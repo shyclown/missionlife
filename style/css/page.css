@@ -1,0 +1,73 @@
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Preserve aspet ratio */
+  box-sizing: border-box;
+  min-width: 1900px;
+  max-width: 1080px;
+  height: 100%;
+  z-index: -9999;
+}
+body{
+  margin: 0px;
+  background-color: rgb(240, 242, 241);
+    font-family: 'Source Sans Pro', sans-serif;
+
+}
+#topnav h1{
+  display: block;
+  width: 120px;
+  background-color: #FFF;
+  font-weight: 300;
+  line-height: 16px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 16px;
+
+  color: rgb(244,100,95);
+  border-bottom: 1px solid rgb(244,100,95);
+  text-decoration: none;
+}
+#topnav{
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 9999;
+  height: 49px;
+  overflow: hidden;
+  background-color: #FFF;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+#topnav > ul{
+  list-style: none;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+
+}
+#topnav li{
+  text-align: center;
+  display: inline-block;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+#topnav a{
+  display: block;
+  width: 100px;
+  background-color: #FFF;
+  padding: 16px 16px;
+  line-height: 16px;
+  box-sizing: border-box;
+  height: 47px;
+
+  color: rgb(244,100,95);
+  border-bottom: 1px solid rgb(244,100,95);
+  text-decoration: none;
+}
+div.ng-view{
+  padding: 48px;
+}

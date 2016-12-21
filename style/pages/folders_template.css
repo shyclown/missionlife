@@ -1,0 +1,41 @@
+#newFolder{
+  background-color: white;
+  padding: 16px;
+}
+#newFolder input{
+  box-sizing: border-box;
+  background-color: white;
+  padding: 8px 8px;
+  height: 32px;
+  background-color: #EFEFEF;
+  border: none;
+  outline: none;
+}
+#newFolder button{
+  outline: none;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 8px 8px;
+  border: none;
+  background-color: #EAEAEA;
+  height: 32px;
+}
+.inline{
+  display: inline-block;
+  background: #fff;
+  padding: 8px 16px;
+}
+.folder.line{
+  display: block;
+  background-color: #FFF;
+  padding: 8px;
+  height: 32px;
+  width: 50%;
+}
+.folder.line:hover{
+  background-color: #EAEAEA;
+  cursor: pointer;
+}
+.btn.delete{
+  float: right;
+}

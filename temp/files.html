@@ -1,0 +1,39 @@
+<!-- Details -->
+  <div ng-if="details.show" class="details">
+    <h3>{{details.file.file_name}}</h3>
+    <div ng-repeat = "detail in details.data">
+      Header: {{detail.header}}</div>
+    <div ng-click="details.close()">CLOSE</div>
+  </div>
+<!-- Folders -->
+<div id="folders">
+  <div class="btn" ng-click="openFolder('article')" ng-class="folderSelected('article')"><i class="fa fa-folder"></i> Article </div>
+  <div class="btn" ng-click="openFolder('garant')" ng-class="folderSelected('garant')"><i class="fa fa-folder"></i> Garants </div>
+</div>
+<!-- Control panel -->
+<div id="controlPanel">
+  <div id="listPages">
+    <button class="btn prev page" ng-click="prevPage()" ng-if="prevPageShow()"><i class="fa fa-angle-left"></i></button>
+    <div class="info page nr">{{page}} / {{allPages()}}</div>
+    <button class="btn next page" ng-click="nextPage()" ng-if="nextPageShow()"><i class="fa fa-angle-right"></i></button>
+  </div>
+  <div id="sortBy">
+    <button class="btn" ng-click="sortBy('size')" ng-class="sortBySelected('size')"><i class="fa fa-sort"></i> size</button>
+    <button class="btn" ng-click="sortBy('name')" ng-class="sortBySelected('name')"><i class="fa fa-sort"></i> name</button>
+    <button class="btn" ng-click="sortBy('date')" ng-class="sortBySelected('date')"><i class="fa fa-sort"></i> date</button>
+  </div>
+  <div id="pageControl">
+    <div class="perPage">Articles per page:
+      <button class="btn per page" ng-click="perPage(5)" ng-class="perPageSelected(5)"> 5 </button>
+      <button class="btn per page" ng-click="perPage(10)" ng-class="perPageSelected(10)"> 10 </button>
+      <button class="btn per page" ng-click="perPage(20)" ng-class="perPageSelected(20)"> 20 </button>
+    </div>
+  </div>
+</div>
+<!-- File List -->
+<div ng-repeat="file in files" class="file" >
+  <div class="name" ng-click="loadDetails(file)">{{file.file_name}}</div>
+  <div class="size">{{sizeMB(file.file_size)}} MB</div>
+  <div class="btn delete" ng-click="loadDetails(file)"><i class="fa fa-trash"></i> REMOVE</div>
+  <div class="btn edit" ng-click="loadDetails(file)"><i class="fa fa-pencil"></i> EDIT</div>
+</div>

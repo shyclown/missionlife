@@ -1,0 +1,195 @@
+#articleForm{
+  margin: auto;
+  margin-top: 100px;
+  max-height: calc(100% - 150px);
+  margin-bottom: 50px;
+  overflow-y: scroll;
+  max-width: 1080px;
+  min-width: 480px;
+  box-sizing: border-box;
+  min-height: 400px;
+  background-color: #fff;
+  padding: 16px;
+}
+/*Edit File*/
+#sheet_editfile .content{
+  position: relative;
+  margin: 150px auto;
+  max-width: 350px;
+  padding: 16px;
+  background-color: #FFF;
+}
+#sheet_editfile .content img{
+  width: 100%;
+}
+#sheet_editfile .content > h3{
+  color: rgb(244,100,95);
+  font-weight: 300;
+  font-size: 24px;
+  margin: 16px 0px 16px 0px;
+  padding: 0px;
+}
+
+#sheet_editfile .content > .btn{
+  background-color: #FFF;
+  border: 1px solid rgb(244,100,95);
+  outline: none;
+  color: rgb(244,100,95);
+  font-weight: 500;
+  padding: 8px 16px;
+  transition: all 0.3s ease-in-out;
+}
+#sheet_editfile .content > .btn.foot{
+  margin-top: 16px;
+  float: right;
+  margin-left: 8px;
+}
+#sheet_editfile .content > .btn.save.foot{
+  border:1px solid #29BC79;
+  color: #069554;
+}
+#sheet_editfile .content > .btn.close.top{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 8px 8px;
+  width: auto;
+}
+#sheet_editfile .content > .btn.save.foot > i{
+  margin-right: 8px;
+}
+#sheet_editfile .content > .btn.close:hover{
+  background-color: #D93E3A;
+  border:1px solid #B31F1B;
+  color: #FFF;
+  cursor: pointer;
+}
+#sheet_editfile .content > .btn.save.foot:hover{
+  background-color: #29BC79;
+  border:1px solid #069554;
+  color: #FFF;
+  cursor: pointer;
+}
+
+/* Files */
+#articleForm .files{
+
+}
+
+/* File */
+#articleForm .one_file{
+  position: relative;
+  padding: 8px;
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+}
+#articleForm .one_file:hover{
+   background-color: rgb(244,100,95);
+}
+/* filename input*/
+#articleForm .fileNameInput{
+
+}
+/* remove button */
+#articleForm .smallFileBtn{
+  display: none;
+  background-color: rgb(244,100,95);
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 5;
+  color: #FFF;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 16px;
+}
+#articleForm .one_file:hover .smallFileBtn{
+  display: block;
+}
+#articleForm .smallFileBtn:hover{
+  background-color: #B31F1B;
+  cursor: pointer;
+}
+#articleForm .remove_btn{
+  top: 0px;
+  right: 0px;
+}
+#articleForm .edit_btn{
+  bottom: 0px;
+  right: 0px;
+}
+#articleForm .filename{
+  display: none;
+  position: absolute;
+  top:0px;
+  padding: 8px;
+  padding-top: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #FFF;
+  font-weight: 100;
+  font-size: 16px;
+}
+#articleForm .one_file:hover .filename{
+  display: block;
+}
+#articleForm .files{
+  margin-top: 8px;
+  background-color: rgb(240,242,241);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#articleForm .files .image{
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#articleForm .files .one_file:hover .image > img{
+  width: 250px;
+  transition: all 1s ease-in-out;
+}
+#articleForm .files .image > img{
+  display: block;
+  width: 350px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transition: all 1s ease-in-out;
+}
+
+#articleForm label{
+  color: rgb(244,100,95);
+  display: block;
+  clear: both;
+}
+#articleForm input{
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  clear: both;
+  padding: 8px;
+  margin: 8px 0px;
+}
+#articleForm textarea{
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  clear: both;
+  resize: vertical;
+  padding: 8px;
+  margin: 8px 0px;
+}

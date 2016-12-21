@@ -1,0 +1,74 @@
+#folders{  background-color: white;  padding: 16px; margin-bottom: 8px;}
+#folders > .btn{  padding: 8px 16px; }
+/* Control Panel */
+#controlPanel{ box-sizing: border-box; background-color: white; width: 100%; padding: 8px 16px; height: 48px; margin-bottom: 8px;}
+#controlPanel > #sortBy { display: block; float: right; }
+#controlPanel > #pageControl { display: block; float: right; margin-right: 16px;}
+#controlPanel > #pageControl > .perPage{ float: right; }
+#controlPanel > #pageControl > .perPage > .per.page{ width: 36px; text-align: center; }
+#controlPanel > #listPages{ background-color: #FFF; display: inline-block;}
+#controlPanel > #listPages > .info.page.nr{ display: inline-block; padding: 8px 16px; width: 50px; text-align: center;}
+#controlPanel > #listPages > .btn.page{ display: inline-block; border: none; background-color: #EAEAEA;}
+.file{
+  background-color: #FFF;
+  height: 36px;
+  line-height: 16px;
+  box-sizing: border-box;
+  padding: 8px;
+  border-bottom: 1px solid #EAEAEA;
+  width: 100%;
+}
+.name{
+  float: left;
+}
+.size{
+  display: inline-block;
+  float: right;
+}
+.btn{
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #EAEAEA;
+  display: inline-block;
+}
+.btn.selected{
+  border: 1px solid rgb(244,100,95);
+  color: rgb(244,100,95);
+  background-color: white;
+}
+.btn{
+  margin: 0px;
+  text-align: center;
+  box-sizing: border-box;
+  height: 32px;
+  line-height: 16px;
+  padding: 8px 8px;
+  outline: none;
+  border: 1px solid #666;
+}
+
+.btn:hover{
+  background-color: #EFEFEF;
+}
+.details{
+  background-color: #FFF;
+  padding: 16px;
+}
+.file > .btn{
+  box-sizing: border-box;
+  height: 22px;
+  display: inline-block;
+  float: right;
+  background-color: #EAEAEA;
+  border: none;
+  padding: 3px 16px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+.file > .btn.edit{
+  color: #069554;
+
+}
+.file > .btn.delete{
+
+}

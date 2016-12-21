@@ -1,0 +1,25 @@
+#upload_image{
+  padding: 16px;
+  color: rgb(244,100,95);
+  background-color: rgb(240, 242, 241);
+}
+#upload_image input[type="file"]{
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+#upload_image .drophere{
+  font-size: 24px;
+  font-weight: 100;
+  display: inline-block;
+}
+#upload_image > label[for="file"]{margin-left: 16px;
+    display: inline-block;
+  color: #FFF;
+  background-color: rgb(244,100,95);
+  padding: 16px;
+  line-height: 16px;
+}

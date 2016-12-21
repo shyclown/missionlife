@@ -1,0 +1,137 @@
+#sourceText{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px;
+  overflow: hidden;
+  background-color:  #FFF3E0;
+
+  display:table;
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+.image{
+  position: relative;
+  background-color: #FFF3E0;
+  display: block;
+  text-align: center;
+}
+/* buttons */
+.icon_btn{
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  position: absolute;
+  text-align: center;
+}
+.icon{
+  box-sizing: border-box;
+  background-color: #FFCC80;
+  font-size: 16px;
+  padding: 8px;
+  width: 32px;
+  height: 32px;
+}
+.moveBtn .icon:hover{
+  background-color: #EF6C00;
+  color: #FFF;
+}
+.deleteBtn .icon:hover{
+  background-color: #EF6C00;
+  color: #FFF;
+}
+.moveBtn{
+  top:0;
+  left:0;
+}
+.deleteBtn{
+  top:0;
+  right:0;
+}
+
+.intLink {
+  display: inline-block;
+  vertical-align: middle;
+  align-content: center;
+  line-height: 16px;
+  font-size: 16px;
+  padding: 8px;
+  border: none;
+  background-color: #FFF;
+
+-webkit-user-select: none; /* Chrome/Safari */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+ */
+/* Rules below not implemented in browsers yet */
+-o-user-select: none;
+user-select: none;
+}
+.intLink:hover{
+  background-color: #EAEAEA;
+}
+.content_wrap{
+  font-family: georgia,'Raleway',sans-serif;
+  max-height: 900px;
+  overflow: scroll;
+  clear: both;
+  border: 1px solid #EAEAEA;
+  min-height: 200px;
+  padding: 24px;
+}
+.red{
+  background-color: red;
+}
+.blue{
+  background-color: blue;
+}
+h2{
+  font-family: georgia,'Raleway',sans-serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 24px;
+  border-top: 3px solid #09F;
+  padding-top: 12px;
+  margin-top: 16px;
+}
+code{
+  border-left: 4px solid #07F;
+  display: block;
+  clear: both;
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #EFEFEF;
+  width: auto;
+  overflow-x: scroll;
+}
+code > .code_line{
+  display: block;
+  line-height: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: #222;
+  background-color: #E0E0E0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.placeholder{
+  background-color: #EFEFEF;
+  padding: 16px;
+  border: 1px dashed #777;
+  border-radius: 5px;
+}
+.content_wrap img{
+  width: 100%;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.editor_wrap{
+  width: 550px;
+
+}

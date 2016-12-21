@@ -1,0 +1,26 @@
+<style>
+.folder{
+  background-color: #FFF;
+}
+.folderLine{
+  padding: 0px 4px;
+}
+.folder.child{
+  background-color: red;
+}
+.folder .treeChildren{
+  padding-left: 16px;
+}
+.folder i{
+  color: #FFE082;
+}
+.folder .currentFolder{
+  background-color: #EAEAEA;
+}
+</style>
+<div class="folder">
+  <div class="folderLine" ng-class="currentOpen(folder)" ng-click="openFolder(folder)"><i ng-class="icon()"></i> {{folder.name}}</div>
+  <div class="treeChildren" ng-if="openFoldersInTree.indexOf(folder.id)>=0">
+  <folder-tree-line ng-repeat="folder in children"><folder-tree-line>
+  </div>
+<div>

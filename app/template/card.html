@@ -1,0 +1,58 @@
+<style>
+  .el-card{
+    width: 350px;
+    display: block;
+    background-color: #FFF;
+    box-sizing: border-box;
+    border: 2px solid  rgb(229,229,229);
+    color: rgb(82,82,82);
+  }
+  .el-card .el-header{
+    padding: 8px 16px;
+    border-bottom: 1px solid rgb(222,224,223);
+  }
+  .el-card .el-header > h3{
+    font-weight: 400;
+    padding: 8px 0px;
+    margin: 0px;
+    color: rgb(244,100,95);
+  }
+  .el-card > .el-content{
+    padding: 16px;
+  }
+  .el-content input{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 8px;
+    display: block;
+    clear: left;
+  }
+  .el-content textarea{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    padding: 8px 8px;
+    display: block;
+    clear: left;
+  }
+  .el-card > .el-control{
+    text-align: right;
+    padding: 8px;
+    border-top: 1px solid rgb(222,224,223);
+  }
+  .el-card input[type='button']{
+    box-sizing: border-box;
+    padding: 8px 8px;
+    background-color: rgb(244,100,95);
+    color: #FFF;
+    border: none;
+  }
+</style>
+<div class="el-card">
+  <div class="el-header" ng-show="1">
+    <h3 ng-transclude="name"></h3>
+  </div>
+  <div class="el-content" ng-transclude="content" ng-show="1"></div>
+  <div class="el-control" ng-transclude="control" ng-show="1"></div>
+</div>

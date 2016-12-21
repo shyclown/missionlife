@@ -1,0 +1,39 @@
+<style>
+  .folderWindow{
+    height: 120px;
+    position: relative;
+
+  }
+  .folderTopPanel{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #FFF;
+    padding: 16px;
+  }
+  .underContent{
+  }
+  .inline{
+    display: inline-block;
+    padding: 0px;
+  }
+  #newFolder{
+    display: inline-block;
+    padding: 4px;
+  }
+</style>
+<div class="folderWindow" folders-data='folders'>
+  <div class="folderTopPanel">
+    <div id="dropRoot" class="inline" ng-click="openFolder(null)">missionlife /</div>
+    <div class="inline" ng-repeat="parent in currentParents" ng-click="openFolder(parent)">{{parent.name}} /</div>
+    <div class="inline" ng-if="currentFolder != null">{{currentFolder.name}}</div>
+    <div id="newFolder">
+      <input class="add_folder" ng-model="new_folder.name" placeholder="folderName"/>
+      <button class="save_new folder" ng-click="saveNewFolder()">ADD</button>
+    </div>
+  </div>
+  <div class="underContent">
+  <folder-tree></folder-tree>
+  <folder-open></folder-open>
+  <div style="clear:both"></div>
+  </div>
+</div>
