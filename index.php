@@ -36,7 +36,7 @@
     </div>
     <div class="notes">
       Notes:
-
+<article-window></article-window>
     </div>
   </div>
   </body>

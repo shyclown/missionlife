@@ -1,0 +1,95 @@
+<style>
+.articleWindow{
+  background-color: #FFF;
+  margin: 0 auto;
+  width: 650px;
+  border: #666 1px solid;
+  position: relative;
+}
+.articleWindow .TopPanel{
+  height: 32px;
+  box-sizing: border-box;
+  line-height: 16px;
+  padding: 8px;
+  border-bottom: 1px solid #EAEAEA;
+  background-color: #FFF;
+}
+.closeBtn{
+  box-sizing: border-box;
+  background-color: #F44336;
+  color: #FFF;
+  position: absolute;
+  top: 0px;
+  right:0px;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  text-align: center;
+}
+.ControlPanel{
+  border-bottom: 1px solid #EAEAEA;
+  background-color: #EAEAEA;
+}
+.ControlPanel>ul{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+.ControlPanel>ul>li{ display: inline-block; }
+.ControlPanel>ul>li>a{
+  padding: 8px;
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+}
+.RightContent{
+  display: block;
+  box-sizing: border-box;
+  float: right;
+  width: 200px;
+  background-color: #EAEAEA;
+  padding: 8px;
+}
+.LeftContent{
+  display: block;
+  float: left;
+  background-color: #FFF;
+  width: calc(100% - 200px);
+}
+.Footer{
+  clear: both;
+  background-color: #666;
+}
+</style>
+<div class="articleWindow">
+  <div class="TopPanel">
+    Article Editor
+    <div class="closeBtn"><i class="fa fa-times"></i></div>
+  </div>
+  <div class="ControlPanel">
+    <ul>
+      <li><a href="#">File</a></li>
+      <li><a href="#">Edit</a></li>
+      <li><a href="#">Selection</a></li>
+    </ul>
+  </div>
+  <div class="LeftContent">
+    <form id="articleEditorForm">
+    <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="header" />
+    <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="content" />
+    <input type="submit" value="submit">
+    </form>{{header}}
+    </br>
+    {{content}}
+    </br>
+  </div>
+  <div class="RightContent">
+    Right Content:
+    Files
+    articles
+    Settings
+  </div>
+  <div class="Footer">
+    Content of response
+  </div>
+</div>

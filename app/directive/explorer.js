@@ -104,3 +104,27 @@ app.directive('folderTreeLine',['$http', function($http) {
     }
   };
 }]);
+
+app.directive('articleWindow',['$http','Folder', function($http, Folder) {
+  return {
+    restrict: 'E',
+    scope: {},
+    templateUrl: '/missionlife/app/template/article_window.html',
+    link: function (scope, element, attrs){
+      scope.header = 'header';
+      scope.content = 'content';
+      console.log(scope);
+      scope.elArticleHeader = document.getElementById('articleEditorHeader');
+      scope.elArticleContent = document.getElementById('articleEditorContent');
+      scope.elArticleContent.value = scope.content;
+      scope.area = new Editor.area({
+        input_id:'articleEditorContent',
+        form_id:'articleEditorForm',
+        // if AngularJS
+        image_url : '/missionlife/uploads/image/',
+      });
+
+
+    }
+  };
+}]);
