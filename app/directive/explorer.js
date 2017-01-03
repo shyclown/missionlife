@@ -99,32 +99,7 @@ app.directive('folderTreeLine',['$http', function($http) {
       scope.icon = function(){
       const theChildren = function(child){ return child.parent == scope.folder.id; }
       scope.children = scope.folders.filter(theChildren);
-      console.log(scope.children);
       return (scope.openFoldersInTree.indexOf(scope.folder.id)>=0) ? 'fa fa-folder-open' : 'fa fa-folder'};
-    }
-  };
-}]);
-
-app.directive('articleWindow',['$http','Folder', function($http, Folder) {
-  return {
-    restrict: 'E',
-    scope: {},
-    templateUrl: '/missionlife/app/template/article_window.html',
-    link: function (scope, element, attrs){
-      scope.header = 'header';
-      scope.content = 'content';
-      console.log(scope);
-      scope.elArticleHeader = document.getElementById('articleEditorHeader');
-      scope.elArticleContent = document.getElementById('articleEditorContent');
-      scope.elArticleContent.value = scope.content;
-      scope.area = new Editor.area({
-        input_id:'articleEditorContent',
-        form_id:'articleEditorForm',
-        // if AngularJS
-        image_url : '/missionlife/uploads/image/',
-      });
-
-
     }
   };
 }]);

@@ -104,9 +104,11 @@ Editor.area.prototype.createEvents = function()
     drop: function(event){
       Editor.fn.removeDefault(event);
       // if provided upload function
-      if(area.drop_file_callback){
+      if(area.drop_file_callback)
+      {
         area.drop_file_callback();
-      } else {
+      }
+      else{
         // default upload function if enabled
         const data = event.dataTransfer.files;
         const reader = new FileReader();
@@ -120,7 +122,8 @@ Editor.area.prototype.createEvents = function()
             }
             const uploadProgress = function(percent){ console.log(percent*100); }
             const callbackAjax = function(response){
-              area.afterImageUpload(response, area.url);} //ugly TODO
+              area.afterImageUpload(response, true);
+            }
             new Editor.ajax(area.upload_file, oData, uploadProgress, callbackAjax);
           }
         }
@@ -139,16 +142,19 @@ Editor.fn.removeDefault = function(event){
   event.preventDefault();
   event.stopPropagation();
 }
+
 Editor.area.prototype.afterImageUpload = function (response, removePlacehoder) {
   response = JSON.parse(response);
   let figure = new Editor.imageFigure( this.image_url+response.file_src, 'new item', this.root );
   this.root.insertBefore( figure.el, this.placeholder.el );
   if(removePlacehoder){ this.removePlaceholder(); }
-};
+}
+
 Editor.area.prototype.removePlaceholder = function(){
   this.placeholder.remove();
   this.placeholder = void 0;
 }
+
 Editor.area.prototype.update_content = function(newContent){
   this.root.innerHTML = newContent;
 }

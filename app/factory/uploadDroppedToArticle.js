@@ -32,7 +32,7 @@ app.factory('uploadDroppedToArticle', ['resizeDroppedImage','customAjax',functio
         }
         customAjax(targetUrl, oData, progressFn, completeFn);
       }
-      console.log('article:',article_id);
+      console.log(article_id);
     });
   }//resizeDropped
 }]);

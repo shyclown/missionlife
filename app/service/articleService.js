@@ -48,7 +48,7 @@ app.service('Article',function($http){
   }
   this.insert = function(data, callback){
     data.action = 'insert';
-    data.folder_id = this.Folder.id;
+    data.folder_id = self.Folder.id;
     ajax(data, url, callback, defError);
   }
   this.update = function(data, callback){
