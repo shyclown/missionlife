@@ -1,3 +1,6 @@
+<?php
+// Change modes of folders
+ ?>
 <html>
   <head>
     <base href="/missionlife/">
@@ -36,7 +39,7 @@
     </div>
     <div class="notes">
       Notes:
-<article-window></article-window>
+
     </div>
   </div>
   </body>

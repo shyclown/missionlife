@@ -1,11 +1,19 @@
 app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Folder, Article) {
   return {
     restrict: 'E',
-    scope:{ folders: '=foldersData' },
+    scope:{
+      currentFolder: '=',
+      openArticle: '='
+    },
     templateUrl: '/missionlife/app/template/folder_window.html',
     link: function (scope, element, attrs)
     {
-      scope.currentFolder = null;
+      // Watch Folders
+      scope.folders;
+      scope.$watch( function(){ return Folder.allFolders; }, function(){ scope.folders = Folder.allFolders;}, true);
+      // Load Folders
+      Folder.select_all();
+
       scope.currentParents = [];
       scope.articles = [];
       scope.openFoldersInTree = [];
@@ -23,6 +31,21 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       }
       scope.isOpen = function(folder){
         return folder.id == scope.currentFolder.id;
+      }
+
+      // Click Event for Articles
+      scope.selectArticle = function(article){
+        console.log('selectArticle');
+        scope.articleWindow = true;
+        scope.openArticle = article;
+        console.log('openArticle: ', scope.openArticle);
+      }
+      // Click Event for New Article Button
+      scope.createNewArticle = function(){
+        console.log('createNewArticle');
+        scope.articleWindow = true;
+        scope.openArticle = false;
+        console.log('openArticle: ', scope.openArticle);
       }
 
       scope.openFolder = function(folder){

@@ -68,15 +68,15 @@
   </div>
   <div class="ControlPanel">
     <ul>
-      <li><a href="#">File</a></li>
+      <li><a ng-click="clickFolder()" href="#">File</a></li>
       <li><a href="#">Edit</a></li>
       <li><a href="#">Selection</a></li>
     </ul>
   </div>
   <div class="LeftContent">
     <form id="articleEditorForm">
-    <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="header" />
-    <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="content" />
+    <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="edit_article.header" />
+    <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="edit_article.content" />
     <input type="submit" value="submit">
     </form>{{header}}
     </br>
@@ -90,6 +90,6 @@
     Settings
   </div>
   <div class="Footer">
-    {{logPanel}}
+    {{logPanel}} {{currentFolder}}
   </div>
 </div>

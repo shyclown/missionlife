@@ -1,24 +1,10 @@
-<div ng-show="(1==0)">
-<div id="newFolder">
-<input class="add_folder" ng-model="new_folder.name" placeholder="folderName"/>
-<button class="save_new folder" ng-click="saveNewFolder()">ADD</button>
-</div>
-
-<div ng-bind-html="php"></div>
-<div id="dropRoot" class="inline" ng-click="openFolder(null)">missionlife</div>
-<div class="inline" ng-repeat="parent in current_parents" ng-click="openFolder(parent)">{{parent.name}}</div>
-<div class="inline" ng-if="current_folder != null">{{current_folder.name}}</div>
-
-<div class="folder line" ng-repeat="folder in folders" ng-if="folder.parent == current_folder.id" folder-item="onDropFn" draggable="true" ng-click="openFolder(folder)">
-<button class="btn delete" ng-click="removeFolder(folder)">Remove Folder</button>
-<button class="btn delete" ng-click="orderUp(folder)">up</button>
-<button class="btn delete" ng-click="orderDown(folder)">down</button>
-<input type="text" ng-change="updateName(folder)" ng-model="folder.name" ng-click='$event.stopPropagation()'>
-<input type="text" ng-change="updatePosition(folder)" ng-model="folder.position" ng-click='$event.stopPropagation()'>
-{{folder.order}}
-</div>
-
-<div class="articles" style="clear:both">
-</div>
-</div>
-<folder-explorer folders-data='folders'></folder-explorer>
+<!--
+Explorer lets you pick folder and open article in editor window
+Controller variables:
+ currentFolder
+ openArticle
+ newArticle
+-->
+<folder-explorer folders='folders' current-folder='currentFolder' open-Article='openArticle'></folder-explorer>
+<div style="clear:both"></div>
+<article-window current-folder='currentFolder' open-Article='openArticle' ng-show="openArticleWindow"></article-window>

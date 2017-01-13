@@ -11,7 +11,8 @@
 </style>
 <div class="folder-open">
   <div ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ng-click="openFolder(folder)">
-  <i class="fa fa-folder"></i> {{folder.name}}</div>
-<div ng-repeat="article in articles">
+  <i class="fa fa-folder" ></i> {{folder.name}}</div>
+<div ng-repeat="article in articles" ng-click="selectArticle(article)">
   <i class="fa fa-file-text-o"></i> {{article.header}}</div>
 </div>
+<div ng-click="createNewArticle()">Add Article</div>
