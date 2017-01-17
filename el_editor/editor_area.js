@@ -162,7 +162,7 @@ Editor.area.prototype.update_content = function(newContent){
 Editor.area.prototype.oSubmit = function()
 {
   if(this.inEditMode()){
-    this.area_el.value = this.root.innerHTML;
+    //this.area_el.value = this.root.innerHTML;
     return true;
   }
   return false;

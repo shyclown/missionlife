@@ -60,6 +60,15 @@
   clear: both;
   background-color: #666;
 }
+#articleSubmitButton{
+  background-color: #09F;
+  width: 100%;
+  height: 40px;
+  clear: both;
+  border: none;
+  outline: none;
+  color: #FFF;
+}
 </style>
 <div class="articleWindow">
   <div class="TopPanel">
@@ -77,19 +86,14 @@
     <form id="articleEditorForm">
     <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="edit_article.header" />
     <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="edit_article.content" />
-    <input type="submit" value="submit">
-    </form>{{header}}
-    </br>
-    {{content}}
-    </br>
   </div>
   <div class="RightContent">
-    Right Content:
-    Files
-    articles
-    Settings
+    <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
+    <div ng-repeat="file in files">{{file.file_name}}</div>
   </div>
-  <div class="Footer">
-    {{logPanel}} {{currentFolder}}
+  </form>
+  <div class="Footer" ng-bind-html="logPanel">
+
   </div>
+  {{currentFolder}}
 </div>

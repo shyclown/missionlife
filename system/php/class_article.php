@@ -34,7 +34,7 @@ class Article
             FROM `ml_article_file` af
             INNER JOIN `ml_file` f
             ON af.file_id = f.id WHERE af.article_id = ?";
-    $params = array('i',$data['article_id']);
+    $params = array('i',$data['id']);
     return $this->db->query($sql,$params);
   }
   public function number_of_rows(){
