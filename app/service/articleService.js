@@ -1,13 +1,6 @@
-app.service('Article',function($http){
+app.service('Article',function(Ajax){
 
   const url = '/missionlife/system/ng/article.php';
-
-  const ajax = function(data, url, completeFn, errorFn){
-    $http({ method: 'POST', url: url, data:data })
-    .then( completeFn, errorFn );
-  }
-  const defSuccess = function(response){console.log('success', response.data);};
-  const defError = function(response){console.log('error', response);};
 
   // ---------------------------------
   // Prop
@@ -33,7 +26,7 @@ app.service('Article',function($http){
 
   this.load = function(callback){
     if(self.Folder == null){ this.selected = []; return; }
-    ajax({  action:'select',
+    Ajax.call({  action:'select',
             folder_id: this.Folder.id,
             sort_by: this.sortByData,
             order: this.sortOrder,
@@ -44,27 +37,27 @@ app.service('Article',function($http){
            self.selected = response.data.result;
            self.all_rows = response.data.all_rows;
            if(callback){ callback(response) };
-         }, defError );
+         } );
   }
   this.insert = function(data, callback){
     data.action = 'insert';
     data.folder_id = self.Folder.id;
-    ajax(data, url, callback, defError);
+    Ajax.call(data, url, callback);
   }
   this.update = function(data, callback){
     data.action = 'update';
-    ajax(data, url, callback, defError);
+    Ajax.call(data, url, callback);
   }
   this.delete = function(data, callback){
     data.action = "delete";
-    ajax(data, url, callback, defError);
+    Ajax.call(data, url, callback);
   }
   this.load_files = function(data, callback){
     data.action = 'load_files';
-    ajax(data, url, callback, defError);
+    Ajax.call(data, url, callback);
   }
   this.updateFileDesc = function(data, callback){
     data.action = 'update_file_desc';
-    ajax(data, url, callback, defError);
+    Ajax.call(data, url, callback);
   }
 });

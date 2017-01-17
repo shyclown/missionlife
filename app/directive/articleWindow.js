@@ -1,3 +1,5 @@
+/* Uses Editor */
+
 app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArticle', function($http, Folder, Article, uploadDroppedToArticle) {
   return {
     restrict: 'E',

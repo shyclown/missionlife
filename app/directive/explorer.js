@@ -24,7 +24,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
       true);
       Article.load();
-
       const inFolderArray = function(id){
         let pos = scope.openFoldersInTree.indexOf(id);
         return {  open: pos >= 0, position: pos }
@@ -32,20 +31,15 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       scope.isOpen = function(folder){
         return folder.id == scope.currentFolder.id;
       }
-
       // Click Event for Articles
       scope.selectArticle = function(article){
-        console.log('selectArticle');
         scope.articleWindow = true;
         scope.openArticle = article;
-        console.log('openArticle: ', scope.openArticle);
       }
       // Click Event for New Article Button
       scope.createNewArticle = function(){
-        console.log('createNewArticle');
         scope.articleWindow = true;
         scope.openArticle = false;
-        console.log('openArticle: ', scope.openArticle);
       }
 
       scope.openFolder = function(folder){

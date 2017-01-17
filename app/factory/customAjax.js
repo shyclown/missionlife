@@ -1,3 +1,7 @@
+/*
+This custom ajax was created for purpose of displaying progres
+of upload process
+*/
 app.factory('customAjax', function(){
   return function(targetUrl, oData, progressFn, completeFn)
   {
