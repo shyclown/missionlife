@@ -38,6 +38,7 @@
 <div class="folder-open">
   <div ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ng-click="openFolder(folder)">
     <i class="fa fa-folder"></i> {{folder.name}}
+    <div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i> remove</div>
   </div>
   <div ng-repeat="article in articles" ng-click="selectArticle(article)" class="ArticleLine">
     <div class="name"><i class="fa fa-file-text-o"></i> {{article.header}}</div>
