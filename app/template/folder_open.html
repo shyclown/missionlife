@@ -8,11 +8,40 @@
     height: 300px;
     overflow-y:scroll;
   }
+  .addArticle{
+    background-color: #09F;
+    color: #FFF;
+    padding: 8px;
+  }
+
+  /* Article listed */
+  .ArticleLine{
+    width: 100%;
+    background-color: #EAEAEA;
+    box-sizing: border-box;
+    height: 24px;
+  }
+  .ArticleLine > .delete{
+    display: block;
+    box-sizing: border-box;
+    padding: 4px;
+    font-size: 16px;
+    height: 24px;
+    background-color: #09F;
+    color: white;
+    float: right;
+  }
+  .ArticleLine > .name{
+    box-sizing: border-box;
+  }
 </style>
 <div class="folder-open">
   <div ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ng-click="openFolder(folder)">
-  <i class="fa fa-folder" ></i> {{folder.name}}</div>
-<div ng-repeat="article in articles" ng-click="selectArticle(article)">
-  <i class="fa fa-file-text-o"></i> {{article.header}}</div>
+    <i class="fa fa-folder"></i> {{folder.name}}
+  </div>
+  <div ng-repeat="article in articles" ng-click="selectArticle(article)" class="ArticleLine">
+    <div class="name"><i class="fa fa-file-text-o"></i> {{article.header}}</div>
+    <div class="delete" ng-click="deleteArticle(article)"><i class="fa fa-trash"></i> delete</div>
+  </div>
 </div>
-<div ng-click="createNewArticle()">Add Article</div>
+<div class="addArticle" ng-if="isOpenFolder()" ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</div>

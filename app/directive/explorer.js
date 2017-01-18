@@ -41,7 +41,7 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         scope.articleWindow = true;
         scope.openArticle = false;
       }
-
+      scope.isOpenFolder = function(){ return scope.currentFolder != null; }
       scope.openFolder = function(folder){
         if(folder == null){ scope.currentFolder = null; }
         else{

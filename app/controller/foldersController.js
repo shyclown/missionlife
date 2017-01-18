@@ -13,8 +13,8 @@ app.controller('foldersController',function($scope, Folder, $compile, $http){
   $scope.newArticle = {};
   $scope.openArticle = {
     new: true,
-    header: 'fdsfds',
-    content: 'fdsfds',
+    header: 'No Article',
+    content: 'No Article is open please close this window to prevent errors',
     state: 0
   };
 

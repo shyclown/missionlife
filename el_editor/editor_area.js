@@ -36,7 +36,7 @@ Editor.area.prototype.attachEvents = function()
   this.root.addEventListener('cut',this.event.cut,false);
   // Change Mode
   this.part.htmlSwitch.addEventListener('change',this.event.changeMode,false);
-  // Mouse Event
+  // Mouse Events
   this.root.addEventListener('contextmenu', function(){},false);
   this.root.addEventListener('dragenter', this.event.dragenter, false);
   this.root.addEventListener('dragleave', Editor.fn.removeDefault, false);// def
