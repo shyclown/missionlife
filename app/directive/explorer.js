@@ -9,7 +9,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
     templateUrl: '/missionlife/app/template/folder_window.html',
     link: function (scope, element, attrs)
     {
-        const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
       // Watch Folders
       scope.folders;
       scope.$watch( function(){ return Folder.allFolders; }, function(){ scope.folders = Folder.allFolders;}, true);
@@ -33,13 +32,21 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       scope.isOpen = function(folder){
         return folder.id == scope.currentFolder.id;
       }
+      const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
       // Click Event for Articles
       scope.selectArticle = function(article){
         console.log('clicked');
         scope.articleWindow = true;
         scope.openArticle = article;
       }
-
+      // Delete article and reload list
+      // todo: prompt panel question
+      // todo: in php remove files too or set them to unused tag
+      scope.deleteArticle = function(article){
+        Article.delete(article, function(response){
+          Article.load();
+        });
+      }
       // Click Event for New Article Button
       scope.createNewArticle = function(){
         scope.articleWindow = true;
@@ -65,14 +72,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
           }
         }
       }
-      // Delete article and reload list
-      // todo: prompt panel question
-      // todo: in php remove files too or set them to unused tag
-      scope.deleteArticle = function(article){
-        Article.delete(article, function(response){
-          Article.load();
-        });
-      }
 
       // New Folder Object
       scope.new_folder = {};
@@ -81,10 +80,8 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         data.parent = scope.currentFolder;
         Folder.insert(data, function(){ scope.new_folder.name = ""; });
       }
-      scope.removeFolder = function(folder){
-        stopDefault(event);
+      scope.removeFolder = function(folder){ stopDefault(event);
         Folder.remove(folder);
-        Folder.select_all();
       }
       scope.orderUp = function(folder){ stopDefault(event);
         Folder.orderUp(folder);
