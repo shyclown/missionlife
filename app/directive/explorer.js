@@ -3,7 +3,8 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
     restrict: 'E',
     scope:{
       currentFolder: '=',
-      openArticle: '='
+      openArticle: '=',
+      articleWindow: '='
     },
     templateUrl: '/missionlife/app/template/folder_window.html',
     link: function (scope, element, attrs)
@@ -33,9 +34,11 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       }
       // Click Event for Articles
       scope.selectArticle = function(article){
+        console.log('clicked');
         scope.articleWindow = true;
         scope.openArticle = article;
       }
+
       // Click Event for New Article Button
       scope.createNewArticle = function(){
         scope.articleWindow = true;

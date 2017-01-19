@@ -3,13 +3,14 @@
 app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArticle', function($http, Folder, Article, uploadDroppedToArticle) {
   return {
     restrict: 'E',
-    scope:{ currentFolder: '=', openArticle: '=' },
+    scope:{ currentFolder: '=', openArticle: '=', articleWindow :'=' },
     templateUrl: '/missionlife/app/template/article_window.html',
     link: function (scope, element, attrs)
     {
+      // url to place which handles file upload to article
       const targetUrl = '/missionlife/system/ng/upload_file.php';
       scope.header = scope.openArticle.header || 'new Header';
-      scope.content = scope.openArticle.content || '';
+      scope.content = scope.openArticle.content || 'new Content';
       scope.logPanel = 'log panel';
       scope.elArticleHeader = document.getElementById('articleEditorHeader');
       scope.elArticleContent = document.getElementById('articleEditorContent');
@@ -22,6 +23,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
 
       scope.files = {};
 
+
       // perform when openArticle is changed
       scope.$watch(
         function(){ return scope.openArticle; },
@@ -33,6 +35,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
           Article.Folder = { id: scope.currentFolder };
           if(scope.openArticle)
           {
+            console.log('Article', scope.openArticle);
             scope.edit_article = Object.assign({},scope.openArticle);
             scope.area.update_content(scope.edit_article.content);
             Editor.attachImageControls.bind(scope.area)();
@@ -65,11 +68,23 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         // if AngularJS
         image_url : '/missionlife/uploads/image/',
       });
-      scope.updateFiles = function(files){ scope.files = files; }
+
       scope.loadFilesOfArticle = function(){
-        Article.load_files(scope.edit_article, function(response){
-          scope.updateFiles(response.data);
-        });
+        // When page is loaded article.id value doesnt exist
+        // We do not load files in this case, no errors
+        /* Before: If we try load files we get error of missing data.id */
+        if(scope.openArticle.id){
+          Article.load_files( scope.edit_article, function(response){
+            // Update scope files
+            scope.files = response.data;
+            console.dir(response.data);
+          });
+        }
+      }
+
+      scope.closeWithoutSave = function(){
+        console.log(scope.articleWindow);
+        scope.articleWindow = false;
       }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){

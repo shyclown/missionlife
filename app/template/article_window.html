@@ -2,7 +2,7 @@
 .articleWindow{
   background-color: #FFF;
   margin: 0 auto;
-  width: 650px;
+  max-width: 750px;
   border: #666 1px solid;
   position: relative;
 }
@@ -69,11 +69,29 @@
   outline: none;
   color: #FFF;
 }
+#blanket{
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
+#articleEditorHeader{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 8px;
+  font-size: 24px;
+  font-weight: 100;
+}
 </style>
+<div id="blanket">
 <div class="articleWindow">
   <div class="TopPanel">
     Article Editor
-    <div class="closeBtn"><i class="fa fa-times"></i></div>
+    <div class="closeBtn" ng-click="closeWithoutSave()"><i class="fa fa-times"></i></div>
   </div>
   <div class="ControlPanel">
     <ul>
@@ -92,8 +110,6 @@
     <div ng-repeat="file in files">{{file.file_name}}</div>
   </div>
   </form>
-  <div class="Footer" ng-bind-html="logPanel">
-
-  </div>
-  {{currentFolder}}
+  <div class="Footer" ng-bind-html="logPanel"></div>
+</div>
 </div>

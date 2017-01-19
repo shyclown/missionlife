@@ -18,5 +18,5 @@ app.controller('foldersController',function($scope, Folder, $compile, $http){
     state: 0
   };
 
-  $scope.openArticleWindow = true;
+  $scope.articleWindow = false;
 });

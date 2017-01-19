@@ -132,6 +132,6 @@ code > .code_line{
   user-select: none;
 }
 .editor_wrap{
-  min-width: 470px;
-
+  box-sizing: border-box;
+  width: 100%;
 }
