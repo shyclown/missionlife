@@ -28,36 +28,15 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
       scope.$watch(
         function(){ return scope.openArticle; },
         function(){
-          // If article is clicked then there is openArticle Object presenet
-          // otherways it is set to false and new Article is inserted
-          /* This needs to be done because of uploading files, Which id is stored to Article <-> File
-            connecting table, to alow reuse of same image on page */
           Article.Folder = { id: scope.currentFolder };
           if(scope.openArticle)
           {
-            console.log('Article', scope.openArticle);
             scope.edit_article = Object.assign({},scope.openArticle);
             scope.area.update_content(scope.edit_article.content);
             Editor.attachImageControls.bind(scope.area)();
             scope.loadFilesOfArticle();
           }
-          else{
-            scope.edit_article = {
-              header: scope.openArticle.header || 'New Article Header',
-              content: scope.openArticle.content || 'Content of Article',
-              state: scope.openArticle.state || 0
-            }
-            Article.insert(scope.edit_article,
-              function(response){
-                scope.logPanel = response.data;
-                scope.edit_article.id = response.data;
-                scope.area.update_content(scope.edit_article.content);
-                Editor.attachImageControls.bind(scope.area)();
-                scope.loadFilesOfArticle();
-              }
-            );
-          }
-        },
+      },
       true);
       // 1. We attach editor to our template
       // - providing IDs and Link to Image Folder
@@ -82,10 +61,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         }
       }
 
-      scope.closeWithoutSave = function(){
-        console.log(scope.articleWindow);
-        scope.articleWindow = false;
-      }
+      scope.closeWithoutSave = function(){ scope.articleWindow = false; }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){
         console.log('onDropFiles', response);
@@ -114,6 +90,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
         Article.update(scope.edit_article, function(response){
           scope.logPanel = response.data;
+          Article.load();
         });
         Editor.attachImageControls.bind(scope.area)();
       }

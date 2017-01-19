@@ -21,6 +21,9 @@ if(isset($ng_data['action']))
   if($act == 'select'){
     echo json_encode($article->select($ng_data));
   }
+  elseif ($act == 'select_by_id') {
+    echo json_encode($article->select_by_id($ng_data));
+  }
   elseif($act == 'insert'){
     echo json_encode($article->create_new($ng_data));
   }

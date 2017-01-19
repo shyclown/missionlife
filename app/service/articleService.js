@@ -39,6 +39,10 @@ app.service('Article',function(Ajax){
            if(callback){ callback(response) };
          } );
   }
+  this.select_by_id = function(data, callback){
+    data.action = 'select_by_id';
+    Ajax.call(data, url, callback);
+  }
   this.insert = function(data, callback){
     data.action = 'insert';
     data.folder_id = self.Folder.id;

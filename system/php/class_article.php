@@ -63,7 +63,11 @@ class Article
     $all = $this->db->query($sql_all_rows);
     return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
-
+  public function select_by_id($data){
+    $sql = "SELECT * FROM `ml_article` WHERE id = ?";
+    $params = array('i',$data['id']);
+    return $this->db->query($sql,$params);
+  }
   public function create_new($data){
     $sql = "INSERT INTO `missionlife`.`ml_article` (`id`, `header`, `content`, `state`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";

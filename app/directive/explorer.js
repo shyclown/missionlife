@@ -9,15 +9,19 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
     templateUrl: '/missionlife/app/template/folder_window.html',
     link: function (scope, element, attrs)
     {
+
       // Watch Folders
       scope.folders;
-      scope.$watch( function(){ return Folder.allFolders; }, function(){ scope.folders = Folder.allFolders;}, true);
-      // Load Folders
-      Folder.select_all();
-
       scope.currentParents = [];
       scope.articles = [];
       scope.openFoldersInTree = [];
+
+      scope.$watch(
+        function(){ return Folder.allFolders; },
+        function(){ scope.folders = Folder.allFolders;},
+      true);
+      // Load Folders
+      Folder.select_all();
 
       // Load Articles in Folder
       scope.$watch(
@@ -25,34 +29,42 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
       true);
       Article.load();
+
+      const stopDefault = function(){
+        event.stopPropagation();
+        event.preventDefault();
+      }
       const inFolderArray = function(id){
         let pos = scope.openFoldersInTree.indexOf(id);
-        return {  open: pos >= 0, position: pos }
+        return {  open: pos >= 0, position: pos };
       }
-      scope.isOpen = function(folder){
-        return folder.id == scope.currentFolder.id;
-      }
-      const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
-      // Click Event for Articles
+
+
       scope.selectArticle = function(article){
-        console.log('clicked');
         scope.articleWindow = true;
         scope.openArticle = article;
       }
-      // Delete article and reload list
-      // todo: prompt panel question
-      // todo: in php remove files too or set them to unused tag
       scope.deleteArticle = function(article){
-        Article.delete(article, function(response){
+        Article.delete(article, function(){
           Article.load();
         });
       }
-      // Click Event for New Article Button
       scope.createNewArticle = function(){
-        scope.articleWindow = true;
-        scope.openArticle = false;
+        Article.insert({
+          header: 'New Article',
+          content: 'Content',
+          state: 0
+        }, function( response ){
+          Article.select_by_id({id: response.data}, function(ArticleByID){
+            scope.openArticle = ArticleByID.data[0]; // data[0], because ajax returns array of results
+            scope.articleWindow = true;
+            Article.load();
+          });
+        })
       }
+      // disable placing articles to null folder
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
+
       scope.openFolder = function(folder){
         if(folder == null){ scope.currentFolder = null; }
         else{
@@ -61,8 +73,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
           if(!folderIsCurrent){
             scope.currentFolder = folder;
             scope.currentParents = Folder.listParents(folder);
-            Article.Folder = folder;
-            Article.load();
           }
           if(folderInArray.open && folderIsCurrent){
             scope.openFoldersInTree.splice(folderInArray.position, 1);
@@ -71,8 +81,12 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
             scope.openFoldersInTree.push(folder.id);
           }
         }
+        Article.Folder = { id: scope.currentFolder };
+        Article.load();
       }
-
+      scope.isOpen = function(folder){
+        return folder.id == scope.currentFolder.id;
+      }
       // New Folder Object
       scope.new_folder = {};
       scope.saveNewFolder = function(){
