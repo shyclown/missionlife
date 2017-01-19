@@ -50,12 +50,10 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         });
       }
       scope.createNewArticle = function(){
-        Article.insert({
-          header: 'New Article',
-          content: 'Content',
-          state: 0
-        }, function( response ){
-          Article.select_by_id({id: response.data}, function(ArticleByID){
+        Article.insert({ header: 'New Article', content: 'Content', state: 0 },
+          function( response ){
+          Article.select_by_id({id: response.data},
+            function(ArticleByID){
             scope.openArticle = ArticleByID.data[0]; // data[0], because ajax returns array of results
             scope.articleWindow = true;
             Article.load();
