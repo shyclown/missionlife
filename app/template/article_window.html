@@ -107,6 +107,7 @@
   </div>
   <div class="RightContent">
     <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
+    <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText()}} </button>
     <div ng-repeat="file in files">{{file.file_name}}</div>
   </div>
   </form>

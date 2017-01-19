@@ -60,6 +60,15 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
           });
         }
       }
+      // Article state
+      scope.stateText = function(){
+        if(scope.edit_article.state){ return 'dectivate'; }
+        else{ return 'activate'; }
+      }
+      scope.changeState = function(){
+        scope.edit_article.state = !scope.edit_article.scope;
+        //scope.buttonText = scope.stateText();
+      }
 
       scope.closeWithoutSave = function(){ scope.articleWindow = false; }
       // 2. Attaching callback function executed after drop of file or image

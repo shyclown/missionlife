@@ -19,4 +19,5 @@ app.controller('foldersController',function($scope, Folder, $compile, $http){
   };
 
   $scope.articleWindow = false;
+  
 });

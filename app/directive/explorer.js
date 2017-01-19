@@ -82,6 +82,23 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         Article.Folder = { id: scope.currentFolder };
         Article.load();
       }
+
+      /* Folder Editor Window */
+      scope.folderWindow = false;
+      scope.editFolder = {};
+      scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
+      scope.setEditFolder = function(folder){
+        stopDefault(event);
+        console.log('editFolder');
+        scope.editFolder = folder;
+        scope.toogleEditFolder();
+        console.log(scope.editFolder);
+      }
+      scope.setPosition = function(position){
+        scope.editFolder.position = position;
+        scope.updatePosition(scope.editFolder);
+      }
+
       scope.isOpen = function(folder){
         return folder.id == scope.currentFolder.id;
       }
