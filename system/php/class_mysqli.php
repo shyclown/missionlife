@@ -10,7 +10,7 @@ class Database{
   private $password = DB_PASS;
   private $database = DB_NAME;
 
-  private $_mysqli;
+  public $_mysqli;
   private $error;
 
   public function __construct(){
@@ -18,7 +18,7 @@ class Database{
     mysqli_report(MYSQLI_REPORT_STRICT);
     try {
       $this->_mysqli = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-      $this->_mysqli->set_charset('utf8');  
+      $this->_mysqli->set_charset('utf8');
     }
     catch(Exception $e){
       echo "Service unavailable";

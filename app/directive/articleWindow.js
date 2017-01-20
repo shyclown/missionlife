@@ -62,7 +62,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
       }
       // Article state
       scope.stateText = function(){
-        if(scope.edit_article.state){ return 'dectivate'; }
+        if(scope.edit_article && scope.edit_article.state){ return 'dectivate'; }
         else{ return 'activate'; }
       }
       scope.changeState = function(){

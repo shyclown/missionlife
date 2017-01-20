@@ -19,6 +19,12 @@ class Folder
     $this->create_table_article_folder();
   }
 
+
+  // In older than 5.6 versions is not possible add CURRENT_TIMESTAMP to DATETIME values
+  /*
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_edited` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  */
   private function create_table_folder(){
     $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
             `id` int(8) NOT NULL AUTO_INCREMENT,
@@ -26,12 +32,12 @@ class Folder
             `order` int(3),
             `parent` int(8),
             `state` int(1) NOT NULL,
-            `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `date_edited` datetime NOT NULL,
+            `date_created` DATETIME NOT NULL,
+            `date_edited` DATETIME NOT NULL,
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB
           DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
+    $this->db->_mysqli->query($sql);
   }
   private function create_table_article_folder(){
     $sql = "CREATE TABLE IF NOT EXISTS `ml_article_folder` (
@@ -41,7 +47,7 @@ class Folder
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB
             DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
+    $this->db->_mysqli->query($sql);
   }
   // -- PUBLIC --
 
@@ -122,7 +128,7 @@ class Folder
   }
 
   public function removeLinks($data){
-    $sql_link = "DELETE FROM `missionlife`.`ml_folder` folder
+    $sql_link = "DELETE FROM `ml_folder` folder
                   INNER JOIN `ml_article_folder` af ON af.folder_id = folder.id
                   WHERE fodler.id = ?";
     $params_link = array('i',$data['id']);

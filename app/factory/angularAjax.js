@@ -9,10 +9,7 @@ app.factory('Ajax',function($http){
       method: 'POST',
       url: url,
       data:data,
-      headers:{
-        'Accept': "application/json",
-        'Content-Type': 'application/json'
-        }
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
       }).then( completeFn, errorFn );
     }
   }

@@ -1,4 +1,4 @@
-app.controller('garantController',function($scope, $http, customAjax, Garant, resizeDroppedImage){
+app.controller('garantController',function(Ajax, $scope, $http, customAjax, Garant, resizeDroppedImage){
 
   $scope.garants = [];
   $scope.new_garant = {
@@ -57,8 +57,8 @@ app.controller('garantController',function($scope, $http, customAjax, Garant, re
     $scope.edit_garant = {};
   }
   $scope.load_garants = function(){
-    ajax(
-      {action: 'select'},
+    Ajax.call(
+      {action: 'select'}, url,
       function(response){
         $scope.garants = response.data; },
       function(response){ console.log(response); } // error
@@ -70,8 +70,8 @@ app.controller('garantController',function($scope, $http, customAjax, Garant, re
     $scope.editor_open = false;
     $scope.open_garant = $scope.edit_garant;
     $scope.edit_garant.action = 'update';
-    ajax(
-      $scope.edit_garant,
+    Ajax.call(
+      $scope.edit_garant, url,
       function(response){
         imageReplaced = false;
         $scope.load_garants();
@@ -85,8 +85,8 @@ app.controller('garantController',function($scope, $http, customAjax, Garant, re
     $scope.editor_open = false;
     $scope.open_garant = $scope.edit_garant;
     $scope.new_garant.action = 'insert';
-    ajax(
-      $scope.new_garant,
+    Ajax.call(
+      $scope.new_garant, url,
       function(response){
         $scope.php = response.data,
         $scope.new_garant = {
@@ -103,8 +103,8 @@ app.controller('garantController',function($scope, $http, customAjax, Garant, re
 
   $scope.remove = function(garant){
     garant.action = 'remove';
-    ajax(
-      garant,
+    Ajax.call(
+      garant, url,
       function(response){
         $scope.load_garants();
         $scope.php = response.data;
@@ -114,7 +114,7 @@ app.controller('garantController',function($scope, $http, customAjax, Garant, re
   }
 
   $scope.load_garants();
-
+  // change to ajax call
   $scope.delete = function(garant){
     Garant.delete({
       id: garant.id

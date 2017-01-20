@@ -1,4 +1,4 @@
-app.controller('filesController',function($scope, $compile, $http){
+app.controller('filesController',function($scope, $compile, $http, Ajax){
 
   $scope.files = [];
   $scope.folder = 'article';
@@ -42,14 +42,6 @@ app.controller('filesController',function($scope, $compile, $http){
   $scope.prevPageShow = function(){ return $scope.page > 1; }
   // Ajax
   const url = '/missionlife/system/ng/files.php';
-  const ajax = function(data, success, error){
-    $http({ method: 'POST', url: url, data: data })
-    .then(
-      function(response){ success(response); },
-      function(response){ error(response); }
-    );
-  }
-
   // Default ajax responses
   const defSuccess = function(response){ $scope.files = response.data.result; $scope.allFiles = response.data.all_rows[0]['FOUND_ROWS()'] }
   const defError = function(response){ console.log(response.data);}
@@ -63,7 +55,7 @@ app.controller('filesController',function($scope, $compile, $http){
   */
   const loadSelected = function()
   {
-    ajax({
+    Ajax.call({
     action: 'load_selected',
     sort_by: sortByData,
     folder: $scope.folder,
@@ -71,14 +63,16 @@ app.controller('filesController',function($scope, $compile, $http){
     limit_min:($scope.page-1)*onePageSize,
     limit_max: onePageSize
     },
-    defSuccess, defError);
+    url,
+    defSuccess,
+    defError);
   };
   const deleteFile = function(file){
-    ajax({ action: 'delete_file', id: file.id }, defSuccess, defError);
+    Ajax.call({ action: 'delete_file', id: file.id }, url, defSuccess, defError);
   }
 
   $scope.loadDetails = function(file){
-    ajax({ action: 'details', file_id: file.file_id},
+    Ajax.call({ action: 'details', file_id: file.file_id}, url,
     function(response){
       $scope.details.file = file;
       $scope.details.data = response.data;

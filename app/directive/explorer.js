@@ -21,14 +21,18 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         function(){ scope.folders = Folder.allFolders;},
       true);
       // Load Folders
-      Folder.select_all();
+      Folder.select_all(function(res){
+        console.log(res.data);
+      });
 
       // Load Articles in Folder
       scope.$watch(
         function(){ return Article.selected; },
         function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
       true);
-      Article.load();
+      Article.load(function(res){
+        console.log(res.data);
+      });
 
       const stopDefault = function(){
         event.stopPropagation();
@@ -107,7 +111,10 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       scope.saveNewFolder = function(){
         let data = scope.new_folder;
         data.parent = scope.currentFolder;
-        Folder.insert(data, function(){ scope.new_folder.name = ""; });
+        Folder.insert(data, function(response){
+          scope.new_folder.name = "";
+          console.log('Folder inserted', response.data);
+        });
       }
       scope.removeFolder = function(folder){ stopDefault(event);
         Folder.remove(folder);

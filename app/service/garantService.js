@@ -3,7 +3,7 @@ app.service('Garant',function($http){
     var req = {
       method:'POST',
       url: '/missionlife/system/ng/handle_ajax.php',
-      //headers:{ 'Content-Type':undefined },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
       data: data
     };
     $http(req).then(

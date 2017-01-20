@@ -15,7 +15,7 @@ class Article
             `header` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
             `content` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
             `state` int(1) NOT NULL,
-            `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `date_created` datetime NOT NULL,
             `date_edited` datetime NOT NULL,
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB
@@ -69,7 +69,7 @@ class Article
     return $this->db->query($sql,$params);
   }
   public function create_new($data){
-    $sql = "INSERT INTO `missionlife`.`ml_article` (`id`, `header`, `content`, `state`, `date_created`, `date_edited`)
+    $sql = "INSERT INTO `ml_article` (`id`, `header`, `content`, `state`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     $params = array( 'ssi', $data['header'], $data['content'], $data['state'] );
     // returns ID of inserted draft
@@ -78,7 +78,7 @@ class Article
     return $article_id;
   }
   public function add_to_folder($article_id, $folder_id){
-    $sql = "INSERT INTO `missionlife`.`ml_article_folder` (`id`,`article_id`, `folder_id`)
+    $sql = "INSERT INTO `ml_article_folder` (`id`,`article_id`, `folder_id`)
             VALUES (NULL, ?, ?)";
     $params = array( 'ii', $article_id, $folder_id );
     $this->db->query($sql, $params);
@@ -90,11 +90,11 @@ class Article
   }
   public function delete($data){
     $params = array('i',$data['id']);
-    $sql_article = "DELETE FROM `missionlife`.`ml_article`
+    $sql_article = "DELETE FROM `ml_article`
                     WHERE `ml_article`.`id` = ?";
-    $sql_article_file = "DELETE FROM `missionlife`.`ml_article_file`
+    $sql_article_file = "DELETE FROM `ml_article_file`
                           WHERE `ml_article_file`.`article_id` = ?";
-    $sql_article_folder = "DELETE FROM `missionlife`.`ml_article_folder`
+    $sql_article_folder = "DELETE FROM `ml_article_folder`
                           WHERE `ml_article_folder`.`article_id` = ?";
     $article = $this->db->query($sql_article,$params);
     $file = $this->db->query($sql_article_file,$params);

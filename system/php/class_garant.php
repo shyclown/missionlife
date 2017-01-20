@@ -28,7 +28,7 @@ class Garant
             `webpage` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin,
             `content` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
             `state` int(1) NOT NULL,
-            `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `date_created` datetime NOT NULL,
             `date_edited` datetime NOT NULL,
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB
@@ -45,7 +45,7 @@ class Garant
   }
 
   public function create_new($data){
-    $sql = "INSERT INTO `missionlife`.`ml_garant` (
+    $sql = "INSERT INTO `ml_garant` (
     `id` ,
     `header` ,
     `title` ,
@@ -78,11 +78,11 @@ class Garant
   public function removeImages($garant_id)
   {
     $params = array("i", $garant_id);
-    $sql_file = "DELETE FROM `missionlife`.`ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
+    $sql_file = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
     return $this->db->query($sql_file, $params);
   }
   public function delete($data){
-    $sql = "DELETE FROM `missionlife`.`ml_garant` WHERE `ml_garant`.`id` = ?";
+    $sql = "DELETE FROM `ml_garant` WHERE `ml_garant`.`id` = ?";
     $params = array('i',$data['id']);
     return $this->db->query($sql,$params);
   }

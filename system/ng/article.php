@@ -7,6 +7,7 @@ require_once($root.'/system/php/class_article.php');
 require_once($root.'/system/php/class_file.php');
 
 $article = new Article();
+$file = new File();
 
 // AngularJS AJAX
 $fileData = file_get_contents("php://input");
