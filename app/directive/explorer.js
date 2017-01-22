@@ -21,18 +21,13 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         function(){ scope.folders = Folder.allFolders;},
       true);
       // Load Folders
-      Folder.select_all(function(res){
-        console.log(res.data);
-      });
-
+      Folder.select_all();
       // Load Articles in Folder
       scope.$watch(
         function(){ return Article.selected; },
         function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
       true);
-      Article.load(function(res){
-        console.log(res.data);
-      });
+      Article.load();
 
       const stopDefault = function(){
         event.stopPropagation();
@@ -42,7 +37,7 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         let pos = scope.openFoldersInTree.indexOf(id);
         return {  open: pos >= 0, position: pos };
       }
-
+      // ISSUE: After changes when article is created it jumps to parent Folder but saves Article to right folder
 
       scope.selectArticle = function(article){
         scope.articleWindow = true;
@@ -73,6 +68,7 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
           const folderInArray = inFolderArray(folder.id);
           const folderIsCurrent = folder == scope.currentFolder;
           if(!folderIsCurrent){
+            console.log('currentFolder', scope.currentFolder);
             scope.currentFolder = folder;
             scope.currentParents = Folder.listParents(folder);
           }
@@ -83,7 +79,7 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
             scope.openFoldersInTree.push(folder.id);
           }
         }
-        Article.Folder = { id: scope.currentFolder };
+        Article.Folder = scope.currentFolder;
         Article.load();
       }
 

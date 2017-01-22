@@ -28,7 +28,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
       scope.$watch(
         function(){ return scope.openArticle; },
         function(){
-          Article.Folder = { id: scope.currentFolder };
+          Article.Folder = scope.currentFolder;
           if(scope.openArticle)
           {
             scope.edit_article = Object.assign({},scope.openArticle);
@@ -70,7 +70,9 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         //scope.buttonText = scope.stateText();
       }
 
-      scope.closeWithoutSave = function(){ scope.articleWindow = false; }
+      scope.closeWithoutSave = function(){
+        scope.articleWindow = false;
+      }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){
         console.log('onDropFiles', response);
