@@ -6,7 +6,7 @@ app.service('pageInfo',function(){
     motto: 'motto'
   }
 });
-app.controller('viewController',function(pageInfo, Garant,$scope){
+app.controller('viewController',function(pageInfo, $scope){
   console.log('viewController');
 });
 app.config(function($routeProvider, $locationProvider){
@@ -17,6 +17,10 @@ app.config(function($routeProvider, $locationProvider){
   .when('/garant/', {
       templateUrl: 'temp/garant.html',
       controller: 'garantController'
+  })
+  .when('/form/', {
+      templateUrl: 'temp/form.php',
+      controller: 'formController'
   })
   .when('/settings/', {
       templateUrl: 'temp/settings.html',

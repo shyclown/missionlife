@@ -1,0 +1,63 @@
+.formLine{
+  margin-bottom: 0px;
+  border-bottom: 4px solid #EAEAEA;
+  padding: 8px;
+  background-color: #FFF;
+  color: #999;
+}
+.formLine button.active{
+  box-sizing: border-box;
+  height: 21px;
+}
+.formLine button.active{
+  background-color: #FFF;
+  border: 1px solid #069554;
+  color: #069554;
+  outline: none;
+  border-radius: 8px;
+}
+.formLine button.inactive{
+  background-color: #FFF;
+  border: 1px solid rgb(244,100,95);
+  color: rgb(244,100,95);
+  outline: none;
+  border-radius: 8px;
+}
+.formLine .delete{
+  outline: none;
+  padding: 2px 8px;
+  border-radius: 8px;
+  border: 1px solid rgb(244,100,95);
+  color: rgb(244,100,95);
+  background-color: #FFF;
+;
+}
+.formLine .edit{
+  outline: none;
+  padding: 2px 8px;
+  border-radius: 8px;
+  border: 1px solid #069554;
+  color: #069554;
+  background-color: #FFF;
+;
+}
+#newForm{
+  background-color: #EAEAEA;
+  padding: 16px;
+
+}
+#newForm h3{
+  font-weight: 100;
+  padding: 16px 0px;
+  margin: 0px;
+}
+#newForm input{
+  padding: 4px;
+}
+#newForm button{
+  background-color: #FFF;
+  padding: 5px;
+  outline: none;
+  border: 1px solid #069554;
+  color: #069554;
+}

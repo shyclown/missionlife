@@ -24,20 +24,8 @@ app.service('Form',function(Ajax){
   // Load articles
   // watch.required or callback
 
-  this.load = function(callback){
-    if(self.Folder == null){ this.selected = []; return; }
-    Ajax.call({  action:'select',
-            folder_id: this.Folder.id,
-            sort_by: this.sortByData,
-            order: this.sortOrder,
-            limit_min:(this.scopePage-1)*this.onePageSize,
-            limit_max: this.onePageSize
-         }, url,
-         function(response){
-           self.selected = response.data.result;
-           self.all_rows = response.data.all_rows;
-           if(callback){ callback(response) };
-         } );
+  this.select_all = function(callback){
+    Ajax.call({  action:'select_all' }, url, callback );
   }
   this.select_by_id = function(data, callback){
     data.action = 'select_by_id';
@@ -45,11 +33,10 @@ app.service('Form',function(Ajax){
   }
   this.insert = function(data, callback){
     data.action = 'insert';
-    data.folder_id = self.Folder.id;
     Ajax.call(data, url, callback);
   }
-  this.update = function(data, callback){
-    data.action = 'update';
+  this.update_all = function(data, callback){
+    data.action = 'update_all';
     Ajax.call(data, url, callback);
   }
   this.delete = function(data, callback){

@@ -27,6 +27,7 @@
       <ul>
         <li><h1>{{page.name}}</h1></li>
         <li><a href="home">Home</a></li>
+        <li><a href="form">Forms</a></li>
         <li><a href="settings">Settings</a></li>
         <li><a href="garant">Garant</a></li>
         <li><a href="article">Article</a></li>
