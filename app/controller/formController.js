@@ -23,6 +23,30 @@ app.controller('formController',function($scope, Form, $compile, $http){
     state: 0,
     data: '[]'
   }
+  const sortByOrder = function(arr){
+    arr.sort(function(a,b){ return a.order - b.order; });
+  }
+  const findByOrder = function(arr, order){
+    arr.find(function(el){
+      return el.order == order;
+    })
+  }
+  $scope.switchOrder = {
+    reorder: function(arr, obj, direction){
+      const newOrder = obj.order + direction;
+      switchObj = findByOrder(arr, newOrder);
+      switchObj.order = obj.order;
+      obj.order = newOrder;
+      sortByOrder(arr);
+    }
+    up: function(arr, obj){ this.reorder(arr, obj, 1);},
+    down: function(arr, obj){ this.reorder(arr, obj, -1);},
+  }
+  const json = {
+    load: function(str){ return JSON.parse(str);},
+    save: function(obj){ return JSON.stringify(obj);}
+    sort: function(arr){ }
+  }
   /* Edit Form */
   $scope.editFormWindow = false;
   $scope.editForm = {}
