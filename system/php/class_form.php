@@ -34,6 +34,11 @@ class Form
     $sql = "SELECT * FROM `ml_form` ORDER BY  `date_created` ASC";
     return $this->db->query($sql);
   }
+  public function select_id($data){
+    $sql = "SELECT * FROM `ml_form` WHERE id = ?";
+    $params = array('i',$data['id']);
+    return $this->db->query($sql, $params);
+  }
   public function insert($data){
     $sql = "INSERT INTO `ml_form` (`id`, `name`, `email`, `data`, `state`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
