@@ -1,6 +1,6 @@
 /* Uses Editor */
 
-app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArticle', function($http, Folder, Article, uploadDroppedToArticle) {
+app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', function($http, Folder, Article, Form, uploadDroppedToArticle) {
   return {
     restrict: 'E',
     scope:{ currentFolder: '=', openArticle: '=', articleWindow :'=' },
@@ -97,6 +97,14 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         }
       }
       scope.saveChanges = function(){
+        let sel = document.getSelection();
+        // test
+        let el = document.createElement('h1');
+        el.innerHTML = 'createdElement';
+        scope.area.insertAfterSelection(el);
+
+
+        console.log('selection', sel);
         Editor.removeImageControls.bind(scope.area)();
         scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
         Article.update(scope.edit_article, function(response){
@@ -105,6 +113,21 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'uploadDroppedToArti
         });
         Editor.attachImageControls.bind(scope.area)();
       }
+
+      /*
+      Link Element for forms
+      */
+      scope.addLinkToForm = function(form){
+        console.log(document.getSelection());
+        let link = document.createElement('a');
+        link.href = "/form/"+form.id;
+        link.innerHTML = form.name;
+
+        scope.area.insertAfterSelection(link);
+      }
+
+      scope.forms = [];
+      Form.select_all(function(res){ scope.forms = res.data});
     }
   };
 }]);

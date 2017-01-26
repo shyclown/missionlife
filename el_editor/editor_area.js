@@ -138,6 +138,16 @@ Editor.area.prototype.imagePlaceholder = function(root){
   return Editor.imagePlaceholder(root);
 }
 
+Editor.area.prototype.insertAfterSelection = function(oElement){
+  // inser after base node
+  const oRoot = this.root;
+  const oRange = document.getSelection().getRangeAt(0);
+  if(Editor.isDescendant(oRange.endContainer, oRoot)){
+    const endElement = getParentInRoot(oRange.endContainer, oRoot);
+    if(endElement){ insertAfter(oElement, endElement); }
+  }
+  else { console.log('nothing selected'); }
+}
 Editor.fn.removeDefault = function(event){
   event.preventDefault();
   event.stopPropagation();

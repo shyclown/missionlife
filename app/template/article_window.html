@@ -86,6 +86,18 @@
   font-size: 24px;
   font-weight: 100;
 }
+*.unselectable {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
 </style>
 <div id="blanket">
 <div class="articleWindow">
@@ -109,6 +121,7 @@
     <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
     <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText()}} </button>
     <div ng-repeat="file in files">{{file.file_name}}</div>
+    <div class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form); ">{{form.name}}</div>
   </div>
   </form>
   <div class="Footer" ng-bind-html="logPanel"></div>

@@ -23,48 +23,56 @@ app.controller('formController',function($scope, Form, $compile, $http){
     state: 0,
     data: '[]'
   }
-  const sortByOrder = function(arr){
-    arr.sort(function(a,b){ return a.order - b.order; });
-  }
-  const findByOrder = function(arr, order){
-    arr.find(function(el){
-      return el.order == order;
-    })
-  }
-  $scope.switchOrder = {
-    reorder: function(arr, obj, direction){
-      const newOrder = obj.order + direction;
-      switchObj = findByOrder(arr, newOrder);
-      switchObj.order = obj.order;
-      obj.order = newOrder;
-      sortByOrder(arr);
-    }
-    up: function(arr, obj){ this.reorder(arr, obj, 1);},
-    down: function(arr, obj){ this.reorder(arr, obj, -1);},
+
+  /* http://stackoverflow.com/questions/2440700/reordering-arrays */
+  Array.prototype.move = function (from, to) {
+  this.splice(to, 0, this.splice(from, 1)[0]);
+  };
+  $scope.order = {
+    up: function(arr, obj, index){
+      arr.move(index, (index - 1));
+      openForm.data = JSON.stringify(arr);
+      Form.update_all(openForm);
+    },
+    down: function(arr, obj, index){
+      arr.move(index, (index + 1));
+      openForm.data = JSON.stringify(arr);
+      Form.update_all(openForm);
+    },
   }
   const json = {
     load: function(str){ return JSON.parse(str);},
-    save: function(obj){ return JSON.stringify(obj);}
+    save: function(obj){ return JSON.stringify(obj);},
     sort: function(arr){ }
   }
+
   /* Edit Form */
   $scope.editFormWindow = false;
-  $scope.editForm = {}
+  $scope.editForm = {};
+  let openForm = {};
 
   $scope.formWindow = function(form){
-    console.log(form);
+    openForm = form;
     $scope.editForm = copy(form);
     $scope.editForm.data = JSON.parse($scope.editForm.data);
-    console.log($scope.editForm.data);
   }
   $scope.addField = function(form){
     form.data.push({
       name: 'fieldName',
       type: 'fieldType',
-      order: 'fieldOrder'
+      order: form.data.length + 1
     });
   }
 
+  $scope.save = function(form){
+    openForm.name = form.name;
+    openForm.email = form.email;
+    openForm.data =  JSON.stringify(form.data);
+    Form.update_all(openForm);
+  }
+  $scope.setType = function(type, field){
+    field.type = type;
+  }
 
   const loadForms = function(){
     Form.select_all(function(response){

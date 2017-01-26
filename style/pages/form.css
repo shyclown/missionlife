@@ -61,3 +61,79 @@
   border: 1px solid #069554;
   color: #069554;
 }
+#editFormWindow{
+  position: relative;
+  background-color: #FFF;
+  padding: 24px 16px;
+}
+span.name {
+  font-weight: 500;
+  color: #000;
+  padding-right: 8px;
+}
+span.email {
+  font-weight: 100;
+  font-size: 14px;
+  color: #666;
+  padding-right: 8px;
+
+}
+
+
+#editFormWindow h1{
+  padding: 0px;
+  margin: 0px 0px 16px 0px;
+  font-weight: 300;
+}
+#editFormWindow h2{
+  border-top: none;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+}
+#editFormWindow .main{
+  font-weight: 100;
+  background-color: #EFEFEF;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+#editFormWindow input{
+
+  padding: 4px;
+}
+#editFormWindow button.move{
+  background-color: #FFF;
+  padding: 5px;
+  outline: none;
+  border: 1px solid #069554;
+  color: #069554;
+  float: right;
+}
+
+#editFormWindow button.type{
+  background-color: #EAEAEA;
+  padding: 4px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+#editFormWindow button.type.selected{
+  background-color: #EAEAEA;
+  padding: 4px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #069554;
+  color: #069554;
+}
+#editFormWindow button.save{
+  box-sizing: border-box;
+  height: 40px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #069554;
+  padding: 4px 16px;
+  outline: none;
+  border: 1px solid #069554;
+  color: #FFF;
+}

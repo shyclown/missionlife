@@ -7,7 +7,7 @@ app.controller('foldersController',function($scope, Folder, $compile, $http){
 
   $scope.$watch(
     function(){ return $scope.currentFolder; },
-    function(){ console.log($scope.currentFolder);},
+    function(){ console.log('currentFolder', $scope.currentFolder);},
   true);
   // Article Window
   $scope.newArticle = {};
@@ -19,5 +19,5 @@ app.controller('foldersController',function($scope, Folder, $compile, $http){
   };
 
   $scope.articleWindow = false;
-  
+
 });
