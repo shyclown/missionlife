@@ -2,6 +2,7 @@ var Editor = Editor || {};
 
 Editor.deleteEvent = function(oSelection, oRoot)
 {
+  // when more items selected
   if(!oSelection.isCollapsed)
   {
     event.preventDefault();
@@ -13,45 +14,58 @@ Editor.deleteEvent = function(oSelection, oRoot)
     event.preventDefault();
     var oNode = oSelection.focusNode;
 
+    /*
+    Issue: There is issue when next element is custom Image,
+    We need to make it skip the image solved in next sibling
+    */
+
     if(oNode == oRoot){
       console.log('error: selected node is root node');
       return false;
     }
-    let firstNotCustomChild = function(){
+    const firstNotCustomChild = function(){
       let oElement = oRoot.firstChild;
       while(Editor.isCustom(oElement)){
         oElement = oElement.nextSibling;
       }
       return oElement;
     }
-    let lastNotCustomChild = function(){
+    const lastNotCustomChild = function(){
       let oElement = oRoot.lastChild;
       while(Editor.isCustom(oElement)){
         oElement = oElement.previousSibling;
       }
       return oElement
     }
-    var emptyNode = !hasTextInside(oNode);
-    var lastNodeInEditor = oNode == firstNotCustomChild() && oNode == lastNotCustomChild();
-    var firstTextNode = oNode == getFirstTextNode(oRoot) || oNode == oRoot.firstChild;
+
+    const emptyNode = !hasTextInside(oNode);
+    const lastNodeInEditor = oNode == firstNotCustomChild() && oNode == lastNotCustomChild();
+    const firstTextNode = oNode == getFirstTextNode(oRoot) || oNode == oRoot.firstChild;
 
     if(lastNodeInEditor && emptyNode){
       console.log('cant delete last tag');
       return false;
     }
+
     // grab next node text content and move to same line
     if(oNode.nextSibling != null && isOfTag(oNode.nextSibling, 'br'))
     {
+      console.log('removed Sibling', oNode.nextSibling);
       removeElement(oNode.nextSibling);
       mergeTextnodes();
     }
-
     else
     {
+      // if next element has no text node in it
       var nextTextNode = getNextTextSibling( oNode, oRoot);
       if( nextTextNode )
       {
-        mergeTextnodes();
+        if(nextTextNode.parentNode.tagName == 'A'){
+          oSelection.getRangeAt(0).insertNode(nextTextNode.parentNode);
+        }
+        else{
+          mergeTextnodes();
+        }
       }
     }
 

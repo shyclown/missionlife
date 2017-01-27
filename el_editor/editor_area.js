@@ -143,8 +143,27 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
   const oRoot = this.root;
   const oRange = document.getSelection().getRangeAt(0);
   if(Editor.isDescendant(oRange.endContainer, oRoot)){
+    // if carret is in a node
+    console.dir(oRange);
+    if(oRange.endContainer.parentNode.tagName == 'A'){
+      console.log('is A', oRange.endContainer.parentNode.tagName);
+      insertAfter(oElement, oRange.endContainer.parentNode);
+    }
+    else if(oRange.endContainer.parentNode.tagName == 'P'){
+      console.log('is P', oRange.endContainer.parentNode.tagName);
+      oRange.deleteContents();
+      oRange.insertNode(oElement);
+    }
+
+    /*
     const endElement = getParentInRoot(oRange.endContainer, oRoot);
-    if(endElement){ insertAfter(oElement, endElement); }
+    if(endElement){
+      insertAfter(oElement, endElement);
+      let p = document.createElement('p');
+      p.innerHTML='<br>';
+      insertAfter(p, oElement);
+      if(this.controlsCustom.add(oElement)){ console.log('controls added');};
+    }*/
   }
   else { console.log('nothing selected'); }
 }

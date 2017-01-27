@@ -126,6 +126,9 @@ var getNextTextSibling = function(oElement, oRoot)
       oElement = oElement.parentNode;
     }
     if(oRoot.lastChild == oElement){ return false; }
+    // Avoid Custom elements!!!
+    while(Editor.isCustom(getParentInRoot(oElement.nextSibling, oRoot))){ oElement = oElement.nextSibling; }
+
     return getFirstTextNode(oElement.nextSibling);
 }
 

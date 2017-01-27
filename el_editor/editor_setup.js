@@ -31,4 +31,4 @@ Editor.texts = {
   figure_defText: 'figure description',
   placeholder: 'placeholder',
 }
-Editor.disalovedTags = ['IMG','FIGURE'];
+Editor.disalovedTags = ['IMG','FIGURE','A'];

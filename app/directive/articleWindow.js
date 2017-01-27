@@ -98,11 +98,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       }
       scope.saveChanges = function(){
         let sel = document.getSelection();
-        // test
-        let el = document.createElement('h1');
-        el.innerHTML = 'createdElement';
-        scope.area.insertAfterSelection(el);
-
 
         console.log('selection', sel);
         Editor.removeImageControls.bind(scope.area)();
@@ -120,11 +115,12 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.addLinkToForm = function(form){
         console.log(document.getSelection());
         let link = document.createElement('a');
-        link.href = "/form/"+form.id;
+        link.className = 'custom';
+        link.href = "form/"+form.id;
         link.innerHTML = form.name;
-
         scope.area.insertAfterSelection(link);
       }
+
 
       scope.forms = [];
       Form.select_all(function(res){ scope.forms = res.data});

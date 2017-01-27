@@ -193,6 +193,7 @@ Editor.notCustom = function(oNode){
   return Editor.disalovedTags.indexOf(oNode.tagName.toUpperCase()) == -1;
 }
 Editor.isCustom = function(oNode){
+  console.log('check if custom element', oNode);
   var result = Editor.disalovedTags.indexOf(oNode.tagName.toUpperCase()) == -1;
   return !result;
 }
