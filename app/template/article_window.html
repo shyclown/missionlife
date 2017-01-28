@@ -121,7 +121,9 @@
     <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
     <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText()}} </button>
     <div ng-repeat="file in files">{{file.file_name}}</div>
-    <div class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form); ">{{form.name}}</div>
+    <div class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form)">{{form.name}}</div>
+    </br></br>
+    <div class="unselectable" ng-repeat="article in articlesList track by $index" ng-click="addLinkToArticle(article)">{{article.header}}</div>
   </div>
   </form>
   <div class="Footer" ng-bind-html="logPanel"></div>

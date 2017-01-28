@@ -104,26 +104,19 @@ Editor.area.prototype.createEvents = function()
     drop: function(event){
       Editor.fn.removeDefault(event);
       // if provided upload function
-      if(area.drop_file_callback)
-      {
+      if(area.drop_file_callback){
         area.drop_file_callback();
       }
       else{
         // default upload function if enabled
         const data = event.dataTransfer.files;
         const reader = new FileReader();
-        reader.onload = function(readerEvent)
-        {
+        reader.onload = function(readerEvent){
           const dataUrl = Editor.resizeDropped(readerEvent, callback); // TODO
           function callback(resultUrl){
-            const oData = {
-              action : 'upload',
-              image : resultUrl
-            }
-            const uploadProgress = function(percent){ console.log(percent*100); }
-            const callbackAjax = function(response){
-              area.afterImageUpload(response, true);
-            }
+            const oData = { action : 'upload', image : resultUrl };
+            const uploadProgress = function(percent){ console.log(percent*100); };
+            const callbackAjax = function(response){ area.afterImageUpload(response, true); };
             new Editor.ajax(area.upload_file, oData, uploadProgress, callbackAjax);
           }
         }
@@ -154,16 +147,6 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
       oRange.deleteContents();
       oRange.insertNode(oElement);
     }
-
-    /*
-    const endElement = getParentInRoot(oRange.endContainer, oRoot);
-    if(endElement){
-      insertAfter(oElement, endElement);
-      let p = document.createElement('p');
-      p.innerHTML='<br>';
-      insertAfter(p, oElement);
-      if(this.controlsCustom.add(oElement)){ console.log('controls added');};
-    }*/
   }
   else { console.log('nothing selected'); }
 }

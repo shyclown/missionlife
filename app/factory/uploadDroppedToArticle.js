@@ -1,6 +1,8 @@
 app.factory('uploadDroppedToArticle', ['resizeDroppedImage','customAjax',function(resizeDroppedImage, customAjax){
   return function(files, targetUrl, progressFn, completeFn, article_id)
   {
+    // If multiple files we call callback only openArticle
+
     console.log(files);
     angular.forEach(files, function(one_file)
     {

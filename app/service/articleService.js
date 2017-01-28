@@ -39,6 +39,13 @@ app.service('Article',function(Ajax){
            if(callback){ callback(response) };
          } );
   }
+  this.select_all = function(callback){
+    Ajax.call({action:'select_all'}, url, callback);
+  }
+  this.search = function(data, callback){
+    data.action = 'search';
+    Ajax.call(data, url, callback);
+  }
   this.select_by_id = function(data, callback){
     data.action = 'select_by_id';
     Ajax.call(data, url, callback);

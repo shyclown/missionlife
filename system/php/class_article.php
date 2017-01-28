@@ -25,11 +25,11 @@ class Article
 
   public function search($data){
     $sql = "SELECT * FROM `ml_article` WHERE `header` LIKE CONCAT('%',?,'%')";
-    $params = array('s',$data['header']);
+    $params = array('s',$data['search']);
     return $this->db->query($sql);
   }
-  public function load_files_of_article($data){
 
+  public function load_files_of_article($data){
     $sql = "SELECT f.*, af.file_desc
             FROM `ml_article_file` af
             INNER JOIN `ml_file` f
@@ -38,9 +38,15 @@ class Article
     return $this->db->query($sql,$params);
   }
   public function number_of_rows(){
-    $sql = 'SELECT COUNT(*) AS `count` FROM `missionlife`.`ml_article`';
+    $sql = 'SELECT COUNT(*) AS `count` FROM `ml_article`';
     return $this->db->query($sql);
   }
+  /* Select ALL Articles */
+  public function select_all($data){
+    $sql = "SELECT id, header FROM `ml_article`";
+    return $this->db->query($sql);
+  }
+  /* Select articles IN FOLDER */
   public function select($data){
     $order = 'DESC';
     $sort_by = 'id';

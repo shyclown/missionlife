@@ -92,6 +92,9 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
     });
   });
 
+  /*
+  Editor
+  */
   $scope.open_editor = function(openArticle){
     $scope.edit_article = Object.assign({}, openArticle);
     if(openArticle.is_new){ $scope.insertArticle(); }
@@ -100,10 +103,14 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
     $scope.area.part.content_wrap.innerHTML = $scope.edit_article.content;
     Editor.attachImageControls.bind($scope.area)();
 
+    /* We can attach callback to drop event */
     $scope.area.drop_file_callback = function(editorCallback){
       const files = event.dataTransfer.files;
-      for (let i = 0, len = files.length; i < len; i++){
-        let file = [files[i]];  let area = $scope.area;   let removePlaceholder = (i == len-1);
+      for (let i = 0, len = files.length; i < len; i++)
+      {
+        let file = [files[i]];
+        let area = $scope.area;
+        let removePlaceholder = (i == len-1);
         uploadDroppedToArticle.bind(null, file, targetUrl, function(response){ },
           function(response){
             $scope.onDropFiles(response);

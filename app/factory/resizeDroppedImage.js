@@ -1,3 +1,7 @@
+/*
+  void 
+  returns canvas DataUrl : callback(dataUrl)
+*/
 app.factory('resizeDroppedImage', function(){
   return function(readerEvent, callback, size)
   {

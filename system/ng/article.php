@@ -22,6 +22,12 @@ if(isset($ng_data['action']))
   if($act == 'select'){
     echo json_encode($article->select($ng_data));
   }
+  elseif($act == 'select_all'){
+      echo json_encode($article->select_all($ng_data));
+  }
+  elseif($act == 'search'){
+      echo json_encode($article->search($ng_data));
+  }
   elseif ($act == 'select_by_id') {
     echo json_encode($article->select_by_id($ng_data));
   }

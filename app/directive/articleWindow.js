@@ -120,10 +120,31 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         link.innerHTML = form.name;
         scope.area.insertAfterSelection(link);
       }
+      scope.addLinkToArticle = function(article){
+        console.log(document.getSelection());
+        let link = document.createElement('a');
+        link.className = 'custom';
+        link.href = "article/"+article.id;
+        link.innerHTML = article.header;
+        scope.area.insertAfterSelection(link);
+      }
 
+      /* Articles to be added */
+      scope.articlesList = [];
+      scope.searchArticle = '';
+      scope.loadArticleList = function(){
+        Article.select_all(function(res){
+          console.log('select_all',res);
+          scope.articlesList = res.data; });
+      }
+      scope.searchArticle = function(){
+        if(scope.searchArticle == ''){ scope.loadArticleList(); }
+        else{ Article.search({ search: scope.searchArticle }, function(res){ scope.articlesList})}
+      }
 
       scope.forms = [];
       Form.select_all(function(res){ scope.forms = res.data});
+      scope.loadArticleList();
     }
   };
 }]);
