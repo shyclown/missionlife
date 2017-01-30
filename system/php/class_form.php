@@ -21,7 +21,7 @@ class Form
             `email` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
             `data` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
             `state` int(1) NOT NULL,
-            `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `date_created` datetime NOT NULL,
             `date_edited` datetime NOT NULL,
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB
