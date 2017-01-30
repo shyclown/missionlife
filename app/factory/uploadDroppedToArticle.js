@@ -2,11 +2,9 @@ app.factory('uploadDroppedToArticle', ['resizeDroppedImage','customAjax',functio
   return function(files, targetUrl, progressFn, completeFn, article_id)
   {
     // If multiple files we call callback only openArticle
-
-    console.log(files);
     angular.forEach(files, function(one_file)
     {
-      console.log(one_file);
+      console.log('UPLOAD FILE', one_file.name);
       if(one_file.type.match('image.*'))
       {
         const callbackImageResize = function(resultUrl){
@@ -23,7 +21,7 @@ app.factory('uploadDroppedToArticle', ['resizeDroppedImage','customAjax',functio
           resizeDroppedImage(readerEvent, callbackImageResize, 1080);
         }
         reader.onprogress = function(ev){
-          console.log(ev.loaded / (ev.total / 100));
+         //  console.log(ev.loaded / (ev.total / 100));
         }
         reader.readAsDataURL(one_file);
       }
@@ -34,7 +32,7 @@ app.factory('uploadDroppedToArticle', ['resizeDroppedImage','customAjax',functio
         }
         customAjax(targetUrl, oData, progressFn, completeFn);
       }
-      console.log(article_id);
+      //console.log('Article ID', article_id);
     });
   }//resizeDropped
 }]);

@@ -56,7 +56,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
           Article.load_files( scope.edit_article, function(response){
             // Update scope files
             scope.files = response.data;
-            console.dir(response.data);
           });
         }
       }
@@ -74,32 +73,39 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         scope.articleWindow = false;
       }
       // 2. Attaching callback function executed after drop of file or image
-      scope.onDropFiles = function(response){
-        console.log('onDropFiles', response);
-        //scope.php = scope.php + response;
-        //$scope.close_editor();
-        //scope.loadFilesOfArticle();
-      }
+      scope.onDropFiles = function(response){ }
+
       scope.area.drop_file_callback = function(editorCallback){
         const files = event.dataTransfer.files;
-        for (let i = 0, len = files.length; i < len; i++){
+        // Wait for all uploads to be completed and then remove placeholder
+        let completed = 0;
+        let all = files.length;
+
+        for (let i = 0; i < all; i++){
+
           let file = [files[i]];
           let area = scope.area;
-          let removePlaceholder = (i == len-1);
-          console.log('remove placeholder', removePlaceholder);
-          let res = uploadDroppedToArticle.bind(null, file, targetUrl, function(response){},
+
+          let res = uploadDroppedToArticle.bind(null,
+            file,
+            targetUrl,
+            function(response){},
             function(response){
+              completed++;
               scope.onDropFiles(response);
-              area.afterImageUpload(response, removePlaceholder);
+              area.afterImageUpload(response);
               scope.loadFilesOfArticle();
-              scope.saveChanges();
-            }, scope.edit_article.id )();
+              // if all processes are completed we remove placeholder
+              if(completed == all){
+                area.removePlaceholder();
+                scope.saveChanges();
+              }
+            },
+            scope.edit_article.id )();
         }
       }
       scope.saveChanges = function(){
         let sel = document.getSelection();
-
-        console.log('selection', sel);
         Editor.removeImageControls.bind(scope.area)();
         scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
         Article.update(scope.edit_article, function(response){

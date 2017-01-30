@@ -155,11 +155,10 @@ Editor.fn.removeDefault = function(event){
   event.stopPropagation();
 }
 
-Editor.area.prototype.afterImageUpload = function (response, removePlacehoder) {
+Editor.area.prototype.afterImageUpload = function (response) {
   response = JSON.parse(response);
   let figure = new Editor.imageFigure( this.image_url+response.file_src, 'new item', this.root );
   this.root.insertBefore( figure.el, this.placeholder.el );
-  if(removePlacehoder){ this.removePlaceholder(); }
 }
 
 Editor.area.prototype.removePlaceholder = function(){

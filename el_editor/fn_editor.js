@@ -31,8 +31,6 @@ function insertBefore(newNode, referenceNode){
   referenceNode.parentNode.insertBefore(newNode, referenceNode);
 }
 var removeElement = function(oElement){
-  console.log('removeElement', oElement);
-  console.dir(oElement);
   oElement.parentNode.removeChild(oElement);
 }
 
