@@ -48,7 +48,6 @@ app.service('File',function(Ajax){
     data.action = 'attach_to_folder';
     Ajax.call(data,url,callback);
   }
-
   // Update All
   this.update = function(data, callback){
     data.action = 'update';

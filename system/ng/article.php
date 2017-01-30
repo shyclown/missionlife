@@ -8,44 +8,19 @@ require_once($root.'/system/php/class_file.php');
 
 $article = new Article();
 $file = new File();
-
 // AngularJS AJAX
 $fileData = file_get_contents("php://input");
 $ng_data = json_decode($fileData, true); //array
 
-
-
+if ( method_exists($article, $ng_data['action']) ){
+   echo json_encode($article->{$ng_data['action']}($ng_data));
+}
+/*
 if(isset($ng_data['action']))
 {
-  $act = $ng_data['action'];
-
-  if($act == 'select'){
-    echo json_encode($article->select($ng_data));
-  }
-  elseif($act == 'select_all'){
-      echo json_encode($article->select_all($ng_data));
-  }
-  elseif($act == 'search'){
-      echo json_encode($article->search($ng_data));
-  }
-  elseif ($act == 'select_by_id') {
-    echo json_encode($article->select_by_id($ng_data));
-  }
-  elseif($act == 'insert'){
-    echo json_encode($article->create_new($ng_data));
-  }
-  elseif ($act == 'update'){
-    echo 'update: ';
-    echo json_encode($article->update($ng_data));
-  }
-  elseif($act == 'delete'){
-    echo json_encode($article->delete($ng_data));
-  }
-  elseif($act == 'load_files'){
-    echo json_encode($article->load_files_of_article($ng_data));
-  }
   elseif($act == 'update_file_desc'){
     $file = new File();
     echo json_encode($file->update_file_desc_in_article($ng_data));
   }
 }
+*/

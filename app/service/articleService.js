@@ -2,10 +2,6 @@ app.service('Article',function(Ajax){
 
   const url = '/missionlife/system/ng/article.php';
 
-  // ---------------------------------
-  // Prop
-  // ---------------------------------
-
   this.onePageSize = 5;
   this.sortByData = 'date';
   this.sortOrder = true; // asc
@@ -14,15 +10,9 @@ app.service('Article',function(Ajax){
   this.allFiles = 0;
   this.Folder = null;
 
-  /* ---------------------------------
-                 fns
-  ------------------------------------*/
   const self = this;
   this.selected = [];
   this.all_rows = 0;
-
-  // Load articles
-  // watch.required or callback
 
   this.load = function(callback){
     if(self.Folder == null){ this.selected = []; return; }
@@ -39,6 +29,7 @@ app.service('Article',function(Ajax){
            if(callback){ callback(response) };
          } );
   }
+
   this.select_all = function(callback){
     Ajax.call({action:'select_all'}, url, callback);
   }
@@ -71,4 +62,5 @@ app.service('Article',function(Ajax){
     data.action = 'update_file_desc';
     Ajax.call(data, url, callback);
   }
+  
 });

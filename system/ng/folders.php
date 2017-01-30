@@ -13,31 +13,8 @@ $folder = new Folder();
 $fileData = file_get_contents("php://input");
 $ng_data = json_decode($fileData, true); //array
 
-if(isset($ng_data['action']))
-{
-  $act = $ng_data['action'];
+// send from ajax to be able remove it
 
-  if($act == 'select_all'){
-    echo json_encode($folder->select_all($ng_data));
-  }
-  if($act == 'insert'){
-    echo json_encode($folder->insert($ng_data));
-  }
-  if($act == 'delete'){
-    echo json_encode($folder->delete($ng_data));
-  }
-  if($act == 'new_parent'){
-    echo json_encode($folder->update_parent($ng_data));
-  }
-
-  if($act == 'update_position'){ echo json_encode($folder->update_position($ng_data)); }
-  if($act == 'update_name'){ echo json_encode($folder->update_name($ng_data)); }
-  if($act == 'order_up'){
-    $ng_data['new_order'] = $ng_data['order']+1;
-    $ng_data['direction'] = false;
-    echo json_encode($folder->order($ng_data)); }
-  if($act == 'order_down'){
-    $ng_data['new_order'] = $ng_data['order']-1;
-    $ng_data['direction'] = true;
-    echo json_encode($folder->order($ng_data)); }
+if ( method_exists($article, $ng_data['action']) ){
+   echo json_encode($article->{$ng_data['action']}($ng_data));
 }

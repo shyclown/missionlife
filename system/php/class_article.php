@@ -26,10 +26,10 @@ class Article
   public function search($data){
     $sql = "SELECT * FROM `ml_article` WHERE `header` LIKE CONCAT('%',?,'%')";
     $params = array('s',$data['search']);
-    return $this->db->query($sql);
+    return $this->db->query($sql, $params);
   }
 
-  public function load_files_of_article($data){
+  public function load_files($data){
     $sql = "SELECT f.*, af.file_desc
             FROM `ml_article_file` af
             INNER JOIN `ml_file` f
@@ -74,7 +74,7 @@ class Article
     $params = array('i',$data['id']);
     return $this->db->query($sql,$params);
   }
-  public function create_new($data){
+  public function insert($data){
     $sql = "INSERT INTO `ml_article` (`id`, `header`, `content`, `state`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     $params = array( 'ssi', $data['header'], $data['content'], $data['state'] );

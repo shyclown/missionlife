@@ -61,6 +61,8 @@ app.service('Folder',function(Ajax){
   }
   this.orderUp = function(data, callback){
     data.action = 'order_up';
+    data.new_order = data.order + 1;
+    data.direction = false;
     Ajax.call(data, url, function(response){
       if(callback){ callback(response); }
       self.select_all();
@@ -68,6 +70,8 @@ app.service('Folder',function(Ajax){
   }
   this.orderDown = function(data, callback){
     data.action = 'order_down';
+    data.new_order = data.order - 1;
+    data.direction = true;
     Ajax.call(data, url, function(response){
       if(callback){ callback(response); }
       self.select_all();
@@ -87,7 +91,7 @@ app.service('Folder',function(Ajax){
   }
   // expects two IDs, itemID and newParentID
   this.updateParent = function(data, callback){
-    data.action = 'new_parent';
+    data.action = 'update_parent';
     Ajax.call.call(data, url, function(response){
       if(callback){ callback(response); }
       self.select_all();
