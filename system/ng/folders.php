@@ -15,6 +15,6 @@ $ng_data = json_decode($fileData, true); //array
 
 // send from ajax to be able remove it
 
-if ( method_exists($article, $ng_data['action']) ){
-   echo json_encode($article->{$ng_data['action']}($ng_data));
+if ( method_exists($folder, $ng_data['action']) ){
+   echo json_encode($folder->{$ng_data['action']}($ng_data));
 }

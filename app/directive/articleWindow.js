@@ -92,6 +92,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
             function(response){},
             function(response){
               completed++;
+              scope.logPanel = response;
               scope.onDropFiles(response);
               area.afterImageUpload(response);
               scope.loadFilesOfArticle();

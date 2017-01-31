@@ -2,9 +2,9 @@ app.service('Article',function(Ajax){
 
   const url = '/missionlife/system/ng/article.php';
 
-  this.onePageSize = 5;
+  this.onePageSize = 150;
   this.sortByData = 'date';
-  this.sortOrder = true; // asc
+  this.sortOrder = false; // desc
 
   this.scopePage = 1;
   this.allFiles = 0;
@@ -62,5 +62,5 @@ app.service('Article',function(Ajax){
     data.action = 'update_file_desc';
     Ajax.call(data, url, callback);
   }
-  
+
 });

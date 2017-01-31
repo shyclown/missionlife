@@ -11,6 +11,9 @@ app.factory('customAjax', function(){
       return oForm;
     }
     const request = new XMLHttpRequest();
+    // file upload throws error so i try this to avoid errors
+
+
     request.addEventListener('load',function(){
       completeFn(request.responseText);
     });

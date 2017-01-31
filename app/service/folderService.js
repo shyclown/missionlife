@@ -41,6 +41,7 @@ app.service('Folder',function(Ajax){
 
   this.insert = function(data, callback)
   {
+    console.log(data);
     data.parent = (data.parent == null) ? null : data.parent.id;
     data.name = (!data.name || data.name == '')? data.name = 'NewFolder' : data.name;
     data.order = 0;

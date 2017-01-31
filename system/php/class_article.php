@@ -43,7 +43,7 @@ class Article
   }
   /* Select ALL Articles */
   public function select_all($data){
-    $sql = "SELECT id, header FROM `ml_article`";
+    $sql = "SELECT id, header FROM `ml_article` ORDER BY id DESC";
     return $this->db->query($sql);
   }
   /* Select articles IN FOLDER */
@@ -51,8 +51,8 @@ class Article
     $order = 'DESC';
     $sort_by = 'id';
     if(isset($data['order'])){
-      if($data['order']){ $order = 'DESC'; }
-      else { $order = 'ASC';}
+      if($data['order']){ $order = 'ASC'; }
+      else { $order = 'DESC';}
     }
     if(isset($data['sort_by'])){
       if($data['sort_by'] == 'name'){ $sort_by = 'header'; }

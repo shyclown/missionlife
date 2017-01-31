@@ -21,51 +21,7 @@ function uploadFile()
   if (!file_exists($root.'/uploads/image/small')) {
       mkdir($root.'/uploads/image/small', 0777, true);
   }
-  // listen to POST:
-  if(isset($_POST['image'])){
-    // Image is being uploaded
-      $img = $_POST['image'];
-      $img = str_replace('data:image/png;base64,', '', $img);
-      $img = str_replace(' ', '+', $img);
-      $data = base64_decode($img);
-      $new_name = uniqid().'.png';
-      $file = $root.'/uploads/image/'.$new_name;
 
-      if(!file_exists($file)){
-      $success = file_put_contents($file, $data);
-      }
-      if($success){
-
-        $thumbnail_size = 250; // default size
-        if(isset($_POST['image_size'])){ $thumbnail_size = $_POST['image_size']; }
-
-
-        list($width, $height) = getimagesize($file);
-        if($width > $height){
-          $newheight = $thumbnail_size;
-          $newwidth = ($width/$height)*$thumbnail_size;
-        } else {
-          $newwidth = $thumbnail_size;
-          $newheight = ($height/$width)*$thumbnail_size;
-        }
-        $src = imagecreatefrompng($file);
-        $tmp = imagecreatetruecolor($newwidth, $newheight);
-        imagecopyresampled($tmp,$src,0,0,0,0, $newwidth, $newheight, $width,$height);
-
-        $filename = $root.'/uploads/image/small/'.$new_name;
-        imagepng($tmp,$filename,0);
-        imagedestroy($tmp);
-        imagedestroy($src);
-
-        $store['file_name'] = $_POST['file_name'];
-        $store['file_type'] = 'png';
-        $store['file_size'] = filesize($file);
-        $store['file_src'] = $new_name;
-
-      }
-      else{ echo 'upload failed'; };
-  }
-  // TODO if another type of file is uploaded
   // handle single file
   if(isset($_FILES['files']))
   {
@@ -100,6 +56,7 @@ function uploadFile()
       if (false === $ext = array_search(
         $finfo->file($_FILES['files']['tmp_name']),
         array(
+            'png' => 'image/png',
             'txt' => 'text/plain',
             'rtf' => 'application/rtf',
             'pdf' => 'application/pdf',
@@ -112,24 +69,54 @@ function uploadFile()
       throw new RuntimeException('Invalid file format.');
       }
 
-      // You should name it uniquely.
-      // DO NOT USE $_FILES['upfile']['name'] WITHOUT ANY VALIDATION !!
-      // On this example, obtain safe unique name from its binary data.
-      $new_name = sha1_file($_FILES['files']['tmp_name']);
-      if (!move_uploaded_file(
-          $_FILES['files']['tmp_name'],
-          sprintf($root.'/uploads/%s.%s',
-              $new_name,
-              $ext
-          )
-      )){
-        throw new RuntimeException('Failed to move uploaded file.');
+      // If its Image
+      if($ext == 'png')
+      {
+        $new_name = uniqid();
+        if (!move_uploaded_file(
+            $_FILES['files']['tmp_name'],
+            sprintf($root.'/uploads/image/%s.%s',
+                $new_name,
+                $ext
+            )
+        )){ throw new RuntimeException('Failed to move uploaded file.'); }
+
+        $file = $root.'/uploads/image/'.$new_name.'.'.$ext;
+        $thumbnail_size = 250; // default size
+
+          list($width, $height) = getimagesize($file);
+          if($width > $height){
+            $newheight = $thumbnail_size;
+            $newwidth = ($width/$height)*$thumbnail_size;
+          } else {
+            $newwidth = $thumbnail_size;
+            $newheight = ($height/$width)*$thumbnail_size;
+          }
+          $src = imagecreatefrompng($file);
+          $tmp = imagecreatetruecolor($newwidth, $newheight);
+          imagecopyresampled($tmp,$src,0,0,0,0, $newwidth, $newheight, $width,$height);
+
+          $filename = $root.'/uploads/image/small/'.$new_name;
+          imagepng($tmp,$filename,0);
+          imagedestroy($tmp);
+          imagedestroy($src);
       }
+      else{
+        $new_name = sha1_file($_FILES['files']['tmp_name']);
+        if (!move_uploaded_file(
+            $_FILES['files']['tmp_name'],
+            sprintf($root.'/uploads/%s.%s',
+                $new_name,
+                $ext
+            )
+        )){ throw new RuntimeException('Failed to move uploaded file.'); }
+      }
+
 
       $store['file_name'] = $_FILES['files']['name'];
       $store['file_type'] = $ext;
       $store['file_size'] = $_FILES['files']['size'];
-      $store['file_src'] = $new_name;
+      $store['file_src'] = $new_name.'.'.$ext;
 
     } catch (RuntimeException $e) {
           $store['error'] = $e->getMessage();
@@ -139,6 +126,7 @@ function uploadFile()
   }
 
   $fileID = $fileClass->insert_new_file($store);
+
   if(isset($_POST['article_id'])){
     $article_file_data = array(
       'article_id' => $_POST['article_id'],

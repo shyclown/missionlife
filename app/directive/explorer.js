@@ -49,7 +49,7 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         });
       }
       scope.createNewArticle = function(){
-        Article.insert({ header: 'New Article', content: 'Content', state: 0 },
+        Article.insert({ header: 'New Article', content: '<p>Content</p>', state: 0 },
           function( response ){
           Article.select_by_id({id: response.data},
             function(ArticleByID){

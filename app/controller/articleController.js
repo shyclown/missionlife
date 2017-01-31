@@ -9,7 +9,6 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
   //-----------------------------------------------------
   // List Folders
   //-----------------------------------------------------
-
   $scope.$watch(
     function(){ return Folder.allFolders; },
     function(){ $scope.folders = Folder.allFolders;},
@@ -103,21 +102,6 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
     $scope.area.part.content_wrap.innerHTML = $scope.edit_article.content;
     Editor.attachImageControls.bind($scope.area)();
 
-    /* We can attach callback to drop event */
-    $scope.area.drop_file_callback = function(editorCallback){
-      const files = event.dataTransfer.files;
-      for (let i = 0, len = files.length; i < len; i++)
-      {
-        let file = [files[i]];
-        let area = $scope.area;
-        let removePlaceholder = (i == len-1);
-        uploadDroppedToArticle.bind(null, file, targetUrl, function(response){ },
-          function(response){
-            $scope.onDropFiles(response);
-            area.afterImageUpload(response, removePlaceholder);
-          }, $scope.edit_article.id   )();
-      }
-    }
     $scope.article_editor = true;
   } // $scope.open_editor
 
@@ -136,15 +120,6 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
   $scope.article_editor = false;
   $scope.article_files = false;
 
-  $scope.php = '';
-
-  $scope.onDropFiles = function(response){
-    console.log('onDropFiles', response);
-    $scope.php = $scope.php + response;
-    //$scope.close_editor();
-    $scope.loadFilesOfArticle();
-    $scope.$apply();
-  }
   $scope.selectedFiles = function(event){
   }
 
@@ -211,7 +186,7 @@ app.controller('articleController',function($scope, $compile, $http, Folder, Art
   $scope.new_article = {
     is_new: true,
     header: "New Header",
-    content: "<p>Content</p>",
+    content: "<p>Content<br></p>",
     state: 1
   }
   $scope.articles = [];

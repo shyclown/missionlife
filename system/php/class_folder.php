@@ -1,16 +1,10 @@
 <?php
-/**
- *
- */
 class Folder
 {
   private $db;
 
   public $id;
   public $name;
-
-
-
   function __construct()
   {
     $this->db = new Database;
@@ -19,12 +13,6 @@ class Folder
     $this->create_table_article_folder();
   }
 
-
-  // In older than 5.6 versions is not possible add CURRENT_TIMESTAMP to DATETIME values
-  /*
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_edited` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  */
   private function create_table_folder(){
     $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
             `id` int(8) NOT NULL AUTO_INCREMENT,
