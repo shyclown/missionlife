@@ -3,6 +3,8 @@
   background-color: #FFF;
   margin: 0 auto;
   max-width: 750px;
+  height: 90%;
+  max-height: 90%;
   border: #666 1px solid;
   position: relative;
 }
@@ -27,8 +29,8 @@
   text-align: center;
 }
 .ControlPanel{
-  border-bottom: 1px solid #EAEAEA;
   background-color: #EAEAEA;
+  height: 32px;
 }
 .ControlPanel>ul{
   margin: 0px;
@@ -38,6 +40,7 @@
 .ControlPanel>ul>li{ display: inline-block; }
 .ControlPanel>ul>li>a{
   padding: 8px;
+  line-height: 16px;
   color: #000;
   text-decoration: none;
   display: inline-block;
@@ -47,16 +50,25 @@
   box-sizing: border-box;
   float: right;
   width: 200px;
+  height: calc(100% - 96px);
+  overflow: hidden;
   background-color: #EAEAEA;
   padding: 8px;
+
 }
 .LeftContent{
   display: block;
   float: left;
   background-color: #FFF;
   width: calc(100% - 200px);
+  height: calc(100% - 96px);
+  overflow: hidden;
 }
 .Footer{
+  padding: 8px;
+  line-height: 16px;
+  box-sizing: border-box;
+  height: 32px;
   clear: both;
   background-color: #666;
 }
@@ -90,13 +102,18 @@
    -moz-user-select: none;
    -khtml-user-select: none;
    -webkit-user-select: none;
-
    /*
      Introduced in IE 10.
      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
    */
    -ms-user-select: none;
    user-select: none;
+}
+.editor_wrap{
+  height: calc(100% - 96px);
+}
+.content_wrap{
+  height: calc(100% - 96px);
 }
 </style>
 

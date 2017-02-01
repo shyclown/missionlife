@@ -4,6 +4,7 @@
  */
 class File
 {
+  private $filetypes;
 
   function __construct()
   {
@@ -12,6 +13,151 @@ class File
     $this->create_table_file();
     $this->create_table_article_file();
     $this->create_table_garant_file();
+    $this->root = $_SERVER["DOCUMENT_ROOT"].'/missionlife';
+    $this->filetypes = array(
+        'png' => 'image/png',
+        'txt' => 'text/plain',
+        'rtf' => 'application/rtf',
+        'pdf' => 'application/pdf',
+        'doc' => 'application/msword',
+        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'xls' => 'application/vdn.ms-excel'
+    );
+  }
+
+  private function create_folders(){
+    if (!file_exists($this->root.'/uploads')) { mkdir($this->root.'/uploads', 0777, true); }
+    if (!file_exists($this->root.'/uploads/image')) { mkdir($this->root.'/uploads/image', 0777, true); }
+    if (!file_exists($this->root.'/uploads/image/small')) { mkdir($this->root.'/uploads/image/small', 0777, true); }
+  }
+
+  private function store_image($ext){
+    $generated_name = uniqid();
+    if (!move_uploaded_file(
+        $_FILES['files']['tmp_name'],
+        sprintf($this->root.'/uploads/image/%s.%s', $generated_name, $ext)
+    )){ return false; }
+    else { return $generated_name; }
+  }
+
+  private function store_file($ext){
+    $generated_name = sha1_file($_FILES['files']['tmp_name']);
+    if (!move_uploaded_file(
+        $_FILES['files']['tmp_name'],
+        sprintf($this->root.'/uploads/%s.%s',
+            $generated_name,
+            $ext
+        )
+    )){ return false; }
+    else { return $generated_name; }
+  }
+
+  private function create_thumbnail($new_name, $ext, $thumbnail_size = 250){
+    $file = $this->root.'/uploads/image/'.$new_name.'.'.$ext;
+
+      list($width, $height) = getimagesize($file);
+      if($width > $height){
+        $newheight = $thumbnail_size;
+        $newwidth = ($width/$height)*$thumbnail_size;
+      } else {
+        $newwidth = $thumbnail_size;
+        $newheight = ($height/$width)*$thumbnail_size;
+      }
+      $src = imagecreatefrompng($file);
+      $tmp = imagecreatetruecolor($newwidth, $newheight);
+      imagecopyresampled($tmp,$src,0,0,0,0, $newwidth, $newheight, $width,$height);
+
+      $filename = $this->root.'/uploads/image/small/'.$new_name.'.'.$ext;
+      imagepng($tmp,$filename,0);
+      imagedestroy($tmp);
+      imagedestroy($src);
+  }
+
+  public function upload(){
+    $this->create_folders();
+    if(isset($_FILES['files'])){
+      try{
+        // Undefined | Multiple Files | $_FILES Corruption Attack
+        // If this request falls under any of them, treat it invalid.
+        if (
+            !isset($_FILES['files']['error']) ||
+            is_array($_FILES['files']['error'])
+        ) {
+            throw new RuntimeException('Invalid parameters.');
+        }
+        // Check $_FILES['upfile']['error'] value.
+        switch ($_FILES['files']['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                throw new RuntimeException('No file sent.');
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                throw new RuntimeException('Exceeded filesize limit.');
+            default:
+                throw new RuntimeException('Unknown errors.');
+        }
+        // You should also check filesize here.
+        if ($_FILES['files']['size'] > 10000000) {
+            throw new RuntimeException('Exceeded filesize limit.');
+        }
+        // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
+        // Check MIME Type by yourself.
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        if (false === $ext = array_search(
+          $finfo->file($_FILES['files']['tmp_name']),
+          $this->filetypes,
+          true
+        )){
+        throw new RuntimeException('Invalid file format.');
+        }
+
+        if($ext == 'png'){
+          if(!$new_name = $this->store_image($ext)){
+            throw new RuntimeException('Failed to move uploaded file.'); }
+          else{
+            $this->create_thumbnail($new_name, $ext, 250);
+          }
+        } else {
+          if(!$new_name = $this->store_file($ext)){
+            throw new RuntimeException('Failed to move uploaded file.');
+          }
+        }
+        $store['file_name'] = $_FILES['files']['name'];
+        $store['file_type'] = $ext;
+        $store['file_size'] = $_FILES['files']['size'];
+        $store['file_src'] = $new_name.'.'.$ext;
+
+      } catch (RuntimeException $e) {
+            $store['error'] = $e->getMessage();
+            echo json_encode($store);
+            exit;
+      }
+
+      if($store){
+        // store to database
+        $fileID = $this->insert_new_file($store);
+        if(isset($_POST['article_id'])){
+          $article_file_data = array(
+            'article_id' => $_POST['article_id'],
+            'file_id' => $fileID
+          );
+          $attach = $this->attach_to_article($article_file_data);
+          if($attach){ return $store; exit; }
+          else{ return false; exit; }
+        }
+        if(isset($_POST['garant_id'])){
+          $garant_file_data = array(
+            'garant_id' => $_POST['garant_id'],
+            'file_id' => $fileID
+          );
+          $attach = $this->attach_to_garant($garant_file_data);
+          if($attach){ return $store; exit(); }
+          else{ return false; exit; }
+        }
+        return $store;
+      }
+    }
   }
 
   private function create_table_file(){
@@ -175,39 +321,7 @@ class File
         throw new RuntimeException('Invalid file format.');
     }
   }
-  public function resize_file($file, $w=0, $h=0, $crop=FALSE){
 
-    $file_name = $file['name'];
-    var_dump($file_name);
-    $tmp_name = $file['tmp_name'];
-    var_dump($tmp_name);
-    // resize file an store
-    /*
-    list($width, $height) = getimagesize($file);
-    $r = $width / $height;
-    if ($crop) {
-        if ($width > $height) {
-            $width = ceil($width-($width*abs($r-$w/$h)));
-        } else {
-            $height = ceil($height-($height*abs($r-$w/$h)));
-        }
-        $newwidth = $w;
-        $newheight = $h;
-    } else {
-        if ($w/$h > $r) {
-            $newwidth = $h*$r;
-            $newheight = $h;
-        } else {
-            $newheight = $w/$r;
-            $newwidth = $w;
-        }
-    }
-    $src = imagecreatefromjpeg($file);
-    $dst = imagecreatetruecolor($newwidth, $newheight);
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-    return $dst;*/
-  }
 
 }
 

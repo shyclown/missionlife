@@ -8,7 +8,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
     link: function (scope, element, attrs)
     {
       // url to place which handles file upload to article
-      const targetUrl = '/missionlife/system/ng/upload_file.php';
+      const targetUrl = '/missionlife/system/ng/files.php';
       scope.header = scope.openArticle.header || 'new Header';
       scope.content = scope.openArticle.content || 'new Content';
       scope.logPanel = 'log panel';
@@ -91,6 +91,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
             targetUrl,
             function(response){},
             function(response){
+              console.log(response);
               completed++;
               scope.logPanel = response;
               scope.onDropFiles(response);
