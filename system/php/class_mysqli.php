@@ -3,21 +3,13 @@
 // debug
 mysqli_report(MYSQLI_REPORT_ALL);
 class Database{
-
-  // from define.php file
-  private $hostname = DB_HOST;
-  private $username = DB_USER;
-  private $password = DB_PASS;
-  private $database = DB_NAME;
-
   public $_mysqli;
   private $error;
-
   public function __construct(){
-
     mysqli_report(MYSQLI_REPORT_STRICT);
     try {
-      $this->_mysqli = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+      // from define.php file
+      $this->_mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
       $this->_mysqli->set_charset('utf8');
     }
     catch(Exception $e){
@@ -27,9 +19,6 @@ class Database{
       exit;
     }
   }
-  public function connect(){
-  }
-
   public function select($sql_string){
     $result = $this->_mysqli->query($sql_string);
     if($result){
@@ -39,7 +28,6 @@ class Database{
       return $_array;
     }
   }
-
   public function query($sql_string = null, $values = null, $returning = 'array')
   {
     $return_value = false;
@@ -47,7 +35,6 @@ class Database{
 
       if($values){
         if(is_array($values)){
-
           if(call_user_func_array(array($stmt, 'bind_param'), $this->refValues($values))){
           };
         }
@@ -82,7 +69,6 @@ class Database{
     }
     return $return_value;
   } // end of query
-
   private function refValues($arr){
     if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
     {
@@ -93,7 +79,6 @@ class Database{
     }
     return $arr;
   }
-
   public function destroy(){
     $thread_id = $this->_mysqli->thread_id;
     $this->_mysqli->kill($thread_id);
