@@ -1,14 +1,12 @@
 <card>
-
-    <card-name>Page Setup</card-name>
-
+  <card-name>Page Setup</card-name>
   <card-content>
       <label for="pagename">Page Name:</label>
-      <input name="pagename" ng-model="page.name">
+      <input name="pagename" ng-model="page.page_name">
       <label for="motto">Motto:</label>
-      <textarea type="textarea" name="motto" ng-model="page.motto"></textarea>
+      <textarea type="textarea" name="motto" ng-model="page.page_motto"></textarea>
   </card-content>
   <card-control>
-      <input type='button' value="Submit">
+      <input type='button' value="Submit" ng-click="changePageData()">
   </card-control>
 </card>

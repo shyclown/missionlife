@@ -88,7 +88,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
 
           let res = uploadDroppedToArticle.bind(null,
             file,
-            targetUrl,
             function(response){},
             function(response){
               console.log(response);

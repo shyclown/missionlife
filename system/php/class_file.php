@@ -147,17 +147,26 @@ class File
           else{ return false; exit; }
         }
         if(isset($_POST['garant_id'])){
-          $garant_file_data = array(
-            'garant_id' => $_POST['garant_id'],
-            'file_id' => $fileID
-          );
-          $attach = $this->attach_to_garant($garant_file_data);
-          if($attach){ return $store; exit(); }
-          else{ return false; exit; }
+          if($this->removeImages($_POST['garant_id'])){
+            $garant_file_data = array(
+              'garant_id' => $_POST['garant_id'],
+              'file_id' => $fileID
+            );
+            $attach = $this->attach_to_garant($garant_file_data);
+            if($attach){ return $store; exit(); }
+            else{ return false; exit; }
+          }
         }
         return $store;
       }
     }
+  }
+
+  public function removeImages($garant_id)
+  {
+    $params = array("i", $garant_id);
+    $sql_file = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
+    return $this->db->query($sql_file, $params);
   }
 
   private function create_table_file(){

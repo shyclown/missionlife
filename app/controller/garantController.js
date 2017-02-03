@@ -1,4 +1,4 @@
-app.controller('garantController',function(Ajax, $scope, $http, customAjax, Garant, resizeDroppedImage){
+app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $http, customAjax, Garant, resizeDroppedImage){
 
   $scope.garants = [];
   $scope.new_garant = {
@@ -14,13 +14,14 @@ app.controller('garantController',function(Ajax, $scope, $http, customAjax, Gara
     reader.onprogress = function(ev){ console.log(ev.loaded / (ev.total / 100));}
     reader.readAsDataURL(event.dataTransfer.files[0]);
   }
+
   $scope.onDropImage = function(){
-    const afterDrop = function(dataUrl){ $scope.new_garant.image = dataUrl; $scope.$apply(); }
+    const afterDrop = function(dataUrl){
+      $scope.new_garant.image = dataUrl; $scope.$apply();
+    }
     $scope.new_garant.file_name = event.dataTransfer.files[0].name;
     resize(event, afterDrop);
   }
-
-
   let imageReplaced = false;
   $scope.editImagePath = function(){
     return imageReplaced ? $scope.edit_garant.image : '/missionlife/uploads/image/'+$scope.edit_garant.image;
@@ -28,22 +29,14 @@ app.controller('garantController',function(Ajax, $scope, $http, customAjax, Gara
   $scope.onEditDropImage = function(){
     const afterDrop = function(dataUrl){
     imageReplaced = true;
-    $scope.edit_garant.image = dataUrl; $scope.$apply(); }
+    $scope.edit_garant.image = dataUrl; $scope.$apply();
+    }
     $scope.edit_garant.file_name = event.dataTransfer.files[0].name;
     resize(event, afterDrop);
   }
 
   $scope.labelPosition = function(item){return item.image ? 'inCorner' : '';};
 
-  const url = '/missionlife/system/ng/garant.php';
-
-  const ajax = function(data, completeFn, errorFn){
-    $http({ method: 'POST', url: url, data:data })
-    .then(
-      function(response){ completeFn(response); },
-      function(response){ errorFn(response) }
-    );
-  }
   $scope.editor_open = false;
   $scope.edit_garant = {};
 
@@ -56,39 +49,48 @@ app.controller('garantController',function(Ajax, $scope, $http, customAjax, Gara
     $scope.editor_open = false;
     $scope.edit_garant = {};
   }
-  $scope.load_garants = function(){
-    Ajax.call(
-      {action: 'select'}, url,
-      function(response){
-        $scope.garants = response.data; },
-      function(response){ console.log(response); } // error
-    );
-  }
 
+  $scope.load_garants = function(){
+    Garant.select( function(response){
+      console.log(response);
+        $scope.garants = response.data;
+    });
+  }
   $scope.update = function(){
+    console.log('update');
     console.log($scope.edit_garant);
     $scope.editor_open = false;
     $scope.open_garant = $scope.edit_garant;
-    $scope.edit_garant.action = 'update';
-    Ajax.call(
-      $scope.edit_garant, url,
-      function(response){
+    Garant.update( $scope.edit_garant, function(response){
+      if(imageReplaced){}
+
+      console.log('response update', response);
+      const reset = function(){
         imageReplaced = false;
         $scope.load_garants();
         $scope.php = response.data;
-      },
-      function(response){ console.log(response); } // error
-    );
+      };
+      if(imageReplaced){
+        console.log($scope.edit_garant);
+        uploadURIToGarant(
+          $scope.edit_garant.image,
+          false,
+          function(response){ reset(); },
+          $scope.edit_garant.id
+        );
+      }
+      else{ reset(); }
+    });
   }
 
   $scope.insert = function(garant){
+    console.log('insert');
     $scope.editor_open = false;
     $scope.open_garant = $scope.edit_garant;
-    $scope.new_garant.action = 'insert';
-    Ajax.call(
-      $scope.new_garant, url,
-      function(response){
-        $scope.php = response.data,
+
+    Garant.insert( $scope.new_garant, function(response){
+      const reset = function(){
+        $scope.php = response.data;
         $scope.new_garant = {
           header: 'new Garant',
           content: 'new Content',
@@ -96,31 +98,27 @@ app.controller('garantController',function(Ajax, $scope, $http, customAjax, Gara
           state: true,
         };
         $scope.load_garants();
-      },
-      function(response){ console.log(response); } // error
-    );
-  }
+      }
+      if($scope.new_garant.image){
+        uploadURIToGarant(
+          $scope.new_garant.image,
+          false,
+          function(response){ reset(); },
+          response.data
+        );
+      }
+      else{ reset(); }
+    });
+  };
 
-  $scope.remove = function(garant){
+  $scope.delete = function(garant){
     garant.action = 'remove';
-    Ajax.call(
-      garant, url,
-      function(response){
+    Garant.delete({id: garant.id}, function(response){
         $scope.load_garants();
         $scope.php = response.data;
-      },
-      function(response){ console.log(response); } // error
-    );
+    });
   }
 
   $scope.load_garants();
   // change to ajax call
-  $scope.delete = function(garant){
-    Garant.delete({
-      id: garant.id
-    },function(response){
-      $scope.php = response.data;
-      load();
-    })
-  }
 });

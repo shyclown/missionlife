@@ -1,5 +1,4 @@
 <?php
-
 class Account
 {
   private $id;
@@ -9,7 +8,7 @@ class Account
 
   function __construct(){
     $this->db = new Database;
-    $this->error = [];
+    $this->errors = array();
     // create tables if not exists
     $this->create_table_account();
   }
@@ -58,7 +57,7 @@ class Account
   public function load_signed(){
   if(isset($_SESSION['user_id'])){
     $id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM `el_account` WHERE `id` = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE `id` = ?";
     $params = array("i",$id);
     $result = $this->db->query($sql,$params);
     if(!empty($result)){
@@ -73,7 +72,6 @@ class Account
     $this->username = $_POST['username'];
     $this->email = $_POST['email'];
     $this->password = $this->generate_hash($_POST['password']);
-    // $this->salt = $_POST['password']; testing
   }
 
   /* Check values */
@@ -82,14 +80,9 @@ class Account
     if(isset($_POST) && $_POST != ''){
       $this->email = $_POST['email'];
       if($this->is_valid('email')){
-        if($this->is_free('email')){
-          echo 'email is ok';
-        }
+        if($this->is_free('email')){ echo 'email is ok'; }
         else{ echo 'email is not free'; }
-      }
-      else{
-        echo 'not valid email';
-      }
+      } else{ echo 'not valid email';  }
     }
   }
 
@@ -103,15 +96,15 @@ class Account
   {
     if($column == 'email'){ $value = $this->email; }
     if($column == 'username'){ $value = $this->username; }
-    $sql = "SELECT * FROM `el_account` WHERE ? = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE ? = ?";
     $params = array('ss', $column, $value);
     $result = $this->db->query($sql, $params);
-    return $result === NULL;
+    return !$result;
   }
 
   public function list_all()
   {
-    $sql = "SELECT * FROM `el_account`";
+    $sql = "SELECT * FROM `ml_account`";
     $result = $this->db->select($sql);
     return $result;
   }
@@ -148,20 +141,23 @@ class Account
 
   private function create_account()
   {
-    $sql = "INSERT INTO `el_account` (`id`, `username`, `password`, `email`, `salt`) VALUES (NULL, ?, ?, ?, ?);";
-    $params = array('ssss', $this->username , $this->password , $this->email, $this->salt);
+    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `state`,`date_created`,`date_edited`)
+    VALUES ( NULL, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );";
+    $params = array('sss', $this->username , $this->password , $this->email);
     $result = $this->db->query($sql, $params);
     echo 'user created';
   }
 
   private function find_account()
   {
-    $sql = "SELECT * FROM `el_account` WHERE `username` = ? OR `email` = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE `username` = ? OR `email` = ?";
     $params = array("ss", $this->logname ,$this->logname);
     $result = $this->db->query($sql, $params);
-    if(!empty($result))
+    echo $this->logname;
+    var_dump($result);
+    if($result)
     {
-      if($this->valid_password($this->password, $result[0]['user_pass']))
+      if($this->valid_password($this->password, $result[0]['password']))
       {
         $this->id = $result[0]['id'];
         $this->username = $result[0]['username'];
@@ -173,11 +169,15 @@ class Account
         return false;
       }
     }
+    else {
+      echo 'no result';
+      return false;
+    }
   }
 
   private function make_cookie()
   {
-    if(!setcookie('elephant-id',session_id(),strtotime( '+30 days' ), "/", NULL)){
+    if(!setcookie('missionlife-id',session_id(),strtotime( '+30 days' ), "/", NULL)){
       echo 'cookie not made';
     };
   }

@@ -36,7 +36,7 @@ class Garant
     $this->db->query($sql);
   }
   // PUBLIC
-  public function select_all(){
+  public function select(){
     $sql = "SELECT f.file_src image, g.* FROM `ml_garant` g
             LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
             LEFT JOIN `ml_file` f ON f.id = gf.file_id
@@ -44,7 +44,7 @@ class Garant
     return $this->db->query($sql);
   }
 
-  public function create_new($data){
+  public function insert($data){
     $sql = "INSERT INTO `ml_garant` (
     `id` ,
     `header` ,

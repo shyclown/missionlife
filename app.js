@@ -1,12 +1,6 @@
 const app = angular.module('myapp',['ngRoute','ngSanitize']);
 
-app.service('pageInfo',function(){
-  this.data = {
-    name: '::swosh',
-    motto: 'motto'
-  }
-});
-app.controller('viewController',function(pageInfo, $scope){
+app.controller('viewController',function($scope){
   console.log('viewController');
 });
 app.config(function($routeProvider, $locationProvider){

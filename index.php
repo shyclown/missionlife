@@ -1,6 +1,11 @@
 <?php
-// Change modes of folders
- ?>
+$root = $_SERVER['DOCUMENT_ROOT']."/missionlife";
+require_once($root.'/system/php/define.php');
+require_once($root.'/system/php/class_mysqli.php');
+require_once($root.'/system/php/class_session.php');
+new Session;
+if(!$_SESSION){ header('Location: '.$root.'/login.php'); exit(); }
+?>
 <html>
   <head>
     <base href="/missionlife/">
@@ -25,21 +30,24 @@
     <img src="bg.jpg" id="bg" alt="">
     <nav id="topnav">
       <ul>
-        <li><h1>{{page.name}}</h1></li>
+        <li><h1>{{page.page_name}}</h1></li>
         <li><a href="home">Home</a></li>
-        <li><a href="form">Forms</a></li>
         <li><a href="settings">Settings</a></li>
-        <li><a href="garant">Garant</a></li>
-        <li><a href="article">Article</a></li>
-        <li><a href="files">Files</a></li>
         <li><a href="folders">Folders</a></li>
+        <li><a href="garant">Garant</a></li>
+        <!-- Removed
+        Same as Folders in new versions
+         <li><a href="article">Article</a></li>
+        -->
+        <li><a href="form">Forms</a></li>
+        <li><a href="files">Files</a></li>
       </ul>
     </nav>
     <div class="ng-view">
       <!-- content -->
     </div>
     <div class="notes">
-      Notes:
+      <!-- notes -->
 
     </div>
   </div>
