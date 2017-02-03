@@ -14,18 +14,22 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
     reader.onprogress = function(ev){ console.log(ev.loaded / (ev.total / 100));}
     reader.readAsDataURL(event.dataTransfer.files[0]);
   }
+  let imageReplaced = false;
+  let NewImageReplaced = false;
 
   $scope.onDropImage = function(){
     const afterDrop = function(dataUrl){
+      NewImageReplaced = true;
       $scope.new_garant.image = dataUrl; $scope.$apply();
     }
     $scope.new_garant.file_name = event.dataTransfer.files[0].name;
     resize(event, afterDrop);
   }
-  let imageReplaced = false;
+
   $scope.editImagePath = function(){
     return imageReplaced ? $scope.edit_garant.image : '/missionlife/uploads/image/'+$scope.edit_garant.image;
   }
+
   $scope.onEditDropImage = function(){
     const afterDrop = function(dataUrl){
     imageReplaced = true;
@@ -52,26 +56,19 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
 
   $scope.load_garants = function(){
     Garant.select( function(response){
-      console.log(response);
         $scope.garants = response.data;
     });
   }
   $scope.update = function(){
-    console.log('update');
-    console.log($scope.edit_garant);
+
     $scope.editor_open = false;
     $scope.open_garant = $scope.edit_garant;
     Garant.update( $scope.edit_garant, function(response){
-      if(imageReplaced){}
-
-      console.log('response update', response);
       const reset = function(){
         imageReplaced = false;
         $scope.load_garants();
-        $scope.php = response.data;
       };
       if(imageReplaced){
-        console.log($scope.edit_garant);
         uploadURIToGarant(
           $scope.edit_garant.image,
           false,
@@ -83,14 +80,18 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
     });
   }
 
-  $scope.insert = function(garant){
-    console.log('insert');
-    $scope.editor_open = false;
-    $scope.open_garant = $scope.edit_garant;
+  $scope.insert = function(){
+    console.log($scope.new_garant);
+    // images werent uploaded when they were sent to Garant.insert
+    // garant was not created as well
+    // solved it by this hack >
+    let imageURI = $scope.new_garant.image;
+    $scope.new_garant.image = false;
 
     Garant.insert( $scope.new_garant, function(response){
+      console.log(response);
       const reset = function(){
-        $scope.php = response.data;
+        NewImageReplaced = false;
         $scope.new_garant = {
           header: 'new Garant',
           content: 'new Content',
@@ -99,9 +100,9 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
         };
         $scope.load_garants();
       }
-      if($scope.new_garant.image){
+      if(NewImageReplaced){
         uploadURIToGarant(
-          $scope.new_garant.image,
+          imageURI,
           false,
           function(response){ reset(); },
           response.data

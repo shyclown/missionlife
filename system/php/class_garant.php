@@ -45,6 +45,7 @@ class Garant
   }
 
   public function insert($data){
+
     $sql = "INSERT INTO `ml_garant` (
     `id` ,
     `header` ,
@@ -58,7 +59,8 @@ class Garant
         VALUES (NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         $params = array( 'ssssi', $data['header'], $data['title'], $data['webpage'], $data['content'], $data['state'] );
         // returns ID of inserted draft
-        return $this->db->query($sql, $params , 'get_id');
+        if ($result = $this->db->query($sql, $params , 'get_id')){ return $result; }
+        else { return $data; }
   }
 
   public function update($data){

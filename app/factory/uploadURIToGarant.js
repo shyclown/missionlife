@@ -6,6 +6,7 @@ app.factory('uploadURIToGarant', ['dataURItoBlob','customAjax', function(dataURI
       action: 'upload',
       files: dataURItoBlob(fileURL),
       garant_id: garant_id };
+      console.log(oData);
     customAjax(targetUrl, oData, progressFn, completeFn);
   }
 }]);

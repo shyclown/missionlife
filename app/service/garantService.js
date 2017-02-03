@@ -7,11 +7,9 @@ app.service('Garant',function(Ajax){
   };
   this.insert = function(data, callback){
     data.action = 'insert';
-    console.log('insert', data);
     Ajax.call(data, url, callback);
   };
   this.update = function(data, callback){
-    console.log('update', data);
     data.action = 'update';
     Ajax.call(data, url, callback);
   };
