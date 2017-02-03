@@ -1,5 +1,9 @@
+
 #uploads
+*.png
 uploads/
+uploads/image
+uploads/image/small
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
