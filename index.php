@@ -4,6 +4,9 @@ require_once($root.'/system/php/define.php');
 require_once($root.'/system/php/class_mysqli.php');
 require_once($root.'/system/php/class_session.php');
 new Session;
+var_dump($_SESSION);
+if($_SESSION){ echo 'session present'; }
+else{ echo 'session false'; }
 if(!$_SESSION){ header('Location: '.$root.'/login.php'); exit(); }
 ?>
 <html>

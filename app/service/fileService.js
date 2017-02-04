@@ -1,6 +1,6 @@
-app.service('File',function(Ajax){
+app.service('FileService',function(Ajax){
 
-  const url = '/missionlife/system/ng/file.php';
+  const url = '/missionlife/system/ng/files.php';
 
   // Select
   this.selectAll = function(data, callback){
@@ -8,6 +8,10 @@ app.service('File',function(Ajax){
   }
   this.selectByID = function(data, callback){
     data.action = 'select_by_id';
+    Ajax.call(data, url, callback);
+  }
+  this.selectByData = function(data,callback){
+    data.action = 'get_files_by_selected';
     Ajax.call(data, url, callback);
   }
   this.selectByArticle = function(data, callback){
@@ -22,7 +26,10 @@ app.service('File',function(Ajax){
     data.action = 'search';
     Ajax.call(data, url, callback);
   }
-
+  this.details = function(data, callback){
+    data.action = 'get_all_details';
+    Ajax.call(data, url, callback);
+  }
   // Insert
   this.insert = function(data, callback){
     data.action = 'insert';

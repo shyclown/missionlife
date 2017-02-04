@@ -58,7 +58,7 @@ class Account
   public function load_signed(){
   if(isset($_SESSION['user_id'])){
     $id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM `el_account` WHERE `id` = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE `id` = ?";
     $params = array("i",$id);
     $result = $this->db->query($sql,$params);
     if(!empty($result)){
@@ -148,7 +148,7 @@ class Account
 
   private function create_account()
   {
-    $sql = "INSERT INTO `el_account` (`id`, `username`, `password`, `email`, `salt`) VALUES (NULL, ?, ?, ?, ?);";
+    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `salt`) VALUES (NULL, ?, ?, ?, ?);";
     $params = array('ssss', $this->username , $this->password , $this->email, $this->salt);
     $result = $this->db->query($sql, $params);
     echo 'user created';
@@ -156,12 +156,12 @@ class Account
 
   private function find_account()
   {
-    $sql = "SELECT * FROM `el_account` WHERE `username` = ? OR `email` = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE `username` = ? OR `email` = ?";
     $params = array("ss", $this->logname ,$this->logname);
     $result = $this->db->query($sql, $params);
     if(!empty($result))
     {
-      if($this->valid_password($this->password, $result[0]['user_pass']))
+      if($this->valid_password($this->password, $result[0]['password']))
       {
         $this->id = $result[0]['id'];
         $this->username = $result[0]['username'];

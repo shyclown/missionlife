@@ -1,5 +1,5 @@
 <?php
-  echo 'login page';
+    echo 'login page';
 ?>
 
 <style>
@@ -37,7 +37,7 @@
     <input name="action" type="hidden" value="login">
   <input name="logname" type="text" placeholder="email or username">
   <input name="password" type="password" placeholder="password">
-  <input type="submit" value="sign in">
+  <input type="submit" value="log in">
   </form>
 </div>
 

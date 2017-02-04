@@ -330,10 +330,5 @@ class File
         throw new RuntimeException('Invalid file format.');
     }
   }
-
-
 }
-
-
-
- ?>
+?>

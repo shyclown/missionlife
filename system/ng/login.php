@@ -11,11 +11,11 @@ $acc = new Account;
 if($_POST && $_POST['action']){
   if($_POST['action'] == 'login'){
     $acc->login();
-    header('Location: '.$root.'/missionlife'); exit();
+    //header('Location: '.$root.'/missionlife'); exit();
   }
   if($_POST['action'] == 'signin'){
     $acc->sign_in();
-    header('Location: '.$root.'/missionlife'); exit();
+    //header('Location: '.$root.'/missionlife'); exit();
   }
 }
 else{
