@@ -1,7 +1,8 @@
 app.controller('filesController',function($scope, $compile, $http, Ajax, FileService){
 
   $scope.files = [];
-  $scope.folder = 'article';
+  $scope.folder = 'all';
+  $scope.search = '';
   $scope.page = 1;
   $scope.allFiles = 0;
 
@@ -58,28 +59,34 @@ app.controller('filesController',function($scope, $compile, $http, Ajax, FileSer
   */
   const loadSelected = function()
   {
-    console.log(FileService);
     FileService.selectByData({
     sort_by: sortByData,
     folder: $scope.folder,
     order: sortOrder,
+    search: $scope.search,
     limit_min:($scope.page-1)*onePageSize,
     limit_max: onePageSize
     },
     defSuccess
     );
   };
-  const deleteFile = function(file){
-    Ajax.call({ action: 'delete_file', id: file.id }, url, defSuccess, defError);
+  $scope.searchUpdate = function(){
+    loadSelected();
+  }
+  $scope.deleteFile = function(file){
+    console.log(file);
+    FileService.delete({ id: file.id }, function(){
+      loadSelected();
+    });
   }
 
   $scope.loadDetails = function(file){
-    FileService.details({ file_id: file.file_id},
+    FileService.details({ file_id: file.id},
     function(response){
+      console.log(response);
       $scope.details.file = file;
       $scope.details.data = response.data;
       $scope.details.open();
-      console.log(response.data);
     });
   }
 

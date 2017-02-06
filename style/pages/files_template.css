@@ -9,6 +9,13 @@
 #controlPanel > #listPages{ background-color: #FFF; display: inline-block;}
 #controlPanel > #listPages > .info.page.nr{ display: inline-block; padding: 8px 16px; width: 50px; text-align: center;}
 #controlPanel > #listPages > .btn.page{ display: inline-block; border: none; background-color: #EAEAEA;}
+#folders > input.search {
+  box-sizing: border-box;
+  height: 30px;
+  display: block;
+  float: right;
+  padding: 8px 16px;
+}
 .file{
   background-color: #FFF;
   height: 36px;

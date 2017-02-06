@@ -25,6 +25,42 @@ class File
     );
   }
 
+  private function create_table_file(){
+    $sql = "CREATE TABLE IF NOT EXISTS `ml_file` (
+            `id` int(8) NOT NULL AUTO_INCREMENT,
+            `file_name` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+            `file_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+            `file_size` int(64) NOT NULL,
+            `file_src` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+            `date_created` datetime NOT NULL,
+            `date_edited` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB
+            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+    $this->db->query($sql);
+  }
+  private function create_table_article_file(){
+    $sql = "CREATE TABLE IF NOT EXISTS `ml_article_file` (
+            `id` int(8) NOT NULL AUTO_INCREMENT,
+            `article_id`  int(8) NOT NULL,
+            `file_id` int(8) NOT NULL ,
+            `file_desc` varchar(64) NOT NULL ,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB
+            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+    $this->db->query($sql);
+  }
+  private function create_table_garant_file(){
+    $sql = "CREATE TABLE IF NOT EXISTS `ml_garant_file` (
+            `id` int(8) NOT NULL AUTO_INCREMENT,
+            `garant_id`  int(8) NOT NULL,
+            `file_id` int(8) NOT NULL ,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB
+            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+    $this->db->query($sql);
+  }
+
   private function create_folders(){
     if (!file_exists($this->root.'/uploads')) { mkdir($this->root.'/uploads', 0777, true); }
     if (!file_exists($this->root.'/uploads/image')) { mkdir($this->root.'/uploads/image', 0777, true); }
@@ -123,7 +159,10 @@ class File
             throw new RuntimeException('Failed to move uploaded file.');
           }
         }
-        $store['file_name'] = $_FILES['files']['name'];
+
+        if(isset($_POST['file_name'])){ $filename = $_POST['file_name']; }
+        else{ $filename = $_FILES['files']['name']; }
+        $store['file_name'] = $filename;
         $store['file_type'] = $ext;
         $store['file_size'] = $_FILES['files']['size'];
         $store['file_src'] = $new_name.'.'.$ext;
@@ -137,6 +176,7 @@ class File
       if($store){
         // store to database
         $fileID = $this->insert_new_file($store);
+
         if(isset($_POST['article_id'])){
           $article_file_data = array(
             'article_id' => $_POST['article_id'],
@@ -169,41 +209,7 @@ class File
     return $this->db->query($sql_file, $params);
   }
 
-  private function create_table_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `file_name` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `file_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `file_size` int(64) NOT NULL,
-            `file_src` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `date_created` datetime NOT NULL,
-            `date_edited` datetime NOT NULL,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
-  }
-  private function create_table_article_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_article_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `article_id`  int(8) NOT NULL,
-            `file_id` int(8) NOT NULL ,
-            `file_desc` varchar(64) NOT NULL ,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
-  }
-  private function create_table_garant_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_garant_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `garant_id`  int(8) NOT NULL,
-            `file_id` int(8) NOT NULL ,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
-  }
+
   public function get_all_details($data){
     $sql =  "SELECT a.header, a.id, 'article' AS table_name
                       FROM  `ml_file` f
@@ -222,6 +228,7 @@ class File
 
   public function get_files_by_selected($data){
     $order;
+    $search = '';
     // set oreder
     if(isset($data['order'])){
       if($data['order']){ $order = 'DESC'; }
@@ -232,13 +239,25 @@ class File
       if($data['sort_by'] == 'date'){ $data['sort_by'] = 'date_created'; }
       if($data['sort_by'] == 'size'){ $data['sort_by'] = 'file_size'; }
     }
+    if(isset($data['search']) && $data['search'] !=""){
+      $search = "WHERE `file_name` LIKE ?";
+    }
+    if(isset($data['folder'])){
+      if($data['folder'] == 'all'){ $str = ""; }
+      else{ $str = "INNER JOIN `ml_".$data['folder']."_file` af ON af.file_id = f.id"; }
+    }
     $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM  `ml_file` f
-            INNER JOIN `ml_".$data['folder']."_file` af ON af.file_id = f.id
+            ".$str." ".$search."
             ORDER BY ".$data['sort_by']." ".$order." LIMIT ? , ?";
     $sql_all_rows = "SELECT FOUND_ROWS()";
+    if($search == ''){
+      $params = array('ii', $data['limit_min'], $data['limit_max']);
+    }else{
+      $srch = '%'.$data['search'].'%';
+      $params = array('sii', $srch , $data['limit_min'], $data['limit_max']);
+    }
 
-    $params = array('ii', $data['limit_min'], $data['limit_max']);
     $result = $this->db->query($sql, $params);
     $all = $this->db->query($sql_all_rows);
     return array('result' => $result, 'all_rows'=> $all);
@@ -303,6 +322,30 @@ class File
             AND `ml_article_file`.`article_id` = ?";
     $params = array('ii', $data['file_id'], $data['article_id']);
     return $this->db->query($sql,$params);
+  }
+
+  public function delete($data){
+      /* Remove File */
+      if($data['file_type'] == 'png'){
+        unlink($this->root.'/uploads/image/'.$data['file_name']);
+        unlink($this->root.'/uploads/image/small/'.$data['file_name']);
+      }
+      else{
+        unlink($this->root.'/uploads/'.$data['file_name']);
+      }
+      /* Remove form File Database */
+      $sql_file = "DELETE FROM `ml_file` WHERE `id` = ?";
+      $params_file = array('i', $data['id']);
+      $this->db->query($sql_file,$params_file);
+      /* Remove form File - Garant Database */
+      $sql_garant = "DELETE FROM `ml_garant_file` WHERE `ml_article_file`.`file_id` = ?";
+      $params_garant = array('i', $data['id']);
+      $this->db->query($sql_garant,$params_garant);
+      /* Remove form File - Article Database */
+      $sql_article = "DELETE FROM `ml_garant_file` WHERE `ml_article_file`.`file_id` = ?";
+      $params_article = array('i', $data['id']);
+      $this->db->query($sql_article,$params_article);
+      return true;
   }
 
   public function arrayFiles($files){

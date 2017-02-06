@@ -81,7 +81,7 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
   }
 
   $scope.insert = function(){
-    console.log($scope.new_garant);
+
     // images werent uploaded when they were sent to Garant.insert
     // garant was not created as well
     // solved it by this hack >
@@ -89,7 +89,6 @@ app.controller('garantController',function(Ajax, uploadURIToGarant, $scope, $htt
     $scope.new_garant.image = false;
 
     Garant.insert( $scope.new_garant, function(response){
-      console.log(response);
       const reset = function(){
         NewImageReplaced = false;
         $scope.new_garant = {

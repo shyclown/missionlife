@@ -4,7 +4,6 @@ app.controller('mainController',function($http, Data , $scope, $route, $routePar
   /* Page Data */
   Data.select({ name:'settings' },function(res){
     res.data[0].data = JSON.parse(res.data[0].data);
-    console.log(res.data[0]);
     $scope.settings = res.data[0];
 
     if(!$scope.settings){
@@ -17,11 +16,10 @@ app.controller('mainController',function($http, Data , $scope, $route, $routePar
         }
       }
       Data.insert( $scope.settings , function(res){
-        $scope.settings.id = res.data; console.log('inserted');
+        $scope.settings.id = res.data;
         $scope.page = $scope.settings.data;
-        console.dir($scope.page);
       });
-    }else{ $scope.page = $scope.settings.data; console.dir($scope.page.page_name);}
+    }else{ $scope.page = $scope.settings.data; }
   });
 
   /* Route Info */

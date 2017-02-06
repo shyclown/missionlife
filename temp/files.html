@@ -1,14 +1,10 @@
-<!-- Details -->
-  <div ng-if="details.show" class="details">
-    <h3>{{details.file.file_name}}</h3>
-    <div ng-repeat = "detail in details.data">
-      Header: {{detail.header}}</div>
-    <div ng-click="details.close()">CLOSE</div>
-  </div>
+
 <!-- Folders -->
 <div id="folders">
+  <div class="btn" ng-click="openFolder('all')" ng-class="folderSelected('all')"><i class="fa fa-folder"></i> All </div>
   <div class="btn" ng-click="openFolder('article')" ng-class="folderSelected('article')"><i class="fa fa-folder"></i> Article </div>
   <div class="btn" ng-click="openFolder('garant')" ng-class="folderSelected('garant')"><i class="fa fa-folder"></i> Garants </div>
+  <input class="search" ng-model="search" ng-change="searchUpdate()">
 </div>
 <!-- Control panel -->
 <div id="controlPanel">
@@ -27,6 +23,7 @@
       <button class="btn per page" ng-click="perPage(5)" ng-class="perPageSelected(5)"> 5 </button>
       <button class="btn per page" ng-click="perPage(10)" ng-class="perPageSelected(10)"> 10 </button>
       <button class="btn per page" ng-click="perPage(20)" ng-class="perPageSelected(20)"> 20 </button>
+
     </div>
   </div>
 </div>
@@ -34,6 +31,13 @@
 <div ng-repeat="file in files" class="file" >
   <div class="name" ng-click="loadDetails(file)">{{file.file_name}}</div>
   <div class="size">{{sizeMB(file.file_size)}} MB</div>
-  <div class="btn delete" ng-click="loadDetails(file)"><i class="fa fa-trash"></i> REMOVE</div>
+  <div class="btn delete" ng-click="deleteFile(file)"><i class="fa fa-trash"></i> REMOVE</div>
   <div class="btn edit" ng-click="loadDetails(file)"><i class="fa fa-pencil"></i> EDIT</div>
 </div>
+<!-- Details -->
+  <div ng-if="details.show" class="details">
+    <h3>{{details.file.file_name}}</h3>
+    <div ng-repeat = "detail in details.data">
+      Header: {{detail.header}}</div>
+    <div ng-click="details.close()"><i class="fa fa-close"></i>CLOSE</div>
+  </div>

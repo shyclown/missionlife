@@ -10,6 +10,7 @@ app.factory('uploadDroppedToArticle', ['dataURItoBlob','resizeDroppedImage','cus
         const callbackImageResize = function(fileURL){
           const oData = {
             action: 'upload',
+            file_name: one_file.name,
             files: dataURItoBlob(fileURL),
             article_id: article_id
           };

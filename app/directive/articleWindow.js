@@ -90,7 +90,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
             file,
             function(response){},
             function(response){
-              console.log(response);
               completed++;
               scope.logPanel = response;
               scope.onDropFiles(response);
@@ -140,9 +139,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.articlesList = [];
       scope.searchArticle = '';
       scope.loadArticleList = function(){
-        Article.select_all(function(res){
-          console.log('select_all',res);
-          scope.articlesList = res.data; });
+        Article.select_all(function(res){ scope.articlesList = res.data; });
       }
       scope.searchArticle = function(){
         if(scope.searchArticle == ''){ scope.loadArticleList(); }
