@@ -135,13 +135,23 @@
     <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="edit_article.header" />
     <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="edit_article.content" />
   </div>
+  <!-- TODO: Search panel and separate results:
+  article, files, garant
+  -->
   <div class="RightContent">
     <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
-    <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText()}} </button>
-    <div ng-repeat="file in files">{{file.file_name}}</div>
-    <div class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form)">{{form.name}}</div>
-    </br></br>
-    <div class="unselectable" ng-repeat="article in articlesList track by $index" ng-click="addLinkToArticle(article)">{{article.header}}</div>
+    <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText}} </button>
+    <!-- create buttons -->
+    <button ng-click="show('all')">All</button>
+    <button ng-click="show('files')">Files</button>
+    <button ng-click="show('aricles')">Article</button>
+    <button ng-click="show('forms')">Forms</button>
+    <!-- be able to search -->
+    <input ng-change="filter()" class="filter">
+    <!-- actuall list -->
+    <div ng-if="open('files')" class="unselectable" ng-repeat="file in files" ng-click="addLinkToFile(file)">{{file.file_name}}</div>
+    <div ng-if="open('forms')" class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form)">{{form.name}}</div>
+    <div ng-if="open('articles')" class="unselectable" ng-repeat="article in articlesList" ng-click="addLinkToArticle(article)">{{article.header}}</div>
   </div>
   </form>
   <div class="Footer" ng-bind-html="logPanel"></div>
