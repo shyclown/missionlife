@@ -71,13 +71,9 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
 
       // change filter
       scope.isOpen;
-      scope.open = function(item){
-        return scope.isOpen == item;
-      }
-      scope.show = function(item){
-        scope.isOpen = item;
-      }
-      
+      scope.open = function(item){ return scope.isOpen == item; }
+      scope.show = function(item){ scope.isOpen = item; }
+
       scope.closeWithoutSave = function(){
         scope.articleWindow = false;
       }

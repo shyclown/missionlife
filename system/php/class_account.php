@@ -9,7 +9,7 @@ class Account
 
   function __construct(){
     $this->db = new Database;
-    $this->error = [];
+    $this->errors = [];
     // create tables if not exists
     $this->create_table_account();
   }
@@ -103,7 +103,7 @@ class Account
   {
     if($column == 'email'){ $value = $this->email; }
     if($column == 'username'){ $value = $this->username; }
-    $sql = "SELECT * FROM `el_account` WHERE ? = ?";
+    $sql = "SELECT * FROM `ml_account` WHERE ? = ?";
     $params = array('ss', $column, $value);
     $result = $this->db->query($sql, $params);
     return $result === NULL;
@@ -111,7 +111,7 @@ class Account
 
   public function list_all()
   {
-    $sql = "SELECT * FROM `el_account`";
+    $sql = "SELECT * FROM `ml_account`";
     $result = $this->db->select($sql);
     return $result;
   }
@@ -148,8 +148,8 @@ class Account
 
   private function create_account()
   {
-    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `salt`) VALUES (NULL, ?, ?, ?, ?);";
-    $params = array('ssss', $this->username , $this->password , $this->email, $this->salt);
+    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `state`,`date_created`,`date_edited`) VALUES (NULL, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+    $params = array('sss', $this->username , $this->password , $this->email);
     $result = $this->db->query($sql, $params);
     echo 'user created';
   }
