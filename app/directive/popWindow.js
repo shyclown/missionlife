@@ -7,3 +7,13 @@ app.directive('popWindow',function(){
     compile: function(){}
   }
 });
+
+app.directive('prompt', function(){
+  return{
+    restrict: 'E',
+    transclude: true,
+    //scope:{},
+    templateUrl:'app/template/prompt_window.html',
+    compile: function(){}
+  }
+});

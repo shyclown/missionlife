@@ -63,6 +63,7 @@
   }
 </style>
 <div class="folder-open">
+  <div class="addArticle" ng-if="isOpenFolder()" ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</div>
   <div class="folderLine" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ng-click="openFolder(folder)">
     <i class="fa fa-folder"></i> {{folder.name}}
     <div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>
@@ -73,5 +74,5 @@
     <div class="delete" ng-click="deleteArticle(article)"><i class="fa fa-trash"></i> delete</div>
   </div>
 </div>
-<div class="addArticle" ng-if="isOpenFolder()" ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</div>
+
 <edit-folder-window ng-show="folderWindow" ></edit-folder-window>

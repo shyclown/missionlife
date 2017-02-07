@@ -73,6 +73,9 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.isOpen;
       scope.open = function(item){ return scope.isOpen == item; }
       scope.show = function(item){ scope.isOpen = item; }
+      scope.filter = function(){
+        console.log(scope.filter_str);
+      }
 
       scope.closeWithoutSave = function(){
         scope.articleWindow = false;
@@ -144,7 +147,10 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.articlesList = [];
       scope.searchArticle = '';
       scope.loadArticleList = function(){
-        Article.select_all(function(res){ scope.articlesList = res.data; });
+        Article.select_all(function(res){
+          scope.articlesList = res.data;
+          console.log(scope.articlesList); 
+        });
       }
       scope.searchArticle = function(){
         if(scope.searchArticle == ''){ scope.loadArticleList(); }

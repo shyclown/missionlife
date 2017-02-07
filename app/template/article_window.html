@@ -144,10 +144,10 @@
     <!-- create buttons -->
     <button ng-click="show('all')">All</button>
     <button ng-click="show('files')">Files</button>
-    <button ng-click="show('aricles')">Article</button>
+    <button ng-click="show('articles')">Article</button>
     <button ng-click="show('forms')">Forms</button>
     <!-- be able to search -->
-    <input ng-change="filter()" class="filter">
+    <input ng-change="filter()" ng-model="filter_str" class="filter">
     <!-- actuall list -->
     <div ng-if="open('files')" class="unselectable" ng-repeat="file in files" ng-click="addLinkToFile(file)">{{file.file_name}}</div>
     <div ng-if="open('forms')" class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form)">{{form.name}}</div>
