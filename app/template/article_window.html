@@ -45,7 +45,7 @@
   text-decoration: none;
   display: inline-block;
 }
-.RightContent{
+#RightContent{
   display: block;
   box-sizing: border-box;
   float: right;
@@ -138,20 +138,102 @@
   <!-- TODO: Search panel and separate results:
   article, files, garant
   -->
-  <div class="RightContent">
+  <style>
+  #RightContent button.btn{
+    background-color: #EAEAEA;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    height: 40px;
+    border: none;
+    /*border-bottom: 1px solid rgb(244,100,95);*/
+  }
+  #RightContent button.btn.selected{
+    /*border: 1px solid rgb(244,100,95);*/
+    border-bottom: none;
+    background-color: #FFF;
+  }
+  #RightContent .searchPanel{
+    background-color: #FFF;
+    height: 24px;
+    padding: 8px;
+    /*border: 1px solid rgb(244,100,95);*/
+    border-top: none;
+  }
+  #RightContent .searchPanel i{
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    line-height: 16px;
+    padding: 4px;
+    background-color: #EAEAEA;
+    float: left;
+  }
+  #RightContent .searchPanel input{
+    box-sizing: border-box;
+    width: calc(100% - 24px);
+    height: 24px;
+    padding: 4px 8px;
+    line-height: 16px;
+    background-color: #EAEAEA;
+    border: none;
+    outline: none;
+  }
+  #RightContent .lists{
+    background-color: #FFF;
+    height: 150px;
+    padding: 4px;
+    overflow-y: scroll;
+  }
+  #RightContent .lists .item{
+    background-color: #FFF;
+    margin-bottom: 4px;
+    line-height: 14px;
+    font-size: 14px;
+    padding: 2px;
+  }
+  #RightContent .box{
+    margin-top: 16px;
+  }
+  #RightContent .lists .item:hover{
+    background-color: #EAEAEA;
+  }
+  #RightContent .flexBox{
+    display: flex;
+    justify-content: space-between;
+  }
+  </style>
+  <div id="RightContent">
     <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
     <button id="articleSubmitButton" type="button" ng-click="changeState()"><i class="fa fa-save"></i> {{stateText}} </button>
     <!-- create buttons -->
-    <button ng-click="show('all')">All</button>
-    <button ng-click="show('files')">Files</button>
-    <button ng-click="show('articles')">Article</button>
-    <button ng-click="show('forms')">Forms</button>
-    <!-- be able to search -->
-    <input ng-change="filter()" ng-model="filter_str" class="filter">
-    <!-- actuall list -->
-    <div ng-if="open('files')" class="unselectable" ng-repeat="file in files" ng-click="addLinkToFile(file)">{{file.file_name}}</div>
-    <div ng-if="open('forms')" class="unselectable" ng-repeat="form in forms" ng-click="addLinkToForm(form)">{{form.name}}</div>
-    <div ng-if="open('articles')" class="unselectable" ng-repeat="article in articlesList" ng-click="addLinkToArticle(article)">{{article.header}}</div>
+    <div class="box">
+      <div class="flexBox">
+      <button ng-click="show('all')" class="btn" ng-class="(isOpen=='all')?'selected':''"><i class="fa fa-circle-o"></i> All</button>
+      <button ng-click="show('files')" class="btn" ng-class="(isOpen=='files')?'selected':''"><i class="fa fa-file"></i> Files</button>
+      <button ng-click="show('articles')" class="btn" ng-class="(isOpen=='articles')?'selected':''"><i class="fa fa-file-text-o"></i > Article</button>
+      <button ng-click="show('forms')" class="btn" ng-class="(isOpen=='forms')?'selected':''"><i class="fa fa-list"></i> Forms</button>
+      </div>
+      <!-- be able to search -->
+      <div class="searchPanel">
+        <i class="fa fa-search"></i>
+        <input ng-change="filter()" ng-model="filter_str" class="filter">
+      </div>
+      <!-- actuall list -->
+      <div class="lists">
+      <div ng-if="open('files') || open('all')" class="item unselectable" ng-repeat="file in filterArray(files, 'file_name')" ng-click="addLinkToFile(file)">
+        <i class="fa fa-file"></i> {{file.file_name}}</div>
+      <div ng-if="open('forms') || open('all')" class="item unselectable" ng-repeat="form in filterArray(forms, 'name')" ng-click="addLinkToForm(form)">
+        <i class="fa fa-list"></i> {{form.name}}</div>
+      <div ng-if="open('articles') || open('all')" class="item unselectable" ng-repeat="article in filterArray(articlesList, 'header')" ng-click="addLinkToArticle(article)">
+        <i class="fa fa-file-text-o"></i> {{article.header}}</div>
+      </div>
+    </div>
+  <div class="box">
+    Insert Image:
+    <div class="flexBox">
+      <div>Image</div>
+    </div>
+  </div>
   </div>
   </form>
   <div class="Footer" ng-bind-html="logPanel"></div>

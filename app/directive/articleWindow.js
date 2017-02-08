@@ -70,11 +70,18 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       }
 
       // change filter
-      scope.isOpen;
+      scope.isOpen = 'all';
+      scope.filter_str;
       scope.open = function(item){ return scope.isOpen == item; }
       scope.show = function(item){ scope.isOpen = item; }
       scope.filter = function(){
+
         console.log(scope.filter_str);
+      }
+      scope.filterArray = function(arr, prop){
+        return arr.filter(function(item){
+          return item[prop].match(scope.filter_str);
+        });
       }
 
       scope.closeWithoutSave = function(){
@@ -149,7 +156,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.loadArticleList = function(){
         Article.select_all(function(res){
           scope.articlesList = res.data;
-          console.log(scope.articlesList); 
+          console.log(scope.articlesList);
         });
       }
       scope.searchArticle = function(){
