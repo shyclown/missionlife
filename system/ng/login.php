@@ -1,25 +1,24 @@
 <?php
-var_dump($_POST);
 $root = $_SERVER['DOCUMENT_ROOT']."/missionlife";
 require_once($root.'/system/php/define.php');
 require_once($root.'/system/php/class_mysqli.php');
 require_once($root.'/system/php/class_session.php');
 require_once($root.'/system/php/class_account.php');
 new Session;
-$acc = new Account;
+  $acc = new Account;
+  $url = 'http://localhost/missionlife/index.php';
+  $url_login = 'http://localhost/missionlife/login.php';
 
-if($_POST && $_POST['action']){
-  if($_POST['action'] == 'login'){
-    $acc->login();
-    //header('Location: '.$root.'/missionlife'); exit();
+  if($_POST && $_POST['action']){
+    if($_POST['action'] == 'login'){
+      if($acc->login()){ header("Location: $url"); exit; }
+    }
+    if($_POST['action'] == 'signin'){
+      if($acc->sign_in()){ header("Location: $url"); exit; }
+    }
   }
-  if($_POST['action'] == 'signin'){
-    $acc->sign_in();
-    //header('Location: '.$root.'/missionlife'); exit();
+  else{
+    header("Location: $url_login"); exit;
   }
-}
-else{
-  header('Location: '.$root.'/missionlife/login.php'); exit();
-}
 
 ?>

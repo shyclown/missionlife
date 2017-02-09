@@ -34,8 +34,9 @@ class Account
   public function sign_in(){
     $this->load_post_values();
     $this->check_values();
-    if(empty($this->errors)){ $this->create_account(); echo 'new account created';}
-    else{ var_dump($this->errors); }
+    if(empty($this->errors)){
+      $this->create_account(); return true;}
+    else{ return false; }
   }
 
   public function login(){
@@ -43,9 +44,9 @@ class Account
   $this->logname = $_POST['logname'];
   $this->password = $_POST['password'];
     if($this->find_account()){ $this->make_session();
-    //  $this->make_cookie();
+     return true;
     }
-    else{ echo "not valid username or password"; }
+    else{ return false; }
   }
 
   public function delete(){

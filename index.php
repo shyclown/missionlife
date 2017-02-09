@@ -1,10 +1,14 @@
 <?php
+$url = 'http://localhost/missionlife/login.php';
 $root = $_SERVER['DOCUMENT_ROOT']."/missionlife";
 require_once($root.'/system/php/define.php');
 require_once($root.'/system/php/class_mysqli.php');
 require_once($root.'/system/php/class_session.php');
 new Session;
-if(!$_SESSION){ header('Location: '.$root.'/login.php'); exit(); }
+if(!$_SESSION){ header("Location: $url"); die('died'); }
+else{
+  var_dump($_SESSION);
+}
 ?>
 <html>
   <head>
