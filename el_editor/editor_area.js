@@ -156,7 +156,8 @@ Editor.fn.removeDefault = function(event){
 }
 
 Editor.area.prototype.afterImageUpload = function (response) {
-  response = JSON.parse(response);
+  /* Edited resposne : it is like default angular : respose.data and already parsed JSON */
+  response = response.data;
   let figure = new Editor.imageFigure( this.image_url+response.file_src, 'new item', this.root );
   this.root.insertBefore( figure.el, this.placeholder.el );
 }

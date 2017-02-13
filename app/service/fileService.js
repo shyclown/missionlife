@@ -1,4 +1,4 @@
-app.service('FileService',function(Ajax){
+app.service('FileService',function(Ajax, customAjax){
 
   const url = '/missionlife/system/ng/files.php';
 
@@ -34,6 +34,13 @@ app.service('FileService',function(Ajax){
   this.insert = function(data, callback){
     data.action = 'insert';
     Ajax.call(data, url, callback);
+  }
+
+  this.upload = function(data, callback){
+    // chack if file is in URI or Blob
+    console.log('upload', data);
+    data.action = 'upload';
+    customAjax(url, data, false, callback);
   }
 
   // Attach

@@ -88,4 +88,18 @@ class Garant
     $params = array('i',$data['id']);
     return $this->db->query($sql,$params);
   }
+
+  public function attach_file($data){
+    if($this->clear_files($data['garant_id'])){
+    $sql = "INSERT INTO `ml_garant_file` (`id`, `garant_id`, `file_id`)
+            VALUES (NULL, ?, ?)";
+    $params = array( 'ii', $data['garant_id'], $data['file_id'] );
+    return $this->db->query($sql, $params);
+    }
+  }
+  private function clear_files($garant_id){
+    $params = array("i", $garant_id);
+    $sql_file = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
+    return $this->db->query($sql_file, $params);
+  }
 }

@@ -110,7 +110,9 @@ class File
   }
 
   public function upload(){
+
     $this->create_folders();
+
     if(isset($_FILES['files'])){
       try{
         // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -175,12 +177,12 @@ class File
 
       if($store){
         // store to database
-        $fileID = $this->insert_new_file($store);
+        $store['file_id'] = $this->insert_new_file($store);
 
         if(isset($_POST['article_id'])){
           $article_file_data = array(
             'article_id' => $_POST['article_id'],
-            'file_id' => $fileID
+            'file_id' => $store['file_id']
           );
           $attach = $this->attach_to_article($article_file_data);
           if($attach){ return $store; exit; }
@@ -190,13 +192,14 @@ class File
           if($this->removeImages($_POST['garant_id'])){
             $garant_file_data = array(
               'garant_id' => $_POST['garant_id'],
-              'file_id' => $fileID
+              'file_id' => $store['file_id']
             );
             $attach = $this->attach_to_garant($garant_file_data);
             if($attach){ return $store; exit(); }
             else{ return false; exit; }
           }
         }
+
         return $store;
       }
     }

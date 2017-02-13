@@ -8,6 +8,7 @@ require_once($root.'/system/php/class_file.php');
 
 $file = new File();
 
+
 // AngularJS AJAX
 // In case of file upload
 if($_POST){

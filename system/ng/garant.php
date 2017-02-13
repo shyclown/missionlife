@@ -7,17 +7,12 @@ require_once($root.'/system/php/class_garant.php');
 
 $garant = new Garant();
 
-// AngularJS AJAX
-// In case of file upload
 if($_POST){
   $ng_data = $_POST;
+}else{
+  $garantData = file_get_contents("php://input");
+  $ng_data = json_decode($garantData, true); //array
 }
-else{
-// ajax from angularJS
-$garantData = file_get_contents("php://input");
-$ng_data = json_decode($garantData, true); //array
-}
-
 if(isset($ng_data['action']))
 {
   if ( method_exists($garant, $ng_data['action']) ){

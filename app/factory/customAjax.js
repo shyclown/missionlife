@@ -1,6 +1,7 @@
 /*
 This custom ajax was created for purpose of displaying progres
 of upload process
+I edited it to return same object as AngularJS: {data: JSONresponseFromPHP }
 */
 app.factory('customAjax', function(){
   return function(targetUrl, oData, progressFn, completeFn)
@@ -12,11 +13,9 @@ app.factory('customAjax', function(){
       return oForm;
     }
     const request = new XMLHttpRequest();
-    // file upload throws error so i try this to avoid errors
-
-
     request.addEventListener('load',function(){
-      completeFn(request.responseText);
+      const res = { data: JSON.parse(request.responseText) }
+      completeFn(res);
     });
     if(progressFn){
       request.addEventListener('progress',function(){
