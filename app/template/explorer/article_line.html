@@ -1,0 +1,30 @@
+
+<style>
+/* Article listed */
+.ArticleLine{
+  width: 100%;
+  background-color: #EAEAEA;
+  box-sizing: border-box;
+  height: 24px;
+}
+.ArticleLine > .delete{
+  display: block;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 16px;
+  height: 24px;
+  background-color: #09F;
+  color: white;
+  float: right;
+}
+
+.ArticleLine > .name{
+  box-sizing: border-box;
+}
+</style>
+
+
+<div class="ArticleLine">
+  <div class="name" ng-click="selectArticle(article)"><i class="fa fa-file-text-o"></i> {{article.header}}</div>
+  <div class="delete" ng-click="deleteArticle(article)"><i class="fa fa-trash"></i> delete</div>
+</div>

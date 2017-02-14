@@ -1,0 +1,95 @@
+<style>
+  .folderWindow{
+    height: 120px;
+    position: relative;
+
+  }
+  .folderTopPanel{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #FFF;
+    padding: 16px;
+  }
+  .underContent{
+  }
+  .inline{
+    display: inline-block;
+    padding: 0px;
+  }
+  #newFolder{
+    display: inline-block;
+    padding: 4px;
+  }
+  .folderTree{
+    background-color: #FFF;
+    box-sizing: border-box;
+    width: 250px;
+    float: left;
+    padding: 16px;
+    height: 300px;
+    overflow-y: scroll;
+  }
+  .folderOpen{
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+    background-color: #EAEAEA;
+    float: right;
+    padding: 16px;
+    height: 300px;
+    overflow-y:scroll;
+  }
+  .addArticle{
+    background-color: #09F;
+    color: #FFF;
+    padding: 8px;
+  }
+
+  /* Article listed */
+  .ArticleLine{
+    width: 100%;
+    background-color: #EAEAEA;
+    box-sizing: border-box;
+    height: 24px;
+  }
+  .ArticleLine > .delete{
+    display: block;
+    box-sizing: border-box;
+    padding: 4px;
+    font-size: 16px;
+    height: 24px;
+    background-color: #09F;
+    color: white;
+    float: right;
+  }
+
+  .ArticleLine > .name{
+    box-sizing: border-box;
+  }
+</style>
+<div class="folderWindow" folders-data='folders'>
+  <div class="folderTopPanel">
+    <div id="dropRoot" class="inline" ng-click="openFolder(null)">missionlife /</div>
+    <div class="inline" ng-repeat="parent in currentParents" ng-click="openFolder(parent)">{{parent.name}} /</div>
+    <div class="inline" ng-if="currentFolder != null">{{currentFolder.name}}</div>
+    <div id="newFolder">
+      <input class="add_folder" ng-model="new_folder.name" placeholder="folderName"/>
+      <button class="save_new folder" ng-click="saveNewFolder()">ADD</button>
+    </div>
+  </div>
+  <div class="underContent">
+    <div class="folderTree">
+      <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
+    </div>
+
+  <div class="folderOpen">
+    <div class="addArticle" ng-if="isOpenFolder()" ng-click="createNewArticle()">
+      <i class="fa fa-plus"></i> Add Article
+    </div>
+    <folder-line ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ></folder-line>
+    <article-line ng-repeat="article in articles"></article-line>
+  </div>
+  <div style="clear:both"></div>
+  </div>
+
+</div>
+  <edit-folder-window ng-show="folderWindow" ></edit-folder-window>

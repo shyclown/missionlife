@@ -1,0 +1,33 @@
+<style>
+.folderLine {
+  display: block;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0px;
+}
+.folderLine > .delete{
+  display: block;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 16px;
+  height: 24px;
+  background-color: red;
+  color: white;
+  float: right;
+}
+.folderLine > .edit{
+  display: block;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 16px;
+  height: 24px;
+  background-color: #09F;
+  color: white;
+  float: right;
+}
+</style>
+<div class="folderLine" ng-click="openFolder(folder)">
+  <i class="fa fa-folder"></i> {{folder.name}}
+  <div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>
+  <div class="edit" ng-click="setEditFolder(folder)"><i class="fa fa-pencil"></i> edit </div>
+</div>

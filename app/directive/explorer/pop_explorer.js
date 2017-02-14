@@ -1,14 +1,23 @@
-app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Folder, Article) {
+app.directive('popFolderExplorer',['$http', 'Folder', 'Article', function($http, Folder, Article) {
   return {
     restrict: 'E',
     scope:{
-      currentFolder: '=',
+    /*  currentFolder: '=',
       openArticle: '=',
-      articleWindow: '='
+      articleWindow: '='*/
     },
-    templateUrl: '/missionlife/app/template/folder_window.html',
+    templateUrl: '/missionlife/app/template/pop_folder_window.html',
     link: function (scope, element, attrs)
     {
+
+      const callbackFn = scope.$eval(attrs.callbackFn);
+      const popSetup = {
+        articles: false,
+        article_click: false,
+        files: false,
+        file_click: false,
+        submit: true
+      }
 
       // Watch Folders
       scope.folders;
@@ -68,7 +77,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
           const folderInArray = inFolderArray(folder.id);
           const folderIsCurrent = folder == scope.currentFolder;
           if(!folderIsCurrent){
-            console.log('currentFolder', scope.currentFolder);
             scope.currentFolder = folder;
             scope.currentParents = Folder.listParents(folder);
           }
@@ -89,10 +97,8 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
       scope.setEditFolder = function(folder){
         stopDefault(event);
-        console.log('editFolder');
         scope.editFolder = folder;
         scope.toogleEditFolder();
-        console.log(scope.editFolder);
       }
       scope.setPosition = function(position){
         scope.editFolder.position = position;
@@ -109,7 +115,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
         data.parent = scope.currentFolder;
         Folder.insert(data, function(response){
           scope.new_folder.name = "";
-          console.log('Folder inserted', response.data);
         });
       }
       scope.removeFolder = function(folder){ stopDefault(event);
@@ -131,35 +136,6 @@ app.directive('folderExplorer',['$http', 'Folder', 'Article', function($http, Fo
       scope.currentOpen = function(folder){
         return (folder.id == scope.openFolder.id) ? 'currentFolder' : '';
       }
-    }
-  };
-}]);
-
-app.directive('folderTree',['$http','Folder', function($http, Folder) {
-  return {
-    restrict: 'E',
-    templateUrl: '/missionlife/app/template/folder_tree.html',
-    link: function (scope, element, attrs){}
-  };
-}]);
-app.directive('folderOpen',['$http', function($http) {
-  return {
-    restrict: 'E',
-    templateUrl: '/missionlife/app/template/folder_open.html',
-    link: function (scope, element, attrs){}
-  };
-}]);
-app.directive('folderTreeLine',['$http', function($http) {
-  return {
-    restrict: 'E',
-    templateUrl: '/missionlife/app/template/folder_tree_line.html',
-    link: function (scope, element, attrs)
-    {
-      scope.folder.open = false;
-      scope.icon = function(){
-      const theChildren = function(child){ return child.parent == scope.folder.id; }
-      scope.children = scope.folders.filter(theChildren);
-      return (scope.openFoldersInTree.indexOf(scope.folder.id)>=0) ? 'fa fa-folder-open' : 'fa fa-folder'};
     }
   };
 }]);
