@@ -2,9 +2,9 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article', function($http,
   return {
     restrict: 'E',
     scope:{
-    /*  currentFolder: '=',
+      currentFolder: '=',
       openArticle: '=',
-      articleWindow: '='*/
+      articleWindow: '='
     },
     templateUrl: '/missionlife/app/template/pop_folder_window.html',
     link: function (scope, element, attrs)
