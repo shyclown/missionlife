@@ -1,5 +1,4 @@
 <?php
-
 $root = $_SERVER['DOCUMENT_ROOT']."/missionlife";
 require_once($root.'/system/php/define.php');
 require_once($root.'/system/php/class_mysqli.php');
@@ -15,12 +14,3 @@ $ng_data = json_decode($fileData, true); //array
 if ( method_exists($article, $ng_data['action']) ){
    echo json_encode($article->{$ng_data['action']}($ng_data));
 }
-/*
-if(isset($ng_data['action']))
-{
-  elseif($act == 'update_file_desc'){
-    $file = new File();
-    echo json_encode($file->update_file_desc_in_article($ng_data));
-  }
-}
-*/

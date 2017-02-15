@@ -6,21 +6,6 @@ class Article
   function __construct(){
     $this->db = new Database;
     $this->error = [];
-    // create tables
-    $this->create_table_article();
-  }
-  private function create_table_article(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_article` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `header` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `content` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `state` int(1) NOT NULL,
-            `date_created` datetime NOT NULL,
-            `date_edited` datetime NOT NULL,
-            PRIMARY KEY (`id`)
-          ) ENGINE=InnoDB
-          DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
   }
 
   public function search($data){

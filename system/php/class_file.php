@@ -10,9 +10,7 @@ class File
   {
     $this->db = new Database;
     $this->error = [];
-    $this->create_table_file();
-    $this->create_table_article_file();
-    $this->create_table_garant_file();
+
     $this->root = $_SERVER["DOCUMENT_ROOT"].'/missionlife';
     $this->filetypes = array(
         'png' => 'image/png',
@@ -23,42 +21,6 @@ class File
         'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'xls' => 'application/vdn.ms-excel'
     );
-  }
-
-  private function create_table_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `file_name` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `file_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `file_size` int(64) NOT NULL,
-            `file_src` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `date_created` datetime NOT NULL,
-            `date_edited` datetime NOT NULL,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
-  }
-  private function create_table_article_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_article_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `article_id`  int(8) NOT NULL,
-            `file_id` int(8) NOT NULL ,
-            `file_desc` varchar(64) NOT NULL ,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
-  }
-  private function create_table_garant_file(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_garant_file` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `garant_id`  int(8) NOT NULL,
-            `file_id` int(8) NOT NULL ,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->query($sql);
   }
 
   private function create_folders(){
@@ -288,6 +250,11 @@ class File
     // returns ID of inserted file
     return $this->db->query($sql, $params , 'get_id');
   }
+
+//-----------------------------------------------------
+// Attach
+//-----------------------------------------------------
+
   public function attach_to_garant($data){
     $sql = "INSERT INTO `ml_garant_file` (`id`, `garant_id`, `file_id`)
             VALUES (NULL, ?, ?)";
@@ -300,7 +267,17 @@ class File
     $params = array( 'ii', $data['article_id'], $data['file_id'] );
     return $this->db->query($sql, $params);
   }
-  // update
+  public function attach_to_folder($data){
+    $sql = "INSERT INTO `ml_folder_file` (`id`, `folder_id`, `file_id`)
+            VALUES (NULL, ?, ?)";
+    $params = array( 'ii', $data['folder_id'], $data['file_id'] );
+    return $this->db->query($sql, $params);
+  }
+
+//-----------------------------------------------------
+// Update
+//-----------------------------------------------------
+
   public function update_file($data){
     $sql = "UPDATE `ml_file` SET `file_name`=?, `file_desc`=?, `date_edited`=CURRENT_TIMESTAMP  WHERE `id` = ?";
     $params = array('ssi', $data['file_name'], $data['file_desc'], $data['file_id']);
@@ -311,7 +288,9 @@ class File
     $params = array('sii', $data['file_desc'], $data['article_id'], $data['file_id'] );
     return $this->db->query($sql,$params);
   }
-  // remove
+//-----------------------------------------------------
+// Update
+//-----------------------------------------------------
   public function remove_from_garant($data){
     $sql = "DELETE FROM `ml_garant_file`
             WHERE `ml_garant_file`.`file_id` = ?
@@ -324,6 +303,13 @@ class File
             WHERE `ml_article_file`.`file_id` = ?
             AND `ml_article_file`.`article_id` = ?";
     $params = array('ii', $data['file_id'], $data['article_id']);
+    return $this->db->query($sql,$params);
+  }
+  public function remove_from_folder($data){
+    $sql = "DELETE FROM `ml_folder_file`
+            WHERE `ml_folder_file`.`file_id` = ?
+            AND `ml_folder_file`.`folder_id` = ?";
+    $params = array('ii', $data['file_id'], $data['folder_id']);
     return $this->db->query($sql,$params);
   }
 
@@ -350,7 +336,9 @@ class File
       $this->db->query($sql_article,$params_article);
       return true;
   }
-
+//-----------------------------------------------------
+// Functions
+//-----------------------------------------------------
   public function arrayFiles($files){
       $file_ary = array();
       $file_count = count($files['files']['name']);

@@ -9,34 +9,9 @@ class Folder
   {
     $this->db = new Database;
     $this->error = [];
-    $this->create_table_folder();
-    $this->create_table_article_folder();
   }
 
-  private function create_table_folder(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-            `order` int(3),
-            `parent` int(8),
-            `state` int(1) NOT NULL,
-            `date_created` DATETIME NOT NULL,
-            `date_edited` DATETIME NOT NULL,
-            PRIMARY KEY (`id`)
-          ) ENGINE=InnoDB
-          DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->_mysqli->query($sql);
-  }
-  private function create_table_article_folder(){
-    $sql = "CREATE TABLE IF NOT EXISTS `ml_article_folder` (
-            `id` int(8) NOT NULL AUTO_INCREMENT,
-            `article_id`  int(8) NOT NULL,
-            `folder_id` int(8) NOT NULL ,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB
-            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-    $this->db->_mysqli->query($sql);
-  }
+
   // -- PUBLIC --
 
   public function select_all(){
