@@ -22,6 +22,10 @@ app.service('FileService',function(Ajax, customAjax){
     data.action = 'select_by_garant';
     Ajax.call(data, url, callback);
   }
+  this.selectByFolder = function(data, callback){
+    data.action = 'select_by_folder';
+    Ajax.call(data, url, callback);
+  }
   this.search = function(data, callback){
     data.action = 'search';
     Ajax.call(data, url, callback);
