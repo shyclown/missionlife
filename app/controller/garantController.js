@@ -14,11 +14,16 @@ app.controller('garantController',function(Ajax, dataURItoBlob, customAjax, File
       files: dataURItoBlob(obj.image)
     }
     FileService.upload(uploadData, function(response){
-      const attachFile = {
+      //const attachFileToFolder = {
+      //  folder_id: null,
+      //  file_id: response.data.file_id
+      //}
+      const attachFileToGarant = {
         garant_id: obj.id,
         file_id: response.data.file_id
       }
-      Garant.attach_file(attachFile, function(response){ reset(); });
+      //FileService.attachToFolder(attachFileToFolder, function(response){ console.log(response);});
+      FileService.attachToGarant(attachFileToGarant, function(response){ reset(); });
     });
   }
   const resize = function(event, callback, sizePX){
