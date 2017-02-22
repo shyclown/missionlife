@@ -1,0 +1,67 @@
+<style>
+  .folderWindow{
+    height: 120px;
+    position: relative;
+
+  }
+  .folderTopPanel{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #FFF;
+    padding: 16px;
+  }
+  .underContent{
+  }
+  .inline{
+    display: inline-block;
+    padding: 0px;
+  }
+  .folderTree{
+    background-color: #FFF;
+    box-sizing: border-box;
+    width: 250px;
+    float: left;
+    padding: 16px;
+    height: 300px;
+    overflow-y: scroll;
+  }
+  .folderOpen{
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+    background-color: #EAEAEA;
+    float: right;
+    padding: 16px;
+    height: 300px;
+    overflow-y:scroll;
+  }
+
+
+</style>
+<div class="folderWindow" folders-data='folders'>
+  <div class="folderTopPanel">
+    <path-to-folder></path-to-folder>
+    <add-folder></add-folder>
+  </div>
+  <div class="underContent">
+    <div class="folderTree">
+      <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
+    </div>
+  <div class="folderOpen">
+    <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">
+      <button class="name" ng-click="openFolder(folder)">
+        <i class="fa fa-folder"></i> {{folder.name}}</button>
+    </div>
+    <div class="ArticleLine" ng-repeat="article in articles">
+      <button class="name" ng-click="call('article', article.id)">
+        <i class="fa fa-file-text-o"></i> {{article.header}}
+      </button>
+    </div>
+    <div class="fileLine" ng-repeat="file in files">
+      <button class="name" ng-click="call('file', file.id)">
+      <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
+      </button>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+  </div>
+</div>

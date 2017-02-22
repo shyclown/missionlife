@@ -1,43 +1,57 @@
-app.directive('popSelectFolder',['$http', 'Folder', function($http, Folder) {
+app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function($http, Folder, Article, FileService) {
   return {
     restrict: 'E',
     scope:{
     },
-    templateUrl: '/missionlife/app/template/pop_select_folder.html',
+    templateUrl: '/missionlife/app/template/pop_select.html',
     link: function (scope, element, attrs)
     {
-      scope.currentFolder = null;
-      scope.articleWindow = false;
-      scope.openArticle = {
-        new: true,
-        header: 'No Article',
-        content: 'No Article',
-        state: 0 };
-        console.log(scope.openArticle);
-      scope.newArticle = {};
+      scope.setup = scope.$eval(attrs.setup);
+      scope.callbackFn = scope.$eval(attrs.callbackFn);
 
-      const callbackFn = scope.$eval(attrs.callbackFn);
-      const popSetup = {
-        articles: false,
-        article_click: false,
-        files: false,
-        file_click: false,
-        submit: true
+      scope.call = function(type, obj){
+        console.log('type', type);
+        console.log('obj', obj);
+
       }
-
-      // Watch Folders
       scope.folders;
+      scope.articles;
+      scope.files;
+
+      scope.currentFolder = null;
       scope.currentParents = [];
       scope.openFoldersInTree = [];
+      scope.folderWindow = false;
+      scope.editFolder = {};
+      scope.new_folder = {};
+
+      scope.clickItem = function(type, item){
+        scope.closeSelect();
+        scope.callbackFn(type, item);
+      }
 
       scope.$watch(
         function(){ return Folder.allFolders; },
         function(){ scope.folders = Folder.allFolders;},
       true);
-      // Load Folders
       Folder.select_all();
-      // Load Articles in Folder
 
+      scope.$watch(
+        function(){ return Article.selected; },
+        function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
+      true);
+      Article.load();
+
+      const loadFiles = function(){
+        FileService.selectByFolder({
+          folder: 'folder',
+          folder_id: scope.currentFolder.id,
+          limit_min: 0,
+          limit_max: 35
+        },function(res){
+          scope.files = res.data.result;
+        });
+      }
 
       const stopDefault = function(){
         event.stopPropagation();
@@ -69,11 +83,11 @@ app.directive('popSelectFolder',['$http', 'Folder', function($http, Folder) {
             scope.openFoldersInTree.push(folder.id);
           }
         }
+        Article.Folder = scope.currentFolder;
+        Article.load();
       }
 
       /* Folder Editor Window */
-      scope.folderWindow = false;
-      scope.editFolder = {};
       scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
       scope.setEditFolder = function(folder){
         stopDefault(event);
@@ -89,7 +103,7 @@ app.directive('popSelectFolder',['$http', 'Folder', function($http, Folder) {
         return folder.id == scope.currentFolder.id;
       }
       // New Folder Object
-      scope.new_folder = {};
+
       scope.saveNewFolder = function(){
         let data = scope.new_folder;
         data.parent = scope.currentFolder;
