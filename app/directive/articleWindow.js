@@ -3,14 +3,15 @@
 app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', function($http, Folder, Article, Form, uploadDroppedToArticle) {
   return {
     restrict: 'E',
-    scope:{ currentFolder: '=', openArticle: '=', articleWindow :'=' },
+    scope:{
+      currentFolder: '=',
+      openArticle: '=',
+      articleWindow :'='
+    },
     templateUrl: '/missionlife/app/template/article_window.html',
     link: function (scope, element, attrs)
     {
-      // url to place which handles file upload to article
       const targetUrl = '/missionlife/system/ng/files.php';
-      scope.header = scope.openArticle.header || 'new Header';
-      scope.content = scope.openArticle.content || 'new Content';
       scope.logPanel = 'log panel';
       scope.elArticleHeader = document.getElementById('articleEditorHeader');
       scope.elArticleContent = document.getElementById('articleEditorContent');
@@ -74,14 +75,13 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.filter_str;
       scope.open = function(item){ return scope.isOpen == item; }
       scope.show = function(item){ scope.isOpen = item; }
-      scope.filter = function(){
-
-        console.log(scope.filter_str);
-      }
+      scope.filter = function(){ console.log(scope.filter_str);  }
       scope.filterArray = function(arr, prop){
-        return arr.filter(function(item){
-          return item[prop].match(scope.filter_str);
-        });
+        if(arr){
+          return arr.filter(function(item){
+            return item[prop].match(scope.filter_str);
+          });
+        }
       }
 
       scope.closeWithoutSave = function(){

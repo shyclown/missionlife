@@ -161,6 +161,16 @@ class File
             else{ return false; exit; }
           }
         }
+        if(isset($_POST['folder_id'])){
+            $folder_file_data = array(
+              'folder_id' => $_POST['folder_id'],
+              'file_id' => $store['file_id']
+            );
+            $attach = $this->attach_to_garant($folder_file_data);
+            if($attach){ return $store; exit(); }
+            else{ return false; exit; }
+
+        }
 
         return $store;
       }
@@ -189,6 +199,52 @@ class File
                       WHERE f.id = ?";
     $params = array('ii', $data['file_id'], $data['file_id']);
     return $this->db->query($sql, $params);
+  }
+
+  public function select_by_folder($data){
+    // default VALUES
+    $order = 'DESC';
+    $search = '';
+    $sort_by = 'file_name';
+    $folder = 'all';
+    $where_folder_id = '';
+
+    if(isset($data['order'])){ $order = $data['order'];};
+    if(isset($data['sort_by'])){ $sort_by = $data['sort_by'];};
+    if(isset($data['search']) && $data['search'] !=""){ $search = "WHERE `file_name` LIKE ?"; }
+    if(isset($data['folder'])){ $folder = $data['folder'];};
+
+    if($folder == 'all'){ $str = ""; }
+    else{ $str = "INNER JOIN `ml_".$data['folder']."_file` af ON af.file_id = f.id"; }
+    if(isset($data['folder_id']) && $search == ''){
+      $where_folder_id = "WHERE `folder_id` = ?";
+    }else{
+      $where_folder_id = "AND `folder_id` = ?";
+    }
+
+    $sql = "SELECT SQL_CALC_FOUND_ROWS *
+            FROM  `ml_file` f
+            ".$str." ".$search." ".$where_folder_id."
+            ORDER BY ".$sort_by." ".$order." LIMIT ? , ?";
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    // params
+    if($search == '' && $where_folder_id == ''){
+      $params = array('ii', $data['limit_min'], $data['limit_max']);
+    }
+    else if($search != '' && $where_folder_id == ''){
+      $srch = '%'.$data['search'].'%';
+      $params = array('sii', $srch , $data['limit_min'], $data['limit_max']);
+    }
+    else if($search == '' && $where_folder_id != ''){
+      $params = array('iii', $data['folder_id'] , $data['limit_min'], $data['limit_max']);
+    }
+    else if($search != '' && $where_folder_id != ''){
+      $srch = '%'.$data['search'].'%';
+      $params = array('siii', $srch , $data['folder_id'], $data['limit_min'], $data['limit_max']);
+    }
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
 
   public function get_files_by_selected($data){

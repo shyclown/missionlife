@@ -1,4 +1,8 @@
+
 <div class="fileLine">
-  <i class="fa fa-file"></i> {{folder.name}}
-  <div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>
+  <button class="name">
+  <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
+  </button>
+  <button class="edit"><i class="fa fa-cog"></i></button>
+  <!--<div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>-->
 </div>

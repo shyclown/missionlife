@@ -3,57 +3,34 @@
   padding: 4px;
 }
 .addArticle{
-  background-color: #09F;
+  background-color: #666;
   color: #FFF;
   padding: 8px;
+  margin-bottom: 8px;
 }
-
-
-.ArticleLine{
-  width: 100%;
-  background-color: #EAEAEA;
-  box-sizing: border-box;
-  height: 24px;
-}
-.ArticleLine > .delete{
-  display: block;
-  box-sizing: border-box;
-  padding: 4px;
-  font-size: 16px;
-  height: 24px;
-  background-color: #09F;
-  color: white;
-  float: right;
-}
-
-.ArticleLine > .name{
-  box-sizing: border-box;
-}
-.folderLine {
-  display: block;
-  box-sizing: border-box;
+.folderOpen .line{
   height: 24px;
   padding: 0px;
 }
-.folderLine > .delete{
-  display: block;
-  box-sizing: border-box;
-  padding: 4px;
-  font-size: 16px;
+.folderOpen button.name{
+  float: left;
+  width: calc(100% - 24px);
   height: 24px;
-  background-color: red;
-  color: white;
-  float: right;
+  text-align: left;
+  overflow: hidden;
+  font-size: 16px;
+  padding: 0px;
+  border: none;
+  white-space: nowrap;
+  background: none;
 }
-.folderLine > .edit{
-  display: block;
-  box-sizing: border-box;
-  padding: 4px;
-  font-size: 16px;
-  height: 24px;
-  background-color: #09F;
-  color: white;
+.folderOpen button.edit{
+  text-align: center;
   float: right;
+  width: 24px;
+  height: 24px;
+  padding: 0px;
+  border: none;
 }
 
 .folder{

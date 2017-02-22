@@ -31,10 +31,10 @@ app.directive('isDropArea',['$http',function($http) {
     restrict: 'A',
     link: function (scope, element, attrs)
     {
-      //console.log('scope check', scope.edit_article);
-      //const targetUrl = '/missionlife/system/ng/upload_file.php';
-      const onDropFn = scope.$eval(attrs.isDropArea);
-      //const progressFn = scope.$eval(attrs.customOnUpdate);
+
+      console.log(scope);
+      //const onDropFn = scope.uploadFile;
+
       const stopDefault = function(){
         event.stopPropagation();
         event.preventDefault();
@@ -44,8 +44,10 @@ app.directive('isDropArea',['$http',function($http) {
       element.bind('dragleave', stopDefault );
       element.bind('drop', function(event)
       {
+
         stopDefault(event);
-        onDropFn();
+        scope.uploadFile(event)
+        //onDropFn();
       });
     }
   };

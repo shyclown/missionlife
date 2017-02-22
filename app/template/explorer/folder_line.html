@@ -1,5 +1,10 @@
-<div class="folderLine" ng-click="openFolder(folder)">
-  <i class="fa fa-folder"></i> {{folder.name}}
+<div class="folderLine line" >
+  <button class="name" ng-click="openFolder(folder)">
+    <i class="fa fa-folder"></i> {{folder.name}}</button>
+  <button class="edit" ng-click="setEditFolder(folder)">
+    <i class="fa fa-cog"></i></button>
+  <!--
   <div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>
   <div class="edit" ng-click="setEditFolder(folder)"><i class="fa fa-pencil"></i> edit </div>
+  -->
 </div>

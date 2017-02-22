@@ -46,14 +46,16 @@
     <div class="folderTree">
       <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
     </div>
-  <div class="folderOpen">
+  <div class="folderOpen" is-drop-area="uploadFile()">
     <add-article></add-article>
     <folder-line ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ></folder-line>
     <article-line ng-repeat="article in articles"></article-line>
-    <file-line ng-repeat="article in articles"></file-line>
+    <file-line ng-repeat="file in files"></file-line>
   </div>
   <div style="clear:both"></div>
   </div>
 
 </div>
-  <edit-folder-window ng-show="folderWindow" ></edit-folder-window>
+<edit-folder-window ng-show="folderWindow" ></edit-folder-window>
+<div style="clear:both"></div>
+<article-window current-folder='currentFolder' open-Article='openArticle' article-Window="articleWindow" ng-show="articleWindow"></article-window>

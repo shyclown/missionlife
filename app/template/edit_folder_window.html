@@ -57,7 +57,7 @@
   border: none;
   border-radius: 8px;
   outline: none;
-  
+
 }
 .positionBtn.selected{
   background-color: #09F;
@@ -76,7 +76,7 @@
     <button class="positionBtn" ng-class="(editFolder.position == 'top' ? 'selected' : '')" ng-click="setPosition('top')" >top</button>
     <button class="positionBtn" ng-class="(editFolder.position == 'side' ? 'selected' : '')" ng-click="setPosition('side')" >side</button>
     <button class="positionBtn" ng-class="(editFolder.position == '' ? 'selected' : '')" ng-click="setPosition('')" >none</button>
-
+    <button class="delete" ng-click="removeFolder(editFolder)">delete</button>
   </div>
   <div class="Footer">Footer</div>
 </div>

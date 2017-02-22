@@ -1,4 +1,7 @@
 <div class="ArticleLine">
-  <div class="name" ng-click="selectArticle(article)"><i class="fa fa-file-text-o"></i> {{article.header}}</div>
-  <div class="delete" ng-click="deleteArticle(article)"><i class="fa fa-trash"></i> delete</div>
+  <button class="name" ng-click="selectArticle(article)">
+    <i class="fa fa-file-text-o"></i> {{article.header}}
+  </button>
+  <button class="edit" ng-click="deleteArticle(article)">
+    <i class="fa fa-cog"></i></button>
 </div>
