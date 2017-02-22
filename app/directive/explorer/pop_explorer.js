@@ -51,21 +51,23 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
           limit_min: 0,
           limit_max: 35
         },function(res){
+          console.log(res);
           scope.files = res.data.result;
         });
       }
 
       const afterUploadOne = function(response, update){
+        console.log('after',response);
         FileService.attachToFolder({
           file_id: response.data.file_id,
           folder_id: scope.currentFolder.id
         }, function(res){
+          console.log('after upload one',res);
           if(update){ afterUploadAll(); }
           console.log('added to folder');
         })
       }
       const afterUploadAll = function(response){
-        console.log('loadFiles');
         loadFiles();
       }
 
@@ -80,6 +82,7 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
           let res = uploadDropped.bind(null, file,
             function(response){},
             function(response){
+              console.log(response);
               completed++;
               let update = completed == all;
               afterUploadOne(response, update);
