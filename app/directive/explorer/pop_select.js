@@ -144,7 +144,28 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
       scope.updatePosition = function(folder){ stopDefault(event);
         Folder.updatePosition(folder);
       }
+
       // CSS Style
+      scope.fileTypeClass = function(type){
+        let str = '';
+        switch (type) {
+          case 'pdf' :
+            str = 'fa fa-file-pdf-o';
+            break;
+          case 'doc' :
+            str = 'fa fa-file-word-o';
+            break;
+          case 'png' :
+            str = 'fa fa-file-image-o';
+            break;
+          case 'txt' :
+            str = 'fa fa-file-text-o';
+            break;
+          default:
+            str = 'fa fa-file-o'
+        }
+        return str;
+      }
       scope.currentOpen = function(folder){
         return (folder.id == scope.openFolder.id) ? 'currentFolder' : '';
       }

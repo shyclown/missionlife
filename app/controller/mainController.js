@@ -3,14 +3,12 @@ app.controller('mainController',function($http, Data , $scope, $route, $routePar
   $scope.page = {};
   /* Page Data */
   Data.select({ name:'settings' },function(res){
-    console.log(res);
-    if(!res.data){
-      console.log('epty');
+    if(!res.data[0]){
       $scope.settings = {
             name: 'settings',
             data:{
-            page_name: 'Default page Name',
-            page_motto: 'Default under Name'
+            page_name: 'Name',
+            page_motto: 'Name'
             }
           }
           Data.insert( $scope.settings , function(res){

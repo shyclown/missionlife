@@ -24,6 +24,10 @@ if(isset($ng_data['action']))
 {
   if ( method_exists($file, $ng_data['action']) ){
      echo json_encode($file->{$ng_data['action']}($ng_data));
+     
+  }
+  else{
+    echo "invalid method";
   }
 }
 ?>

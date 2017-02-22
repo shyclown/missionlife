@@ -12,7 +12,7 @@ app.service('FileService',function(Ajax, customAjax){
   }
   this.selectByData = function(data,callback){
     data.action = 'get_files_by_selected';
-    Ajax.call(data, url, callback);
+    customAjax(url, data, false, callback);
   }
   this.selectByArticle = function(data, callback){
     data.action = 'select_by_article';
@@ -24,7 +24,7 @@ app.service('FileService',function(Ajax, customAjax){
   }
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
-    Ajax.call(data, url, callback);
+    customAjax(url, data, false, callback);
   }
   this.search = function(data, callback){
     data.action = 'search';
@@ -64,7 +64,7 @@ app.service('FileService',function(Ajax, customAjax){
   // require folder_id
   this.attachToFolder = function(data, callback){
     data.action = 'attach_to_folder';
-    Ajax.call(data,url,callback);
+    customAjax(url, data, false, callback);
   }
   // Update All
   this.update = function(data, callback){
