@@ -1,19 +1,25 @@
 app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function($http, Folder, Article, FileService) {
   return {
     restrict: 'E',
-    scope:{
-    },
+    scope:{},
     templateUrl: '/missionlife/app/template/pop_select.html',
     link: function (scope, element, attrs)
     {
-      scope.setup = scope.$eval(attrs.setup);
-      scope.callbackFn = scope.$eval(attrs.callbackFn);
-
+      // in parent scope
+      scope.setup = scope.$parent.$eval(attrs.setup);
+      scope.callbackFn = scope.$parent.$eval(attrs.callbackFn);
+      console.log('setup',scope.setup);
       scope.call = function(type, obj){
+        if(type == 'file') { scope.selectedName = '/ '+obj.file_name; }
+        if(type == 'article') { scope.selectedName = '/ '+obj.header; }
+        scope.selected = {
+          type: type,
+          obj: obj
+        }
         console.log('type', type);
         console.log('obj', obj);
-
       }
+
       scope.folders;
       scope.articles;
       scope.files;
@@ -25,10 +31,20 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
       scope.editFolder = {};
       scope.new_folder = {};
 
+      scope.selected = {};
+      scope.selectedName = '';
+      scope.getName = function(item){
+        let displayName;
+
+
+        return displayName;
+      }
+
       scope.clickItem = function(type, item){
         scope.closeSelect();
         scope.callbackFn(type, item);
       }
+      console.log(scope.setup);
 
       scope.$watch(
         function(){ return Folder.allFolders; },
@@ -83,6 +99,8 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
             scope.openFoldersInTree.push(folder.id);
           }
         }
+        scope.selected = {};
+        scope.selectedName = '';
         Article.Folder = scope.currentFolder;
         Article.load();
       }
@@ -129,6 +147,26 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
       // CSS Style
       scope.currentOpen = function(folder){
         return (folder.id == scope.openFolder.id) ? 'currentFolder' : '';
+      }
+      scope.fileTypeClass = function(type){
+        let str = '';
+        switch (type) {
+          case 'pdf' :
+            str = 'fa fa-file-pdf-o';
+            break;
+          case 'doc' :
+            str = 'fa fa-file-word-o';
+            break;
+          case 'png' :
+            str = 'fa fa-file-image-o';
+            break;
+          case 'txt' :
+            str = 'fa fa-file-text-o';
+            break;
+          default:
+            str = 'fa fa-file-o'
+        }
+        return str;
       }
     }
   };

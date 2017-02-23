@@ -35,10 +35,15 @@
     overflow-y:scroll;
   }
 
-
+button.submit{
+  background-color: #09F;
+  color: #FFF;
+  padding: 4px 8px;
+  border: none;
+}
 </style>
 <div class="folderWindow" folders-data='folders'>
-  <div class="folderTopPanel">
+  <div class="folderTopPanel" ng-if="setup.createFolder">
     <path-to-folder></path-to-folder>
     <add-folder></add-folder>
   </div>
@@ -51,16 +56,55 @@
       <button class="name" ng-click="openFolder(folder)">
         <i class="fa fa-folder"></i> {{folder.name}}</button>
     </div>
-    <div class="ArticleLine" ng-repeat="article in articles">
-      <button class="name" ng-click="call('article', article.id)">
+    <div class="ArticleLine" ng-repeat="article in articles" ng-if="setup.articles">
+      <button class="name" ng-click="call('article', article)">
         <i class="fa fa-file-text-o"></i> {{article.header}}
       </button>
     </div>
-    <div class="fileLine" ng-repeat="file in files">
-      <button class="name" ng-click="call('file', file.id)">
+    <div class="fileLine" ng-repeat="file in files" ng-if="setup.files">
+      <button class="name" ng-click="call('file', file)">
       <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
       </button>
     </div>
+  </div>
+  <style>
+  .under{
+    box-sizing: border-box;
+    width: calc(100%);
+    background-color: #FFF;
+    padding: 16px;
+  }
+  .selectedPath{
+    box-sizing: border-box;
+    height: 24px;
+    float: left;
+    width: calc(100% - 120px);
+    background-color: #EAEAEA;
+    line-height: 16px;
+    padding: 4px 8px;
+  }
+  .selectedPath .inline{
+    line-height: 16px;
+    background-color: #EAEAEA;
+  }
+  .under button.submit{
+    background-color: #09F;
+    color: #FFF;
+    padding: 4px 8px;
+    border: none;
+    float: right;
+  }
+
+  </style>
+    <div style="clear:both"></div>
+  <div class="under">
+    <div class="selectedPath">
+    <path-to-folder></path-to-folder>{{selectedName}}
+    </div>
+    <button class="submit" ng-click="SubmitFn(selectedItem)">
+    <i class="fa fa-check"></i> Submit
+    </button>
+      <div style="clear:both"></div>
   </div>
   <div style="clear:both"></div>
   </div>

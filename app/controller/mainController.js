@@ -33,4 +33,14 @@ app.controller('mainController',function($http, Data , $scope, $route, $routePar
     $scope.settings.data = $scope.page;
     Data.update($scope.settings,function(res){console.log(res.data);});
   }
+  $scope.selectArticle = {
+    imageSelect: false,
+    articles : true,
+    files: false,
+    selectFolder: false,
+    selectArticleOrFile: true,
+    createFolder: false
+
+
+  }
 });

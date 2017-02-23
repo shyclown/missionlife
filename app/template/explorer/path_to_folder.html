@@ -1,3 +1,3 @@
-<div id="dropRoot" class="inline" ng-click="openFolder(null)">missionlife /</div>
+<div class="inline" ng-click="openFolder(null)">missionlife /</div>
 <div class="inline" ng-repeat="parent in currentParents" ng-click="openFolder(parent)">{{parent.name}} /</div>
 <div class="inline" ng-if="currentFolder != null">{{currentFolder.name}}</div>
