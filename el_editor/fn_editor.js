@@ -175,7 +175,14 @@ var getTopEmpty = function(oElement,oRoot)
     else{ return false };
   }
 }
-
+const hasCustomParent = function(oElement, oRoot){
+  while(oElement.parentNode != oRoot){
+    if(Editor.isCustom(oElement.parentNode)){ return true; }
+    if(!oElement.parentNode){ return false; } // has not parent in root
+    oElement = oElement.parentNode;
+  }
+  return false;
+}
 
 var getParentInRoot = function(oElement,oRoot){
   while(oElement.parentNode != oRoot )

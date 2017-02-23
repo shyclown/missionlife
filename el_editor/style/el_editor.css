@@ -120,6 +120,10 @@ code > .code_line{
   background-color: #FAFAFA;
   margin-bottom: 2px;
 }
+.content_wrap a{
+  background-color: #EAEAEA;
+  padding: 0px 4px;
+}
 .placeholder{
   background-color: #EFEFEF;
   padding: 16px;

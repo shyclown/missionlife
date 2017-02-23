@@ -24,7 +24,8 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
       }
       scope.submitFn = function(){
         if(!scope.selected){ alert('Nothing Was Selected'); }
-        else{ scope.selectFn(scope.selected); }
+        else{ console.log(scope.selected);
+          scope.selectFn(scope.selected); }
         scope.cancelWindow();
       }
 

@@ -208,9 +208,10 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       }
       scope.addLinkToFile = function(file){
         loadSelection();
+        console.log(file);
         let link = document.createElement('a');
         link.className = 'custom';
-        link.href = "uploads/"+file.src;
+        link.href = "uploads/"+file.file_src;
         link.innerHTML = file.file_name;
         scope.area.insertAfterSelection(link);
       }
