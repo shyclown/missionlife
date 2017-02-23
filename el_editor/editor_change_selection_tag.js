@@ -93,6 +93,10 @@ Editor.changeSelectionTag = function(oTag, oRoot)
     var rootStart = getParentInRoot(changeStartNode,oRoot);
     var rootEnd = getParentInRoot(changeEndNode,oRoot);
 
+    // because of ability editing text in custom elements
+    if(Editor.isCustom(rootStart) && rootStart == rootEnd){ return false; };
+
+
     var placeNodes = [];
     var placeAfter = rootStart;
     var currentNode = rootStart;
@@ -101,7 +105,9 @@ Editor.changeSelectionTag = function(oTag, oRoot)
     while(controlElement) {
       console.log('current node',currentNode);
       nextElement = currentNode.nextSibling;
+
       if(!Editor.isCustom(currentNode)){
+        console.log('element is not custom');
         var nodes = getAllTextNodes(currentNode);
 
 

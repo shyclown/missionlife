@@ -3,18 +3,36 @@ Editor.backspaceEvent = function (oSelection, oRoot)
 {
   if(!oSelection.isCollapsed){
     event.preventDefault();
+    var oNode = oSelection.focusNode;
+    var rootNode = getParentInRoot(oNode,oRoot);
+    console.log(Editor.isCustom(rootNode));
+    /*
+    If selection is not colapsed we use custom function which handles
+    custom tags as expected.
+    */
     Editor.deleteRange(oRoot);
   }
   else if( oSelection.isCollapsed && oSelection.focusOffset == 0 )
   {
     event.preventDefault();
+    /*
+    If selection is collapsed we check if cusor is next to tags
+    and we use custom actions
+    */
 
-
+    // focus node is node in which is carret of selection, since its collapsed
+    // focus and anchor node should be the same
     var oNode = oSelection.focusNode;
-    var rootNode = getParentInRoot(oNode,oRoot);
-    if(oNode == oRoot){  console.log('error: selected node is root node'); return false; }
 
-    // if operating in code
+    var rootNode = getParentInRoot(oNode,oRoot);
+    // sometimes happens that selection node is root node,
+    // this happens when tag around is missing for some reason
+    if(oNode == oRoot){
+      console.log('error: selected node is root node'); return false;
+    }
+
+    // if we are inside CODE node
+
     if(isOfTag(rootNode,'code'))
     {
       if(getFirstTextNode(rootNode) == oNode){
@@ -29,6 +47,11 @@ Editor.backspaceEvent = function (oSelection, oRoot)
         newCaretPosition(oSelection, oPrevText, oPosition);
       }
     }
+    if(Editor.isCustom(rootNode)){
+      console.log('custom node', rootNode.tagName);
+      return false;
+    }
+    // in other types of nodes
     else{
       var emptyNode = !hasTextInside(oNode);
       var lastNodeInTree = oNode == oRoot.firstChild && oNode == oRoot.lastChild;

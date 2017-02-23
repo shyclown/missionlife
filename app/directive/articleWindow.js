@@ -128,13 +128,69 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
           Article.load();
         });
         Editor.attachImageControls.bind(scope.area)();
+        }
+
+      /*
+      Select Items
+      Needed for Select Pop up window
+      */
+      // function that will run after selection
+      scope.selectFn = function(selected){
+        console.log(selected);
+        scope.addLinkToArticle(selected.obj);
       }
+      // setup of Window
+      const selectArticle = {
+        imageSelect: false,
+        articles : true,
+        files: false,
+        selectFolder: false,
+        selectArticleOrFile: true,
+        createFolder: false
+      }
+      // setup of Window
+      const selectFile = {
+        imageSelect: false,
+        articles : false,
+        files: true,
+        selectFolder: false,
+        selectArticleOrFile: true,
+        createFolder: false
+      }
+      scope.selectArticlePop = function(){
+        storeSelection();
+        scope.setupSelect = selectArticle;
+        scope.selectFn = function(selected){ scope.addLinkToArticle(selected.obj); }
+        scope.showPopSelect();
+      }
+      scope.selectFilePop = function(){
+        storeSelection();
+        scope.setupSelect = selectFile;
+        scope.selectFn = function(selected){
+          console.log(selected);
+          scope.addLinkToFile(selected.obj); }
+        scope.showPopSelect();
+      }
+      // Window is showed if true
+      scope.popSelect = false;
+      scope.cancelPopSelect = function(){ scope.popSelect = false;}
+      scope.showPopSelect = function(){  scope.popSelect = true;}
 
       /*
       Link Element for forms
       */
+      let storedRange = {};
+      function storeSelection(){
+        oSelection = document.getSelection();
+        storedRange = oSelection.getRangeAt(0);
+      }
+      function loadSelection() {
+        let oSelection = document.getSelection();
+        oSelection.removeAllRanges();
+        oSelection.addRange(storedRange);
+      }
       scope.addLinkToForm = function(form){
-        console.log(document.getSelection());
+        loadSelection();
         let link = document.createElement('a');
         link.className = 'custom';
         link.href = "form/"+form.id;
@@ -142,6 +198,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         scope.area.insertAfterSelection(link);
       }
       scope.addLinkToArticle = function(article){
+        loadSelection();
         console.log(document.getSelection());
         let link = document.createElement('a');
         link.className = 'custom';
@@ -149,8 +206,17 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         link.innerHTML = article.header;
         scope.area.insertAfterSelection(link);
       }
+      scope.addLinkToFile = function(file){
+        loadSelection();
+        let link = document.createElement('a');
+        link.className = 'custom';
+        link.href = "uploads/"+file.src;
+        link.innerHTML = file.file_name;
+        scope.area.insertAfterSelection(link);
+      }
 
       /* Articles to be added */
+      /*
       scope.articlesList = [];
       scope.searchArticle = '';
       scope.loadArticleList = function(){
@@ -167,6 +233,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.forms = [];
       Form.select_all(function(res){ scope.forms = res.data});
       scope.loadArticleList();
+      */
     }
   };
 }]);

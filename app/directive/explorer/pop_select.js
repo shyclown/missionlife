@@ -6,14 +6,14 @@ Select item to callback function provided
 app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function($http, Folder, Article, FileService) {
   return {
     restrict: 'E',
-    scope:{},
+    scope:{
+      cancelWindow : '=',
+      selectFn: '=',
+      setup: '='
+    },
     templateUrl: '/missionlife/app/template/pop_select.html',
     link: function (scope, element, attrs)
     {
-      // in parent scope
-      scope.setup = scope.$parent.$eval(attrs.setup);
-      scope.callbackFn = scope.$parent.$eval(attrs.callbackFn);
-      console.log('setup',scope.setup);
       scope.call = function(type, obj){
         if(type == 'file') { scope.selectedName = '/ '+obj.file_name; }
         if(type == 'article') { scope.selectedName = '/ '+obj.header; }
@@ -22,24 +22,33 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
           obj: obj
         }
       }
+      scope.submitFn = function(){
+        if(!scope.selected){ alert('Nothing Was Selected'); }
+        else{ scope.selectFn(scope.selected); }
+        scope.cancelWindow();
+      }
 
       scope.folders;
       scope.articles;
       scope.files;
 
-      scope.currentFolder = null;
-      scope.currentParents = [];
-      scope.openFoldersInTree = [];
-      scope.folderWindow = false;
-      scope.editFolder = {};
-      scope.new_folder = {};
+      const reset = function(){
+        console.log('reset');
+        scope.currentFolder = null;
+        scope.currentParents = [];
+        scope.openFoldersInTree = [];
+        scope.folderWindow = false;
+        scope.editFolder = {};
+        scope.new_folder = {};
 
-      scope.selected = {};
-      scope.selectedName = '';
+        scope.selected = {};
+        scope.selectedName = '';
+
+      }
+      reset();
+
       scope.getName = function(item){
         let displayName;
-
-
         return displayName;
       }
 
@@ -47,19 +56,30 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
         scope.closeSelect();
         scope.callbackFn(type, item);
       }
-      console.log(scope.setup);
 
       scope.$watch(
         function(){ return Folder.allFolders; },
         function(){ scope.folders = Folder.allFolders;},
       true);
       Folder.select_all();
-
+      scope.$watch(
+        function(){ return scope.currentFolder; },
+        function(){
+          if(scope.currentFolder != null ){
+            loadFiles();
+            Article.load();
+          }
+          else {
+            scope.files = [];
+            scope.articles = [];
+          }
+        },
+      true);
       scope.$watch(
         function(){ return Article.selected; },
         function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
       true);
-      Article.load();
+
 
       const loadFiles = function(){
         FileService.selectByFolder({
@@ -76,6 +96,7 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
         event.stopPropagation();
         event.preventDefault();
       }
+      scope.cancel = function(){ stopDefault();  scope.cancelWindow(); }
       const inFolderArray = function(id){
         let pos = scope.openFoldersInTree.indexOf(id);
         return {  open: pos >= 0, position: pos };
@@ -172,26 +193,6 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
       }
       scope.currentOpen = function(folder){
         return (folder.id == scope.openFolder.id) ? 'currentFolder' : '';
-      }
-      scope.fileTypeClass = function(type){
-        let str = '';
-        switch (type) {
-          case 'pdf' :
-            str = 'fa fa-file-pdf-o';
-            break;
-          case 'doc' :
-            str = 'fa fa-file-word-o';
-            break;
-          case 'png' :
-            str = 'fa fa-file-image-o';
-            break;
-          case 'txt' :
-            str = 'fa fa-file-text-o';
-            break;
-          default:
-            str = 'fa fa-file-o'
-        }
-        return str;
       }
     }
   };

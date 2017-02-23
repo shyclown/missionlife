@@ -25,6 +25,7 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
         submit: true
       }
 
+
       // Watch Folders
       scope.folders;
       scope.currentParents = [];

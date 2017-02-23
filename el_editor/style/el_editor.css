@@ -73,7 +73,7 @@ user-select: none;
   background-color: #EAEAEA;
 }
 .content_wrap{
-  font-family: georgia,'Raleway',sans-serif;
+  font-family: 'Source Sans Pro',sans-serif;
   max-height: 900px;
   overflow: scroll;
   clear: both;
@@ -88,11 +88,11 @@ user-select: none;
   background-color: blue;
 }
 h2{
-  font-family: georgia,'Raleway',sans-serif;
+  font-family: 'Source Sans Pro',sans-serif;
   font-style: italic;
   font-weight: 500;
   font-size: 24px;
-  border-top: 3px solid #09F;
+  border-top: 3px solid #EAEAEA;
   padding-top: 12px;
   margin-top: 16px;
 }
@@ -115,6 +115,10 @@ code > .code_line{
   background-color: #E0E0E0;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.content_wrap p{
+  background-color: #FAFAFA;
+  margin-bottom: 2px;
 }
 .placeholder{
   background-color: #EFEFEF;

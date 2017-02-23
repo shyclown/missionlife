@@ -1,6 +1,17 @@
 <style>
+  .blanket{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
   .folderWindow{
     display: block;
+    max-width: 550px;
+    margin: 50px auto;
     position: relative;
     -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
@@ -66,11 +77,13 @@ button.submit{
   color: white;
 
 }
+
 </style>
-<div class="folderWindow" folders-data='folders'>
+<div class="blanket" ng-click="cancel()">
+<div class="folderWindow" folders-data='folders' ng-click="$event.stopPropagation();">
   <div class="topName">
     Select PopUp
-    <button class="closeWindow"><i class="fa fa-times"></i></button>
+    <button class="closeWindow" ng-click="cancel()"><i class="fa fa-times"></i></button>
   </div>
   <div class="folderTopPanel" ng-if="setup.createFolder">
     <path-to-folder></path-to-folder>
@@ -130,7 +143,7 @@ button.submit{
     <div class="selectedPath">
     <path-to-folder></path-to-folder>{{selectedName}}
     </div>
-    <button class="submit" ng-click="SubmitFn(selectedItem)">
+    <button class="submit" ng-click="submitFn(selectedItem)">
     <i class="fa fa-check"></i> Submit
     </button>
       <div style="clear:both"></div>
@@ -138,4 +151,5 @@ button.submit{
   <div style="clear:both"></div>
   </div>
     <div style="clear:both"></div>
-</div>
+</div><!-- end of window -->
+</div><!-- end of blanket -->

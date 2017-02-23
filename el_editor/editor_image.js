@@ -10,6 +10,7 @@ Editor.imageFigure = function(source, caption, root)
 
   let figureImage = new Image();
   let figureCaption = Editor.fn.el('figcaption',css.figure_text);
+  figureCaption.setAttribute('contenteditable', true);
   figureCaption.innerHTML = caption;
   figureImage.src = source;
   figure.className = css.image;

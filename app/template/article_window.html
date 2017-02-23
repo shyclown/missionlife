@@ -27,24 +27,11 @@
     <div class="box">
       <div class="flexBox">
       <button ng-click="show('all')" class="btn" ng-class="(isOpen=='all')?'selected':''"><i class="fa fa-circle-o"></i> All</button>
-      <button ng-click="show('files')" class="btn" ng-class="(isOpen=='files')?'selected':''"><i class="fa fa-file"></i> Files</button>
-      <button ng-click="show('articles')" class="btn" ng-class="(isOpen=='articles')?'selected':''"><i class="fa fa-file-text-o"></i > Article</button>
+      <button ng-click="selectFilePop()" class="btn" ng-class="(isOpen=='files')?'selected':''"><i class="fa fa-file"></i> Files</button>
+      <button ng-click="selectArticlePop()" class="btn" ng-class="(isOpen=='articles')?'selected':''"><i class="fa fa-file-text-o"></i > Article</button>
       <button ng-click="show('forms')" class="btn" ng-class="(isOpen=='forms')?'selected':''"><i class="fa fa-list"></i> Forms</button>
       </div>
       <!-- be able to search -->
-      <div class="searchPanel">
-        <i class="fa fa-search"></i>
-        <input ng-change="filter()" ng-model="filter_str" class="filter">
-      </div>
-      <!-- actuall list -->
-      <div class="lists">
-      <div ng-if="open('files') || open('all')" class="item unselectable" ng-repeat="file in filterArray(files, 'file_name')" ng-click="addLinkToFile(file)">
-        <i class="fa fa-file"></i> {{file.file_name}}</div>
-      <div ng-if="open('forms') || open('all')" class="item unselectable" ng-repeat="form in filterArray(forms, 'name')" ng-click="addLinkToForm(form)">
-        <i class="fa fa-list"></i> {{form.name}}</div>
-      <div ng-if="open('articles') || open('all')" class="item unselectable" ng-repeat="article in filterArray(articlesList, 'header')" ng-click="addLinkToArticle(article)">
-        <i class="fa fa-file-text-o"></i> {{article.header}}</div>
-      </div>
     </div>
 
 
@@ -58,4 +45,7 @@
   </form>
   <div class="Footer" ng-bind-html="logPanel"></div>
 </div>
+<!-- POP WINDOW -->
+<pop-select setup="setupSelect" select-fn="selectFn" cancel-window="cancelPopSelect" ng-show="popSelect">
+</pop-select>
 </div>

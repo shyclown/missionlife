@@ -33,7 +33,7 @@ body{
 #topnav{
   box-sizing: border-box;
   position: fixed;
-  z-index: 9990;
+  z-index: 9;
   height: 49px;
   overflow: hidden;
   background-color: #FFF;
