@@ -1,3 +1,8 @@
+/*
+POP UP Select
+Select item to callback function provided
+*/
+
 app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function($http, Folder, Article, FileService) {
   return {
     restrict: 'E',
@@ -16,8 +21,6 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
           type: type,
           obj: obj
         }
-        console.log('type', type);
-        console.log('obj', obj);
       }
 
       scope.folders;
@@ -116,6 +119,7 @@ app.directive('popSelect',['$http', 'Folder', 'Article','FileService', function(
         scope.editFolder.position = position;
         scope.updatePosition(scope.editFolder);
       }
+
 
       scope.isOpen = function(folder){
         return folder.id == scope.currentFolder.id;
