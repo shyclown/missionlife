@@ -16,9 +16,9 @@ if(isset($_GET) && isset($_GET['class']))
     $data = file_get_contents("php://input");
     $data = json_decode($data, true); //array
   }
-  if(isset($ng_data['action'])){
+  if(isset($data['action'])){
     if ( method_exists($class, $data['action']) ){
-       echo json_encode($class->{$data['action']}($ng_data));
+       echo json_encode($class->{$data['action']}($data));
     }
   }
 }
