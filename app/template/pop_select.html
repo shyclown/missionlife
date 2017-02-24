@@ -8,7 +8,7 @@
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.2);
   }
-  .folderWindow{
+  .selectWindow{
     display: block;
     max-width: 550px;
     margin: 50px auto;
@@ -54,14 +54,14 @@ button.submit{
   padding: 4px 8px;
   border: none;
 }
-.folderWindow .topName{
+.selectWindow .topName{
   background-color: #FFF;
   box-sizing: border-box;
   height: 32px;
   padding: 8px 16px;
   line-height: 16px;
 }
-.folderWindow .topName button.closeWindow{
+.selectWindow .topName button.closeWindow{
   float: right;
   position: absolute;
   top: 0px;
@@ -80,7 +80,7 @@ button.submit{
 
 </style>
 <div class="blanket" ng-click="cancel()">
-<div class="folderWindow" folders-data='folders' ng-click="$event.stopPropagation();">
+<div class="selectWindow" folders-data='folders' ng-click="$event.stopPropagation();">
   <div class="topName">
     Select PopUp
     <button class="closeWindow" ng-click="cancel()"><i class="fa fa-times"></i></button>
