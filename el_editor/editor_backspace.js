@@ -47,6 +47,7 @@ Editor.backspaceEvent = function (oSelection, oRoot)
         newCaretPosition(oSelection, oPrevText, oPosition);
       }
     }
+    // custom node
     if(Editor.isCustom(rootNode)){
       console.log('custom node', rootNode.tagName);
       return false;
@@ -59,17 +60,32 @@ Editor.backspaceEvent = function (oSelection, oRoot)
 
       if(!firstTextNode && !lastNodeInTree)
       {
-        var oPrevText = getPreviousTextSibling(oNode,oRoot);
-        var oPosition = oPrevText.length;
-        console.log(oNode.textContent);
-        oPrevText.textContent += oNode.textContent;
-        oNode.textContent = '';
-        newCaretPosition(oSelection, oPrevText, oPosition);
-        // if node has previousSibling
-        while(oNode.previousSibling && isOfTag(oNode.previousSibling, 'br') ){
-        removeElement(oNode.previousSibling);
+        let oPrevText = getPreviousTextSibling(oNode, oRoot);
+        let targetRoot = getParentInRoot(oPrevText, oRoot);
+        let sourceRoot = getParentInRoot(oNode, oRoot);
+        let oPosition = oPrevText.length;
+
+        if(Editor.isCustom(targetRoot)){ return false; }
+
+        if(isOfTag(oPrevText,'br')){
+          removeElement(oPrevText, oRoot);
+          oPosition = 0;
+          oText = oNode;
+        } else { oText = oPrevText; }
+
+        let i = 0;
+        while(oNode){
+          let nextNode = oNode.nextSibling;
+          if(isOfTag(oNode.parentNode, 'a')){ oNode = oNode.parentNode; }
+          if(isTextNode(oPrevText) && isTextNode(oNode) && i == 0 && !isOfTag(oNode, 'a')){
+            oPrevText.textContent += oNode.textContent;
+          }
+          else{ targetRoot.appendChild(oNode); }
+          oNode = nextNode;
+          i++;
         }
-        removeElement(  getTopEmpty(oNode, oRoot)  );
+        newCaretPosition(oSelection, oText, oPosition);
+        removeElement(  getTopEmpty(sourceRoot, oRoot)  );
       }
       else if(firstTextNode){
         if(lastNodeInTree || !emptyNode){ return false; }
