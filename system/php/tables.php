@@ -95,6 +95,28 @@
       $this->db->query($sql);
     }
 
+    private function create_table_folder_form(){
+      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_form` (
+              `id` int(8) NOT NULL AUTO_INCREMENT,
+              `folder_id`  int(8) NOT NULL,
+              `form_id` int(8) NOT NULL ,
+              PRIMARY KEY (`id`)
+              ) ENGINE=InnoDB
+              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+      $this->db->query($sql);
+    }
+
+    private function create_table_folder_garant(){
+      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_garant` (
+              `id` int(8) NOT NULL AUTO_INCREMENT,
+              `folder_id`  int(8) NOT NULL,
+              `garant_id` int(8) NOT NULL ,
+              PRIMARY KEY (`id`)
+              ) ENGINE=InnoDB
+              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+      $this->db->query($sql);
+    }
+
     private function create_table_folder(){
       $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
