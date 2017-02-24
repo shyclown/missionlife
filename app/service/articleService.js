@@ -1,6 +1,6 @@
 app.service('Article',function(Ajax){
 
-  const url = '/missionlife/system/ng/article.php';
+  const url = '/missionlife/system/ng/call.php?class=article';
 
   this.onePageSize = 150;
   this.sortByData = 'date';

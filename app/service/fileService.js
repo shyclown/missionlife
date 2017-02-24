@@ -1,6 +1,6 @@
 app.service('FileService',function(Ajax, customAjax){
 
-  const url = '/missionlife/system/ng/files.php';
+  const url = '/missionlife/system/ng/call.php?class=file';
 
   // Select
   this.selectAll = function(data, callback){

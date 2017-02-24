@@ -1,6 +1,6 @@
 app.service('Garant',function(Ajax, customAjax){
 
-  const url = '/missionlife/system/ng/garant.php';
+  const url = '/missionlife/system/ng/call.php?class=garant';
 
   this.select = function(callback){
     Ajax.call({action: 'select'}, url, callback);

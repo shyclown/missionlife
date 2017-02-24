@@ -3,7 +3,7 @@ app.service('Folder',function(Ajax){
   this.allFolders = {};
 
   const self = this;
-  const url = '/missionlife/system/ng/folders.php';
+  const url = '/missionlife/system/ng/call.php?class=folder';
   const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
   const folderID = function(id){
     let i = 0; while(self.allFolders[i].id != id){ i++; }; return self.allFolders[i];

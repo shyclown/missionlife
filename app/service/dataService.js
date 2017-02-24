@@ -1,5 +1,5 @@
 app.service('Data',function(Ajax){
-  const url = '/missionlife/system/ng/page_data.php';
+  const url = '/missionlife/system/ng/call.php?class=data';
   this.select = function(data, callback){
     if(!data){ data = {}; }
     data.action = 'select';

@@ -1,6 +1,6 @@
 app.service('Form',function(Ajax){
 
-  const url = '/missionlife/system/ng/form.php';
+  const url = '/missionlife/system/ng/call.php?class=form';
 
   // ---------------------------------
   // Prop
