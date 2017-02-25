@@ -18,6 +18,8 @@
       $this->create_table_article_folder();
       $this->create_table_form();
       $this->create_table_garant();
+
+      $this->create_table_folder_form();
     }
 
     private function create_table_account(){
