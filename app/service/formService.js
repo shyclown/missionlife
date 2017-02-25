@@ -43,12 +43,8 @@ app.service('Form',function(Ajax){
     data.action = "delete";
     Ajax.call(data, url, callback);
   }
-  this.load_files = function(data, callback){
-    data.action = 'load_files';
-    Ajax.call(data, url, callback);
-  }
-  this.updateFileDesc = function(data, callback){
-    data.action = 'update_file_desc';
+  this.addToFolder = function(data, callback){
+    data.action = 'add_to_folder';
     Ajax.call(data, url, callback);
   }
 });
