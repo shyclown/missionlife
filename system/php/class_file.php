@@ -202,6 +202,19 @@ class File
   }
 
   public function select_by_folder($data){
+    $sql = "SELECT SQL_CALC_FOUND_ROWS *
+            FROM  `ml_file` f
+            INNER JOIN `ml_folder_file` af ON af.file_id = f.id
+            WHERE `folder_id` = ?
+            ORDER BY f.id DESC ";
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    $params = array('i', $data['folder_id']);
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
+  }
+/*
+  public function select_by_folder($data){
     // default VALUES
     $order = 'DESC';
     $search = '';
@@ -246,7 +259,7 @@ class File
     $all = $this->db->query($sql_all_rows);
     return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
-
+*/
   public function get_files_by_selected($data){
     $order;
     $search = '';
