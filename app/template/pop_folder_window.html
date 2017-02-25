@@ -57,10 +57,13 @@
     <folder-line ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ></folder-line>
     <article-line ng-repeat="article in articles"></article-line>
 
+
     <div ng-repeat="form in forms" class="fileLine">
       <button class="name" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
     </div>
-
+    <div ng-repeat="garant in garants" class="fileLine">
+      <button class="name" ng-click="openGarantWindow(garant)"><i class="fa fa-tasks"></i> {{garant.header}} </button>
+    </div>
     <file-line ng-repeat="file in files"></file-line>
 
 

@@ -66,6 +66,23 @@ function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
         loadForms();
       }
 
+      /* Garant Window */
+
+      scope.garantWindow = false;
+      scope.openGarant = false;
+      scope.openGarantWindow = function(garant){
+        scope.openGarant = garant;
+        scope.garantWindow = true;
+      }
+      const loadGarants = function(){
+        Form.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
+          scope.garants = response.data.result;
+        })
+      }
+      scope.afterFormWindow = function(){
+        loadForms();
+      }
+
       /* Article Window Data */
 
       scope.articleWindow = false;
