@@ -32,6 +32,17 @@ class Article
     return $this->db->query($sql);
   }
   /* Select articles IN FOLDER */
+  public function select_by_folder($data){
+    $sql = "SELECT SQL_CALC_FOUND_ROWS a.* FROM `ml_article` a
+            INNER JOIN `ml_article_folder` af ON a.id = af.article_id
+            WHERE af.folder_id = ?
+            ORDER BY id DESC";
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    $params = array('i',$data['folder_id']);
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
+  }
   public function select($data){
     $order = 'DESC';
     $sort_by = 'id';
