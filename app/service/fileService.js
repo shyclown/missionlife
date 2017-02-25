@@ -5,6 +5,10 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
   const self = this;
   this.selected = [];
 
+  // THIS COULD REFRESH EVEN WHEN I DO NOT NEED IT
+  /*
+
+  */
   $rootScope.$watch(
     function(){ return Shared.currentFolder; },
     function(){ self.refresh(); },
@@ -12,12 +16,16 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
   );
 
   // Select
-  this.refresh = function(){
+  this.refresh = function(callback){
     if(Shared.currentFolder==null){
       self.selected = [];
     }else{
       self.selectByFolder({ folder_id: Shared.currentFolder.id },
-      function(response){ self.selected = response.data.result;});
+      function(response){
+        self.selected = response.data.result;
+        if(callback){ callback(); }
+      });
+
     }
   }
 
@@ -42,7 +50,10 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
   }
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
-    customAjax(url, data, false, callback);
+    customAjax(url, data, false, function(response){
+      self.selected = response.data.result;
+      if(callback){ callback(response) };
+    });
   }
   this.search = function(data, callback){
     data.action = 'search';

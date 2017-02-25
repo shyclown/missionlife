@@ -49,6 +49,17 @@ class Form
     $params = array( 'ii', $data['folder_id'], $data['form_id'] );
     return $this->db->query($sql, $params);
   }
+  public function select_by_folder($data){
+    $sql = "SELECT SQL_CALC_FOUND_ROWS f.* FROM `ml_form` f
+            INNER JOIN `ml_folder_form` ff ON f.id = ff.form_id
+            WHERE ff.folder_id = ?
+            ORDER BY id DESC";
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    $params = array('i',$data['folder_id']);
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
+  }
 
 }
 

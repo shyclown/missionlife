@@ -1,7 +1,7 @@
 app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','customAjax',function(dataURItoBlob, resizeDroppedImage, customAjax){
   return function(files, progressFn, completeFn)
   {
-    const targetUrl = '/missionlife/system/ng/files.php';
+    const targetUrl = '/missionlife/system/ng/call.php?class=file';
     // If multiple files we call callback only openArticle
     angular.forEach(files, function(one_file)
     {
