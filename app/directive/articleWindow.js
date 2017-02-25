@@ -6,7 +6,8 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
     scope:{
       currentFolder: '=',
       openArticle: '=',
-      articleWindow :'='
+      articleWindow :'=',
+      callbackWindow : '='
     },
     templateUrl: '/missionlife/app/template/article_window.html',
     link: function (scope, element, attrs)
@@ -86,6 +87,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
 
       scope.closeWithoutSave = function(){
         scope.articleWindow = false;
+        Article.selectByFolder({ folder_id: scope.currentFolder.id });
       }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){ }
@@ -125,7 +127,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
         Article.update(scope.edit_article, function(response){
           scope.logPanel = response.data;
-          Article.load();
+          Article.selectByFolder({ folder_id: scope.currentFolder.id });
         });
         Editor.attachImageControls.bind(scope.area)();
         }
@@ -215,26 +217,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         link.innerHTML = file.file_name;
         scope.area.insertAfterSelection(link);
       }
-
-      /* Articles to be added */
-      /*
-      scope.articlesList = [];
-      scope.searchArticle = '';
-      scope.loadArticleList = function(){
-        Article.select_all(function(res){
-          scope.articlesList = res.data;
-          console.log(scope.articlesList);
-        });
-      }
-      scope.searchArticle = function(){
-        if(scope.searchArticle == ''){ scope.loadArticleList(); }
-        else{ Article.search({ search: scope.searchArticle }, function(res){ scope.articlesList})}
-      }
-
-      scope.forms = [];
-      Form.select_all(function(res){ scope.forms = res.data});
-      scope.loadArticleList();
-      */
     }
   };
 }]);
