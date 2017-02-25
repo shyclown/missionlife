@@ -37,19 +37,12 @@ app.directive('popFolderExplorer',['$http','Shared', 'Folder', 'Article','FileSe
       scope.currentParents = [];
       scope.articles = [];
       scope.openFoldersInTree = [];
-
-      scope.$watch(
-        function(){ return Article.selected; },
-        function(){ scope.articles = Article.selected;},
-      true);
-      scope.$watch(
-        function(){ return FileService.selected; },
-        function(){ scope.files = FileService.selected;},
-      true);
-      scope.$watch(
-        function(){ return Folder.allFolders; },
-        function(){ scope.folders = Folder.allFolders;},
-      true);
+      /*
+      Article and File can be changed updated in outside directive
+      */
+      scope.$watch( function(){ return Article.selected; }, function(){ scope.articles = Article.selected;}, true);
+      scope.$watch( function(){ return FileService.selected; }, function(){ scope.files = FileService.selected;}, true);
+      scope.$watch( function(){ return Folder.allFolders; }, function(){ scope.folders = Folder.allFolders;}, true);
       // Load Folders
       Folder.select_all();
       // Load Articles in Folder
@@ -100,11 +93,8 @@ app.directive('popFolderExplorer',['$http','Shared', 'Folder', 'Article','FileSe
         scope.articleWindow = true;
         scope.openArticle = article;
       }
-      scope.deleteArticle = function(article){
-        Article.delete(article, function(){
-          loadArticles();
-        });
-      }
+
+
       scope.callbackArticleWindow = function(action){
 
       }

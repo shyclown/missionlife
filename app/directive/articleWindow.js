@@ -30,7 +30,6 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       scope.$watch(
         function(){ return scope.openArticle; },
         function(){
-          Article.Folder = scope.currentFolder;
           if(scope.openArticle)
           {
             scope.edit_article = Object.assign({},scope.openArticle);
@@ -49,6 +48,10 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         // if AngularJS
         image_url : '/missionlife/uploads/image/',
       });
+
+      /* Buttons */
+      // Save
+      // Delete
 
       scope.loadFilesOfArticle = function(){
         // When page is loaded article.id value doesnt exist
@@ -87,7 +90,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
 
       scope.closeWithoutSave = function(){
         scope.articleWindow = false;
-        Article.selectByFolder({ folder_id: scope.currentFolder.id });
+        //Article.selectByFolder({ folder_id: scope.currentFolder.id });
       }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){ }
@@ -120,6 +123,11 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
             },
             scope.edit_article.id )();
         }
+      }
+      scope.deleteArticle = function(article){
+        Article.delete(article, function(){
+          Article.selectByFolder({ folder_id: scope.currentFolder.id });
+        });
       }
       scope.saveChanges = function(){
         let sel = document.getSelection();
