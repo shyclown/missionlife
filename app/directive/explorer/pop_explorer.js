@@ -1,5 +1,5 @@
-app.directive('popFolderExplorer',['$http','Shared', 'Folder', 'Article','FileService','uploadDropped',
-function($http, Shared, Folder, Article, FileService, uploadDropped) {
+app.directive('popFolderExplorer',['$http','Form','Shared', 'Folder', 'Article','FileService','uploadDropped',
+function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
   return {
     restrict: 'E',
     scope:{
@@ -51,8 +51,19 @@ function($http, Shared, Folder, Article, FileService, uploadDropped) {
 
       scope.formWindow = false;
       scope.openForm = false;
-      scope.openFormWindow = function(){
+      scope.openFormWindow = function(form){
+        scope.openForm = form;
+        console.log(scope.openForm);
         scope.formWindow = true;
+      }
+      const loadForms = function(){
+        Form.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
+          scope.forms = response.data.result;
+          console.log(scope.forms);
+        })
+      }
+      scope.afterFormWindow = function(){
+        loadForms();
       }
 
       /* Article Window Data */
@@ -131,6 +142,9 @@ function($http, Shared, Folder, Article, FileService, uploadDropped) {
             scope.openFoldersInTree.splice(folderInArray.position, 1);
           }
           if(!folderInArray.open){ scope.openFoldersInTree.push(folder.id); }
+
+          // Load forms
+          loadForms();
         }
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }

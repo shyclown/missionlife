@@ -56,7 +56,15 @@
 
     <folder-line ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ></folder-line>
     <article-line ng-repeat="article in articles"></article-line>
+
+    <div ng-repeat="form in forms" class="fileLine">
+      <button class="name" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
+    </div>
+
     <file-line ng-repeat="file in files"></file-line>
+
+
+
   </div>
   <div style="clear:both"></div>
   </div>
@@ -65,5 +73,5 @@
 <edit-folder-window ng-show="folderWindow" ></edit-folder-window>
 <div style="clear:both"></div>
 
-<edit-form-window current-folder='currentFolder' open-form='openForm' form-window ='formWindow' ng-show='formWindow'></edit-form-window>
+<edit-form-window current-folder='currentFolder' after-form-window="afterFormWindow" open-form='openForm' form-window ='formWindow' ng-show='formWindow'></edit-form-window>
 <article-window current-folder='currentFolder' open-Article='openArticle' article-Window="articleWindow" ng-show="articleWindow"></article-window>

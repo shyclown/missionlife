@@ -7,8 +7,9 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
     restrict: 'E',
     scope:{
       currentFolder : '=',
-      form: '=',
+      openForm: '=',
       formWindow: '=',
+      afterFormWindow: '='
     },
     templateUrl: '/missionlife/app/template/edit_form_window.html',
     link: function (scope, element, attrs)
@@ -18,21 +19,34 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
       Array.prototype.move = function (from, to) {
       this.splice(to, 0, this.splice(from, 1)[0]);
       };
-
+      // check values when is open
+      let sourceForm;
+      scope.editForm;
+      scope.$watch(
+        function(){ return scope.openForm; },
+        function(){
+          sourceForm = scope.openForm;
+          if(!sourceForm){ scope.editForm = copy(newForm); }
+          else{ scope.editForm = copy(sourceForm); }
+          scope.editForm.data = JSON.parse(scope.editForm.data);
+          console.log(sourceForm);
+          console.log(scope.editForm);
+        },
+        true
+      )
       scope.cancel = function(){ scope.formWindow = false; }
 
       const newForm = { name: '', email: '', state: 0, data: '[]' }
-      let sourceForm = scope.form;
+
       // manipulated object before save
-      scope.editForm;
       const callbackFn = function(){
-        alert('saved');
+        console.log('callback');
+        console.log('');
+        scope.afterFormWindow();
       }
 
-      if(!sourceForm){ scope.editForm = copy(newForm); }
-      else{ scope.editForm = copy(sourceForm); }
 
-      scope.editForm.data = JSON.parse(scope.editForm.data);
+
 
       const orderFn = function(arr, obj, index, value){
         arr.move(index, (index + value));
@@ -50,20 +64,25 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
         form.data.push({ name: 'name', type: 'type', order: form.data.length + 1 });
       }
       scope.save = function(form){
-        if(!sourceForm){
+        if(!form.id){
           form.data = JSON.stringify(form.data);
           Form.insert(form, function(res){ Form.addToFolder({
               form_id: res.data,
               folder_id: scope.currentFolder.id
             }, function(){
               form.data = JSON.parse(form.data);
-              callbackFn() });
+              form.id = res.data;
+              callbackFn(); });
           });
         }
         else{
+          console.log('update form');
           form.data = JSON.stringify(form.data);
           scope.form = form;
-          Form.update_all(form, function(){ callbackFn() });
+          Form.update_all(form, function(){
+            form.data = JSON.parse(form.data);
+            callbackFn();
+          });
         }
       }
 
