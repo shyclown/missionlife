@@ -1,4 +1,4 @@
-app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','uploadDropped', function($http, Folder, Article, FileService, uploadDropped) {
+app.directive('popFolderExplorer',['$http','Shared', 'Folder', 'Article','FileService','uploadDropped', function($http, Shared, Folder, Article, FileService, uploadDropped) {
   return {
     restrict: 'E',
     scope:{
@@ -6,7 +6,7 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
     templateUrl: '/missionlife/app/template/pop_folder_window.html',
     link: function (scope, element, attrs)
     {
-      scope.currentFolder = null;
+      scope.currentFolder = Shared.currentFolder;
       scope.articleWindow = false;
       scope.openArticle = {
         new: true,
@@ -25,6 +25,12 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
         submit: true
       }
 
+      scope.formWindow = false;
+      scope.openForm = false;
+      scope.openFormWindow = function(){
+        console.log('open');
+        scope.formWindow = true;
+      }
 
       // Watch Folders
       scope.folders;
@@ -33,44 +39,33 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
       scope.openFoldersInTree = [];
 
       scope.$watch(
+        function(){ return Article.selected; },
+        function(){ scope.articles = Article.selected;},
+      true);
+      scope.$watch(
+        function(){ return FileService.selected; },
+        function(){ scope.files = FileService.selected;},
+      true);
+      scope.$watch(
         function(){ return Folder.allFolders; },
         function(){ scope.folders = Folder.allFolders;},
       true);
       // Load Folders
       Folder.select_all();
       // Load Articles in Folder
-      scope.$watch(
-        function(){ return Article.selected; },
-        function(){ scope.articles = Article.selected; scope.all_rows = Article.all_rows;},
-      true);
-      Article.load();
 
-      const loadFiles = function(){
-        FileService.selectByFolder({
-          folder: 'folder',
-          folder_id: scope.currentFolder.id,
-          limit_min: 0,
-          limit_max: 35
-        },function(res){
-          console.log(res);
-          scope.files = res.data.result;
-        });
+      const loadArticles = function(){
+        Article.selectByFolder({ folder_id: scope.currentFolder.id });
       }
 
       const afterUploadOne = function(response, update){
-        console.log('after',response);
         FileService.attachToFolder({
           file_id: response.data.file_id,
-          folder_id: scope.currentFolder.id
-        }, function(res){
-          console.log('after upload one',res);
-          if(update){ afterUploadAll(); }
-          console.log('added to folder');
-        })
+          folder_id: scope.currentFolder.id },
+          function(res){ if(update){ afterUploadAll(); }
+        });
       }
-      const afterUploadAll = function(response){
-        loadFiles();
-      }
+      const afterUploadAll = function(response){ FileService.refresh(); }
 
       scope.uploadFile = function(){
         const files = event.dataTransfer.files;
@@ -83,7 +78,6 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
           let res = uploadDropped.bind(null, file,
             function(response){},
             function(response){
-              console.log(response);
               completed++;
               let update = completed == all;
               afterUploadOne(response, update);
@@ -108,20 +102,23 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
       }
       scope.deleteArticle = function(article){
         Article.delete(article, function(){
-          Article.load();
+          loadArticles();
         });
+      }
+      scope.callbackArticleWindow = function(action){
+
       }
       scope.createNewArticle = function(){
         Article.insert({
           header: 'New Article',
           content: '<p>Content</p>',
+          folder_id: scope.currentFolder.id,
           state: 0 },
           function( response ){
           Article.select_by_id({id: response.data},
             function(ArticleByID){
             scope.openArticle = ArticleByID.data[0]; // data[0], because ajax returns array of results
             scope.articleWindow = true;
-            Article.load();
           });
         })
       }
@@ -134,19 +131,15 @@ app.directive('popFolderExplorer',['$http', 'Folder', 'Article','FileService','u
           const folderInArray = inFolderArray(folder.id);
           const folderIsCurrent = folder == scope.currentFolder;
           if(!folderIsCurrent){
+            Shared.currentFolder = folder;
             scope.currentFolder = folder;
             scope.currentParents = Folder.listParents(folder);
-            loadFiles();
           }
           if(folderInArray.open && folderIsCurrent){
             scope.openFoldersInTree.splice(folderInArray.position, 1);
           }
-          if(!folderInArray.open){
-            scope.openFoldersInTree.push(folder.id);
-          }
+          if(!folderInArray.open){ scope.openFoldersInTree.push(folder.id); }
         }
-        Article.Folder = scope.currentFolder;
-        Article.load();
       }
 
       /* Folder Editor Window */

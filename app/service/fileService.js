@@ -1,8 +1,26 @@
-app.service('FileService',function(Ajax, customAjax){
+app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
 
   const url = '/missionlife/system/ng/call.php?class=file';
 
+  const self = this;
+  this.selected = [];
+
+  $rootScope.$watch(
+    function(){ return Shared.currentFolder; },
+    function(){ self.refresh(); },
+    true
+  );
+
   // Select
+  this.refresh = function(){
+    if(Shared.currentFolder==null){
+      self.selected = [];
+    }else{
+      self.selectByFolder({ folder_id: Shared.currentFolder.id },
+      function(response){ self.selected = response.data.result;});
+    }
+  }
+
   this.selectAll = function(data, callback){
     Ajax.call({action:'select_all'}, url, callback);
   }

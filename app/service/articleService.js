@@ -1,6 +1,16 @@
-app.service('Article',function(Ajax){
+app.service('Article',function($rootScope, Ajax, Shared){
 
   const url = '/missionlife/system/ng/call.php?class=article';
+  const self = this;
+
+  $rootScope.$watch(
+    function(){ return Shared.currentFolder; },
+    function(){ if(Shared.currentFolder==null){ self.selected = []; }
+      else{ self.selectByFolder({ folder_id: Shared.currentFolder.id });}
+    },
+    true
+  );
+
 
   this.onePageSize = 150;
   this.sortByData = 'date';
@@ -10,7 +20,6 @@ app.service('Article',function(Ajax){
   this.allFiles = 0;
   this.Folder = null;
 
-  const self = this;
   this.selected = [];
   this.all_rows = 0;
 
@@ -43,7 +52,6 @@ app.service('Article',function(Ajax){
   }
   this.insert = function(data, callback){
     data.action = 'insert';
-    data.folder_id = self.Folder.id;
     Ajax.call(data, url, callback);
   }
   this.update = function(data, callback){
@@ -61,6 +69,13 @@ app.service('Article',function(Ajax){
   this.updateFileDesc = function(data, callback){
     data.action = 'update_file_desc';
     Ajax.call(data, url, callback);
+  }
+  this.selectByFolder = function(data, callback){
+    data.action = 'select_by_folder';
+    Ajax.call(data, url, function(response){
+      self.selected = response.data.result;
+      if(callback){ callback(response) };
+    });
   }
 
 });
