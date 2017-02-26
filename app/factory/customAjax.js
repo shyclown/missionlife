@@ -6,7 +6,6 @@ I edited it to return same object as AngularJS: {data: JSONresponseFromPHP }
 app.factory('customAjax', function(){
   return function(targetUrl, oData, progressFn, completeFn)
   {
-    console.log(oData);
     const createForm = function(oArray){
       var oForm = new FormData();
       for(var oKey in oArray){ oForm.append(oKey,oArray[oKey]); }

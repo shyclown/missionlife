@@ -6,7 +6,9 @@ app.service('Article',function($rootScope, Ajax, Shared){
   $rootScope.$watch(
     function(){ return Shared.currentFolder; },
     function(){ if(Shared.currentFolder==null){ self.selected = []; }
-      else{ self.selectByFolder({ folder_id: Shared.currentFolder.id });}
+      else{ self.selectByFolder({ folder_id: Shared.currentFolder.id }, function(response){
+              self.selected = response.data.result;
+      });}
     },
     true
   );
@@ -73,7 +75,6 @@ app.service('Article',function($rootScope, Ajax, Shared){
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
     Ajax.call(data, url, function(response){
-      self.selected = response.data.result;
       if(callback){ callback(response) };
     });
   }

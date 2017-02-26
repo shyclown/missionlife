@@ -140,91 +140,85 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
         Editor.attachImageControls.bind(scope.area)();
         }
 
-      /*
-      Select Items
-      Needed for Select Pop up window
-      */
-      // function that will run after selection
-      scope.selectFn = function(selected){
-        console.log(selected);
-        scope.addLinkToArticle(selected.obj);
-      }
-      // setup of Window
-      const selectArticle = {
-        imageSelect: false,
-        articles : true,
-        files: false,
-        selectFolder: false,
-        selectArticleOrFile: true,
-        createFolder: false
-      }
-      // setup of Window
-      const selectFile = {
-        imageSelect: false,
-        articles : false,
-        files: true,
-        selectFolder: false,
-        selectArticleOrFile: true,
-        createFolder: false
-      }
-      scope.selectArticlePop = function(){
-        storeSelection();
-        scope.setupSelect = selectArticle;
-        scope.selectFn = function(selected){ scope.addLinkToArticle(selected.obj); }
-        scope.showPopSelect();
-      }
-      scope.selectFilePop = function(){
-        storeSelection();
-        scope.setupSelect = selectFile;
-        scope.selectFn = function(selected){
-          console.log(selected);
-          scope.addLinkToFile(selected.obj); }
-        scope.showPopSelect();
-      }
-      // Window is showed if true
-      scope.popSelect = false;
-      scope.cancelPopSelect = function(){ scope.popSelect = false;}
-      scope.showPopSelect = function(){  scope.popSelect = true;}
+  //-----------------------------------------------------
+  // Select Window
+  //-----------------------------------------------------
 
-      /*
-      Link Element for forms
-      */
-      let storedRange = {};
-      function storeSelection(){
-        oSelection = document.getSelection();
-        storedRange = oSelection.getRangeAt(0);
-      }
-      function loadSelection() {
-        let oSelection = document.getSelection();
-        oSelection.removeAllRanges();
-        oSelection.addRange(storedRange);
-      }
-      scope.addLinkToForm = function(form){
-        loadSelection();
-        let link = document.createElement('a');
-        link.className = 'custom';
-        link.href = "form/"+form.id;
-        link.innerHTML = form.name;
-        scope.area.insertAfterSelection(link);
-      }
-      scope.addLinkToArticle = function(article){
-        loadSelection();
-        console.log(document.getSelection());
-        let link = document.createElement('a');
-        link.className = 'custom';
-        link.href = "article/"+article.id;
-        link.innerHTML = article.header;
-        scope.area.insertAfterSelection(link);
-      }
-      scope.addLinkToFile = function(file){
-        loadSelection();
-        console.log(file);
-        let link = document.createElement('a');
-        link.className = 'custom';
-        link.href = "uploads/"+file.file_src;
-        link.innerHTML = file.file_name;
-        scope.area.insertAfterSelection(link);
-      }
+  /* Default */
+
+  scope.popSelect = false;
+  scope.cancelPopSelect = function(){ scope.popSelect = false;}
+  scope.showPopSelect = function(){  scope.popSelect = true;}
+  scope.selectFn = function(selected){ scope.addLinkToArticle(selected.obj); }
+
+  /* Setup */
+
+  const selectArticle = {
+    imageSelect: false,
+    articles : true,
+    files: false,
+    forms: false,
+    selectFolder: false,
+    selectArticleOrFile: true,
+    createFolder: false
+  }
+  const selectFile = {
+    imageSelect: false,
+    articles : false,
+    files: true,
+    forms: false,
+    selectFolder: false,
+    selectArticleOrFile: true,
+    createFolder: false
+  }
+  const selectForm = {
+    imageSelect: false,
+    articles : false,
+    files: false,
+    forms: true,
+    selectFolder: false,
+    selectArticleOrFile: true,
+    createFolder: false
+  }
+
+  /* Range */
+
+  let storedRange = {};
+  function storeSelection(){
+    oSelection = document.getSelection();
+    storedRange = oSelection.getRangeAt(0);
+  }
+  function loadSelection() {
+    let oSelection = document.getSelection();
+    oSelection.removeAllRanges();
+    oSelection.addRange(storedRange);
+  }
+
+  /* Add Links to Items */
+
+  const addLink = function(selected){
+    loadSelection();
+    let link = document.createElement('a');
+    link.className = 'custom';
+    link.href = selected.path+"/"+selected.target;
+    link.innerHTML = selected.name;
+    scope.area.insertAfterSelection(link);
+  }
+
+  /* Event Function */
+
+  const openPopSelect = function(setup, after){ return function(){
+      storeSelection();
+      scope.setupSelect = setup;
+      scope.selectFn = function(selected){ after(selected); }
+      scope.showPopSelect();
     }
+  }
+
+  scope.selectArticlePop = openPopSelect(selectArticle, addLink);
+  scope.selectFilePop = openPopSelect(selectFile, addLink);
+  scope.selectFormPop = openPopSelect(selectForm, addLink);
+
+    }// link
   };
 }]);

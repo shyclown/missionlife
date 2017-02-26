@@ -50,8 +50,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
   }
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
-    customAjax(url, data, false, function(response){
-      self.selected = response.data.result;
+    Ajax.call(data, url, function(response){
       if(callback){ callback(response) };
     });
   }

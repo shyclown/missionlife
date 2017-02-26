@@ -50,7 +50,6 @@ app.service('Form',function(Ajax){
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
     Ajax.call(data, url, function(response){
-      self.selected = response.data.result;
       if(callback){ callback(response) };
     });
   }

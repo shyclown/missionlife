@@ -29,8 +29,7 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
           if(!sourceForm){ scope.editForm = copy(newForm); }
           else{ scope.editForm = copy(sourceForm); }
           scope.editForm.data = JSON.parse(scope.editForm.data);
-          console.log(sourceForm);
-          console.log(scope.editForm);
+
         },
         true
       )
@@ -40,8 +39,6 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
 
       // manipulated object before save
       const callbackFn = function(){
-        console.log('callback');
-        console.log('');
         scope.afterFormWindow();
       }
 
@@ -76,7 +73,6 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
           });
         }
         else{
-          console.log('update form');
           form.data = JSON.stringify(form.data);
           scope.form = form;
           Form.update_all(form, function(){

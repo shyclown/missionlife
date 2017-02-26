@@ -98,14 +98,20 @@ button.submit{
       <button class="name" ng-click="openFolder(folder)">
         <i class="fa fa-folder"></i> {{folder.name}}</button>
     </div>
-    <div class="ArticleLine" ng-repeat="article in articles" ng-if="setup.articles">
+    <div class="ArticleLine" ng-repeat="article in articles">
       <button class="name" ng-click="call('article', article)">
         <i class="fa fa-file-text-o"></i> {{article.header}}
       </button>
     </div>
-    <div class="fileLine" ng-repeat="file in files" ng-if="setup.files">
+    <div class="fileLine" ng-repeat="file in files">
       <button class="name" ng-click="call('file', file)">
       <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
+      </button>
+    </div>
+
+    <div class="fileLine" ng-repeat="form in forms">
+      <button class="name" ng-click="call('form', forms)">
+      <i class="fa fa-tasks"></i> {{form.name}}
       </button>
     </div>
   </div>

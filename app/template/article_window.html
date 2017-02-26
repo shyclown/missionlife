@@ -29,7 +29,7 @@
       <button ng-click="show('all')" class="btn" ng-class="(isOpen=='all')?'selected':''"><i class="fa fa-circle-o"></i> All</button>
       <button ng-click="selectFilePop()" class="btn" ng-class="(isOpen=='files')?'selected':''"><i class="fa fa-file"></i> Files</button>
       <button ng-click="selectArticlePop()" class="btn" ng-class="(isOpen=='articles')?'selected':''"><i class="fa fa-file-text-o"></i > Article</button>
-      <button ng-click="show('forms')" class="btn" ng-class="(isOpen=='forms')?'selected':''"><i class="fa fa-list"></i> Forms</button>
+      <button ng-click="selectFormPop()" class="btn" ng-class="(isOpen=='forms')?'selected':''"><i class="fa fa-list"></i> Forms</button>
       </div>
       <!-- be able to search -->
     </div>
@@ -46,6 +46,6 @@
   <div class="Footer" ng-bind-html="logPanel"></div>
 </div>
 <!-- POP WINDOW -->
-<pop-select setup="setupSelect" select-fn="selectFn" cancel-window="cancelPopSelect" ng-show="popSelect">
+<pop-select select-setup="setupSelect" select-fn="selectFn" select-open="popSelect" ng-show="popSelect">
 </pop-select>
 </div>
