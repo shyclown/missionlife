@@ -1,5 +1,5 @@
-app.directive('popFolderExplorer',['$http','Form','Shared', 'Folder', 'Article','FileService','uploadDropped',
-function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
+app.directive('popFolderExplorer',['$http','Form','Shared', 'Folder', 'Article', 'Garant','FileService','uploadDropped',
+function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDropped) {
   return {
     restrict: 'E',
     scope:{
@@ -71,17 +71,17 @@ function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
       scope.garantWindow = false;
       scope.openGarant = false;
       scope.openGarantWindow = function(garant){
+        console.log(garant);
         scope.openGarant = garant;
         scope.garantWindow = true;
       }
       const loadGarants = function(){
-        Form.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
+        Garant.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
           scope.garants = response.data.result;
+          console.log(scope.garants);
         })
       }
-      scope.afterFormWindow = function(){
-        loadForms();
-      }
+      scope.afterGarantWindow = function(){ loadGarants(); }
 
       /* Article Window Data */
 
@@ -91,7 +91,6 @@ function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
         header: 'No Article',
         content: 'No Article',
         state: 0 };
-        console.log(scope.openArticle);
       scope.newArticle = {};
 
       scope.selectArticle = function(article){
@@ -162,6 +161,7 @@ function($http, Form, Shared, Folder, Article, FileService, uploadDropped) {
 
           // Load forms
           loadForms();
+          loadGarants();
         }
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }

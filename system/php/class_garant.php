@@ -87,9 +87,28 @@ class Garant
     return $this->db->query($sql_file, $params);
   }
   public function add_to_folder($data){
-    $sql = "INSERT INTO `ml_folder_form` (`id`,`folder_id`, `form_id`)
+    $sql = "INSERT INTO `ml_folder_garant` (`id`,`folder_id`, `garant_id`)
             VALUES (NULL, ?, ?)";
-    $params = array( 'ii', $data['folder_id'], $data['form_id'] );
+    $params = array( 'ii', $data['folder_id'], $data['garant_id'] );
     $this->db->query($sql, $params);
   }
+  public function select_by_folder($data){
+    $sql = "SELECT SQL_CALC_FOUND_ROWS f.file_src image, g.* FROM `ml_garant` g
+            LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
+            LEFT JOIN `ml_file` f ON f.id = gf.file_id
+            INNER JOIN `ml_folder_garant` fg ON g.id = fg.garant_id
+            WHERE fg.folder_id = ?
+            ORDER BY g.id DESC";
+            /*
+    $sql = "SELECT SQL_CALC_FOUND_ROWS g.* FROM `ml_garant` g
+            INNER JOIN `ml_folder_garant` fg ON g.id = fg.garant_id
+            WHERE fg.folder_id = ?
+            ORDER BY id DESC";*/
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    $params = array('i',$data['folder_id']);
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
+  }
+
 }

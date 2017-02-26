@@ -8,18 +8,21 @@
     function __construct()
     {
       $this->db = new Database;
+
       $this->create_table_account();
       $this->create_table_article();
       $this->create_table_file();
       $this->create_table_article_file();
       $this->create_table_garant_file();
-      $this->create_table_folder_file();
+
       $this->create_table_folder();
       $this->create_table_article_folder();
       $this->create_table_form();
       $this->create_table_garant();
-
+      // folder -> smth
+      $this->create_table_folder_file();
       $this->create_table_folder_form();
+      $this->create_table_folder_garant();
     }
 
     private function create_table_account(){

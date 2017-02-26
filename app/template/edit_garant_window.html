@@ -1,0 +1,25 @@
+<div class="blanket" ng-click="cancel()">
+
+    <div class="GarantCard inPopUp" ng-click="$event.stopPropagation()">
+      <div class="header">Garant</div>
+      <!-- Image Drop -->
+      <div class="imageDroparea" is-drop-area="onDropImage">
+        <label for="newGarantFile" ng-class="labelPosition(editGarant)"><i class="fa fa-picture-o"></i></label>
+        <input id="newGarantFile" type="file" name="droppedFile"/>
+        <img ng-if="image" src="{{editImagePath()}}" width="250px">
+      </div>
+      <div class="content">
+        <label for="garantName">Garant name:</label>
+        <input name="garantName" ng-model="editGarant.header">
+        <label for="garantName">Garant Title:</label>
+        <input name="garantName" ng-model="editGarant.title">
+        <label for="garantWeb">Garant web:</label>
+        <input name="garantWeb" ng-model="editGarant.webpage">
+        <label for="motto">Motto:</label>
+        <textarea type="textarea" contenteditable="true" name="motto" ng-model="editGarant.content"></textarea>
+      </div>
+      <div class="control">
+        <input type='button' ng-click='save(editGarant)' value="Save">
+      </div>
+  </div>
+</div>

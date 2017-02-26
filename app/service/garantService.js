@@ -23,4 +23,15 @@ app.service('Garant',function(Ajax, customAjax){
     data.action = 'attach_file';
     Ajax.call(data, url, callback);
   }
+  this.addToFolder = function(data, callback){
+    data.action = 'add_to_folder';
+    Ajax.call(data, url, callback);
+  }
+  this.selectByFolder = function(data, callback){
+    data.action = 'select_by_folder';
+    Ajax.call(data, url, function(response){
+      self.selected = response.data.result;
+      if(callback){ callback(response) };
+    });
+  }
 });

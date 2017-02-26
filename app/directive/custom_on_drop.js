@@ -29,12 +29,10 @@ app.directive('customOnDrop',['$http','customAjax','uploadDroppedToArticle', fun
 app.directive('isDropArea',['$http',function($http) {
   return {
     restrict: 'A',
+    scope: { onDropFn: '=isDropArea' },
     link: function (scope, element, attrs)
     {
-
-      console.log(scope);
-      //const onDropFn = scope.uploadFile;
-
+      //const onDropFn = scope.$eval(attrs.isDropArea);
       const stopDefault = function(){
         event.stopPropagation();
         event.preventDefault();
@@ -46,8 +44,8 @@ app.directive('isDropArea',['$http',function($http) {
       {
 
         stopDefault(event);
-        scope.uploadFile(event)
-        //onDropFn();
+      //  scope.uploadFile(event)
+        scope.onDropFn();
       });
     }
   };

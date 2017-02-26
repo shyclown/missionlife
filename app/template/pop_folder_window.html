@@ -46,11 +46,11 @@
     <div class="folderTree">
       <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
     </div>
-  <div class="folderOpen" is-drop-area="uploadFile()">
+  <div class="folderOpen" is-drop-area="uploadFile">
     <div ng-if="isOpenFolder()">
       <button ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</button>
       <button ng-click="openFormWindow()"><i class="fa fa-plus"></i> Add Form</button>
-      <button ng-click=""><i class="fa fa-plus"></i> Add Garant</button>
+      <button ng-click="openGarantWindow(false)"><i class="fa fa-plus"></i> Add Garant</button>
       <button ng-click=""><i class="fa fa-plus"></i> Add File</button>
     </div>
 
@@ -62,7 +62,7 @@
       <button class="name" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
     </div>
     <div ng-repeat="garant in garants" class="fileLine">
-      <button class="name" ng-click="openGarantWindow(garant)"><i class="fa fa-tasks"></i> {{garant.header}} </button>
+      <button class="name" ng-click="openGarantWindow(garant)"><i class="fa fa-id-card-o"></i> {{garant.header}} </button>
     </div>
     <file-line ng-repeat="file in files"></file-line>
 
@@ -75,6 +75,6 @@
 </div>
 <edit-folder-window ng-show="folderWindow" ></edit-folder-window>
 <div style="clear:both"></div>
-
+<edit-garant-window current-folder='currentFolder' after-garant-window="afterGarantWindow" open-garant='openGarant' garant-window ='garantWindow' ng-show='garantWindow'></edit-garant-window>
 <edit-form-window current-folder='currentFolder' after-form-window="afterFormWindow" open-form='openForm' form-window ='formWindow' ng-show='formWindow'></edit-form-window>
 <article-window current-folder='currentFolder' open-Article='openArticle' article-Window="articleWindow" ng-show="articleWindow"></article-window>
