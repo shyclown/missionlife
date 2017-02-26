@@ -14,17 +14,34 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.files = [];
       scope.currentParents = [];
       scope.openFoldersInTree = [];
+
       // Article and File can be changed updated in outside directive
-      scope.$watch( function(){ return Article.selected; }, function(){ scope.articles = Article.selected;}, true);
-      scope.$watch( function(){ return FileService.selected; }, function(){ scope.files = FileService.selected;}, true);
-      scope.$watch( function(){ return Folder.allFolders; }, function(){ scope.folders = Folder.allFolders;}, true);
+
+      scope.$watch( function(){ return Folder.allFolders; },
+      function(){ scope.folders = Folder.allFolders;}, true);
       // Load Folders
       Folder.select_all();
+
       const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
+
+      const loadArticles = function(){
+        Article.selectByFolder(
+          { folder_id: scope.currentFolder.id, },
+          function(res){ scope.articles = res.data.result; }
+        );
+      }
+      const loadFiles = function(callback){
+        FileService.selectByFolder(
+          { folder_id: scope.currentFolder.id, },
+          function(res){
+            scope.files = res.data.result;
+            if(callback){ callback(); }
+          }
+        );
+      }
 
 
       /* Folder Editor Window */
-
       scope.folderWindow = false;
       scope.editFolder = {};
       scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
@@ -51,34 +68,29 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
 
       scope.formWindow = false;
       scope.openForm = false;
+
       scope.openFormWindow = function(form){
         scope.openForm = form;
-        console.log(scope.openForm);
         scope.formWindow = true;
       }
       const loadForms = function(){
         Form.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
           scope.forms = response.data.result;
-          console.log(scope.forms);
-        })
+        });
       }
-      scope.afterFormWindow = function(){
-        loadForms();
-      }
+      scope.afterFormWindow = function(){ loadForms(); }
 
       /* Garant Window */
 
       scope.garantWindow = false;
       scope.openGarant = false;
       scope.openGarantWindow = function(garant){
-        console.log(garant);
         scope.openGarant = garant;
         scope.garantWindow = true;
       }
       const loadGarants = function(){
         Garant.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
           scope.garants = response.data.result;
-          console.log(scope.garants);
         })
       }
       scope.afterGarantWindow = function(){ loadGarants(); }
@@ -122,13 +134,15 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           return { file_id: response.data.file_id, folder_id: scope.currentFolder.id }
         }
         const refreshFiles = function(update){
-          const fn = function(){ if(update){ FileService.refresh(function(){ scope.$apply(); }); } }
-          return fn;
+          return function(){
+            if(update){ loadFiles(function(){ scope.$apply(); });  }
+          }
         }
         // refres only after all filea are uploaded
         let completed = 0;
         for (let i = 0; i < all; i++){ let file = [files[i]];
           uploadDropped(file, false, function(response){
+            completed++;
             let update = completed == all;
             FileService.attachToFolder( oData(response), refreshFiles(update));});
         }
@@ -160,8 +174,10 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           if(!folderInArray.open){ scope.openFoldersInTree.push(folder.id); }
 
           // Load forms
+          loadArticles();
           loadForms();
           loadGarants();
+          loadFiles();
         }
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }
