@@ -14,7 +14,9 @@ app.factory('customAjax', function(){
     const request = new XMLHttpRequest();
     request.addEventListener('load',function(){
       const res = { data: JSON.parse(request.responseText) }
-      completeFn(res);
+      if(completeFn){
+        completeFn(res);
+      }
     });
     if(progressFn){
       request.addEventListener('progress',function(){

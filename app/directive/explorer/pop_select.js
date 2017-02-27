@@ -22,6 +22,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
       scope.forms;
       scope.articles;
       scope.files;
+      scope.currentFolder = null;
 
       scope.cancel = function(){
         stopDefault();
@@ -60,9 +61,12 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.currentParents = Folder.listParents(scope.currentFolder);
         scope.selected = {};
         scope.selectedName = '';
+
         scope.articles = [];
         scope.files = [];
         scope.forms = [];
+
+
         if(setup.articles){ loadArticles(); }
         if(setup.files){ loadFiles(); }
         if(setup.forms){ loadForms(); }

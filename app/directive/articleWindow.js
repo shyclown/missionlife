@@ -12,7 +12,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
     templateUrl: '/missionlife/app/template/article_window.html',
     link: function (scope, element, attrs)
     {
-      const targetUrl = '/missionlife/system/ng/files.php';
+      const targetUrl = '/missionlife/system/ng/call.php?class=file';
       scope.logPanel = 'log panel';
       scope.elArticleHeader = document.getElementById('articleEditorHeader');
       scope.elArticleContent = document.getElementById('articleEditorContent');

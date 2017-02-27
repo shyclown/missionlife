@@ -2,11 +2,11 @@ app.directive('popFolderExplorer',['$http','Form','Shared', 'Folder', 'Article',
 function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDropped) {
   return {
     restrict: 'E',
-    scope:{
-    },
+    scope:{ },
     templateUrl: '/missionlife/app/template/pop_folder_window.html',
     link: function (scope, element, attrs)
     {
+      let Explorer = Shared.explorer;
 
       scope.currentFolder = Shared.currentFolder;
       scope.folders = [];
@@ -22,23 +22,13 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       // Load Folders
       Folder.select_all();
 
-      const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
+      const explorer = Shared.explorer;
+      scope.$watch( function(){ return explorer.articles; }, function(){ scope.articles = explorer.articles; }, true );
+      scope.$watch( function(){ return explorer.garants; }, function(){ scope.garants = explorer.garants; }, true );
+      scope.$watch( function(){ return explorer.files; }, function(){ scope.files = explorer.files; }, true );
+      scope.$watch( function(){ return explorer.forms; }, function(){ scope.forms = explorer.forms; }, true );
 
-      const loadArticles = function(){
-        Article.selectByFolder(
-          { folder_id: scope.currentFolder.id, },
-          function(res){ scope.articles = res.data.result; }
-        );
-      }
-      const loadFiles = function(callback){
-        FileService.selectByFolder(
-          { folder_id: scope.currentFolder.id, },
-          function(res){
-            scope.files = res.data.result;
-            if(callback){ callback(); }
-          }
-        );
-      }
+      const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
 
 
       /* Folder Editor Window */
@@ -73,12 +63,9 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         scope.openForm = form;
         scope.formWindow = true;
       }
-      const loadForms = function(){
-        Form.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
-          scope.forms = response.data.result;
-        });
+      scope.afterFormWindow = function(){
+        Form.updateExplorer();
       }
-      scope.afterFormWindow = function(){ loadForms(); }
 
       /* Garant Window */
 
@@ -88,12 +75,10 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         scope.openGarant = garant;
         scope.garantWindow = true;
       }
-      const loadGarants = function(){
-        Garant.selectByFolder({folder_id: Shared.currentFolder.id},function(response){
-          scope.garants = response.data.result;
-        })
+      scope.afterGarantWindow = function(image){
+        if(image){ FileService.updateExplorer(); }
+        Garant.updateExplorer();
       }
-      scope.afterGarantWindow = function(){ loadGarants(); }
 
       /* Article Window Data */
 
@@ -134,9 +119,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           return { file_id: response.data.file_id, folder_id: scope.currentFolder.id }
         }
         const refreshFiles = function(update){
-          return function(){
-            if(update){ loadFiles(function(){ scope.$apply(); });  }
-          }
+          return function(){ if(update){ FileService.updateExplorer();  } }
         }
         // refres only after all filea are uploaded
         let completed = 0;
@@ -158,13 +141,13 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         }
         if(folder == null){
           scope.currentFolder = folder;
-          Shared.currentFolder = folder;
+          Shared.explorer.current_folder = folder;
         }
         else{
           const folderInArray = inFolderArray(folder.id);
           const folderIsCurrent = folder == scope.currentFolder;
           if(!folderIsCurrent){
-            Shared.currentFolder = folder;
+            Shared.explorer.current_folder = folder;
             scope.currentFolder = folder;
             scope.currentParents = Folder.listParents(folder);
           }
@@ -174,10 +157,6 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           if(!folderInArray.open){ scope.openFoldersInTree.push(folder.id); }
 
           // Load forms
-          loadArticles();
-          loadForms();
-          loadGarants();
-          loadFiles();
         }
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }

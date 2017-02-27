@@ -1,6 +1,25 @@
-app.service('Form',function(Ajax){
+app.service('Form',function($rootScope, Ajax, Shared){
 
   const url = '/missionlife/system/ng/call.php?class=form';
+  const self = this;
+  const ex = Shared.explorer;
+
+  $rootScope.$watch(
+    function(){ return ex.current_folder; },
+    function(){ self.updateExplorer(); },
+    true
+  );
+
+  this.updateExplorer = function(){
+    if(ex.current_folder == null){
+      ex.forms = [];
+    }
+    else{ self.selectByFolder(
+      { folder_id: ex.current_folder.id },
+      function(response){ ex.forms = response.data.result;
+    });
+    }
+  }
 
   // ---------------------------------
   // Prop
@@ -17,7 +36,7 @@ app.service('Form',function(Ajax){
   /* ---------------------------------
                  fns
   ------------------------------------*/
-  const self = this;
+
   this.selected = [];
   this.all_rows = 0;
 

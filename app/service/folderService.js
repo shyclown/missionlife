@@ -1,13 +1,16 @@
-app.service('Folder',function(Ajax){
+app.service('Folder',function(Ajax, Shared){
 
   this.allFolders = {};
 
   const self = this;
   const url = '/missionlife/system/ng/call.php?class=folder';
+
   const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
   const folderID = function(id){
     let i = 0; while(self.allFolders[i].id != id){ i++; }; return self.allFolders[i];
   }
+
+
 
   this.listParents = function(folder){
     let parents = [];
@@ -22,6 +25,7 @@ app.service('Folder',function(Ajax){
   this.select_all = function( callback ){
     Ajax.call({action: 'select_all'}, url, function(response){
       self.allFolders = response.data;
+      Shared.explorer.all_folders = response.data;
       if(callback){ callback(response); }
     });
   }

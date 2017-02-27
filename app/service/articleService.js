@@ -4,11 +4,17 @@ app.service('Article',function($rootScope, Ajax, Shared){
   const self = this;
 
   $rootScope.$watch(
-    function(){ return Shared.currentFolder; },
-    function(){ if(Shared.currentFolder==null){ self.selected = []; }
-      else{ self.selectByFolder({ folder_id: Shared.currentFolder.id }, function(response){
-              self.selected = response.data.result;
-      });}
+    function(){ return Shared.explorer.current_folder; },
+    function(){
+      const ex = Shared.explorer;
+      if(ex.current_folder == null){ ex.articles = []; }
+      else{
+        self.selectByFolder({ folder_id: ex.current_folder.id },
+        function(response){
+          ex.articles = response.data.result;
+          console.log(response);
+        });
+      }
     },
     true
   );

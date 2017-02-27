@@ -22,6 +22,10 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
       const copy = function(obj){ return Object.assign({},obj); }
       const callbackFn = function(){ scope.afterGarantWindow(); }
       const newGarant = { image: false, header: '', title: '', webpage: '', motto: '', state: 1 }
+      const end = function(){
+        scope.afterGarantWindow();
+        scope.cancel(); // close window
+      }
 
       const updateValue = function(){
           sourceGarant = scope.openGarant;
@@ -39,24 +43,17 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
 
       // Garant functions
       scope.save = function(garant){
-        if (garant.id) {
-          Garant.update( garant,
-            function(response){
-              scope.afterGarantWindow();
-              replaceImage();});
+        if (garant.id) { Garant.update( garant,
+          function(response){ replaceImage( end ); });}
+        else{ Garant.insert( garant,
+          function(response){ garant.id = response.data; replaceImage( end ); });
         }
-        else{
-          Garant.insert( garant,
-            function(response){ garant.id = response.data;
-              const reply = function(r){ scope.afterGarantWindow(); }
-              const attachGarantToFolder = { folder_id: scope.currentFolder.id, garant_id: scope.editGarant.id }
-              Garant.addToFolder(attachGarantToFolder, reply );
-              replaceImage();});
-        }
-        scope.cancel(); // close window
-      }
+      } // save
 
-      const replaceImage = function(){ if(imageReplaced){ uploadFile(); }}
+      const replaceImage = function( endFn ){
+        if(imageReplaced){ uploadFile(endFn); }
+        else{ if(endFn){ endFn(); } }
+      }
 
       // not implemented yet
       scope.delete = function(garant){
@@ -74,15 +71,17 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
         reader.readAsDataURL(event.dataTransfer.files[0]);
       }
 
-      const uploadFile = function(reset)
+      const uploadFile = function(endFn)
       {
         const uploadData = { file_name: scope.new_file_name, files: dataURItoBlob(scope.image) }
         FileService.upload(uploadData, function(response){
-          const reply = function(r){ console.log('reply', r); }
+          let update = false;
           const attachFileToFolder = { folder_id: scope.currentFolder.id, file_id: response.data.file_id }
           const attachFileToGarant = { garant_id: scope.editGarant.id, file_id: response.data.file_id }
-          FileService.attachToFolder(attachFileToFolder, reply);
-          FileService.attachToGarant(attachFileToGarant, reply);
+          FileService.attachToFolder(attachFileToFolder,
+            function(){ if(update && endFn){ endFn(); update = true; } });
+          FileService.attachToGarant(attachFileToGarant,
+            function(){ if(update && endFn){ endFn(); update = true; } });
         });
       }
 
@@ -91,9 +90,7 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
 
       scope.onDropImage = function(){
         const afterResize = function(dataUrl){
-          console.log(imageReplaced);
           imageReplaced = true;
-          console.log(imageReplaced);
           scope.image = dataUrl;
           scope.$apply();
         }

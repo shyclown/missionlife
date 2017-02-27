@@ -29,22 +29,13 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
           if(!sourceForm){ scope.editForm = copy(newForm); }
           else{ scope.editForm = copy(sourceForm); }
           scope.editForm.data = JSON.parse(scope.editForm.data);
-
         },
         true
       )
       scope.cancel = function(){ scope.formWindow = false; }
-
       const newForm = { name: '', email: '', state: 0, data: '[]' }
-
       // manipulated object before save
-      const callbackFn = function(){
-        scope.afterFormWindow();
-      }
-
-
-
-
+      const callbackFn = function(){ scope.afterFormWindow(); }
       const orderFn = function(arr, obj, index, value){
         arr.move(index, (index + value));
         //openForm.data = JSON.stringify(arr);
@@ -81,7 +72,6 @@ app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
           });
         }
       }
-
       scope.setType = function(type, field){ field.type = type; }
       scope.formStateText = function(form){ return (form.state) ? 'active' : 'inactive';}
       scope.changeState = function(form){ form.state = !form.state; }

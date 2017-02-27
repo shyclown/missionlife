@@ -81,11 +81,7 @@ class Garant
     return $this->db->query($sql, $params);
     }
   }
-  private function clear_files($garant_id){
-    $params = array("i", $garant_id);
-    $sql_file = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
-    return $this->db->query($sql_file, $params);
-  }
+
   public function add_to_folder($data){
     $sql = "INSERT INTO `ml_folder_garant` (`id`,`folder_id`, `garant_id`)
             VALUES (NULL, ?, ?)";

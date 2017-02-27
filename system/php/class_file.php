@@ -213,53 +213,7 @@ class File
     $all = $this->db->query($sql_all_rows);
     return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
-/*
-  public function select_by_folder($data){
-    // default VALUES
-    $order = 'DESC';
-    $search = '';
-    $sort_by = 'file_name';
-    $folder = 'all';
-    $where_folder_id = '';
 
-    if(isset($data['order'])){ $order = $data['order'];};
-    if(isset($data['sort_by'])){ $sort_by = $data['sort_by'];};
-    if(isset($data['search']) && $data['search'] !=""){ $search = "WHERE `file_name` LIKE ?"; }
-    if(isset($data['folder'])){ $folder = $data['folder'];};
-
-    if($folder == 'all'){ $str = ""; }
-    else{ $str = "INNER JOIN `ml_".$data['folder']."_file` af ON af.file_id = f.id"; }
-    if(isset($data['folder_id']) && $search == ''){
-      $where_folder_id = "WHERE `folder_id` = ?";
-    }else{
-      $where_folder_id = "AND `folder_id` = ?";
-    }
-
-    $sql = "SELECT SQL_CALC_FOUND_ROWS *
-            FROM  `ml_file` f
-            ".$str." ".$search." ".$where_folder_id."
-            ORDER BY ".$sort_by." ".$order." LIMIT ? , ?";
-    $sql_all_rows = "SELECT FOUND_ROWS()";
-    // params
-    if($search == '' && $where_folder_id == ''){
-      $params = array('ii', $data['limit_min'], $data['limit_max']);
-    }
-    else if($search != '' && $where_folder_id == ''){
-      $srch = '%'.$data['search'].'%';
-      $params = array('sii', $srch , $data['limit_min'], $data['limit_max']);
-    }
-    else if($search == '' && $where_folder_id != ''){
-      $params = array('iii', $data['folder_id'] , $data['limit_min'], $data['limit_max']);
-    }
-    else if($search != '' && $where_folder_id != ''){
-      $srch = '%'.$data['search'].'%';
-      $params = array('siii', $srch , $data['folder_id'], $data['limit_min'], $data['limit_max']);
-    }
-    $result = $this->db->query($sql, $params);
-    $all = $this->db->query($sql_all_rows);
-    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
-  }
-*/
   public function get_files_by_selected($data){
     $order;
     $search = '';
@@ -324,11 +278,22 @@ class File
 // Attach
 //-----------------------------------------------------
 
+  private function clear_files_from_garant($garant_id){
+
+    $params = array("i", $garant_id);
+    $sql_file = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`garant_id` = ?";
+    return $this->db->query($sql_file, $params);
+
+  }
+
   public function attach_to_garant($data){
+    if($this->clear_files_from_garant($data['garant_id']))
+    {
     $sql = "INSERT INTO `ml_garant_file` (`id`, `garant_id`, `file_id`)
             VALUES (NULL, ?, ?)";
     $params = array( 'ii', $data['garant_id'], $data['file_id']);
     return $this->db->query($sql, $params);
+    }
   }
   public function attach_to_article($data){
     $sql = "INSERT INTO `ml_article_file` (`id`, `article_id`, `file_id`, `file_desc`)
