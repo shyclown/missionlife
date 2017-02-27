@@ -53,6 +53,19 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           scope.new_folder.name = "";
         });
       }
+      /* File Window Data */
+      /* Tool */
+
+      scope.fileWindow = false;
+      scope.openFile = false;
+
+      scope.openFileWindow = function(file){
+        scope.openFile = file;
+        scope.fileWindow = true;
+      }
+      scope.afterFileWindow = function(){
+        //Form.updateExplorer();
+      }
 
       /* Form Window Data */
 

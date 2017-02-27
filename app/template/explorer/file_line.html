@@ -3,6 +3,6 @@
   <button class="name">
   <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
   </button>
-  <button class="edit"><i class="fa fa-cog"></i></button>
+  <button class="edit" ng-click="openFileWindow(file)"><i class="fa fa-cog"></i></button>
   <!--<div class="delete" ng-click="removeFolder(folder)"><i class="fa fa-trash"></i></div>-->
 </div>

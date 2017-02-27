@@ -75,6 +75,8 @@
 </div>
 <edit-folder-window ng-show="folderWindow" ></edit-folder-window>
 <div style="clear:both"></div>
+
+<edit-file-window current-folder='currentFolder' after-file-window="afterFileWindow" open-file='openFile' file-window ='fileWindow' ng-show='fileWindow'></edit-file-window>
 <edit-garant-window current-folder='currentFolder' after-garant-window="afterGarantWindow" open-garant='openGarant' garant-window ='garantWindow' ng-show='garantWindow'></edit-garant-window>
 <edit-form-window current-folder='currentFolder' after-form-window="afterFormWindow" open-form='openForm' form-window ='formWindow' ng-show='formWindow'></edit-form-window>
-<article-window current-folder='currentFolder' open-Article='openArticle' article-Window="articleWindow" ng-show="articleWindow"></article-window>
+<edit-article-window current-folder='currentFolder' open-Article='openArticle' article-Window="articleWindow" ng-show="articleWindow"></edit-article-window>

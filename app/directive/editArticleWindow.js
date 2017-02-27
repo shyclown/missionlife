@@ -1,6 +1,6 @@
 /* Uses Editor */
 
-app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', function($http, Folder, Article, Form, uploadDroppedToArticle) {
+app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', function($http, Folder, Article, Form, uploadDroppedToArticle) {
   return {
     restrict: 'E',
     scope:{
@@ -9,7 +9,7 @@ app.directive('articleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropp
       articleWindow :'=',
       callbackWindow : '='
     },
-    templateUrl: '/missionlife/app/template/article_window.html',
+    templateUrl: '/missionlife/app/template/edit_article_window.html',
     link: function (scope, element, attrs)
     {
       const targetUrl = '/missionlife/system/ng/call.php?class=file';
