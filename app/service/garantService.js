@@ -62,8 +62,15 @@ app.service('Garant',function($rootScope, Shared, Ajax, customAjax){
   this.selectByFolder = function(data, callback){
     data.action = 'select_by_folder';
     Ajax.call(data, url, function(response){
-      self.selected = response.data.result;
       if(callback){ callback(response) };
     });
   }
+  this.selectByID = function(data, callback){
+    data.action = 'select_by_id';
+    Ajax.call(data, url, function(response){
+      if(callback){ callback(response) };
+    });
+  }
+
+
 });

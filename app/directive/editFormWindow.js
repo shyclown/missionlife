@@ -2,37 +2,31 @@
 
 */
 
-app.directive('editFormWindow',['$http', 'Form', function($http, Form) {
+app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form, Shared) {
   return {
     restrict: 'E',
-    scope:{
-      currentFolder : '=',
-      openForm: '=',
-      formWindow: '=',
-      afterFormWindow: '='
-    },
+    scope:{ formWindow: '=editObj' },
     templateUrl: '/missionlife/app/template/edit_form_window.html',
     link: function (scope, element, attrs)
     {
+
       const copy = function(obj){ return Object.assign({},obj); }
       /* http://stackoverflow.com/questions/2440700/reordering-arrays */
       Array.prototype.move = function (from, to) {
       this.splice(to, 0, this.splice(from, 1)[0]);
       };
       // check values when is open
-      let sourceForm;
-      scope.editForm;
-      scope.$watch(
-        function(){ return scope.openForm; },
-        function(){
-          sourceForm = scope.openForm;
-          if(!sourceForm){ scope.editForm = copy(newForm); }
-          else{ scope.editForm = copy(sourceForm); }
-          scope.editForm.data = JSON.parse(scope.editForm.data);
-        },
-        true
-      )
-      scope.cancel = function(){ scope.formWindow = false; }
+      scope.openForm = scope.formWindow.item;
+      scope.openFolder = Shared.explorer.current_folder;
+
+      let sourceForm = scope.openForm;
+
+      if(!sourceForm){ scope.editForm = copy(newForm); }
+      else{ scope.editForm = copy(sourceForm); }
+      scope.editForm.data = JSON.parse(scope.editForm.data);
+
+
+      scope.cancel = function(){ Shared.window.form = false; }
       const newForm = { name: '', email: '', state: 0, data: '[]' }
       // manipulated object before save
       const callbackFn = function(){ scope.afterFormWindow(); }

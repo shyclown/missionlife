@@ -39,8 +39,10 @@ function($http, Shared, Folder, Article, Form, FileService) {
         function(){ return scope.selectOpen; },
         function(){
           if(scope.selectOpen){
-            scope.currentFolder = Shared.currentFolder;
-            loadItems();
+            scope.currentFolder = Shared.explorer.current_folder;
+            if(scope.currentFolder != null){
+                loadItems();
+            }
           }
           else{ resetItems(); }
       },true);
@@ -65,7 +67,6 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.articles = [];
         scope.files = [];
         scope.forms = [];
-
 
         if(setup.articles){ loadArticles(); }
         if(setup.files){ loadFiles(); }

@@ -1,69 +1,44 @@
 /* Uses Editor */
 
-app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', function($http, Folder, Article, Form, uploadDroppedToArticle) {
+app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', 'Shared',
+function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
   return {
     restrict: 'E',
-    scope:{
-      currentFolder: '=',
-      openArticle: '=',
-      articleWindow :'=',
-      callbackWindow : '='
-    },
+    scope:{ articleWindow : '=editObj' },
     templateUrl: '/missionlife/app/template/edit_article_window.html',
     link: function (scope, element, attrs)
     {
       const targetUrl = '/missionlife/system/ng/call.php?class=file';
+      const explorer = Shared.explorer;
       scope.logPanel = 'log panel';
       scope.elArticleHeader = document.getElementById('articleEditorHeader');
       scope.elArticleContent = document.getElementById('articleEditorContent');
       scope.elArticleContent.value = scope.content;
 
-      // 2. Create new Article to receive ID
-      // If new Article is not created we can not upload images successfully
-      // We need folder to be set otherways it doesnt work
-      // TODO: make id null
-
+      scope.openArticle = scope.articleWindow.item;
       scope.files = {};
-
-
-      // perform when openArticle is changed
-      scope.$watch(
-        function(){ return scope.openArticle; },
-        function(){
-          if(scope.openArticle)
-          {
-            scope.edit_article = Object.assign({},scope.openArticle);
-            scope.area.update_content(scope.edit_article.content);
-            Editor.attachImageControls.bind(scope.area)();
-            scope.loadFilesOfArticle();
-          }
-      },
-      true);
-      // 1. We attach editor to our template
-      // - providing IDs and Link to Image Folder
 
       scope.area = new Editor.area({
         input_id:'articleEditorContent',
         form_id:'articleEditorForm',
-        // if AngularJS
         image_url : '/missionlife/uploads/image/',
       });
-
-      /* Buttons */
-      // Save
-      // Delete
-
       scope.loadFilesOfArticle = function(){
-        // When page is loaded article.id value doesnt exist
-        // We do not load files in this case, no errors
-        /* Before: If we try load files we get error of missing data.id */
         if(scope.openArticle.id){
           Article.load_files( scope.edit_article, function(response){
-            // Update scope files
             scope.files = response.data;
           });
         }
       }
+      if(scope.openArticle){
+        scope.edit_article = Object.assign({},scope.openArticle);
+        scope.area.update_content(scope.edit_article.content);
+        Editor.attachImageControls.bind(scope.area)();
+        scope.loadFilesOfArticle();
+      }
+
+
+
       // Article state
       scope.stateText = function(){
         if(scope.edit_article && scope.edit_article.state){ return 'dectivate'; }
@@ -89,7 +64,7 @@ app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadD
       }
 
       scope.closeWithoutSave = function(){
-        scope.articleWindow = false;
+        scope.articleWindow.close();
         //Article.selectByFolder({ folder_id: scope.currentFolder.id });
       }
       // 2. Attaching callback function executed after drop of file or image
@@ -126,7 +101,7 @@ app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadD
       }
       scope.deleteArticle = function(article){
         Article.delete(article, function(){
-          Article.selectByFolder({ folder_id: scope.currentFolder.id });
+          Article.selectByFolder({ folder_id: explorer.current_folder.id });
         });
       }
       scope.saveChanges = function(){
@@ -135,7 +110,7 @@ app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadD
         scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
         Article.update(scope.edit_article, function(response){
           scope.logPanel = response.data;
-          Article.selectByFolder({ folder_id: scope.currentFolder.id });
+          Article.selectByFolder({ folder_id: explorer.current_folder.id });
         });
         Editor.attachImageControls.bind(scope.area)();
         }

@@ -53,8 +53,9 @@
         <h1 class="filename">{{file.file_name}}</h1>
         </header>
         <div class="manipulateImage">
-          <button class="editImage">rotate</button>
+          <button class="editImage" disabled="true">rotate</button>
           <button class="editImage">change folder</button>
+          <button class="editImage">download</button>
           <button class="editImage">delete</button>
         </div>
         <section class="image" ng-if="(file.file_type == 'png')">
@@ -62,10 +63,7 @@
         </section>
         <section class="details">
           <h3>Used in:</h3>
-          <button class="spanlink" ng-repeat="detail in details">{{detail.header}}</button>
-          <button class="spanlink" ng-repeat="detail in details">{{detail.header}}</button>
-          <button class="spanlink" ng-repeat="detail in details">{{detail.header}}</button>
-          <button class="spanlink" ng-repeat="detail in details">{{detail.header}}</button>
+          <button class="spanlink" ng-repeat="detail in details" ng-click="openItem(detail)">{{detail.header}}</button>
 
         </section>
         <section class="details">

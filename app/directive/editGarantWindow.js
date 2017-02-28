@@ -1,16 +1,11 @@
 /*
 
 */
-app.directive('editGarantWindow',['Garant', 'FileService', 'dataURItoBlob', 'resizeDroppedImage',
-function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
+app.directive('editGarantWindow',['Garant', 'FileService', 'dataURItoBlob', 'resizeDroppedImage', 'Shared',
+function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
   return {
     restrict: 'E',
-    scope:{
-      currentFolder : '=',
-      openGarant: '=',
-      garantWindow: '=',
-      afterGarantWindow: '='
-    },
+    scope:{ garantWindow: '=editObj' },
     templateUrl: '/missionlife/app/template/edit_garant_window.html',
     link: function (scope, element, attrs)
     {
@@ -18,12 +13,14 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
       let imageReplaced;
       scope.editGarant;
       scope.image;
+      scope.openGarant = scope.garantWindow.item;
+      scope.currentFolder = Shared.explorer.current_folder;
 
       const copy = function(obj){ return Object.assign({},obj); }
       const callbackFn = function(){ scope.afterGarantWindow(); }
       const newGarant = { image: false, header: '', title: '', webpage: '', motto: '', state: 1 }
       const end = function(){
-        scope.afterGarantWindow();
+        scope.garantWindow.callback();
         scope.cancel(); // close window
       }
 
@@ -35,7 +32,7 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage ) {
           scope.image = scope.editGarant.image;
       }
 
-      scope.cancel = function(){ scope.garantWindow = false; }
+      scope.cancel = function(){ scope.garantWindow.close(); }
       scope.$watch(
         function(){ return scope.openGarant; },
         function(){ updateValue(); }, true
