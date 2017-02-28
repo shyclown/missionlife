@@ -107,4 +107,14 @@ class Garant
     return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
 
+  public function select_by_id($data){
+    $sql = "SELECT f.file_src image, g.* FROM `ml_garant` g
+            LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
+            LEFT JOIN `ml_file` f ON f.id = gf.file_id
+            INNER JOIN `ml_folder_garant` fg ON g.id = fg.garant_id
+            WHERE g.id = ? ";
+    $params = array('i',$data['garant_id']);
+    return $this->db->query($sql, $params);
+  }
+
 }
