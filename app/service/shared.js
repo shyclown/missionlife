@@ -18,15 +18,27 @@ app.service('Shared',function($document, $compile){
     form: false
   }
 
+  let windowID = 0;
+  this.openWindows = [];
 
-  this.editWindowElement = function( name, window_element_obj, item, callback, scope )
-  {
-      this.html = '<edit-'+name+'-window edit-obj="'+window_element_obj+'"></edit-'+name+'-window>';
-      this.el = $compile( this.html )( scope );
-      this.item = item;
-      this.callback = callback;
-      this.close = function(){ this.el.remove(); };
+  const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
+    this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';
+    this.el = $compile( this.html )( scope );
+    this.item = item;
+    this.callback = callback;
+    this.close = function(){ this.el.remove(); };
   }
+  this.directiveElement = function( name, item, callback, scope )
+  {
+      const generatedID = 'item_'+windowID;
+      const generatedOBJ = 'openWindows.'+generatedID;
+      scope.openWindows[generatedID] = new directiveOBJ(name, generatedOBJ, item, callback, scope);
+      windowID++;
+      return scope.openWindows[generatedID];
+  }
+
+
+
 
   this.currentFolder = null;
 
