@@ -53,11 +53,10 @@
     </div>
     <div class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" >
       <button class="name" ng-click="openFolder(folder)"><i class="fa fa-folder"></i> {{folder.name}}</button>
-      <button class="edit" ng-click="setEditFolder(folder)"><i class="fa fa-cog"></i></button>
+      <button class="edit" ng-click="openFolderWindow(folder)"><i class="fa fa-cog"></i></button>
     </div>
     <div class="ArticleLine" ng-repeat="article in articles">
-      <button class="name" ng-click="selectArticle(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>
-      <button class="edit" ng-click="deleteArticle(article)"><i class="fa fa-cog"></i></button>
+      <button class="name" ng-click="openArticleWindow(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>
     </div>
     <div class="fileLine" ng-repeat="form in forms" >
       <button class="name" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
@@ -74,5 +73,4 @@
   </div>
 
 </div>
-<edit-folder-window ng-show="folderWindow" ></edit-folder-window>
 <div style="clear:both"></div>

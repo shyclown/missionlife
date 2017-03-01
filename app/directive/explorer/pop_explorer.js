@@ -28,78 +28,40 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.$watch( function(){ return explorer.files; }, function(){ scope.files = explorer.files; }, true );
       scope.$watch( function(){ return explorer.forms; }, function(){ scope.forms = explorer.forms; }, true );
 
-      scope.$watch(
-        function(){ return Shared.window; },
-        function(){ scope.isOpenWindow = Shared.window; },
-      true );
-
-      const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
-
-
-      /* Folder Editor Window */
-      scope.folderWindow = false;
-      scope.editFolder = {};
-      scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
-      scope.setEditFolder = function(folder){
-        stopDefault(event);
-        scope.editFolder = folder;
-        scope.toogleEditFolder();
-      }
-      scope.setPosition = function(position){
-        scope.editFolder.position = position;
-        scope.updatePosition(scope.editFolder);
-      }
-
       scope.new_folder = {};
       scope.saveNewFolder = function(){
         let data = scope.new_folder;
         data.parent = scope.currentFolder;
-        Folder.insert(data, function(response){
-          scope.new_folder.name = "";
-        });
+        Folder.insert( data, function(response){ scope.new_folder.name = ""; });
       }
-
       /* Window */
-      let windowID = 0;
       scope.openWindows = [];
       const openWindow = function(name, item, callback){
         name = 'edit-'+name+'-window';
         return  new Shared.directiveElement(name, item, callback, scope);
       }
-
-
-      /* File Window Data */
-      /* Tool */
-      const callbackArticle = function(){};
+      const callbackArticle = function(){}
       const callbackFile = function(){}
+      const callbackFolder = function(){}
       const callbackForm = function(){ Form.updateExplorer(); }
-      const callbackGarant = function(image){
-        if(image){ FileService.updateExplorer(); }
-        Garant.updateExplorer();
-      }
+      const callbackGarant = function(image){ if(image){ FileService.updateExplorer(); }; Garant.updateExplorer(); }
+
       scope.openFileWindow = function(file){ element.append(openWindow('file', file, callbackGarant).el); }
       scope.openFormWindow = function(form){ element.append(openWindow('form', form, callbackGarant).el); }
+      scope.openFolderWindow = function(folder){ element.append(openWindow('folder', folder, callbackFolder).el); }
       scope.openGarantWindow = function(garant){ element.append(openWindow('garant', garant, callbackGarant).el); }
       scope.openArticleWindow = function(article){ element.append(openWindow('article', article, callbackArticle).el); }
 
-
       scope.createNewArticle = function(){
-        Article.insert({
-          header: 'New Article',
-          content: '<p>Content</p>',
-          folder_id: scope.currentFolder.id,
-          state: 0 },
-          function( response ){
-          Article.select_by_id({id: response.data},
-            function(ArticleByID){
-            const article = ArticleByID.data[0]; // data[0], because ajax returns array of results
-            element.append(openWindow('article', article, callbackArticle).el);
+        const newArticle = { header: 'New Article', content: '<p>Content</p>', folder_id: scope.currentFolder.id, state: 0 }
+        Article.insert(newArticle, function( response ){
+          Article.select_by_id({id: response.data}, function(res){
+            element.append(openWindow('article', res.data[0], callbackArticle).el);
           });
         })
       }
 
       /* File Upload On Drop */
-
       scope.uploadFile = function(){
         const files = event.dataTransfer.files;
         const all = files.length;
@@ -109,17 +71,14 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         const refreshFiles = function(update){
           return function(){ if(update){ FileService.updateExplorer();  } }
         }
-        // refres only after all filea are uploaded
         let completed = 0;
         for (let i = 0; i < all; i++){ let file = [files[i]];
           uploadDropped(file, false, function(response){
-            completed++;
+            completed++; // some files take longer to load
             let update = completed == all;
             FileService.attachToFolder( oData(response), refreshFiles(update));});
         }
       }
-
-      /* Folders */
 
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
       scope.openFolder = function(folder){
@@ -142,19 +101,36 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           if(folderInArray.open && folderIsCurrent){
             scope.openFoldersInTree.splice(folderInArray.position, 1);
           }
-          if(!folderInArray.open){ scope.openFoldersInTree.push(folder.id); }
-
-          // Load forms
+          if(!folderInArray.open){
+            scope.openFoldersInTree.push(folder.id);
+          }
         }
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }
-      scope.removeFolder = function(folder){ stopDefault(event); Folder.remove(folder); }
-      scope.orderUp = function(folder){ stopDefault(event); Folder.orderUp(folder); }
-      scope.orderDown = function(folder){ stopDefault(event); Folder.orderDown(folder); }
-      scope.updateName = function(folder){ stopDefault(event); Folder.updateName(folder); }
-      scope.updatePosition = function(folder){ stopDefault(event); Folder.updatePosition(folder); }
+
       // CSS Style
+
       scope.currentOpen = function(folder){ return (folder.id == scope.openFolder.id) ? 'currentFolder' : ''; }
+      scope.fileTypeClass = function(type){
+        let str = '';
+        switch (type) {
+          case 'pdf' :
+            str = 'fa fa-file-pdf-o';
+            break;
+          case 'doc' :
+            str = 'fa fa-file-word-o';
+            break;
+          case 'png' :
+            str = 'fa fa-file-image-o';
+            break;
+          case 'txt' :
+            str = 'fa fa-file-text-o';
+            break;
+          default:
+            str = 'fa fa-file-o'
+        }
+        return str;
+      }
     }
   };
 }]);

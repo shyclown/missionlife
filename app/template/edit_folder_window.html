@@ -63,20 +63,20 @@
   background-color: #09F;
 }
 </style>
-<div id="blanket">
-<div class="editFolderWindow">
+<div id="blanket" ng-click="close()">
+<div class="editFolderWindow" ng-click="$event.stopPropagation()">
   <div class="TopPanel">
-   Folder Editor - {{editFolder.name}}
-    <div class="closeBtn" ng-click="toogleEditFolder()"><i class="fa fa-times"></i></div>
+   Folder Editor - {{folder.name}}
+    <div class="closeBtn" ng-click="close()"><i class="fa fa-times"></i></div>
   </div>
   <div class="content">
     Name: </br>
-    <input type="text" ng-model="editFolder.name" ng-change="updateName(editFolder)"></br>
+    <input type="text" ng-model="folder.name" ng-change="updateName(folder)"></br>
     Position: </br>
-    <button class="positionBtn" ng-class="(editFolder.position == 'top' ? 'selected' : '')" ng-click="setPosition('top')" >top</button>
-    <button class="positionBtn" ng-class="(editFolder.position == 'side' ? 'selected' : '')" ng-click="setPosition('side')" >side</button>
-    <button class="positionBtn" ng-class="(editFolder.position == '' ? 'selected' : '')" ng-click="setPosition('')" >none</button>
-    <button class="delete" ng-click="removeFolder(editFolder)">delete</button>
+    <button class="positionBtn" ng-class="(folder.position == 'top' ? 'selected' : '')" ng-click="setPosition('top')" >top</button>
+    <button class="positionBtn" ng-class="(folder.position == 'side' ? 'selected' : '')" ng-click="setPosition('side')" >side</button>
+    <button class="positionBtn" ng-class="(folder.position == '' ? 'selected' : '')" ng-click="setPosition('')" >none</button>
+    <button class="delete" ng-click="removeFolder(folder)">delete</button>
   </div>
   <div class="Footer">Footer</div>
 </div>

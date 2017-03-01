@@ -18,6 +18,21 @@ function($http, Shared, Folder, Article, Form, FileService) {
       //-----------------------------------------------------
       // Setup
       //-----------------------------------------------------
+
+      /*
+      popSelect is based on popFolderExplorer
+      - it loads files independently and performs provided callback action
+      - callbacks return value is selected item :
+      - could be folder, article, form, or file
+      - used in actions , move and add
+      - we can provide list of objects that should be excluded
+      - if we do not move folder we cant select null folder
+      - if we delete folder we cant select same folder as a file moving destination
+
+      TODO: make it universal directive called from shared function
+      TODO: make confirm prompt if delete folder
+      TODO: make prompt with info after wrong action
+      */
       scope.folders;
       scope.forms;
       scope.articles;

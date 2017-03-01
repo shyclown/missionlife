@@ -30,6 +30,8 @@ app.service('Shared',function($document, $compile){
   }
   this.directiveElement = function( name, item, callback, scope )
   {
+      callback = callback || function(){};
+      item = item || {};
       const generatedID = 'item_'+windowID;
       const generatedOBJ = 'openWindows.'+generatedID;
       scope.openWindows[generatedID] = new directiveOBJ(name, generatedOBJ, item, callback, scope);
