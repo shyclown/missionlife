@@ -25,16 +25,10 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
       else{ scope.editForm = copy(sourceForm); }
       scope.editForm.data = JSON.parse(scope.editForm.data);
 
-
-      scope.cancel = function(){ Shared.window.form = false; }
+      scope.cancel = function(){ scope.formWindow.close(); }
       const newForm = { name: '', email: '', state: 0, data: '[]' }
-      // manipulated object before save
-      const callbackFn = function(){ scope.afterFormWindow(); }
-      const orderFn = function(arr, obj, index, value){
-        arr.move(index, (index + value));
-        //openForm.data = JSON.stringify(arr);
-        //Form.update_all(openForm);
-      }
+      const callbackFn = function(){ scope.formWindow.callback(); scope.formWindow.close(); }
+      const orderFn = function(arr, obj, index, value){ arr.move(index, (index + value));  }
       scope.order = {
         up: function(arr, obj, index){orderFn(arr, obj, index, -1)},
         down: function(arr, obj, index){orderFn(arr, obj, index, +1)},

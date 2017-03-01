@@ -11,6 +11,7 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
     {
       let sourceGarant;
       let imageReplaced;
+      console.log(scope.garantWindow);
       scope.editGarant;
       scope.image;
       scope.openGarant = scope.garantWindow.item;

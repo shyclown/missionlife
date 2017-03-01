@@ -33,7 +33,6 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         function(){ scope.isOpenWindow = Shared.window; },
       true );
 
-
       const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
 
 
@@ -63,49 +62,27 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       /* Window */
       let windowID = 0;
       scope.openWindows = [];
-      scope.openWindow = function(type, item, callback){
-        const generatedID = type+'Window_'+windowID;
-        const generatedOBJ = 'openWindows.'+generatedID;
-        scope.openWindows[generatedID] = new Shared.editWindowElement(type, generatedOBJ, item, callback, scope);
-        windowID++; //
-        return scope.openWindows[generatedID];
+      const openWindow = function(name, item, callback){
+        name = 'edit-'+name+'-window';
+        return  new Shared.directiveElement(name, item, callback, scope);
       }
 
 
       /* File Window Data */
       /* Tool */
-      const callbackFile = function(image){ }
-      scope.openFileWindow = function(file){
-        element.append(scope.openWindow('file', garant, callbackGarant).el);
-      }
-      /* Form Window Data */
-      const callbackForm = function(image){ Form.updateExplorer(); }
-      scope.openFormWindow = function(form){
-        element.append(scope.openWindow('form', garant, callbackGarant).el);
-      }
-      /* Garant Window */
+      const callbackArticle = function(){};
+      const callbackFile = function(){}
+      const callbackForm = function(){ Form.updateExplorer(); }
       const callbackGarant = function(image){
         if(image){ FileService.updateExplorer(); }
         Garant.updateExplorer();
       }
-      scope.openGarantWindow = function(garant){
-        element.append(scope.openWindow('garant', garant, callbackGarant).el);
-      }
+      scope.openFileWindow = function(file){ element.append(openWindow('file', file, callbackGarant).el); }
+      scope.openFormWindow = function(form){ element.append(openWindow('form', form, callbackGarant).el); }
+      scope.openGarantWindow = function(garant){ element.append(openWindow('garant', garant, callbackGarant).el); }
+      scope.openArticleWindow = function(article){ element.append(openWindow('article', article, callbackArticle).el); }
 
-      /* Article Window Data */
 
-      scope.openArticle = {
-        new: true,
-        header: 'No Article',
-        content: 'No Article',
-        state: 0 };
-      scope.newArticle = {};
-
-      callbackArticle = function(){};
-
-      scope.selectArticle = function(article){
-        element.append(scope.openWindow('article', article, callbackArticle).el);
-      }
       scope.createNewArticle = function(){
         Article.insert({
           header: 'New Article',
@@ -116,7 +93,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           Article.select_by_id({id: response.data},
             function(ArticleByID){
             const article = ArticleByID.data[0]; // data[0], because ajax returns array of results
-            element.append(scope.openWindow('article', article, callbackArticle).el);
+            element.append(openWindow('article', article, callbackArticle).el);
           });
         })
       }
