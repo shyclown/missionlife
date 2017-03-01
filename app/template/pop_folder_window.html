@@ -33,8 +33,6 @@
     height: 300px;
     overflow-y:scroll;
   }
-
-
 </style>
 
 <div class="folderWindow" folders-data='folders'>
@@ -51,23 +49,26 @@
       <button ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</button>
       <button ng-click="openFormWindow()"><i class="fa fa-plus"></i> Add Form</button>
       <button ng-click="openGarantWindow(false)"><i class="fa fa-plus"></i> Add Garant</button>
-      <button ng-click=""><i class="fa fa-plus"></i> Add File</button>
+      <button type="file" ng-click=""><i class="fa fa-plus"></i> Add File</button>
     </div>
-
-    <folder-line ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" ></folder-line>
-    <article-line ng-repeat="article in articles"></article-line>
-
-
-    <div ng-repeat="form in forms" class="fileLine">
+    <div class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" >
+      <button class="name" ng-click="openFolder(folder)"><i class="fa fa-folder"></i> {{folder.name}}</button>
+      <button class="edit" ng-click="setEditFolder(folder)"><i class="fa fa-cog"></i></button>
+    </div>
+    <div class="ArticleLine" ng-repeat="article in articles">
+      <button class="name" ng-click="selectArticle(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>
+      <button class="edit" ng-click="deleteArticle(article)"><i class="fa fa-cog"></i></button>
+    </div>
+    <div class="fileLine" ng-repeat="form in forms" >
       <button class="name" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
     </div>
     <div ng-repeat="garant in garants" class="fileLine">
       <button class="name" ng-click="openGarantWindow(garant)"><i class="fa fa-id-card-o"></i> {{garant.header}} </button>
     </div>
-    <file-line ng-repeat="file in files"></file-line>
-
-
-
+    <div class="fileLine" ng-repeat="file in files">
+      <button class="name"><i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}</button>
+      <button class="edit" ng-click="openFileWindow(file)"><i class="fa fa-cog"></i></button>
+    </div>
   </div>
   <div style="clear:both"></div>
   </div>
