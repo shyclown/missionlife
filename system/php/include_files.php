@@ -9,9 +9,18 @@ echo '<!-- App / Service -->';
 foreach (glob("app/service/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
 echo '<!-- App / Factory -->';
 foreach (glob("app/factory/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
+
 echo '<!-- App / Directive -->';
 foreach (glob("app/directive/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
 echo '<!-- App / Directive Explorer -->';
 foreach (glob("app/directive/explorer/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
+echo '<!-- App / Directive Explorer -->';
+foreach (glob("app/directive/popup/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
+echo '<!-- App / Directive Explorer -->';
+foreach (glob("app/directive/window/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
+
+
+
+
 echo '<!-- App / Controller -->';
 foreach (glob("app/controller/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
