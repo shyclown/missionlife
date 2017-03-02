@@ -36,6 +36,7 @@
 </style>
 
 <div class="folderWindow" folders-data='folders'>
+  <button ng-click="testFn()"><i class="fa fa-plus"></i> TestPrompt</button>
   <div class="folderTopPanel">
     <path-to-folder></path-to-folder>
     <add-folder></add-folder>
@@ -44,6 +45,7 @@
     <div class="folderTree">
       <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
     </div>
+
   <div class="folderOpen" is-drop-area="uploadFile">
     <div ng-if="isOpenFolder()">
       <button ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</button>

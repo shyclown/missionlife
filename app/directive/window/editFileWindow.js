@@ -6,7 +6,7 @@ function( FileService, Article, Garant, Shared ) {
   return {
     restrict: 'E',
     scope:{ fileWindow : '=editObj' },
-    templateUrl: '/missionlife/app/template/edit_file_window.html',
+    templateUrl: '/missionlife/app/template/window/edit_file_window.html',
     link: function (scope, element, attrs)
     {
       const clone = function(obj){ return Object.assign({},obj); }

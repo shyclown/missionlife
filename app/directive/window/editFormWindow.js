@@ -6,7 +6,7 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
   return {
     restrict: 'E',
     scope:{ formWindow: '=editObj' },
-    templateUrl: '/missionlife/app/template/edit_form_window.html',
+    templateUrl: '/missionlife/app/template/window/edit_form_window.html',
     link: function (scope, element, attrs)
     {
 

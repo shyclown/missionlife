@@ -12,7 +12,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
       selectFn: '=',
       selectSetup: '='
     },
-    templateUrl: '/missionlife/app/template/pop_select.html',
+    templateUrl: '/missionlife/app/template/popup/pop_select.html',
     link: function (scope, element, attrs)
     {
       //-----------------------------------------------------

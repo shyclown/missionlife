@@ -5,7 +5,7 @@ function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
   return {
     restrict: 'E',
     scope:{ articleWindow : '=editObj' },
-    templateUrl: '/missionlife/app/template/edit_article_window.html',
+    templateUrl: '/missionlife/app/template/window/edit_article_window.html',
     link: function (scope, element, attrs)
     {
       const targetUrl = '/missionlife/system/ng/call.php?class=file';

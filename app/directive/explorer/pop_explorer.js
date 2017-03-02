@@ -3,7 +3,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
   return {
     restrict: 'E',
     scope:{ },
-    templateUrl: '/missionlife/app/template/pop_folder_window.html',
+    templateUrl: '/missionlife/app/template/explorer/pop_explorer.html',
     link: function (scope, element, attrs)
     {
       let Explorer = Shared.explorer;
@@ -52,6 +52,15 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.openGarantWindow = function(garant){ element.append(openWindow('garant', garant, callbackGarant).el); }
       scope.openArticleWindow = function(article){ element.append(openWindow('article', article, callbackArticle).el); }
 
+      scope.prompted = function(message, description, cancelBtn, acceptBtn, callback){
+        const promptObj = new Shared.prompt({
+          message: message,
+          description: description,
+          cancelBtn: cancelBtn,
+          acceptBtn: acceptBtn
+        }, callback, scope);
+      }
+
       scope.createNewArticle = function(){
         const newArticle = { header: 'New Article', content: '<p>Content</p>', folder_id: scope.currentFolder.id, state: 0 }
         Article.insert(newArticle, function( response ){
@@ -82,29 +91,38 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
 
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
       scope.openFolder = function(folder){
-        const inFolderArray = function(id){
-          let pos = scope.openFoldersInTree.indexOf(id);
-          return {  open: pos >= 0, position: pos };
-        }
-        if(folder == null){
-          scope.currentFolder = folder;
-          Shared.explorer.current_folder = folder;
-        }
-        else{
-          const folderInArray = inFolderArray(folder.id);
-          const folderIsCurrent = folder == scope.currentFolder;
-          if(!folderIsCurrent){
-            Shared.explorer.current_folder = folder;
-            scope.currentFolder = folder;
-            scope.currentParents = Folder.listParents(folder);
+        // prompted action
+        scope.prompted(
+          'Opening Folder',
+          'by submiting to this you are going to open folder',
+          'cancel',
+          'Open Folder',
+          function(){
+            const inFolderArray = function(id){
+              let pos = scope.openFoldersInTree.indexOf(id);
+              return {  open: pos >= 0, position: pos };
+            }
+            if(folder == null){
+              scope.currentFolder = folder;
+              Shared.explorer.current_folder = folder;
+            }
+            else{
+              const folderInArray = inFolderArray(folder.id);
+              const folderIsCurrent = folder == scope.currentFolder;
+              if(!folderIsCurrent){
+                Shared.explorer.current_folder = folder;
+                scope.currentFolder = folder;
+                scope.currentParents = Folder.listParents(folder);
+              }
+              if(folderInArray.open && folderIsCurrent){
+                scope.openFoldersInTree.splice(folderInArray.position, 1);
+              }
+              if(!folderInArray.open){
+                scope.openFoldersInTree.push(folder.id);
+              }
+            }
           }
-          if(folderInArray.open && folderIsCurrent){
-            scope.openFoldersInTree.splice(folderInArray.position, 1);
-          }
-          if(!folderInArray.open){
-            scope.openFoldersInTree.push(folder.id);
-          }
-        }
+        );
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }
 

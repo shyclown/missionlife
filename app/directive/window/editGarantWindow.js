@@ -6,7 +6,7 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
   return {
     restrict: 'E',
     scope:{ garantWindow: '=editObj' },
-    templateUrl: '/missionlife/app/template/edit_garant_window.html',
+    templateUrl: '/missionlife/app/template/window/edit_garant_window.html',
     link: function (scope, element, attrs)
     {
       let sourceGarant;

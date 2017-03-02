@@ -21,6 +21,8 @@ app.service('Shared',function($document, $compile){
   let windowID = 0;
   this.openWindows = [];
 
+  const self = this;
+
   const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
     this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';
     this.el = $compile( this.html )( scope );
@@ -39,8 +41,17 @@ app.service('Shared',function($document, $compile){
       return scope.openWindows[generatedID];
   }
 
+  let popupID = 0;
+  this.openPopup = [];
 
+  this.prompt = function(item, callback, scope){
+    const generatedID = 'item_'+popupID;
+    self.openPopup[generatedID] = new directiveOBJ('pop-prompt', generatedID, item, callback, scope);
+    angular.element($document).find('body').append(self.openPopup[generatedID].el);
+    popupID++;
+  }
 
+  this.document = $document;
 
   this.currentFolder = null;
 
