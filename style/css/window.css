@@ -1,0 +1,111 @@
+/* default button */
+button{
+  background-color: #F5F5F5;
+  text-transform: uppercase;
+  border: none;
+  border-radius: none;
+  outline: none;
+  padding: 8px 16px;
+  line-height: 16px;
+  box-sizing: border-box;
+  height: 32px;
+}
+button:hover{
+  background-color: #E0E0E0;
+}
+button.promote{
+  background-color: #9CCC65;
+  border: none;
+  border-radius: none;
+  outline: none;
+  padding: 8px 16px;
+}
+button.caution{
+  background-color: #F44336;
+  color: #FFF;
+
+  border: none;
+  border-radius: none;
+  outline: none;
+  padding: 8px 16px;
+}
+button.small{
+  background-color: #E0E0E0;
+  padding: 2px 4px;
+  height: 20px;
+  cursor: pointer;
+}
+button.set.small{
+  border-radius: 6px;
+}
+button.set.small.selected{
+  background-color: #9CCC65;
+}
+.window button.close{
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #F44336;
+  color: #FFF;
+  position: absolute;
+  top: 0px;
+  right:0px;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  text-align: center;
+}
+.explorer .panel button{
+  text-transform: none;
+}
+/* window */
+.window{
+  background-color: #FFF;
+  margin: 0 auto;
+  max-width: 750px;
+  position: relative;
+}
+.window > .top{
+  height: 32px;
+  box-sizing: border-box;
+  line-height: 16px;
+  padding: 8px;
+  border-bottom: 1px solid #EAEAEA;
+  background-color: #FFF;
+}
+
+.window > .content {
+  padding: 0px;
+}
+.window > .content > section{
+  padding: 16px;
+}
+
+.window > .control {
+  height: 48px;
+  background-color: #EFEFEF;
+}
+
+.window > .content > header > h1.filename{
+  font-size: 24px;
+  font-weight: 100;
+}
+.window img{
+  max-width: 100%;
+}
+.window .p16 { padding: 16px; }
+.window .content > section.image{
+  background-color: #FFF;
+}
+.window .details {
+  padding: 16px;
+  background-color: #FFF;
+}
+.window button.spanlink{
+  border: none;
+  background-color: #EAEAEA;
+  padding: 4px 8px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 4px;
+  outline: none;
+}

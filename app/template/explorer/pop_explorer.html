@@ -1,42 +1,4 @@
-<style>
-  .folderWindow{
-    position: relative;
-
-  }
-  .folderTopPanel{
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #FFF;
-    padding: 16px;
-  }
-  .underContent{
-  }
-  .inline{
-    display: inline-block;
-    padding: 0px;
-  }
-  .folderTree{
-    background-color: #FFF;
-    box-sizing: border-box;
-    width: 250px;
-    float: left;
-    padding: 16px;
-    height: 300px;
-    overflow-y: scroll;
-  }
-  .folderOpen{
-    width: calc(100% - 250px);
-    box-sizing: border-box;
-    background-color: #EAEAEA;
-    float: right;
-    padding: 16px;
-    height: 300px;
-    overflow-y:scroll;
-  }
-</style>
-
-<div class="folderWindow" folders-data='folders'>
-  <button ng-click="testFn()"><i class="fa fa-plus"></i> TestPrompt</button>
+<div class="folderWindow explorer" folders-data='folders'>
   <div class="folderTopPanel">
     <path-to-folder></path-to-folder>
     <add-folder></add-folder>
@@ -46,7 +8,7 @@
       <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
     </div>
 
-  <div class="folderOpen" is-drop-area="uploadFile">
+  <div class="folderOpen panel" is-drop-area="uploadFile">
     <div ng-if="isOpenFolder()">
       <button ng-click="createNewArticle()"><i class="fa fa-plus"></i> Add Article</button>
       <button ng-click="openFormWindow()"><i class="fa fa-plus"></i> Add Form</button>
@@ -73,6 +35,5 @@
   </div>
   <div style="clear:both"></div>
   </div>
-
 </div>
 <div style="clear:both"></div>

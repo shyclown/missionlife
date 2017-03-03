@@ -1,161 +1,51 @@
-<style>
-  .blanket{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  .selectWindow{
-    display: block;
-    max-width: 550px;
-    margin: 50px auto;
-    position: relative;
-    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
-  }
-  .folderTopPanel{
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #FFF;
-    padding: 16px;
-  }
-  .underContent{
-  }
-  .inline{
-    display: inline-block;
-    padding: 0px;
-  }
-  .folderTree{
-    background-color: #FFF;
-    box-sizing: border-box;
-    width: 250px;
-    float: left;
-    padding: 16px;
-    height: 300px;
-    overflow-y: scroll;
-  }
-  .folderOpen{
-    width: calc(100% - 250px);
-    box-sizing: border-box;
-    background-color: #EAEAEA;
-    float: right;
-    padding: 16px;
-    height: 300px;
-    overflow-y:scroll;
-  }
-
-button.submit{
-  background-color: #09F;
-  color: #FFF;
-  padding: 4px 8px;
-  border: none;
-}
-.selectWindow .topName{
-  background-color: #FFF;
-  box-sizing: border-box;
-  height: 32px;
-  padding: 8px 16px;
-  line-height: 16px;
-}
-.selectWindow .topName button.closeWindow{
-  float: right;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 32px;
-  width: 32px;
-  text-align: center;
-  box-sizing: border-box;
-  line-height: 16px;
-  font-size: 16px;
-  border: none;
-  background-color: red;
-  color: white;
-
-}
-
-</style>
 <div class="blanket" ng-click="cancel()">
-<div class="selectWindow" folders-data='folders' ng-click="$event.stopPropagation();">
-  <div class="topName">
-    Select PopUp
-    <button class="closeWindow" ng-click="cancel()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="folderTopPanel" ng-if="setup.createFolder">
-    <path-to-folder></path-to-folder>
-    <add-folder></add-folder>
-  </div>
-  <div class="underContent">
-    <div class="folderTree">
-      <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
+  <div class="selectWindow" folders-data='folders' ng-click="$event.stopPropagation();">
+    <div class="topName">
+      Select PopUp
+      <button class="closeWindow" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
-  <div class="folderOpen">
-    <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">
-      <button class="name" ng-click="openFolder(folder)">
-        <i class="fa fa-folder"></i> {{folder.name}}</button>
+    <div class="folderTopPanel" ng-if="setup.createFolder">
+      <path-to-folder></path-to-folder>
+      <add-folder></add-folder>
     </div>
-    <div class="ArticleLine" ng-repeat="article in articles">
-      <button class="name" ng-click="call('article', article)">
-        <i class="fa fa-file-text-o"></i> {{article.header}}
-      </button>
-    </div>
-    <div class="fileLine" ng-repeat="file in files">
-      <button class="name" ng-click="call('file', file)">
-      <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
-      </button>
-    </div>
+    <div class="underContent">
+      <div class="folderTree">
+        <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
+      </div>
+    <div class="folderOpen">
+      <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">
+        <button class="name" ng-click="openFolder(folder)">
+          <i class="fa fa-folder"></i> {{folder.name}}</button>
+      </div>
+      <div class="ArticleLine" ng-repeat="article in articles">
+        <button class="name" ng-click="call('article', article)">
+          <i class="fa fa-file-text-o"></i> {{article.header}}
+        </button>
+      </div>
+      <div class="fileLine" ng-repeat="file in files">
+        <button class="name" ng-click="call('file', file)">
+        <i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}
+        </button>
+      </div>
 
-    <div class="fileLine" ng-repeat="form in forms">
-      <button class="name" ng-click="call('form', forms)">
-      <i class="fa fa-tasks"></i> {{form.name}}
-      </button>
+      <div class="fileLine" ng-repeat="form in forms">
+        <button class="name" ng-click="call('form', forms)">
+        <i class="fa fa-tasks"></i> {{form.name}}
+        </button>
+      </div>
     </div>
-  </div>
-  <style>
-  .under{
-    box-sizing: border-box;
-    width: calc(100%);
-    background-color: #FFF;
-    padding: 16px;
-  }
-  .selectedPath{
-    box-sizing: border-box;
-    height: 24px;
-    float: left;
-    width: calc(100% - 120px);
-    background-color: #EAEAEA;
-    line-height: 16px;
-    padding: 4px 8px;
-  }
-  .selectedPath .inline{
-    line-height: 16px;
-    background-color: #EAEAEA;
-  }
-  .under button.submit{
-    background-color: #09F;
-    color: #FFF;
-    padding: 4px 8px;
-    border: none;
-    float: right;
-  }
-
-  </style>
-    <div style="clear:both"></div>
-  <div class="under">
-    <div class="selectedPath">
-    <path-to-folder></path-to-folder>{{selectedName}}
-    </div>
-    <button class="submit" ng-click="submitFn(selectedItem)">
-    <i class="fa fa-check"></i> Submit
-    </button>
       <div style="clear:both"></div>
-  </div>
-  <div style="clear:both"></div>
-  </div>
+    <div class="under">
+      <div class="selectedPath">
+      <path-to-folder></path-to-folder>{{selectedName}}
+      </div>
+      <button class="submit" ng-click="submitFn(selectedItem)">
+      <i class="fa fa-check"></i> Submit
+      </button>
+      <div style="clear:both"></div>
+    </div>
     <div style="clear:both"></div>
-</div><!-- end of window -->
+    </div>
+    <div style="clear:both"></div>
+  </div><!-- end of window -->
 </div><!-- end of blanket -->

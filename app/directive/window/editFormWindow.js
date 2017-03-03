@@ -10,7 +10,6 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
     link: function (scope, element, attrs)
     {
 
-      const copy = function(obj){ return Object.assign({},obj); }
       /* http://stackoverflow.com/questions/2440700/reordering-arrays */
       Array.prototype.move = function (from, to) {
       this.splice(to, 0, this.splice(from, 1)[0]);
@@ -19,15 +18,16 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
       scope.openForm = scope.formWindow.item;
       scope.openFolder = Shared.explorer.current_folder;
 
-      let sourceForm = scope.openForm;
+      if(scope.openForm){ scope.editForm = Shared.fn.cloneObject(scope.openForm); }
+      else{   scope.editForm = Shared.fn.cloneObject(Shared.setupNewForm); }
 
-      if(!sourceForm){ scope.editForm = copy(newForm); }
-      else{ scope.editForm = copy(sourceForm); }
       scope.editForm.data = JSON.parse(scope.editForm.data);
 
       scope.cancel = function(){ scope.formWindow.close(); }
-      const newForm = { name: '', email: '', state: 0, data: '[]' }
-      const callbackFn = function(){ scope.formWindow.callback(); scope.formWindow.close(); }
+      const callbackFn = function(){
+        scope.formWindow.callback();
+        scope.formWindow.close();
+      }
       const orderFn = function(arr, obj, index, value){ arr.move(index, (index + value));  }
       scope.order = {
         up: function(arr, obj, index){orderFn(arr, obj, index, -1)},
@@ -44,7 +44,7 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
           form.data = JSON.stringify(form.data);
           Form.insert(form, function(res){ Form.addToFolder({
               form_id: res.data,
-              folder_id: scope.currentFolder.id
+              folder_id: Shared.explorer.current_folder.id
             }, function(){
               form.data = JSON.parse(form.data);
               form.id = res.data;

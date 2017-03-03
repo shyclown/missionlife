@@ -6,9 +6,7 @@ require_once($root.'/system/php/class_mysqli.php');
 require_once($root.'/system/php/class_session.php');
 new Session;
 if(!$_SESSION){ header("Location: $url"); die('died'); }
-else{
-  var_dump($_SESSION);
-}
+else{}
 ?>
 <html>
   <head>

@@ -1,5 +1,21 @@
 app.service('Shared',function($document, $compile){
 
+  this.fn ={
+    cloneObject: function(obj){ return Object.assign({},obj); },
+    getFileSize: function bytesToSize(bytes) {
+       var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+       if (bytes == 0) return '0 Byte';
+       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+       return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    },
+    stopDefaultEvent: function(){ event.stopPropagation(); event.preventDefault(); },
+    getRange: function(){ return document.getSelection().getRangeAt(0); },
+    selectRange: function(oRange) {
+      let oSelection = document.getSelection();
+      oSelection.removeAllRanges();
+      oSelection.addRange(storedRange);
+    }
+  }
   this.explorer = {
     current_folder: null,
     all_folders: {},
@@ -10,7 +26,36 @@ app.service('Shared',function($document, $compile){
     currentParents : [],
     openFoldersInTree : []
   }
-
+  this.setupNewForm = { name: '', email: '', state: 0, data: '{}' }
+  this.setupSelect = {
+    selectArticle : {
+      imageSelect: false,
+      articles : true,
+      files: false,
+      forms: false,
+      selectFolder: false,
+      selectArticleOrFile: true,
+      createFolder: false
+    },
+    selectFile : {
+      imageSelect: false,
+      articles : false,
+      files: true,
+      forms: false,
+      selectFolder: false,
+      selectArticleOrFile: true,
+      createFolder: false
+    },
+    selectForm : {
+      imageSelect: false,
+      articles : false,
+      files: false,
+      forms: true,
+      selectFolder: false,
+      selectArticleOrFile: true,
+      createFolder: false
+    }
+  }
   this.window = {
     garant: false,
     article: false,
@@ -33,7 +78,7 @@ app.service('Shared',function($document, $compile){
   this.directiveElement = function( name, item, callback, scope )
   {
       callback = callback || function(){};
-      item = item || {};
+      item = item || false;
       const generatedID = 'item_'+windowID;
       const generatedOBJ = 'openWindows.'+generatedID;
       scope.openWindows[generatedID] = new directiveOBJ(name, generatedOBJ, item, callback, scope);
@@ -54,5 +99,51 @@ app.service('Shared',function($document, $compile){
   this.document = $document;
 
   this.currentFolder = null;
+  this.text = {
+    edit:{
+      folder:{
+        top:{
+          name: 'Folder Editor'
+        },
+        name:{
+          label: 'Name'
+        },
+        position:{
+          label: 'position',
+          top: 'top',
+          side: 'side',
+          none: 'none',
+        },
+        state:{
+          label: 'state',
+          public: 'public',
+          private: 'private'
+        },
+        button:{
+          delete: 'delete',
+          save: 'save'
+        },
+        NameLabel: 'Name',
+        PositionLabel: 'Position',
+        StateLabel: 'State',
+      }
+    },
+    prompt:{
+      folder:{
+        delete:{
+          message: 'Delete folder',
+          description: 'You are about to delete the folder',
+          cancelBtn: 'Cancel',
+          acceptBtn: 'Delete Folder'
+        },
+        cancel:{
+          message: 'Cancel',
+          description: 'Save changes?',
+          cancelBtn: 'Leave Without Save',
+          acceptBtn: 'Save Changes'
+        }
+      }
+    }
+  }
 
 });

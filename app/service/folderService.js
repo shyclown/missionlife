@@ -4,13 +4,12 @@ app.service('Folder',function(Ajax, Shared){
 
   const self = this;
   const url = '/missionlife/system/ng/call.php?class=folder';
-
   const stopDefault = function(){ event.stopPropagation(); event.preventDefault();}
   const folderID = function(id){
-    let i = 0; while(self.allFolders[i].id != id){ i++; }; return self.allFolders[i];
+    let i = 0;
+    while(self.allFolders[i].id != id){ i++; };
+    return self.allFolders[i];
   }
-
-
 
   this.listParents = function(folder){
     let parents = [];
@@ -81,6 +80,13 @@ app.service('Folder',function(Ajax, Shared){
       self.select_all();
     });
   }
+  this.update = function(data, callback){
+    data.action = 'update';
+    Ajax.call(data, url, function(response){
+      if(callback){ callback(response);}
+      self.select_all();
+    });
+  }
   this.updateName = function(data, callback){
     data.action = 'update_name';
     Ajax.call(data, url, function(response){
@@ -88,8 +94,10 @@ app.service('Folder',function(Ajax, Shared){
     });
   }
   this.updatePosition = function(data, callback){
+    console.log(data);
     data.action = 'update_position';
     Ajax.call(data, url, function(response){
+      console.log('update position: ', response.data);
       if(callback){ callback(response);}
     });
   }

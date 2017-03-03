@@ -37,21 +37,29 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       /* Window */
       scope.openWindows = [];
       const openWindow = function(name, item, callback){
+        console.log(item);
         name = 'edit-'+name+'-window';
         return  new Shared.directiveElement(name, item, callback, scope);
       }
+
+
+      /*
+      * Callbacks are executed after popup is confirmed
+      */
       const callbackArticle = function(){}
       const callbackFile = function(){}
       const callbackFolder = function(){}
       const callbackForm = function(){ Form.updateExplorer(); }
       const callbackGarant = function(image){ if(image){ FileService.updateExplorer(); }; Garant.updateExplorer(); }
 
-      scope.openFileWindow = function(file){ element.append(openWindow('file', file, callbackGarant).el); }
-      scope.openFormWindow = function(form){ element.append(openWindow('form', form, callbackGarant).el); }
+      // Create Windows to Edit Items
+      scope.openFileWindow = function(file){ element.append(openWindow('file', file, callbackFile).el); }
+      scope.openFormWindow = function(form){ element.append(openWindow('form', form, callbackForm).el); }
       scope.openFolderWindow = function(folder){ element.append(openWindow('folder', folder, callbackFolder).el); }
       scope.openGarantWindow = function(garant){ element.append(openWindow('garant', garant, callbackGarant).el); }
       scope.openArticleWindow = function(article){ element.append(openWindow('article', article, callbackArticle).el); }
 
+      
       scope.prompted = function(message, description, cancelBtn, acceptBtn, callback){
         const promptObj = new Shared.prompt({
           message: message,

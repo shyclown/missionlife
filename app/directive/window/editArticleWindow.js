@@ -120,79 +120,33 @@ function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
   //-----------------------------------------------------
 
   /* Default */
-
   scope.popSelect = false;
   scope.cancelPopSelect = function(){ scope.popSelect = false;}
   scope.showPopSelect = function(){  scope.popSelect = true;}
   scope.selectFn = function(selected){ scope.addLinkToArticle(selected.obj); }
 
-  /* Setup */
-
-  const selectArticle = {
-    imageSelect: false,
-    articles : true,
-    files: false,
-    forms: false,
-    selectFolder: false,
-    selectArticleOrFile: true,
-    createFolder: false
-  }
-  const selectFile = {
-    imageSelect: false,
-    articles : false,
-    files: true,
-    forms: false,
-    selectFolder: false,
-    selectArticleOrFile: true,
-    createFolder: false
-  }
-  const selectForm = {
-    imageSelect: false,
-    articles : false,
-    files: false,
-    forms: true,
-    selectFolder: false,
-    selectArticleOrFile: true,
-    createFolder: false
-  }
-
   /* Range */
-
   let storedRange = {};
-  function storeSelection(){
-    oSelection = document.getSelection();
-    storedRange = oSelection.getRangeAt(0);
-  }
-  function loadSelection() {
-    let oSelection = document.getSelection();
-    oSelection.removeAllRanges();
-    oSelection.addRange(storedRange);
-  }
-
   /* Add Links to Items */
-
   const addLink = function(selected){
-    loadSelection();
+    Shared.fn.selectRange(storedRange)
     let link = document.createElement('a');
     link.className = 'custom';
     link.href = selected.path+"/"+selected.target;
     link.innerHTML = selected.name;
     scope.area.insertAfterSelection(link);
   }
-
   /* Event Function */
-
   const openPopSelect = function(setup, after){ return function(){
-      storeSelection();
-      scope.setupSelect = setup;
+      storedRange = Shared.fn.getRange();
+      scope.setupSelect = Shared.setupSelect[setup];
       scope.selectFn = function(selected){ after(selected); }
       scope.showPopSelect();
     }
   }
-
-  scope.selectArticlePop = openPopSelect(selectArticle, addLink);
-  scope.selectFilePop = openPopSelect(selectFile, addLink);
-  scope.selectFormPop = openPopSelect(selectForm, addLink);
+  scope.selectArticlePop = openPopSelect('selectArticle', addLink);
+  scope.selectFilePop = openPopSelect('selectFile', addLink);
+  scope.selectFormPop = openPopSelect('selectForm', addLink);
 
     }// link
   };

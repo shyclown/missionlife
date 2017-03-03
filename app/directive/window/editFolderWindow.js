@@ -1,23 +1,40 @@
-app.directive('editFolderWindow', ['Folder', function(Folder) {
+app.directive('editFolderWindow', ['Folder','Shared', function(Folder, Shared) {
   return {
     restrict: 'E',
     scope:{ folderWindow : '=editObj' },
     templateUrl: '/missionlife/app/template/window/edit_folder_window.html',
     link: function (scope, element, attrs){
-      const stopDefault = function(){ event.stopPropagation(); event.preventDefault(); }
-      scope.folder = scope.folderWindow.item;
 
-      scope.removeFolder = function(folder){ stopDefault(event); Folder.remove(folder); }
-      scope.orderUp = function(folder){ stopDefault(event); Folder.orderUp(folder); }
-      scope.orderDown = function(folder){ stopDefault(event); Folder.orderDown(folder); }
-      scope.updateName = function(folder){ stopDefault(event); Folder.updateName(folder); }
-      scope.updatePosition = function(folder){ stopDefault(event); Folder.updatePosition(folder); }
-
-      scope.close = function(){
-        scope.folderWindow.close();
+      scope.text = Shared.text.edit.folder;
+      scope.folder = Shared.fn.cloneObject(scope.folderWindow.item);
+      scope.setPosition = function(newPosition){
+        scope.folder.position = newPosition;
       }
 
+      scope.changeState = function(state){ scope.folder.state = state; }
+      scope.removeFolder = function(folder){ Folder.remove(folder); }
+      scope.updateName = function(folder){ Folder.updateName(folder); }
+      scope.updatePosition = function(folder){ Folder.updatePosition(folder); }
 
+      scope.cancel = function(){
+        new Shared.prompt( Shared.text.prompt.folder.cancel, function(){
+          Folder.update(scope.folder);
+          scope.folderWindow.callback();
+        }, scope);
+        scope.folderWindow.close();
+      }
+      scope.save = function(folder){
+        Folder.update(folder);
+        scope.folderWindow.callback();
+        scope.folderWindow.close();
+      }
+      scope.delete = function(){
+        new Shared.prompt( Shared.text.prompt.folder.delete, function(){
+          Folder.remove(scope.folder);
+          scope.folderWindow.callback();
+          scope.folderWindow.close();
+        }, scope);
+      }
     }
   }
 }]);

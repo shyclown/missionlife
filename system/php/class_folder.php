@@ -24,8 +24,8 @@ class Folder
     $params = array( 'siii', $data['name'], $data['order'], $data['parent'],  $data['state']  );
     return $this->db->query($sql, $params);
   }
-  public function update_all($data){
-    $this->newOrder($data);
+  public function update($data){
+    //$this->newOrder($data);
     $sql = "UPDATE `ml_folder` SET `name`=?, `order`=?, `parent`=?, `state`=?,
     `date_edited`=CURRENT_TIMESTAMP WHERE `id` = ?";
     $params = array('sssii',  $data['name'], $data['new_order'], $data['parent'], $data['state'], $data['id']);

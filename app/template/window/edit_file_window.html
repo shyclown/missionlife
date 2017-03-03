@@ -1,56 +1,19 @@
-
-<style>
-  .window{
-    background-color: #FFF;
-    margin: 0 auto;
-    max-width: 750px;
-    position: relative;
-  }
-  .window > .control {
-    height: 48px;
-    background-color: #EFEFEF;
-  }
-  .window > .content {
-    padding: 0px;
-  }
-  .window > .content > header > h1.filename{
-    font-size: 24px;
-    font-weight: 100;
-  }
-  .window img{
-    max-width: 100%;
-  }
-  .window .p16 { padding: 16px; }
-  .window .content > section.image{
-    background-color: #FFF;
-  }
-  .window .details {
-    padding: 16px;
-    background-color: #FFF;
-  }
-  .window button.spanlink{
-    border: none;
-    background-color: #EAEAEA;
-    padding: 4px 8px;
-    width: 100%;
-    text-align: left;
-    margin-bottom: 4px;
-    outline: none;
-  }
-</style>
-
-
 <div class="blanket" ng-click="cancel()">
-
-    <div class="window fileWindow" ng-click="$event.stopPropagation()">
-
-      <div class="control">
-        <div class="header">topControl</div>
+  <div class="window" ng-click="$event.stopPropagation()">
+    <div class="top">
+     Folder Editor - {{folder.name}}
+      <button class="win close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="control">
+      <div class="header">
+        topControl
       </div>
-
+      </div>
       <div class="content ">
         <header class="p16">
-        <h1 class="filename">{{file.file_name}}</h1>
+          <h1 class="filename">
+            {{file.file_name}}
+          </h1>
         </header>
         <div class="manipulateImage">
           <button class="editImage" disabled="true">rotate</button>
@@ -64,16 +27,15 @@
         <section class="details">
           <h3>Used in:</h3>
           <button class="spanlink" ng-repeat="detail in details" ng-click="openItem(detail)">{{detail.header}}</button>
-
         </section>
         <section class="details">
           <h2>File Details</h2>
           File Source: {{file.file_src}}<br>
           File Size: {{filesize}}
         </section>
-      </div>
-      <div class="footer">
-        Footer
-      </div>
+    </div>
+    <div class="footer">
+      Footer
+    </div>
   </div>
-</div>
+</div><!-- blanket -->

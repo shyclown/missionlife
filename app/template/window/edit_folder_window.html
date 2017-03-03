@@ -1,83 +1,28 @@
-<style>
-.editFolderWindow{
-  background-color: #FFF;
-  margin: 0 auto;
-  max-width: 750px;
-  border: #666 1px solid;
-  position: relative;
-}
-.editFolderWindow .TopPanel{
-  height: 32px;
-  box-sizing: border-box;
-  line-height: 16px;
-  padding: 8px;
-  border-bottom: 1px solid #EAEAEA;
-  background-color: #FFF;
-}
-.closeBtn{
-  box-sizing: border-box;
-  background-color: #F44336;
-  color: #FFF;
-  position: absolute;
-  top: 0px;
-  right:0px;
-  width: 32px;
-  height: 32px;
-  padding: 8px;
-  text-align: center;
-}
-.Footer{
-  clear: both;
-  background-color: #666;
-}
-#articleSubmitButton{
-  background-color: #09F;
-  width: 100%;
-  height: 40px;
-  clear: both;
-  border: none;
-  outline: none;
-  color: #FFF;
-}
-#blanket{
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  background-color: rgba(0,0,0,0.5);
-  width: 100%;
-  height: 100%;
-}
-.content{
-  padding: 16px;
-}
-.positionBtn{
-  background-color: #EAEAEA;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-
-}
-.positionBtn.selected{
-  background-color: #09F;
-}
-</style>
-<div id="blanket" ng-click="close()">
-<div class="editFolderWindow" ng-click="$event.stopPropagation()">
-  <div class="TopPanel">
-   Folder Editor - {{folder.name}}
-    <div class="closeBtn" ng-click="close()"><i class="fa fa-times"></i></div>
+<div class="blanket" ng-click="cancel()">
+  <div class="window" ng-click="$event.stopPropagation()">
+    <div class="top">
+     {{text.top.name}} - {{folder.name}}
+      <button class="win close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="content">
+      <section>
+        {{text.name.label}}: </br>
+        <input type="text" ng-model="folder.name" ng-change="updateName(folder)"></br>
+        {{text.position.label}}: </br>
+        <button class="set small" ng-class="(folder.position == 'top' ? 'selected' : '')" ng-click="setPosition('top')" >{{text.position.top}}</button>
+        <button class="set small" ng-class="(folder.position == 'side' ? 'selected' : '')" ng-click="setPosition('side')" >{{text.position.side}}</button>
+        <button class="set small" ng-class="(folder.position == '' ? 'selected' : '')" ng-click="setPosition('')" >{{text.position.none}}</button>
+        </br>{{text.state.label}}: </br>
+        <button class="set small" ng-class="(folder.state == true ? 'selected' : '')" ng-click="changeState(true)" >{{text.state.public}}</button>
+        <button class="set small" ng-class="(folder.state == false ? 'selected' : '')" ng-click="changeState(false)">{{text.state.private}}</button>
+      </section>
+    </div>
+    <div class="control">
+      <section>
+      <button class="delete" ng-click="delete(folder)">{{text.button.delete}}</button>
+      <button class="promote save" ng-click="save(folder)">{{text.button.save}}</button>
+      </section>
+    </div>
+    <div class="Footer">Footer</div>
   </div>
-  <div class="content">
-    Name: </br>
-    <input type="text" ng-model="folder.name" ng-change="updateName(folder)"></br>
-    Position: </br>
-    <button class="positionBtn" ng-class="(folder.position == 'top' ? 'selected' : '')" ng-click="setPosition('top')" >top</button>
-    <button class="positionBtn" ng-class="(folder.position == 'side' ? 'selected' : '')" ng-click="setPosition('side')" >side</button>
-    <button class="positionBtn" ng-class="(folder.position == '' ? 'selected' : '')" ng-click="setPosition('')" >none</button>
-    <button class="delete" ng-click="removeFolder(folder)">delete</button>
-  </div>
-  <div class="Footer">Footer</div>
-</div>
-</div>
+</div><!-- blanket -->
