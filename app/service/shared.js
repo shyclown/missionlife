@@ -1,5 +1,7 @@
 app.service('Shared',function($document, $compile){
 
+  const self = this;
+
   this.fn ={
     cloneObject: function(obj){ return Object.assign({},obj); },
     getFileSize: function bytesToSize(bytes) {
@@ -65,8 +67,6 @@ app.service('Shared',function($document, $compile){
 
   let windowID = 0;
   this.openWindows = [];
-
-  const self = this;
 
   const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
     this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';

@@ -34,6 +34,9 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         data.parent = scope.currentFolder;
         Folder.insert( data, function(response){ scope.new_folder.name = ""; });
       }
+
+
+
       /* Window */
       scope.openWindows = [];
       const openWindow = function(name, item, callback){
@@ -41,8 +44,6 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         name = 'edit-'+name+'-window';
         return  new Shared.directiveElement(name, item, callback, scope);
       }
-
-
       /*
       * Callbacks are executed after popup is confirmed
       */
@@ -59,7 +60,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.openGarantWindow = function(garant){ element.append(openWindow('garant', garant, callbackGarant).el); }
       scope.openArticleWindow = function(article){ element.append(openWindow('article', article, callbackArticle).el); }
 
-      
+
       scope.prompted = function(message, description, cancelBtn, acceptBtn, callback){
         const promptObj = new Shared.prompt({
           message: message,
@@ -79,23 +80,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       }
 
       /* File Upload On Drop */
-      scope.uploadFile = function(){
-        const files = event.dataTransfer.files;
-        const all = files.length;
-        const oData = function(response){
-          return { file_id: response.data.file_id, folder_id: scope.currentFolder.id }
-        }
-        const refreshFiles = function(update){
-          return function(){ if(update){ FileService.updateExplorer();  } }
-        }
-        let completed = 0;
-        for (let i = 0; i < all; i++){ let file = [files[i]];
-          uploadDropped(file, false, function(response){
-            completed++; // some files take longer to load
-            let update = completed == all;
-            FileService.attachToFolder( oData(response), refreshFiles(update));});
-        }
-      }
+      scope.uploadFile = FileService.uploadFile;
 
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
       scope.openFolder = function(folder){

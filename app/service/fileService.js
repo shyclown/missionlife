@@ -1,11 +1,28 @@
-app.service('FileService',function($rootScope, Shared, Ajax, customAjax){
+app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadDropped){
 
   const url = '/missionlife/system/ng/call.php?class=file';
 
   const self = this;
   this.selected = [];
 
-
+  this.uploadFile = function(){
+    const files = event.dataTransfer.files;
+    const all = files.length;
+    const oData = function(response){
+      return { file_id: response.data.file_id, folder_id: Shared.explorer.current_folder.id }
+    }
+    let completed = 0;
+    for (let i = 0; i < all; i++){
+      let file = [files[i]];
+      uploadDropped(file, false, function(response){
+        completed++; // some files take longer to load
+        let update = completed == all;
+        self.attachToFolder( oData(response), function(){
+          if(update){ self.updateExplorer(); }
+        });
+      });// uploadDropped
+    }// for
+  }
   /* Watch explorer */
   const ex = Shared.explorer;
   $rootScope.$watch(
