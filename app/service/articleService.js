@@ -2,23 +2,23 @@ app.service('Article',function($rootScope, Ajax, Shared){
 
   const url = '/missionlife/system/ng/call.php?class=article';
   const self = this;
+  const ex = Shared.explorer;
 
   $rootScope.$watch(
     function(){ return Shared.explorer.current_folder; },
-    function(){
-      const ex = Shared.explorer;
-      if(ex.current_folder == null){ ex.articles = []; }
-      else{
-        self.selectByFolder({ folder_id: ex.current_folder.id },
-        function(response){
-          ex.articles = response.data.result;
-          console.log(response);
-        });
-      }
-    },
+    function(){ self.updateExplorer(); },
     true
   );
 
+  this.updateExplorer = function(){
+    if(ex.current_folder == null){ ex.articles = []; }
+    else{
+      self.selectByFolder(
+        { folder_id: ex.current_folder.id },
+        function(response){ ex.articles = response.data.result;}
+      );
+    }
+  }
 
   this.onePageSize = 150;
   this.sortByData = 'date';
