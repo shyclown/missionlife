@@ -5,10 +5,11 @@ app.directive('editGarantWindow',['Garant', 'FileService', 'dataURItoBlob', 'res
 function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
   return {
     restrict: 'E',
-    scope:{ garantWindow: '=editObj' },
+    scope:{},
     templateUrl: '/missionlife/app/template/window/edit_garant_window.html',
     link: function (scope, element, attrs)
     {
+      scope.garantWindow = Shared.openElement[attrs.editObj];
       let sourceGarant;
       let imageReplaced;
       console.log(scope.garantWindow);

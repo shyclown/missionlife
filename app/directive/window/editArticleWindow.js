@@ -1,51 +1,78 @@
 /* Uses Editor */
 
-app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDroppedToArticle', 'Shared',
-function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
+app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropped', 'Shared',
+function($http, Folder, Article, Form, uploadDropped, Shared) {
   return {
     restrict: 'E',
-    scope:{ articleWindow : '=editObj' },
+    scope:{},
     templateUrl: '/missionlife/app/template/window/edit_article_window.html',
     link: function (scope, element, attrs)
     {
-      const targetUrl = '/missionlife/system/ng/call.php?class=file';
+      const oArticleWindow = Shared.openElement[attrs.editObj];
+      const oArticle = oArticleWindow.item;
       const explorer = Shared.explorer;
+      const newArticle = {
+        header: 'New Article',
+        content: '<p>Content</p>',
+        folder_id: explorer.current_folder.id,
+        state: 0
+      }
+      const targetUrl = '/missionlife/system/ng/call.php?class=file';
+      const callbackFn = function(){
+        oArticleWindow.callback();
+        oArticleWindow.close();
+      }
+
+      /* SCOPE */
+
+      scope.articleWindow = Shared.openElement[attrs.editObj];
       scope.logPanel = 'log panel';
       scope.elArticleHeader = document.getElementById('articleEditorHeader');
       scope.elArticleContent = document.getElementById('articleEditorContent');
-      scope.elArticleContent.value = scope.content;
-
-      scope.openArticle = scope.articleWindow.item;
+      scope.elArticleContent.value = scope.content; // ??
       scope.files = {};
+
+      /* EDITOR AREA SETUP */
 
       scope.area = new Editor.area({
         input_id:'articleEditorContent',
         form_id:'articleEditorForm',
         image_url : '/missionlife/uploads/image/',
       });
-      scope.loadFilesOfArticle = function(){
-        if(scope.openArticle.id){
-          Article.load_files( scope.edit_article, function(response){
+
+      /* LOAD FILES - not implemented */
+
+      const loadFilesOfArticle = function(){
+        if(oArticle){
+          Article.load_files( oArticle, function(response){
             scope.files = response.data;
           });
         }
       }
-      if(scope.openArticle){
-        scope.edit_article = Object.assign({},scope.openArticle);
-        scope.area.update_content(scope.edit_article.content);
-        Editor.attachImageControls.bind(scope.area)();
-        scope.loadFilesOfArticle();
+
+      /* OPEN ARTICLE */
+
+      if(!oArticle){
+        scope.article = Object.assign({}, newArticle);
+        Article.insert(newArticle, function(res){
+          scope.article.id = res.data;
+          console.log(scope.article.id);
+        });
       }
-
-
+      else{
+        scope.article = Object.assign({}, oArticle);
+      }
+      scope.area.update_content(scope.article.content);
+      Editor.attachImageControls.bind(scope.area)();
+      loadFilesOfArticle();
 
       // Article state
       scope.stateText = function(){
-        if(scope.edit_article && scope.edit_article.state){ return 'dectivate'; }
+        if(scope.article && scope.article.state){ return 'dectivate'; }
         else{ return 'activate'; }
       }
       scope.changeState = function(){
-        scope.edit_article.state = !scope.edit_article.scope;
+        scope.article.state = !scope.article.scope;
         //scope.buttonText = scope.stateText();
       }
 
@@ -64,7 +91,7 @@ function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
       }
 
       scope.closeWithoutSave = function(){
-        scope.articleWindow.close();
+        oArticleWindow.close();
         //Article.selectByFolder({ folder_id: scope.currentFolder.id });
       }
       // 2. Attaching callback function executed after drop of file or image
@@ -81,36 +108,38 @@ function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
           let file = [files[i]];
           let area = scope.area;
 
-          let res = uploadDroppedToArticle.bind(null,
+          let res = uploadDropped.bind(null,
             file,
             function(response){},
             function(response){
+              console.log(response.data);
               completed++;
+              // TODO:  attach to article //
+              // FileService.attachToArticle
+              // loadFilesOfArticle();
               scope.logPanel = response;
               scope.onDropFiles(response);
               area.afterImageUpload(response);
-              scope.loadFilesOfArticle();
+
               // if all processes are completed we remove placeholder
               if(completed == all){
                 area.removePlaceholder();
                 scope.saveChanges();
               }
-            },
-            scope.edit_article.id )();
+            })();
         }
       }
       scope.deleteArticle = function(article){
         Article.delete(article, function(){
-          Article.selectByFolder({ folder_id: explorer.current_folder.id });
+          callbackFn();
         });
       }
       scope.saveChanges = function(){
         let sel = document.getSelection();
         Editor.removeImageControls.bind(scope.area)();
-        scope.edit_article.content = scope.area.part.content_wrap.innerHTML;
-        Article.update(scope.edit_article, function(response){
-          scope.logPanel = response.data;
-          Article.selectByFolder({ folder_id: explorer.current_folder.id });
+        scope.article.content = scope.area.part.content_wrap.innerHTML;
+        Article.update(scope.article, function(response){
+          callbackFn()
         });
         Editor.attachImageControls.bind(scope.area)();
         }

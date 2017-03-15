@@ -2,10 +2,11 @@ app.directive('editFileWindow',['FileService','Article','Garant', 'Shared',
 function( FileService, Article, Garant, Shared ) {
   return {
     restrict: 'E',
-    scope:{ fileWindow : '=editObj' },
+    scope:{},
     templateUrl: '/missionlife/app/template/window/edit_file_window.html',
     link: function (scope, element, attrs)
     {
+      scope.fileWindow = Shared.openElement[attrs.editObj];
       scope.cancel = function(){  scope.fileWindow.close();  }
       scope.openFile = scope.fileWindow.item;
 

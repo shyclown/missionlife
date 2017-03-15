@@ -1,11 +1,7 @@
-/*
-
-*/
-
 app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form, Shared) {
   return {
     restrict: 'E',
-    scope:{ formWindow: '=editObj' },
+    scope:{},
     templateUrl: '/missionlife/app/template/window/edit_form_window.html',
     link: function (scope, element, attrs)
     {
@@ -15,20 +11,26 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
       this.splice(to, 0, this.splice(from, 1)[0]);
       };
       // check values when is open
-      scope.openForm = scope.formWindow.item;
-      scope.openFolder = Shared.explorer.current_folder;
 
-      if(scope.openForm){ scope.editForm = Shared.fn.cloneObject(scope.openForm); }
-      else{   scope.editForm = Shared.fn.cloneObject(Shared.setupNewForm); }
+      const oFormWindow = Shared.openElement[attrs.editObj];
+      const oForm = oFormWindow.item;
+      scope.new = true;
 
-      scope.editForm.data = JSON.parse(scope.editForm.data);
+      if(oForm){ scope.form = Object.assign({},oForm); scope.new = false; }
+      else{ scope.form = Object.assign({},Shared.setupNewForm); }
 
-      scope.cancel = function(){ scope.formWindow.close(); }
-      const callbackFn = function(){
-        scope.formWindow.callback();
-        scope.formWindow.close();
+      scope.form.data = JSON.parse(scope.form.data);
+
+      scope.cancel = function(){
+        oFormWindow.close();
       }
-      const orderFn = function(arr, obj, index, value){ arr.move(index, (index + value));  }
+      const callbackFn = function(){
+        oFormWindow.callback();
+        oFormWindow.close();
+      }
+      const orderFn = function(arr, obj, index, value){
+        arr.move(index, (index + value));
+      }
       scope.order = {
         up: function(arr, obj, index){orderFn(arr, obj, index, -1)},
         down: function(arr, obj, index){orderFn(arr, obj, index, +1)},
@@ -37,7 +39,12 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
       /* Edit Form */
 
       scope.addField = function(form){
-        form.data.push({ name: 'name', type: 'type', order: form.data.length + 1 });
+        console.dir(form.data);
+        form.data.push({
+          name: 'name',
+          type: 'type',
+          order: form.data.length + 1
+        });
       }
       scope.save = function(form){
         if(!form.id){

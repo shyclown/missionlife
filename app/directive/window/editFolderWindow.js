@@ -1,9 +1,11 @@
 app.directive('editFolderWindow', ['Folder','Shared', function(Folder, Shared) {
   return {
     restrict: 'E',
-    scope:{ folderWindow : '=editObj' },
+    scope:{},
     templateUrl: '/missionlife/app/template/window/edit_folder_window.html',
     link: function (scope, element, attrs){
+
+      scope.folderWindow = Shared.openElement[attrs.editObj];
 
       scope.text = Shared.text.edit.folder;
       scope.folder = Shared.fn.cloneObject(scope.folderWindow.item);
@@ -23,11 +25,13 @@ app.directive('editFolderWindow', ['Folder','Shared', function(Folder, Shared) {
         }, scope);
         scope.folderWindow.close();
       }
+      
       scope.save = function(folder){
         Folder.update(folder);
         scope.folderWindow.callback();
         scope.folderWindow.close();
       }
+
       scope.delete = function(){
         new Shared.prompt( Shared.text.prompt.folder.delete, function(){
           Folder.remove(scope.folder);
