@@ -28,7 +28,7 @@ app.service('Shared',function($document, $compile){
     currentParents : [],
     openFoldersInTree : []
   }
-  this.setupNewForm = { name: '', email: '', state: 0, data: '{}' }
+  this.setupNewForm = { name: '', email: '', state: 0, data: '[]' }
   this.setupSelect = {
     selectArticle : {
       imageSelect: false,
@@ -66,7 +66,7 @@ app.service('Shared',function($document, $compile){
   }
 
   let windowID = 0;
-  this.openWindows = [];
+  this.openElement = [];
 
   const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
     this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';
@@ -80,10 +80,9 @@ app.service('Shared',function($document, $compile){
       callback = callback || function(){};
       item = item || false;
       const generatedID = 'item_'+windowID;
-      const generatedOBJ = 'openWindows.'+generatedID;
-      scope.openWindows[generatedID] = new directiveOBJ(name, generatedOBJ, item, callback, scope);
+      self.openElement[generatedID] = new directiveOBJ(name, generatedID, item, callback, scope);
+      angular.element($document).find('body').append(self.openElement[generatedID].el);
       windowID++;
-      return scope.openWindows[generatedID];
   }
 
   let popupID = 0;
