@@ -59,27 +59,36 @@ app.directive('newFormWindow',['$http', 'Form', function($http, Form) {
         });
       }
 
+      $scope.save = function(form){
         openForm.name = form.name;
         openForm.email = form.email;
         openForm.data =  JSON.stringify(form.data);
         Form.update_all(openForm);
       }
+      $scope.setType = function(type, field){
         field.type = type;
       }
 
       const loadForms = function(){
         Form.select_all(function(response){
+          $scope.forms = response.data;
         });
       }
+      $scope.formStateText = function(form){
         return (form.state) ? 'active' : 'inactive';
       }
+      $scope.changeState = function(form){
         form.state = !form.state;
+        $scope.updateForm(form);
       }
+      $scope.createNewForm = function(){
         Form.insert($scope.newForm, loadForms);
       }
+      $scope.deleteForm = function(form){
         Form.delete(form, loadForms);
 
       }
+      $scope.updateForm = function(form){
         Form.update_all(form);
       }
       loadForms();
