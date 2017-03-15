@@ -136,9 +136,6 @@ span.email {
 #editFormWindow button.save{
   box-sizing: border-box;
   height: 40px;
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background-color: #069554;
   padding: 4px 16px;
   outline: none;
