@@ -138,7 +138,7 @@ function($http, Folder, Article, Form, uploadDroppedToArticle, Shared) {
   }
   /* Event Function */
   const openPopSelect = function(setup, after){ return function(){
-      storedRange = Shared.fn.getRange();
+      storedRange = Shared.fn.storeRange();
       scope.setupSelect = Shared.setupSelect[setup];
       scope.selectFn = function(selected){ after(selected); }
       scope.showPopSelect();

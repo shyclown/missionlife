@@ -9,11 +9,11 @@ app.service('Shared',function($document, $compile){
        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     },
     stopDefaultEvent: function(){ event.stopPropagation(); event.preventDefault(); },
-    getRange: function(){ return document.getSelection().getRangeAt(0); },
+    storeRange: function(){ return document.getSelection().getRangeAt(0); },
     selectRange: function(oRange) {
       let oSelection = document.getSelection();
       oSelection.removeAllRanges();
-      oSelection.addRange(storedRange);
+      oSelection.addRange(oRange);
     }
   }
   this.explorer = {
