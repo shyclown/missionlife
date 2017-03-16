@@ -1,20 +1,10 @@
-#bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  /* Preserve aspet ratio */
-  box-sizing: border-box;
-  min-width: 1900px;
-  max-width: 1080px;
-  height: 100%;
-  z-index: -9999;
+html, body{
+  padding: 0px;
+  margin: 0px;
 }
 body{
-  margin: 0px;
   background-color: rgb(240, 242, 241);
-    font-family: 'Source Sans Pro', sans-serif;
-
+  font-family: 'Source Sans Pro', sans-serif;
 }
 .blanket{
   width: 100%;
@@ -28,26 +18,25 @@ body{
 #topnav h1{
   display: block;
   width: 120px;
-  background-color: #FFF;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 16px;
   box-sizing: border-box;
   margin: 0px;
   padding: 16px;
 
-  color: rgb(244,100,95);
-  border-bottom: 1px solid rgb(244,100,95);
+  color: #000;
   text-decoration: none;
 }
 #topnav{
   box-sizing: border-box;
   position: fixed;
+  top:0px;
   z-index: 9;
-  height: 49px;
+  height: 64px;
   overflow: hidden;
-  background-color: #FFF;
+  background-color: #FDD835;
   margin: 0px;
-  padding: 0px;
+  padding: 8px;
   width: 100%;
 }
 #topnav > ul{
@@ -78,5 +67,6 @@ body{
   text-decoration: none;
 }
 div.ng-view{
-  padding: 48px;
+  margin-left: 240px;
+  margin-top: 64px;
 }

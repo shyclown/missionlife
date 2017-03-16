@@ -148,16 +148,11 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
   // Select Window
   //-----------------------------------------------------
 
-  /* Default */
-  scope.popSelect = false;
-  scope.cancelPopSelect = function(){ scope.popSelect = false;}
-  scope.showPopSelect = function(){  scope.popSelect = true;}
-  scope.selectFn = function(selected){ scope.addLinkToArticle(selected.obj); }
-
   /* Range */
   let storedRange = {};
   /* Add Links to Items */
   const addLink = function(selected){
+    console.log(selected);
     Shared.fn.selectRange(storedRange)
     let link = document.createElement('a');
     link.className = 'custom';
@@ -168,9 +163,10 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
   /* Event Function */
   const openPopSelect = function(setup, after){ return function(){
       storedRange = Shared.fn.storeRange();
-      scope.setupSelect = Shared.setupSelect[setup];
-      scope.selectFn = function(selected){ after(selected); }
-      scope.showPopSelect();
+      new Shared.directiveElement('pop-select', Shared.setupSelect[setup],
+      function(selection){
+        after(selection);
+      }, scope);
     }
   }
   scope.selectArticlePop = openPopSelect('selectArticle', addLink);

@@ -26,7 +26,7 @@
 
       // Design
       $this->create_table_page();
-      // $this->create_table_page_item();
+      $this->create_table_page_item();
     }
 
     private function create_table_account(){
@@ -142,8 +142,10 @@
     private function create_table_page_item(){
       $sql = "CREATE TABLE IF NOT EXISTS `ml_page_item` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
-              `page`  int(8) NOT NULL,
-              `item` int(8) NOT NULL ,
+              `page_id`  int(8) NOT NULL,
+              `item_id` int(8) NOT NULL ,
+              `type` int(1) NOT NULL ,
+              `order` int(2) NOT NULL ,
               PRIMARY KEY (`id`)
               ) ENGINE=InnoDB
               DEFAULT CHARSET=utf8 COLLATE=utf8_bin";

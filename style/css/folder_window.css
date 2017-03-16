@@ -38,16 +38,7 @@
   outline: none;
   color: #FFF;
 }
-#blanket{
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  background-color: rgba(0,0,0,0.5);
-  width: 100%;
-  height: 100%;
-}
+
 .content{
   padding: 16px;
 }

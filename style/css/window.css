@@ -64,6 +64,11 @@ button.set.small.selected{
   max-width: 750px;
   position: relative;
 }
+.shadow{
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+}
 .window > .top{
   height: 32px;
   box-sizing: border-box;

@@ -10,6 +10,8 @@ Editor.backspaceEvent = function (oSelection, oRoot)
     console.log('error: selected node is root node'); return false;
   }
 
+  /* Not colapsed selection */
+  
   if(!oSelection.isCollapsed){
 
     if(Editor.isCustom(rootNode)){

@@ -1,32 +1,3 @@
-.articleWindow{
-  background-color: #FFF;
-  margin: 0 auto;
-  max-width: 750px;
-  height: 90%;
-  max-height: 90%;
-  border: #666 1px solid;
-  position: relative;
-}
-.articleWindow .TopPanel{
-  height: 32px;
-  box-sizing: border-box;
-  line-height: 16px;
-  padding: 8px;
-  border-bottom: 1px solid #EAEAEA;
-  background-color: #FFF;
-}
-.closeBtn{
-  box-sizing: border-box;
-  background-color: #F44336;
-  color: #FFF;
-  position: absolute;
-  top: 0px;
-  right:0px;
-  width: 32px;
-  height: 32px;
-  padding: 8px;
-  text-align: center;
-}
 .ControlPanel{
   background-color: #EAEAEA;
   height: 32px;
@@ -44,7 +15,7 @@
   text-decoration: none;
   display: inline-block;
 }
-#RightContent{
+.RightContent{
   display: block;
   box-sizing: border-box;
   float: right;
@@ -55,7 +26,7 @@
   padding: 8px;
 
 }
-#RightContent > button.delete{
+.RightContent > button.delete{
   width: 100%;
   height: 40px;
   clear: both;
@@ -91,16 +62,6 @@
   outline: none;
   color: #FFF;
 }
-#blanket{
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  background-color: rgba(0,0,0,0.5);
-  width: 100%;
-  height: 100%;
-}
 #articleEditorHeader{
   width: 100%;
   box-sizing: border-box;
@@ -125,7 +86,7 @@
 .content_wrap{
   height: calc(100% - 96px);
 }
-#RightContent button.btn{
+.RightContent button.btn{
   background-color: #EAEAEA;
   box-sizing: border-box;
   padding: 4px 8px;
@@ -133,19 +94,19 @@
   border: none;
   /*border-bottom: 1px solid rgb(244,100,95);*/
 }
-#RightContent button.btn.selected{
+.RightContent button.btn.selected{
   /*border: 1px solid rgb(244,100,95);*/
   border-bottom: none;
   background-color: #FFF;
 }
-#RightContent .searchPanel{
+.RightContent .searchPanel{
   background-color: #FFF;
   height: 24px;
   padding: 8px;
   /*border: 1px solid rgb(244,100,95);*/
   border-top: none;
 }
-#RightContent .searchPanel i{
+.RightContent .searchPanel i{
   box-sizing: border-box;
   width: 24px;
   height: 24px;
@@ -154,7 +115,7 @@
   background-color: #EAEAEA;
   float: left;
 }
-#RightContent .searchPanel input{
+.RightContent .searchPanel input{
   box-sizing: border-box;
   width: calc(100% - 24px);
   height: 24px;
@@ -164,26 +125,27 @@
   border: none;
   outline: none;
 }
-#RightContent .lists{
+.RightContent .lists{
   background-color: #FFF;
   height: 150px;
   padding: 4px;
   overflow-y: scroll;
 }
-#RightContent .lists .item{
+.RightContent .lists .item{
   background-color: #FFF;
   margin-bottom: 4px;
   line-height: 14px;
   font-size: 14px;
   padding: 2px;
 }
-#RightContent .box{
+.RightContent .box{
+  width: 100%;
   margin-top: 16px;
 }
-#RightContent .lists .item:hover{
+.RightContent .lists .item:hover{
   background-color: #EAEAEA;
 }
-#RightContent .flexBox{
+.RightContent .flexBox{
   display: flex;
   justify-content: space-between;
 }
