@@ -36,13 +36,15 @@ else{}
         <li><a href="home">Home</a></li>
         <li><a href="settings">Settings</a></li>
         <li><a href="folders">Folders</a></li>
-        <li><a href="garant">Garant</a></li>
+
         <!-- Removed
         Same as Folders in new versions
-         <li><a href="article">Article</a></li>
-        -->
+                <li><a href="garant">Garant</a></li>
         <li><a href="form">Forms</a></li>
         <li><a href="files">Files</a></li>
+         <li><a href="article">Article</a></li>
+        -->
+
       </ul>
     </nav>
     <div class="ng-view">
