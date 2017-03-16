@@ -3,6 +3,11 @@ const app = angular.module('myapp',['ngRoute','ngSanitize']);
 app.controller('viewController',function($scope){
   console.log('viewController');
 });
+
+app.config(function ($httpProvider) {
+    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+    $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
+});
 app.config(function($routeProvider, $locationProvider){
   $routeProvider.when('/', {
       templateUrl: 'temp/home.html',
