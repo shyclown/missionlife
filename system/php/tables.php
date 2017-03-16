@@ -23,6 +23,10 @@
       $this->create_table_folder_file();
       $this->create_table_folder_form();
       $this->create_table_folder_garant();
+
+      // Design
+      $this->create_table_page();
+      // $this->create_table_page_item();
     }
 
     private function create_table_account(){
@@ -121,7 +125,30 @@
               DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
       $this->db->query($sql);
     }
-
+    private function create_table_page(){
+      $sql = "CREATE TABLE IF NOT EXISTS `ml_page` (
+              `id` int(8) NOT NULL AUTO_INCREMENT,
+              `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+              `order` int(3),
+              `parent` int(8),
+              `state` int(1) NOT NULL,
+              `date_created` DATETIME NOT NULL,
+              `date_edited` DATETIME NOT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB
+            DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+      $this->db->_mysqli->query($sql);
+    }
+    private function create_table_page_item(){
+      $sql = "CREATE TABLE IF NOT EXISTS `ml_page_item` (
+              `id` int(8) NOT NULL AUTO_INCREMENT,
+              `page`  int(8) NOT NULL,
+              `item` int(8) NOT NULL ,
+              PRIMARY KEY (`id`)
+              ) ENGINE=InnoDB
+              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+      $this->db->query($sql);
+    }
     private function create_table_folder(){
       $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
