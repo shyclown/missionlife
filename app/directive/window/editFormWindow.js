@@ -21,9 +21,7 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
 
       scope.form.data = JSON.parse(scope.form.data);
 
-      scope.cancel = function(){
-        oFormWindow.close();
-      }
+
       const callbackFn = function(){
         oFormWindow.callback();
         oFormWindow.close();
@@ -37,6 +35,9 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
       }
 
       /* Edit Form */
+      scope.setType = function(type, field){ field.type = type; }
+      scope.formStateText = function(form){ return (form.state) ? 'active' : 'inactive';}
+      scope.changeState = function(form){ form.state = !form.state; }
 
       scope.addField = function(form){
         console.dir(form.data);
@@ -46,31 +47,32 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
           order: form.data.length + 1
         });
       }
+
+      /* Button functions */
+
+      scope.cancel = function(){
+        oFormWindow.close();
+      }
+      scope.insert = function(form){
+        form.data = JSON.stringify(form.data);
+        Form.insert(form, function(res){ Form.addToFolder({
+            form_id: res.data,
+            folder_id: Shared.explorer.current_folder.id
+          }, function(){
+            form.data = JSON.parse(form.data);
+            form.id = res.data;
+            callbackFn(); });
+        });
+      }
       scope.save = function(form){
-        if(!form.id){
-          form.data = JSON.stringify(form.data);
-          Form.insert(form, function(res){ Form.addToFolder({
-              form_id: res.data,
-              folder_id: Shared.explorer.current_folder.id
-            }, function(){
-              form.data = JSON.parse(form.data);
-              form.id = res.data;
-              callbackFn(); });
-          });
-        }
-        else{
           form.data = JSON.stringify(form.data);
           scope.form = form;
           Form.update_all(form, function(){
             form.data = JSON.parse(form.data);
             callbackFn();
           });
-        }
       }
-      scope.setType = function(type, field){ field.type = type; }
-      scope.formStateText = function(form){ return (form.state) ? 'active' : 'inactive';}
-      scope.changeState = function(form){ form.state = !form.state; }
-      scope.deleteForm = function(form){ Form.delete(form, function(){
+      scope.delete = function(form){ Form.delete(form, function(){
         callbackFn();
       });}
     }
