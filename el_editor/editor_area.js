@@ -64,9 +64,7 @@ Editor.area.prototype.createEvents = function()
       console.log('copy',event);
     },
     paste: function(event){
-      let clipboardData = event.clipboardData || window.clipboardData;
-      let pasteData = clipboardData.getData('Text');
-      console.log('paste',event);
+      Editor.pasteEvent(oSelection, oRoot, event);
     },
     cut: function(event){
       console.log('cut',event);

@@ -124,7 +124,7 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
               // if all processes are completed we remove placeholder
               if(completed == all){
                 area.removePlaceholder();
-                scope.saveChanges();
+              //  scope.saveChanges();
               }
             })();
         }

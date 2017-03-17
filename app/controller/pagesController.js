@@ -25,6 +25,7 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
         if(item.type === 1){
           Article.select_by_id({id: item.item_id},function(res){
             item.obj = res.data[0];
+            item.obj.content = decodeURIComponent(item.obj.content);
         });}
         $scope.currPageItems.push(item);
       })
