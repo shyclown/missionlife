@@ -62,7 +62,7 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
       else{
         scope.article = Object.assign({}, oArticle);
       }
-      scope.area.update_content(scope.article.content);
+      scope.area.update_content(decodeURIComponent(scope.article.content));
       Editor.attachImageControls.bind(scope.area)();
       loadFilesOfArticle();
 
@@ -137,9 +137,10 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
       scope.saveChanges = function(){
         let sel = document.getSelection();
         Editor.removeImageControls.bind(scope.area)();
-        scope.article.content = scope.area.part.content_wrap.innerHTML;
+        scope.article.content = encodeURIComponent(scope.area.part.content_wrap.innerHTML);
         Article.update(scope.article, function(response){
-          callbackFn()
+          callbackFn();
+          console.log(response.data);
         });
         Editor.attachImageControls.bind(scope.area)();
         }
