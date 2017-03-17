@@ -117,7 +117,22 @@ code > .code_line{
   white-space: nowrap;
 }
 .content_wrap p{
-  background-color: #FAFAFA;
+  background-color: skyblue;
+  min-height: 16px;
+  padding: 16px;
+  margin-bottom: 2px;
+}
+.content_wrap ol{
+  background-color: pink;
+  margin-bottom: 2px;
+}
+.content_wrap ul{
+  background-color: pink;
+  padding-left: 15px;
+  margin-bottom: 2px;
+}
+.content_wrap li{
+  background-color: red;
   margin-bottom: 2px;
 }
 .content_wrap a{
