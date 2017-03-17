@@ -17,7 +17,6 @@ function($http, Shared, Folder, Article, Form, FileService) {
     {
 
       const oSelectWindow = Shared.openElement[attrs.editObj];
-      console.log(oSelectWindow);
       const oSetup = oSelectWindow.item;
       const oCallback = oSelectWindow.callback;
 
@@ -58,7 +57,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
       }
 
       const resetItems = function(){
-        scope.currentFolder = Shared.currentFolder;
+        scope.currentFolder = null;
         scope.currentParents = [];
         scope.openFoldersInTree = [];
         scope.folderWindow = false;

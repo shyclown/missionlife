@@ -59,6 +59,18 @@ Editor.backspaceEvent = function (oSelection, oRoot)
     // Default Function when not Custom Elements - Not First or Last Node
     //-----------------------------------------------------
     else{
+      if(!hasTextInside(sourceRoot)){
+        console.log('Source is Empty');
+        removeElement(sourceRoot);
+        newCaretPosition(oSelection, oPrevText, oPrevText.length);
+        return false;
+      }
+      if(!hasTextInside(targetRoot)){
+        console.log('is Empty');
+        removeElement(targetRoot);
+        return false;
+      }
+
       console.log('inside - Normal Root Node');
       if(!firstTextNode)
       {
@@ -67,6 +79,7 @@ Editor.backspaceEvent = function (oSelection, oRoot)
 
         /* Remove previous BR */
         oPrevious = oNode.previousSibling;
+        console.log('previousSibling', oPrevious);
         if(oPrevious && isOfTag(oPrevious,'br')){ removeElement(oPrevious, oRoot); oPosition = oPrevText.textContent.length; }
 
         /* Move A TAG as a Element not just text */
@@ -76,6 +89,7 @@ Editor.backspaceEvent = function (oSelection, oRoot)
         // Same Root Element
         //-----------------------------------------------------
         if(sameRoot){
+          console.log('In Same Root');
           if(isTextNode(oPrevText) && isTextNode(oNode)){
             oPrevText.textContent += oNode.textContent;
             removeElement( oNode );
@@ -85,6 +99,8 @@ Editor.backspaceEvent = function (oSelection, oRoot)
         // Different root Element
         //-----------------------------------------------------
         else{
+          console.log('Different Roots');
+          if(oNode == sourceRoot){ oNode = sourceRoot.firstChild; }
           let prevNode = oPrevText;
           while(oNode){
             let nextNode = oNode.nextSibling;

@@ -7,8 +7,9 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
     link: function (scope, element, attrs)
     {
       let Explorer = Shared.explorer;
-
-      scope.currentFolder = Shared.currentFolder;
+      // reset it
+      Shared.explorer.current_folder = null;
+      scope.currentFolder = null;
       scope.folders = [];
       scope.articles = [];
       scope.files = [];

@@ -9,16 +9,6 @@ redo undo,
 print
 */
 Editor.buttons = {
-  Undo: {
-    nicename:'Undo',
-    fname:'undo',
-    btn_event: function(){Editor.btnEvent('undo')}
-  },
-  Redo: {
-    nicename:'Redo',
-    fname:'repeat',
-    btn_event: function(){Editor.btnEvent('redo')}
-  },
   Remove_formating: {
     nicename:'Remove_formating',
     fname:'paragraph',
@@ -76,16 +66,6 @@ Editor.buttons = {
     fname:'list-ul',
     btn_event: function(){Editor.changeSelectionTag('ul',this.root)}
   },
-  Add_identation: {
-    nicename:'Add identation',
-    fname:'indent',
-    btn_event: function(){Editor.btnEvent('indent');}
-  },
-  Delete_identation: {
-    nicename:'Delete identation',
-    fname:'outdent',
-    btn_event: function(){Editor.btnEvent('outdent');}
-  },
   Quote:{
     nicename:'Quote',
     fname:'quote-right',
@@ -104,11 +84,5 @@ Editor.buttons = {
     nicename:'Code',
     fname:'code',
     btn_event: function(){ Editor.changeSelectionTag('code', this.root); }
-  },
-  Print: {
-    nicename:'Print',
-    fname:'print',
-    btn_event: function(){//self.printDoc();
-    }
-  },
+  }
 }
