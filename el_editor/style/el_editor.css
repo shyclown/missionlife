@@ -89,12 +89,9 @@ user-select: none;
 }
 h2{
   font-family: 'Source Sans Pro',sans-serif;
-  font-style: italic;
   font-weight: 500;
   font-size: 24px;
-  border-top: 3px solid #EAEAEA;
-  padding-top: 12px;
-  margin-top: 16px;
+  background-color: #FFF;
 }
 code{
   border-left: 4px solid #07F;
@@ -117,11 +114,24 @@ code > .code_line{
   white-space: nowrap;
 }
 .content_wrap p{
-  background-color: #FAFAFA;
+  background-color: #FFF;
+  margin-bottom: 2px;
+}
+.content_wrap ol{
+  background-color: #FFF;
+  margin-bottom: 2px;
+}
+.content_wrap ul{
+  background-color: #FFF;
+  padding-left: 15px;
+  margin-bottom: 2px;
+}
+.content_wrap li{
+  background-color: #FFF;
   margin-bottom: 2px;
 }
 .content_wrap a{
-  background-color: #EAEAEA;
+  background-color: #FDD835;
   padding: 0px 4px;
 }
 .placeholder{

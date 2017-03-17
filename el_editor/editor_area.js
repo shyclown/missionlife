@@ -59,14 +59,13 @@ Editor.area.prototype.createEvents = function()
     keydown: function(event){
       if(event.keyCode == 46){ Editor.deleteEvent(oSelection, oRoot);} // delete
       if(event.keyCode == 8){ Editor.backspaceEvent(oSelection, oRoot);} // backspace
+      if(event.keyCode == 13){ Editor.enterEvent(oSelection, oRoot, event);} // enter
     },
     copy: function(event){
       console.log('copy',event);
     },
     paste: function(event){
-      let clipboardData = event.clipboardData || window.clipboardData;
-      let pasteData = clipboardData.getData('Text');
-      console.log('paste',event);
+      Editor.pasteEvent(oSelection, oRoot, event);
     },
     cut: function(event){
       console.log('cut',event);

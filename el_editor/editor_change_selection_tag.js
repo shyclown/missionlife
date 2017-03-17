@@ -89,7 +89,6 @@ Editor.changeSelectionTag = function(oTag, oRoot)
     const xSelection = Editor.splitSelection(oRoot);
     let changeStartNode = xSelection.changeStartNode;
     let changeEndNode = xSelection.changeEndNode;
-    console.log(oRoot);
     var rootStart = getParentInRoot(changeStartNode,oRoot);
     var rootEnd = getParentInRoot(changeEndNode,oRoot);
 
@@ -103,11 +102,9 @@ Editor.changeSelectionTag = function(oTag, oRoot)
     var controlElement = true;
 
     while(controlElement) {
-      console.log('current node',currentNode);
       nextElement = currentNode.nextSibling;
 
       if(!Editor.isCustom(currentNode)){
-        console.log('element is not custom');
         var nodes = getAllTextNodes(currentNode);
 
 
@@ -145,8 +142,6 @@ Editor.changeSelectionTag = function(oTag, oRoot)
       else{
         var newArray = placeNodes.concat(nodes);
         placeNodes = newArray;
-          console.log('nodes', nodes);
-          console.log('placeNodes', placeNodes);
       }
 
     }
@@ -199,7 +194,6 @@ Editor.notCustom = function(oNode){
   return Editor.disalovedTags.indexOf(oNode.tagName.toUpperCase()) == -1;
 }
 Editor.isCustom = function(oNode){
-  console.log('check if custom element', oNode);
   var result = Editor.disalovedTags.indexOf(oNode.tagName.toUpperCase()) == -1;
   return !result;
 }

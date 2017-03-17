@@ -15,68 +15,36 @@ function($http, Shared, Folder, Article, Form, FileService) {
     templateUrl: '/missionlife/app/template/popup/pop_select.html',
     link: function (scope, element, attrs)
     {
-      //-----------------------------------------------------
-      // Setup
-      //-----------------------------------------------------
 
-      /*
-      popSelect is based on popFolderExplorer
-      - it loads files independently and performs provided callback action
-      - callbacks return value is selected item :
-      - could be folder, article, form, or file
-      - used in actions , move and add
-      - we can provide list of objects that should be excluded
-      - if we do not move folder we cant select null folder
-      - if we delete folder we cant select same folder as a file moving destination
+      const oSelectWindow = Shared.openElement[attrs.editObj];
+      const oSetup = oSelectWindow.item;
+      const oCallback = oSelectWindow.callback;
 
-      TODO: make it universal directive called from shared function
-      TODO: make confirm prompt if delete folder
-      TODO: make prompt with info after wrong action
-      */
       scope.folders;
       scope.forms;
       scope.articles;
       scope.files;
       scope.currentFolder = null;
+      scope.cancel = function(){ oSelectWindow.close();  }
 
-      scope.cancel = function(){
-        stopDefault();
-        scope.selectOpen = false;
-      }
-      scope.$watch( function(){ return Folder.allFolders; },
-      function(){ scope.folders = Folder.allFolders;}, true);
-      Folder.select_all();
-
-
-
-      /* watch if open */
       scope.$watch(
-        function(){ return scope.selectOpen; },
-        function(){
-          if(scope.selectOpen){
-            scope.currentFolder = Shared.explorer.current_folder;
-            if(scope.currentFolder != null){
-                loadItems();
-            }
-          }
-          else{ resetItems(); }
-      },true);
-
+        function(){ return Folder.allFolders; },
+        function(){ scope.folders = Folder.allFolders;},
+      true);
       scope.$watch(
         function(){ return scope.currentFolder; },
-        function(){ if( scope.currentFolder != null ){
-          loadItems(); }
+        function(){
+          if( scope.currentFolder != null ){ loadItems(); }
           else { resetItems(); }
       },true);
 
-
-
+      Folder.select_all();
 
       const loadItems = function(){
 
-        const setup = scope.selectSetup;
+        const setup = oSetup;
         scope.currentParents = Folder.listParents(scope.currentFolder);
-        scope.selected = {};
+        scope.selected = false;
         scope.selectedName = '';
 
         scope.articles = [];
@@ -89,13 +57,13 @@ function($http, Shared, Folder, Article, Form, FileService) {
       }
 
       const resetItems = function(){
-        scope.currentFolder = Shared.currentFolder;
+        scope.currentFolder = null;
         scope.currentParents = [];
         scope.openFoldersInTree = [];
         scope.folderWindow = false;
         scope.editFolder = {};
         scope.new_folder = {};
-        scope.selected = {};
+        scope.selected = false;
         scope.selectedName = '';
       }
       const stopDefault = function(){
@@ -151,8 +119,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
       }
       scope.submitFn = function(){
         if(!scope.selected){ alert('Nothing Was Selected'); }
-        else{ scope.selectFn(scope.selected); }
-        scope.cancel();
+        else{ oCallback(scope.selected); scope.cancel();}
       }
 
       scope.getName = function(item){  let displayName;  return displayName; }
