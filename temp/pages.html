@@ -7,12 +7,31 @@
   padding: 16px;
   height: calc(100% - 64px) ;
 }
-#pageList > button.page{
+#pageList > div.pageBtn{
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  text-align: left;
   background-color: #FFF;
   box-sizing: border-box;
   width: 100%;
   text-align: left;
   margin-top: 8px;
+}
+#pageList > div.name{
+  text-transform: uppercase;
+}
+#pageList > div.pageBtn i{
+  color: #EAEAEA;
+  background-color: none;
+  padding: 4px 4px;
+}
+#pageList > div.pageBtn:hover i{
+  color: #999;
+}
+#pageList > div.pageBtn:hover i:hover{
+  color: #000;
+  cursor: pointer;
 }
 #pageList > .labelList{
   box-sizing: border-box;
@@ -52,9 +71,12 @@
 
 
 <div id="pageList">
-<button ng-click="openPopNewPage()" ><i class="fa fa-plus"></i> Add Page</button>
+<button ng-click="openPopEditPage()" ><i class="fa fa-plus"></i> Add Page</button>
 <div class="labelList">Pages</div>
-<button class="page" ng-repeat="page in pages" ng-click="openPage(page)"> {{page.name}} </button>
+  <div class="pageBtn" ng-repeat="page in pages" ng-click="openPage(page)">
+    <div class="name"> {{page.name}} </div>
+    <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
+  </div>
 </div>
 
 

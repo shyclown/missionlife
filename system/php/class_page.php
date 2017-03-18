@@ -32,8 +32,8 @@ class Page
     return $this->db->query($sql,$params);
   }
   public function delete($data){
-    $this->removeFromParents($data);
-    $this->orderAfterDelete($data);
+    //$this->removeFromParents($data);
+    //$this->orderAfterDelete($data);
     $sql = "DELETE FROM `ml_page` WHERE `ml_page`.`id` = ?";
     $params = array('i',$data['id']);
     return $this->db->query($sql,$params);

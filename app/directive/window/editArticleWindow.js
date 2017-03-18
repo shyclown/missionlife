@@ -173,6 +173,8 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
   scope.selectArticlePop = openPopSelect('selectArticle', addLink);
   scope.selectFilePop = openPopSelect('selectFile', addLink);
   scope.selectFormPop = openPopSelect('selectForm', addLink);
+  scope.selectFolderPop = openPopSelect('selectFolder', addLink);
+  scope.selectImagePop = openPopSelect('selectImage', addLink);
 
     }// link
   };

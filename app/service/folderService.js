@@ -81,6 +81,7 @@ app.service('Folder',function(Ajax, Shared){
     });
   }
   this.update = function(data, callback){
+    console.log(data);
     data.action = 'update';
     Ajax.call(data, url, function(response){
       if(callback){ callback(response);}

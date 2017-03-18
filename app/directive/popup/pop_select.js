@@ -7,11 +7,7 @@ app.directive('popSelect',['$http', 'Shared', 'Folder', 'Article','Form','FileSe
 function($http, Shared, Folder, Article, Form, FileService) {
   return {
     restrict: 'E',
-    scope:{
-      selectOpen : '=',
-      selectFn: '=',
-      selectSetup: '='
-    },
+    scope:{},
     templateUrl: '/missionlife/app/template/popup/pop_select.html',
     link: function (scope, element, attrs)
     {
@@ -19,6 +15,8 @@ function($http, Shared, Folder, Article, Form, FileService) {
       const oSelectWindow = Shared.openElement[attrs.editObj];
       const oSetup = oSelectWindow.item;
       const oCallback = oSelectWindow.callback;
+      const setup = oSetup;
+      scope.setup = setup;
 
       scope.folders;
       scope.forms;
@@ -42,7 +40,8 @@ function($http, Shared, Folder, Article, Form, FileService) {
 
       const loadItems = function(){
 
-        const setup = oSetup;
+
+        console.log(setup);
         scope.currentParents = Folder.listParents(scope.currentFolder);
         scope.selected = false;
         scope.selectedName = '';
@@ -50,9 +49,10 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.articles = [];
         scope.files = [];
         scope.forms = [];
+        scope.images = [];
 
         if(setup.articles){ loadArticles(); }
-        if(setup.files){ loadFiles(); }
+        if(setup.files){ loadFiles();  }
         if(setup.forms){ loadForms(); }
       }
 
@@ -79,7 +79,10 @@ function($http, Shared, Folder, Article, Form, FileService) {
       const loadFiles = function(){
         FileService.selectByFolder(
           { folder_id: scope.currentFolder.id, },
-          function(res){ scope.files = res.data.result; }
+          function(res){
+            scope.files = res.data.result;
+            scope.images = scope.files.filter(function(img){ return img.file_type == 'png'; });
+          }
         );
       }
       const loadForms = function(){
@@ -89,6 +92,14 @@ function($http, Shared, Folder, Article, Form, FileService) {
         );
       }
 
+
+      // columns
+      scope.getNumber = function(num){
+          let arr = []; let i = 0; while(i != num){
+            arr.push(i); i++; }
+          return arr;
+      }
+      scope.columns = 2;
       //-----------------------------------------------------
       // Selected
       //-----------------------------------------------------
@@ -115,7 +126,6 @@ function($http, Shared, Folder, Article, Form, FileService) {
             break;
           default:
         }
-
       }
       scope.submitFn = function(){
         if(!scope.selected){ alert('Nothing Was Selected'); }

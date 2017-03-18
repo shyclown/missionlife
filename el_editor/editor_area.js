@@ -146,6 +146,12 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
       oRange.deleteContents();
       oRange.insertNode(oElement);
     }
+    else{
+      const oTarget = getParentInRoot(oRange.endContainer, oRoot);
+      let p = document.createElement('p');
+      insertAfter(p, oTarget);
+      p.appendChild(oElement);
+    }
   }
   else { console.log('nothing selected'); }
 }

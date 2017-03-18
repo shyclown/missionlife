@@ -31,7 +31,7 @@ app.service('Shared',function($document, $compile){
   this.setupNewForm = { name: '', email: '', state: 0, data: '[]' }
   this.setupSelect = {
     selectArticle : {
-      imageSelect: false,
+      selectImage: false,
       articles : true,
       files: false,
       forms: false,
@@ -40,7 +40,7 @@ app.service('Shared',function($document, $compile){
       createFolder: false
     },
     selectFile : {
-      imageSelect: false,
+      selectImage: false,
       articles : false,
       files: true,
       forms: false,
@@ -48,14 +48,32 @@ app.service('Shared',function($document, $compile){
       selectArticleOrFile: true,
       createFolder: false
     },
+    selectImage : {
+      selectImage: true,
+      articles : false,
+      files: true,
+      forms: false,
+      selectFolder: false,
+      selectArticleOrFile: false,
+      createFolder: false
+    },
     selectForm : {
-      imageSelect: false,
+      selectImage: false,
       articles : false,
       files: false,
       forms: true,
       selectFolder: false,
       selectArticleOrFile: true,
       createFolder: false
+    },
+    selectFolder : {
+      selectImage: false,
+      articles : false,
+      files: false,
+      forms: false,
+      selectFolder: true,
+      selectArticleOrFile: false,
+      createFolder: true
     }
   }
   this.window = {

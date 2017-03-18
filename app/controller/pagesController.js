@@ -34,11 +34,10 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
   const getIntType = function(stringType){ if(stringType === "article"){ return 1; } }
   const readIntType = function(intType){ if(intType === 1){ return 'article'; } }
 
-  /* POP NEW PAGE */
-  $scope.openPopNewPage = function(){
-    new Shared.directiveElement('pop-new-page', false, function(){ loadPages(); }, $scope);
+  /* POP EDIT PAGE */
+  $scope.openPopEditPage = function(page){
+    new Shared.directiveElement('pop-edit-page', page, function(){ loadPages();}, $scope);
   }
-
   /* REMOVE */
   $scope.removeItem = function(item){
     // item should be retreived object with id attached already
