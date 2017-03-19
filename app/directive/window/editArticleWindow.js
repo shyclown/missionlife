@@ -1,7 +1,7 @@
 /* Uses Editor */
 
-app.directive('editArticleWindow',['$http','Folder', 'Article', 'Form', 'uploadDropped', 'Shared',
-function($http, Folder, Article, Form, uploadDropped, Shared) {
+app.directive('editArticleWindow',['$http', '$compile','Folder', 'Article', 'Form', 'uploadDropped', 'Shared',
+function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
   return {
     restrict: 'E',
     scope:{},
@@ -54,15 +54,21 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
 
       if(!oArticle){
         scope.article = Object.assign({}, newArticle);
-        Article.insert(newArticle, function(res){
-          scope.article.id = res.data;
-          console.log(scope.article.id);
-        });
-      }
-      else{
+        Article.insert(newArticle, function(res){ scope.article.id = res.data; });
+      }else{
         scope.article = Object.assign({}, oArticle);
       }
       scope.area.update_content(decodeURIComponent(scope.article.content));
+
+      // compile links
+      let content = scope.area.part.content_wrap;
+      let links = content.getElementsByClassName('link');
+      for (var i = 0; i < links.length; i++) {
+        let link = links[i]
+        link = $compile(link)(scope);
+      }
+
+
       Editor.attachImageControls.bind(scope.area)();
       loadFilesOfArticle();
 
@@ -92,7 +98,7 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
 
       scope.closeWithoutSave = function(){
         oArticleWindow.close();
-        //Article.selectByFolder({ folder_id: scope.currentFolder.id });
+
       }
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){ }
@@ -148,33 +154,53 @@ function($http, Folder, Article, Form, uploadDropped, Shared) {
   //-----------------------------------------------------
   // Select Window
   //-----------------------------------------------------
+      /* Range */
+      let storedRange = {};
+      let storedItem = {};
+      /* Add Links to Items */
+      const createLink = function(name, href){
+        let link = document.createElement('a');
+        link.setAttribute('ng-click', 'editWebLinkPop(true)');
+        link.href = href;
+        link.className = 'link';
+        link.contentEditable = false;
+        link.innerHTML = name;
+        return link;
+      }
+      const addLink = function(data){
+        if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
+        if(data.new){
+          let link = $compile(createLink(data.name, data.href))(scope);
+          let oSelection = Shared.fn.selectRange(Shared.storedRange);
+          scope.area.insertAfterSelection(link[0]);
+          newCaretPosition(oSelection, link[0].nextSibling, 0);
+        }else{
+          storedItem.innerHTML = data.name;
+          storedItem.href = data.href;
+        }
+      }
+      /* Event Function */
+      const openPopSelect = function(setup, callback){
+        return function(){
+          Shared.storedRange = Shared.fn.storeRange();
+          new Shared.directiveElement('pop-select', Shared.setupSelect[setup], callback, scope);
+        }
+      }
 
-  /* Range */
-  let storedRange = {};
-  /* Add Links to Items */
-  const addLink = function(selected){
-    console.log(selected);
-    Shared.fn.selectRange(storedRange)
-    let link = document.createElement('a');
-    link.className = 'custom';
-    link.href = selected.path+"/"+selected.target;
-    link.innerHTML = selected.name;
-    scope.area.insertAfterSelection(link);
-  }
-  /* Event Function */
-  const openPopSelect = function(setup, after){ return function(){
-      storedRange = Shared.fn.storeRange();
-      new Shared.directiveElement('pop-select', Shared.setupSelect[setup],
-      function(selection){
-        after(selection);
-      }, scope);
-    }
-  }
-  scope.selectArticlePop = openPopSelect('selectArticle', addLink);
-  scope.selectFilePop = openPopSelect('selectFile', addLink);
-  scope.selectFormPop = openPopSelect('selectForm', addLink);
-  scope.selectFolderPop = openPopSelect('selectFolder', addLink);
-  scope.selectImagePop = openPopSelect('selectImage', addLink);
+      scope.selectArticlePop = openPopSelect('selectArticle', addLink);
+      scope.selectFilePop = openPopSelect('selectFile', addLink);
+      scope.selectFormPop = openPopSelect('selectForm', addLink);
+      scope.selectFolderPop = openPopSelect('selectFolder', addLink);
+      scope.selectImagePop = openPopSelect('selectImage', addLink);
+
+      let myScope = scope;
+
+      scope.editWebLinkPop = function(item){
+        event.preventDefault();
+          if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
+          else{ Shared.storedRange = Shared.fn.storeRange(); }
+          new Shared.directiveElement('pop-edit-web-link', item, addLink, scope);
+      }
 
     }// link
   };

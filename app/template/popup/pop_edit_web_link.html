@@ -1,0 +1,32 @@
+
+<style>
+  #popEditWebLink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #popEditWebLink > .window{
+    padding: 24px;
+  }
+
+
+
+</style>
+
+
+<div id="popEditWebLink" class="blanket" ng-click="cancel()">
+
+  <div  class="window shadow" ng-click="$event.stopPropagation();">
+  {{ scope }}
+    <input type="text" ng-model="link.name" placeholder="Link Text">
+    <input type="text" ng-model="link.href" placeholder="Link to web page">
+
+    <div ng-if="new">
+      <button ng-click="save()">SAVE</button>
+    </div>
+    <div ng-if="!new">
+      <button ng-click="delete()">DELETE</button>
+      <button ng-click="update()">UPDATE</button>
+    </div>
+  </div><!-- end of window -->
+</div><!-- end of blanket -->

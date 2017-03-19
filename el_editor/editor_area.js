@@ -133,16 +133,15 @@ Editor.area.prototype.imagePlaceholder = function(root){
 Editor.area.prototype.insertAfterSelection = function(oElement){
   // inser after base node
   const oRoot = this.root;
-  const oRange = document.getSelection().getRangeAt(0);
+  const oSelection = document.getSelection();
+  const oRange = oSelection.getRangeAt(0);
   if(Editor.isDescendant(oRange.endContainer, oRoot)){
     // if carret is in a node
     console.dir(oRange);
     if(oRange.endContainer.parentNode.tagName == 'A'){
-      console.log('is A', oRange.endContainer.parentNode.tagName);
       insertAfter(oElement, oRange.endContainer.parentNode);
     }
     else if(oRange.endContainer.parentNode.tagName == 'P'){
-      console.log('is P', oRange.endContainer.parentNode.tagName);
       oRange.deleteContents();
       oRange.insertNode(oElement);
     }
@@ -151,6 +150,7 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
       let p = document.createElement('p');
       insertAfter(p, oTarget);
       p.appendChild(oElement);
+      oElement.addEventListener('click',function(){console.log('click');}, false);
     }
   }
   else { console.log('nothing selected'); }

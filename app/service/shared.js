@@ -1,6 +1,7 @@
 app.service('Shared',function($document, $compile){
 
   const self = this;
+  this.storedRange = {};
 
   this.fn ={
     cloneObject: function(obj){ return Object.assign({},obj); },
@@ -16,6 +17,7 @@ app.service('Shared',function($document, $compile){
       let oSelection = document.getSelection();
       oSelection.removeAllRanges();
       oSelection.addRange(oRange);
+      return oSelection;
     }
   }
   this.explorer = {
@@ -88,6 +90,7 @@ app.service('Shared',function($document, $compile){
 
   const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
     this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';
+    console.log(scope);
     this.el = $compile( this.html )( scope );
     this.item = item;
     this.callback = callback;
@@ -101,6 +104,7 @@ app.service('Shared',function($document, $compile){
       self.openElement[generatedID] = new directiveOBJ(name, generatedID, item, callback, scope);
       angular.element($document).find('body').append(self.openElement[generatedID].el);
       windowID++;
+      return self.openElement[generatedID];
   }
 
   let popupID = 0;
