@@ -173,7 +173,8 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           let link = $compile(createLink(data.name, data.href))(scope);
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
           scope.area.insertAfterSelection(link[0]);
-          newCaretPosition(oSelection, link[0].nextSibling, 0);
+          if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
+           newCaretPosition(oSelection, link[0].nextSibling, 0);
         }else{
           storedItem.innerHTML = data.name;
           storedItem.href = data.href;

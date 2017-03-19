@@ -136,8 +136,6 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
   const oSelection = document.getSelection();
   const oRange = oSelection.getRangeAt(0);
   if(Editor.isDescendant(oRange.endContainer, oRoot)){
-    // if carret is in a node
-    console.dir(oRange);
     if(oRange.endContainer.parentNode.tagName == 'A'){
       insertAfter(oElement, oRange.endContainer.parentNode);
     }

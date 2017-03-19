@@ -46,12 +46,19 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
 
   /* REORDER */
   $scope.orderUp = function(item){
+
     if(item.order == 0){ console.warn('item is on top of stack');; }
-    else{ Page.orderUp(item, function(){ $scope.openPage($scope.currPage); }); }
+    else{   item.obj.content ='';
+      Page.orderUp(item, function(){ $scope.openPage($scope.currPage); });
+    }
   }
   $scope.orderDown = function(item){
+    console.log(item);
+
     if(item.order == $scope.currPageItems.length - 1){ console.warn('item is already at bottom of the stack'); }
-    else{ Page.orderDown(item, function(){ $scope.openPage($scope.currPage);});  }
+    else{   item.obj.content = '';
+      Page.orderDown(item, function(){ $scope.openPage($scope.currPage);});
+    }
   }
 
   /* POP SELECT WINDOW */
