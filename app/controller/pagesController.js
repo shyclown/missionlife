@@ -5,6 +5,7 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
   $scope.onPage = [];
   $scope.currPage = false;
   $scope.currPageItems = [];
+  $scope.columns = 2;
 
   const loadPages = function(){
     Page.select(function(response){ $scope.pages = response.data; console.log(response); });
@@ -27,12 +28,26 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
             item.obj = res.data[0];
             item.obj.content = decodeURIComponent(item.obj.content);
         });}
+        if(item.type === 2){
+          Article.selectByFolder({folder_id: item.item_id},function(res){
+            res.data.result.forEach(function(article){
+              article.content = decodeURIComponent(article.content);
+            });
+            item.obj = res.data.result;
+        });}
         $scope.currPageItems.push(item);
+        console.log($scope.currPageItems);
       })
     })
   }
-  const getIntType = function(stringType){ if(stringType === "article"){ return 1; } }
-  const readIntType = function(intType){ if(intType === 1){ return 'article'; } }
+  const getIntType = function(stringType){
+    if(stringType === "article"){ return 1; }
+    if(stringType === "folder"){ return 2; }
+  }
+  const readIntType = function(intType){
+    if(intType === 1){ return 'article'; }
+    if(intType === 2){ return 'folder'; }
+  }
 
   /* POP EDIT PAGE */
   $scope.openPopEditPage = function(page){
@@ -61,16 +76,27 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
     }
   }
 
+  const attachItem = function(selection){
+    $scope.onPage.push(selection);
+    Page.attachItem({
+      page_id:  $scope.currPage.id,
+      item_id: selection.target,
+      type: getIntType(selection.type),
+      order: $scope.currPageItems.length
+    }, function(res){ $scope.openPage($scope.currPage)})
+  }
+  $scope.getNumber = function(num){
+    let arr = []; let i = 0; while(i != num){
+      arr.push(i); i++; }
+    return arr;
+  }
+  const sSetup = Shared.setupSelect;
+
   /* POP SELECT WINDOW */
   $scope.openSelectArticle = function(){
-    new Shared.directiveElement('pop-select', Shared.setupSelect.selectArticle, function(selection){
-      $scope.onPage.push(selection);
-      Page.attachItem({
-        page_id:  $scope.currPage.id,
-        item_id: selection.target,
-        type: getIntType(selection.type),
-        order: $scope.currPageItems.length
-      }, function(res){ $scope.openPage($scope.currPage)})
-    }, $scope);
+    new Shared.directiveElement('pop-select', sSetup.selectArticle, attachItem, $scope);
+  }
+  $scope.openSelectFolder = function(){
+    new Shared.directiveElement('pop-select', sSetup.selectFolder, attachItem, $scope);
   }
 });

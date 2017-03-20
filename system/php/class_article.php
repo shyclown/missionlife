@@ -43,6 +43,24 @@ class Article
     $all = $this->db->query($sql_all_rows);
     return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
   }
+
+  public function select_by_page($data){
+    $sql = "SELECT SQL_CALC_FOUND_ROWS
+              p.page_id AS page_id,
+              p.order AS page_order,
+              a.*
+            FROM `ml_page_item` p
+            RIGHT JOIN `ml_article` a
+              ON p.item_id = a.id AND p.type = 1
+            WHERE p.page_id = ?
+            ORDER BY p.order";
+    $sql_all_rows = "SELECT FOUND_ROWS()";
+    $params = array('i',$data['page_id']);
+    $result = $this->db->query($sql, $params);
+    $all = $this->db->query($sql_all_rows);
+    return array('result' => $result, 'all_rows'=> $all[0]['FOUND_ROWS()']);
+  }
+
   public function select($data){
     $order = 'DESC';
     $sort_by = 'id';

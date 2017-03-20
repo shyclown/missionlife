@@ -8,7 +8,24 @@
   #popEditPage > .window{
     padding: 24px;
   }
-
+  button.pick.selected {
+    background-color: #FFF;
+    color: #09F;
+  }
+  button.pick.selected:hover {
+    background-color: #FFF;
+    color: #09F;
+  }
+  button.pick{
+    background-color: #FFF;
+    font-weight: bold;
+    color: #BDBDBD;
+  }
+  button.pick:hover{
+    background-color: #FFF;
+    font-weight: bold;
+    color: #9E9E9E;
+  }
 
 
 </style>
@@ -16,14 +33,17 @@
 
 <div id="popEditPage" class="blanket" ng-click="cancel()">
   <div  class="window shadow" ng-click="$event.stopPropagation();">
+    <div class="content">
     <input type="text" ng-model="page.name" placeholder="New Page Name">
-
-    <div ng-if="new">
-    <button ng-click="save()">save</button>
+      <div>
+      <button class="pick" ng-class="cssState(0)" ng-click="setState(0)">unused</button>
+      <button class="pick" ng-class="cssState(1)" ng-click="setState(1)">top</button>
+      <button class="pick" ng-class="cssState(2)" ng-click="setState(2)">side</button>
+      </div>
     </div>
-    <div ng-if="!new">
-      <button ng-click="delete()">DELETE</button>
-      <button ng-click="update()">UPDATE</button>
+    <div class="control">
+      <div ng-if="new"><button ng-click="save()">save</button></div>
+      <div ng-if="!new"><button ng-click="delete()">DELETE</button><button ng-click="update()">UPDATE</button></div>
     </div>
   </div><!-- end of window -->
 </div><!-- end of blanket -->

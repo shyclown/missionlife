@@ -124,10 +124,19 @@ function($http, Shared, Folder, Article, Form, FileService) {
             scope.selected.target = obj.id;
             scope.selected.name = obj.name;
             break;
+          case 'folder':
+            scope.selected.path = 'folder';
+            scope.selected.target = obj.id;
+            scope.selected.name = obj.name;
+          break;
           default:
         }
       }
       scope.submitFn = function(){
+        console.log(scope.setup.selectFolder);
+        if(scope.setup.selectFolder){
+          scope.call('folder', scope.currentFolder);
+        }
         if(!scope.selected){ alert('Nothing Was Selected'); }
         else{ oCallback(scope.selected); scope.cancel();}
       }

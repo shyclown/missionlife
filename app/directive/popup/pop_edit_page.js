@@ -6,14 +6,19 @@ function(Shared, Page) {
     templateUrl: '/missionlife/app/template/popup/pop_edit_page.html',
     link: function (scope, element, attrs)
     {
-      oEditPageWindow = Shared.openElement[attrs.editObj];
-      oPage = oEditPageWindow.item;
-      callbackFn = oEditPageWindow.callback;
+      const oEditPageWindow = Shared.openElement[attrs.editObj];
+      const oPage = oEditPageWindow.item;
+      const callbackFn = oEditPageWindow.callback;
+
       scope.new = false;
       scope.cancel = function(){ oEditPageWindow.close(); }
-      if(oPage){ scope.page = Object.assign({}, oPage); }
+      if(oPage){ scope.page = Object.assign({}, oPage); console.log(scope.page);}
       else{ scope.page = {}; scope.new = true; }
 
+
+      scope.setState = function(state){ scope.page.state = state;  }
+      scope.isState = function(state){ scope.page.state == state; }
+      scope.cssState = function(state){ return scope.page.state == state ? 'selected' : ''; }
 
       scope.update = function(){
         Page.update(scope.page, callbackFn );

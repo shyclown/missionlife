@@ -47,25 +47,37 @@
   background-color: #EEEEEE;
   margin-left: 200px;
   min-height: calc(100% - 64px) ;
-  padding: 24px;
-
-
 }
 #pageView{
   margin: 0 auto;
   max-width: 550px;
-  background-color: #FFF;
   min-height: 64px;
-  padding: 24px;
   margin-top: 24px;
-
-
+  padding: 8px;
 }
 #pageView img{
   width: 100%;
 }
 #pageView article{
-  border-bottom: 16px solid #EEEEEE;
+  margin-bottom: 24px;
+  margin-top: 8px;
+  background-color: #FFF;
+  padding: 24px;
+}
+
+.columns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.column{
+  flex:1;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+.column article{
+  margin: 8px;
 }
 </style>
 
@@ -82,13 +94,25 @@
 
 <div id="pagePreview" >
   <div ng-if="currPage != false">
-  <button ng-click="openSelectArticle()"<i class="fa fa-plus"></i> Add Item to Page</button>
-  <div id="pageView"class="shadow">
+  <button ng-click="openSelectArticle()"><i class="fa fa-plus"></i><i class="fa fa-file-text"></i> Add Article</button>
+  <button ng-click="openSelectFolder()"><i class="fa fa-plus"></i><i class="fa fa-folder"></i> Add Folder</button>
+  <div id="pageView">
     <div ng-repeat="item in currPageItems">
       <button ng-click="removeItem(item)"><i class="fa fa-minus"></i></button>
       <button ng-click="orderUp(item)"><i class="fa fa-arrow-up"></i></button>
       <button ng-click="orderDown(item)"><i class="fa fa-arrow-down"></i></button>
-      <article ng-if="item.type == 1"><h1>{{item.obj.header}}</h1><div ng-bind-html="item.obj.content"></div></article>
+      <article class="shadow" ng-if="item.type == 1"><h1>{{item.obj.header}}</h1><div ng-bind-html="item.obj.content"></div></article>
+
+      <div class="columns" ng-if="item.type == 2" >
+        <div class="column" ng-repeat="k in getNumber(columns)">
+          <div ng-repeat="article in item.obj" ng-if="$index % columns == 0 && item.obj.length > ($index+k)">
+              <article class="shadow">
+                <h1>{{item.obj[$index+k].header}}</h1>
+                <div ng-bind-html="item.obj[$index+k].content"></div>
+              </article>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   </div>
