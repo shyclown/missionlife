@@ -102,6 +102,7 @@ Editor.backspaceEvent = function (oSelection, oRoot)
           console.log('Different Roots');
           if(oNode == sourceRoot){ oNode = sourceRoot.firstChild; }
           let prevNode = oPrevText;
+          if(isOfTag(prevNode.parentNode,'a')){ prevNode = prevNode.parentNode; }
           while(oNode){
             let nextNode = oNode.nextSibling;
             if(isTextNode(oNode) && isTextNode(prevNode)){ prevNode.textContent += oNode.textContent; removeElement( oNode ); }

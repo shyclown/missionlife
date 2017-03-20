@@ -18,7 +18,10 @@ function( Shared, Page ) {
 
       scope.new = true;
       if(oLink){ scope.link = Object.assign({}, oLink), scope.new = false; }
-      else{ scope.link = { name: '', href: '', new: true } }
+      else{
+        let oSelection = Shared.fn.selectRange(Shared.storedRange);
+        scope.link = { name: oSelection.toString(), href: '', new: true }
+      }
 
       scope.cancel = function(){ oEditWebLinkWindow.close(); }
       scope.save = function(){

@@ -163,15 +163,24 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         link.setAttribute('ng-click', 'editWebLinkPop(true)');
         link.href = href;
         link.className = 'link';
-        link.contentEditable = false;
+        //link.contentEditable = false;
         link.innerHTML = name;
         return link;
       }
+      const createImage = function(image){
+        let src = '/missionlife/uploads/image/'+image.file_src;
+        let figure  = new Editor.imageFigure(src, image.file_name, scope.area.root).el;
+        return figure;
+      }
       const addLink = function(data){
         if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
-        if(data.new){
-          let link = $compile(createLink(data.name, data.href))(scope);
+        if(data.new || data.obj){
+
+          let link;
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
+          let oText = oSelection.toString();
+          if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
+          else{ link = $compile(createLink(data.name, data.href))(scope);}
           scope.area.insertAfterSelection(link[0]);
           if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
            newCaretPosition(oSelection, link[0].nextSibling, 0);
