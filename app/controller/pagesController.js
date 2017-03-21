@@ -63,7 +63,8 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
   $scope.orderUp = function(item){
 
     if(item.order == 0){ console.warn('item is on top of stack');; }
-    else{   item.obj.content ='';
+    else{   item.obj = [];
+      console.log(item);
       Page.orderUp(item, function(){ $scope.openPage($scope.currPage); });
     }
   }
@@ -71,7 +72,7 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
     console.log(item);
 
     if(item.order == $scope.currPageItems.length - 1){ console.warn('item is already at bottom of the stack'); }
-    else{   item.obj.content = '';
+    else{   item.obj = [];
       Page.orderDown(item, function(){ $scope.openPage($scope.currPage);});
     }
   }

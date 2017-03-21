@@ -69,12 +69,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow: hidden;
 }
 .column{
   flex:1;
   justify-content: space-between;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .column article{
   margin: 8px;
@@ -101,8 +103,12 @@
       <button ng-click="removeItem(item)"><i class="fa fa-minus"></i></button>
       <button ng-click="orderUp(item)"><i class="fa fa-arrow-up"></i></button>
       <button ng-click="orderDown(item)"><i class="fa fa-arrow-down"></i></button>
-      <article class="shadow" ng-if="item.type == 1"><h1>{{item.obj.header}}</h1><div ng-bind-html="item.obj.content"></div></article>
-
+      <!-- Single Article -->
+      <article class="shadow" ng-if="item.type == 1">
+        <h1>{{item.obj.header}}</h1>
+        <div ng-bind-html="item.obj.content"></div>
+      </article>
+      <!-- Folder Articles -->
       <div class="columns" ng-if="item.type == 2" >
         <div class="column" ng-repeat="k in getNumber(columns)">
           <div ng-repeat="article in item.obj" ng-if="$index % columns == 0 && item.obj.length > ($index+k)">
@@ -113,6 +119,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
   </div>
