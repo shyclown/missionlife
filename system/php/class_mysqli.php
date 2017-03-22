@@ -4,7 +4,7 @@
 mysqli_report(MYSQLI_REPORT_ALL);
 class Database{
   public $_mysqli;
-  private $error;
+  public $error;
   public function __construct(){
     mysqli_report(MYSQLI_REPORT_STRICT);
     try {
