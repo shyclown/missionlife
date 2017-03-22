@@ -173,6 +173,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         return figure;
       }
       const addLink = function(data){
+        console.log(data);
         if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
         if(data.new || data.obj){
 
@@ -203,13 +204,16 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       scope.selectFolderPop = openPopSelect('selectFolder', addLink);
       scope.selectImagePop = openPopSelect('selectImage', addLink);
 
-      let myScope = scope;
-
       scope.editWebLinkPop = function(item){
         event.preventDefault();
           if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
           else{ Shared.storedRange = Shared.fn.storeRange(); }
           new Shared.directiveElement('pop-edit-web-link', item, addLink, scope);
+      }
+
+      scope.selectPagePop = function(){
+        Shared.storedRange = Shared.fn.storeRange();
+        new Shared.directiveElement('pop-select-page', false, addLink, scope);
       }
 
     }// link
