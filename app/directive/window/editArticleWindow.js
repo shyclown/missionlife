@@ -180,8 +180,11 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           let link;
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
           let oText = oSelection.toString();
+          // based on type
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
-          else{ link = $compile(createLink(data.name, data.href))(scope);}
+          else if(data.type === 'page'){}
+          else{ link = $compile(createLink(data.name, data.href))(scope); }
+
           scope.area.insertAfterSelection(link[0]);
           if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
            newCaretPosition(oSelection, link[0].nextSibling, 0);
