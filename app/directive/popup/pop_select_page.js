@@ -20,7 +20,7 @@ function(Shared, Page) {
       scope.cssSelected = function(page){ return scope.selectedPage == page ? 'selected' : ''; }
       scope.cancel = function(){ oEditPageWindow.close(); }
       scope.select = function(){
-        if(scope.selectedPage){ scope.selectedPage.type = 'page'}
+        if(scope.selectedPage){ scope.selectedPage.type = 'page'; }
         oCallback(scope.selectedPage);
         scope.cancel();
       }
