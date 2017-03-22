@@ -92,7 +92,8 @@ class Account
     $sql = "SELECT * FROM `ml_account` WHERE ? = ?";
     $params = array('ss', $column, $value);
     $result = $this->db->query($sql, $params);
-    return $result === NULL;
+    if($result){ return false; }
+    return true;
   }
 
   public function list_all()
