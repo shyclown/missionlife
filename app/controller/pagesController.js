@@ -37,6 +37,7 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
         });}
         if(item.type === 3){
           Form.select_by_id({id: item.item_id},function(res){
+              console.log(res.data[0]);
               item.obj = res.data[0];
               item.obj.data = JSON.parse(item.obj.data);
         });}

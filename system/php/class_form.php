@@ -21,9 +21,12 @@ class Form
     return $this->db->query($sql);
   }
   public function select_by_id($data){
+    //var_dump($data);
     $sql = "SELECT * FROM `ml_form` WHERE id = ?";
     $params = array('i',$data['id']);
-    return $this->db->query($sql, $params);
+    $res = $this->db->query($sql, $params);
+  //  var_dump($res);
+    return $res;
   }
   public function insert($data){
     $sql = "INSERT INTO `ml_form` (`id`, `name`, `email`, `data`, `state`, `date_created`, `date_edited`)
@@ -40,7 +43,12 @@ class Form
   public function delete($data){
     $sql = "DELETE FROM `ml_form` WHERE `ml_form`.`id` = ?";
     $params = array('i',$data['id']);
-    return $this->db->query($sql,$params);
+    if($this->db->query($sql, $params)){
+      // REMOVE FROM PAGE IF USED
+      $sql_remove_fromPage = "DELETE FROM `ml_page` WHERE `item_id` = ? AND `type` = ?";
+      $params_remove_fromPage = array('i', $data['id']);
+      return $this->db->query($sql_removeFromPage, $params_removeFromPage);
+    }
   }
   public function add_to_folder($data){
     // delete old value after

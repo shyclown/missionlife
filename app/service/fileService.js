@@ -5,11 +5,38 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
   const self = this;
   this.selected = [];
 
-  this.uploadFile = function(){
+
+  // returns array of uploaded IDs
+  this.uploadFilesToFolder = function(files, folder, callback, progressItems){
+    const all = files.length;
+    const uploaded = [];
+    const data = function(res){ return { file_id: res.data.file_id, folder_id: folder.id } }
+    let completed = 0;
+    for (var i = 0; i < all; i++) {
+      let file = [files[i]];
+      uploadDropped( file,
+        function(data){ // PROGRESS
+          console.log(data);
+        },
+        function(response){ // AFTER
+        completed++; // some files take longer to load
+        progressItems(completed);
+        let update = completed == all;
+        uploaded.push(response.data);
+        self.attachToFolder( data(response), function(){
+          if(update){ callback(uploaded); }
+        });
+      });// uploadDropped
+    }
+  }
+  this.uploadFile = function(folder)
+  {
+    console.log('file upload');
+    if(!folder){ folder = Shared.explorer.current_folder }
     const files = event.dataTransfer.files;
     const all = files.length;
     const oData = function(response){
-      return { file_id: response.data.file_id, folder_id: Shared.explorer.current_folder.id }
+      return { file_id: response.data.file_id, folder_id: folder.id }
     }
     let completed = 0;
     for (let i = 0; i < all; i++){

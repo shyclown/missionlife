@@ -15,7 +15,7 @@ app.config(function($routeProvider, $locationProvider){
   })
   .when('/settings/', {
       templateUrl: 'temp/settings.html',
-      controller: 'viewController'
+      controller: 'settingsController'
   })
   .when('/home/', {
       templateUrl: 'temp/home.html',
