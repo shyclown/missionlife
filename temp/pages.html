@@ -64,6 +64,45 @@
   background-color: #FFF;
   padding: 24px;
 }
+#pageView article h1{
+  font-weight: 500;
+  font-size: 1.70em;
+}
+#pageView article h2{
+  font-weight: 500;
+  font-size: 1.20em;
+}
+#pageView article p{
+  font-weight: 300;
+  font-size: 1em;
+}
+#pageView article.form  label{
+  margin: 4px 0px;
+  display: block;
+}
+#pageView article.form  input{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px;
+  display: block;
+}
+#pageView article.form  textarea{
+  font-family: 'Source Sans Pro', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px;
+  display: block;
+  resize: vertical;
+}
+#pageView article.form .control{
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row-reverse;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+#pageView article.form .control button{
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 .columns{
   display: flex;
@@ -96,8 +135,11 @@
 
 <div id="pagePreview" >
   <div ng-if="currPage != false">
-  <button ng-click="openSelectArticle()"><i class="fa fa-plus"></i><i class="fa fa-file-text"></i> Add Article</button>
-  <button ng-click="openSelectFolder()"><i class="fa fa-plus"></i><i class="fa fa-folder"></i> Add Folder</button>
+
+  <button ng-click="openSelectArticle()"><i class="fa fa-plus"></i> <i class="fa fa-file-text"></i> Add Article</button>
+  <button ng-click="openSelectFolder()"><i class="fa fa-plus"></i> <i class="fa fa-folder"></i> Add Folder</button>
+  <button ng-click="openSelectForm()"><i class="fa fa-plus"></i> <i class="fa fa-list"></i> Add Form</button>
+
   <div id="pageView">
     <div ng-repeat="item in currPageItems">
       <button ng-click="removeItem(item)"><i class="fa fa-minus"></i></button>
@@ -115,10 +157,23 @@
               <article class="shadow">
                 <h1>{{item.obj[$index+k].header}}</h1>
                 <div ng-bind-html="item.obj[$index+k].content"></div>
+
               </article>
           </div>
         </div>
       </div>
+      <!-- Form -->
+      <article class="form shadow" ng-if="item.type == 3">
+        <h1>{{item.obj.name}}</h1>
+        <div ng-repeat="formInput in item.obj.data">
+          <label>{{formInput.name}}</label>
+          <input ng-if="formInput.type != 'all'" type="{{formInput.type}}"></input>
+          <textarea ng-if="formInput.type == 'all'"></textarea>
+        </div>
+        <div class="control">
+        <button> SUBMIT </button>
+        <div>
+      </article>
 
     </div>
   </div>

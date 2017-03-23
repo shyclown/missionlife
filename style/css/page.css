@@ -5,6 +5,9 @@ html, body{
 body{
   background-color: rgb(240, 242, 241);
   font-family: 'Source Sans Pro', sans-serif;
+  font-smooth: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #topnav h1{

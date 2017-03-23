@@ -1,4 +1,4 @@
-app.controller('pagesController',function($scope, $sanitize, Shared, Page, Article){
+app.controller('pagesController',function($scope, $sanitize, Shared, Page, Article, Form){
 
   $scope.php = '';
   $scope.pages = [];
@@ -35,18 +35,24 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
             });
             item.obj = res.data.result;
         });}
+        if(item.type === 3){
+          Form.select_by_id({id: item.item_id},function(res){
+              item.obj = res.data[0];
+              item.obj.data = JSON.parse(item.obj.data);
+        });}
         $scope.currPageItems.push(item);
-        console.log($scope.currPageItems);
       })
     })
   }
   const getIntType = function(stringType){
     if(stringType === "article"){ return 1; }
     if(stringType === "folder"){ return 2; }
+    if(stringType === "form"){ return 3; }
   }
   const readIntType = function(intType){
     if(intType === 1){ return 'article'; }
     if(intType === 2){ return 'folder'; }
+    if(intType === 3){ return 'form'; }
   }
 
   /* POP EDIT PAGE */
@@ -91,13 +97,20 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
       arr.push(i); i++; }
     return arr;
   }
-  const sSetup = Shared.setupSelect;
 
   /* POP SELECT WINDOW */
+  const sSetup = Shared.setupSelect;
+
   $scope.openSelectArticle = function(){
-    new Shared.directiveElement('pop-select', sSetup.selectArticle, attachItem, $scope);
+    new Shared.directiveElement(
+      'pop-select', sSetup.selectArticle, attachItem, $scope);
   }
   $scope.openSelectFolder = function(){
-    new Shared.directiveElement('pop-select', sSetup.selectFolder, attachItem, $scope);
+    new Shared.directiveElement(
+      'pop-select', sSetup.selectFolder, attachItem, $scope);
+  }
+  $scope.openSelectForm = function(){
+    new Shared.directiveElement(
+      'pop-select', sSetup.selectForm, attachItem, $scope);
   }
 });

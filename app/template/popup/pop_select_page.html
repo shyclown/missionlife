@@ -5,7 +5,12 @@
 
     <div class="content">
       <div class="pick page">
-        <button ng-class="cssSelected(page)" ng-repeat="page in pages" ng-click="selectPage(page)">{{page.name}}</button>
+        <ul>
+          <li ng-repeat="page in pages">
+            <button ng-class="cssSelected(page)"  ng-click="selectPage(page)">{{page.name}}</button>
+          </li>
+        </ul>
+
       </div>
     </div>
 

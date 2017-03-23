@@ -24,25 +24,13 @@
       <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
       <button class="delete" ng-click="saveChanges()"><i class="fa fa-trash-o"></i> Delete </button>
       <!-- create buttons -->
-      <div class="box">
-        <div class="flexBox">
-          <button ng-click="show('all')" class="btn" ng-class="(isOpen=='all')?'selected':''"><i class="fa fa-circle-o"></i></button>
-          <button ng-click="selectFilePop()" class="btn" ng-class="(isOpen=='files')?'selected':''"><i class="fa fa-file"></i></button>
-          <button ng-click="selectArticlePop()" class="btn" ng-class="(isOpen=='articles')?'selected':''"><i class="fa fa-file-text-o"></i ></button>
-          <button ng-click="selectFormPop()" class="btn" ng-class="(isOpen=='forms')?'selected':''"><i class="fa fa-list"></i></button>
-          <button ng-click="selectFolderPop()" class="btn" ng-class="(isOpen=='folders')?'selected':''"><i class="fa fa-folder"></i></button>
-          <button ng-click="selectImagePop()" class="btn" ng-class="(isOpen=='images')?'selected':''"><i class="fa fa-image"></i></button>
-          <button ng-click="editWebLinkPop()" class="btn" ng-class="(isOpen=='images')?'selected':''"><i class="fa fa-link"></i></button>
-        </div>
-        <button ng-click="selectPagePop()" class="btn" ng-class="(isOpen=='images')?'selected':''"><i class="fa fa-link"></i></button>
-      <!-- be able to search -->
-      </div>
-        <div class="box">
-          Insert Image:
-          <div class="flexBox">
-            <div>Image</div>
-          </div>
-        </div>
+      <ul>
+        <li><button ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>
+        <li><button ng-click="selectArticlePop()"><i class="fa fa-file-text-o"></i > Article</button></li>
+        <li><button ng-click="selectImagePop()"><i class="fa fa-image"></i> Image</button></li>
+        <li><button ng-click="editWebLinkPop()"><i class="fa fa-link"></i> Web Link</button></li>
+        <li><button ng-click="selectPagePop()"><i class="fa fa-sitemap"></i> Page Link</button></li>
+      </ul>
       </form>
     </div>
   </div class="content">

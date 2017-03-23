@@ -20,7 +20,7 @@ class Form
     $sql = "SELECT * FROM `ml_form` ORDER BY  `date_created` ASC";
     return $this->db->query($sql);
   }
-  public function select_id($data){
+  public function select_by_id($data){
     $sql = "SELECT * FROM `ml_form` WHERE id = ?";
     $params = array('i',$data['id']);
     return $this->db->query($sql, $params);
