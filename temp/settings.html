@@ -1,27 +1,27 @@
-<card>
-  <card-name>Page Setup</card-name>
-  <card-content>
-
-<style>.dropImage{
+<style>
+.dropImage{
   padding: 24px;
   background-color: #EEEEEE;
-  border-radius: 16px;
-  }
-  #uploadLogo{
+  border-radius: 8px;
+}
+#uploadLogo{
     display: none;
-  }
-  .dropImage label{
+}
+.dropImage label{
     background-color: #E0E0E0;
     margin-right: 8px;
     padding: 4px 8px;
     border-radius: 8px;
-  }
-
+}
 </style>
-  <div class="dropImage" is-drop-area="dropFunction">
-  <label for="uploadLogo" class="shadow"><i class="fa fa-upload"></i> Upload </label> or Drop new File
-  <input id="uploadLogo" type="file" custom-on-change="pickFile" />
-  </div>
+
+<card>
+  <card-name>Page Setup</card-name>
+  <card-content>
+    <div class="dropImage" is-drop-area="dropFunction">
+      <label for="uploadLogo" class="shadow"><i class="fa fa-upload"></i> Upload </label> or Drop new File
+      <input id="uploadLogo" type="file" custom-on-change="pickFile" />
+    </div>
       <label for="pagename">Page Name:</label>
       <input name="pagename" ng-model="page.page_name">
       <label for="motto">Motto:</label>
@@ -30,7 +30,4 @@
   <card-control>
       <input type='button' value="Submit" ng-click="changePageData()">
   </card-control>
-
-
-
 </card>

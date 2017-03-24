@@ -34,8 +34,8 @@ class Article
   /* Select articles IN FOLDER */
   public function select_by_folder($data){
     $sql = "SELECT SQL_CALC_FOUND_ROWS a.* FROM `ml_article` a
-            INNER JOIN `ml_article_folder` af ON a.id = af.article_id
-            WHERE af.folder_id = ?
+            INNER JOIN `ml_folder_item` af ON a.id = af.item_id
+            WHERE af.folder_id = ? AND af.type = 1
             ORDER BY id DESC";
     $sql_all_rows = "SELECT FOUND_ROWS()";
     $params = array('i',$data['folder_id']);
@@ -74,8 +74,8 @@ class Article
       //if($data['sort_by'] == 'size'){ $sort_by = 'file_size'; }
     }
     $sql = "SELECT SQL_CALC_FOUND_ROWS a.* FROM `ml_article` a
-            INNER JOIN `ml_article_folder` af ON a.id = af.article_id
-            WHERE af.folder_id = ?
+            INNER JOIN `ml_folder_item` af ON a.id = af.item_id
+            WHERE af.folder_id = ? AND type = 1
             ORDER BY ".$sort_by." ".$order." LIMIT ? , ?";
     $sql_all_rows = "SELECT FOUND_ROWS()";
     $params = array('iii',$data['folder_id'],$data['limit_min'],$data['limit_max']);
@@ -98,8 +98,8 @@ class Article
     return $article_id;
   }
   public function add_to_folder($article_id, $folder_id){
-    $sql = "INSERT INTO `ml_article_folder` (`id`,`article_id`, `folder_id`)
-            VALUES (NULL, ?, ?)";
+    $sql = "INSERT INTO `ml_folder_item` (`id`,`item_id`, `folder_id`, `type`)
+            VALUES (NULL, ?, ?, 1)";
     $params = array( 'ii', $article_id, $folder_id );
     $this->db->query($sql, $params);
   }
@@ -114,8 +114,8 @@ class Article
                     WHERE `ml_article`.`id` = ?";
     $sql_article_file = "DELETE FROM `ml_article_file`
                           WHERE `ml_article_file`.`article_id` = ?";
-    $sql_article_folder = "DELETE FROM `ml_article_folder`
-                          WHERE `ml_article_folder`.`article_id` = ?";
+    $sql_article_folder = "DELETE FROM `ml_folder_item`
+                          WHERE `item_id` = ? AND `type` = 1";
     $article = $this->db->query($sql_article,$params);
     $file = $this->db->query($sql_article_file,$params);
     $folder = $this->db->query($sql_article_folder,$params);

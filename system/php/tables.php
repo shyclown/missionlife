@@ -10,23 +10,20 @@
       $this->db = new Database;
 
       $this->create_table_account();
+
       $this->create_table_article();
       $this->create_table_file();
       $this->create_table_article_file();
       $this->create_table_garant_file();
-
-      $this->create_table_folder();
-      $this->create_table_article_folder();
       $this->create_table_form();
       $this->create_table_garant();
       // folder -> smth
-      $this->create_table_folder_file();
-      $this->create_table_folder_form();
-      $this->create_table_folder_garant();
 
       // Design
       $this->create_table_page();
+      $this->create_table_folder();
       $this->create_table_page_item();
+      $this->create_table_folder_item();
     }
 
     private function create_table_account(){
@@ -93,38 +90,7 @@
               DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
       $this->db->query($sql);
     }
-    private function create_table_folder_file(){
-      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_file` (
-              `id` int(8) NOT NULL AUTO_INCREMENT,
-              `folder_id`  int(8) NOT NULL,
-              `file_id` int(8) NOT NULL ,
-              PRIMARY KEY (`id`)
-              ) ENGINE=InnoDB
-              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-      $this->db->query($sql);
-    }
 
-    private function create_table_folder_form(){
-      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_form` (
-              `id` int(8) NOT NULL AUTO_INCREMENT,
-              `folder_id`  int(8) NOT NULL,
-              `form_id` int(8) NOT NULL ,
-              PRIMARY KEY (`id`)
-              ) ENGINE=InnoDB
-              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-      $this->db->query($sql);
-    }
-
-    private function create_table_folder_garant(){
-      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_garant` (
-              `id` int(8) NOT NULL AUTO_INCREMENT,
-              `folder_id`  int(8) NOT NULL,
-              `garant_id` int(8) NOT NULL ,
-              PRIMARY KEY (`id`)
-              ) ENGINE=InnoDB
-              DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-      $this->db->query($sql);
-    }
     private function create_table_page(){
       $sql = "CREATE TABLE IF NOT EXISTS `ml_page` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
@@ -144,13 +110,14 @@
               `id` int(8) NOT NULL AUTO_INCREMENT,
               `page_id`  int(8) NOT NULL,
               `item_id` int(8) NOT NULL ,
-              `type` int(1) NOT NULL ,
+              `type` int(2) NOT NULL ,
               `order` int(2) NOT NULL ,
               PRIMARY KEY (`id`)
               ) ENGINE=InnoDB
               DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
       $this->db->query($sql);
     }
+
     private function create_table_folder(){
       $sql = "CREATE TABLE IF NOT EXISTS `ml_folder` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
@@ -165,15 +132,18 @@
             DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
       $this->db->_mysqli->query($sql);
     }
-    private function create_table_article_folder(){
-      $sql = "CREATE TABLE IF NOT EXISTS `ml_article_folder` (
+
+    private function create_table_folder_item(){
+      $sql = "CREATE TABLE IF NOT EXISTS `ml_folder_item` (
               `id` int(8) NOT NULL AUTO_INCREMENT,
-              `article_id`  int(8) NOT NULL,
-              `folder_id` int(8) NOT NULL ,
+              `folder_id`  int(8) NOT NULL,
+              `item_id` int(8) NOT NULL ,
+              `type` int(2) NOT NULL ,
+
               PRIMARY KEY (`id`)
               ) ENGINE=InnoDB
               DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
-      $this->db->_mysqli->query($sql);
+      $this->db->query($sql);
     }
 
     private function create_table_form(){

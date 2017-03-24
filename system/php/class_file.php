@@ -302,8 +302,8 @@ class File
     return $this->db->query($sql, $params);
   }
   public function attach_to_folder($data){
-    $sql = "INSERT INTO `ml_folder_file` (`id`, `folder_id`, `file_id`)
-            VALUES (NULL, ?, ?)";
+    $sql = "INSERT INTO `ml_folder_item` (`id`, `folder_id`, `file_id`, `type`)
+            VALUES (NULL, ?, ?, 4)";
     $params = array( 'ii', $data['folder_id'], $data['file_id'] );
     return $this->db->query($sql, $params);
   }
@@ -323,7 +323,17 @@ class File
     return $this->db->query($sql,$params);
   }
 //-----------------------------------------------------
-// Update
+// Move
+//-----------------------------------------------------
+
+public function move_to_folder($data){
+  if($this->remove_from_folders($data)){
+    return $this->attach_to_folder($data);
+  }
+}
+
+//-----------------------------------------------------
+// Remove one
 //-----------------------------------------------------
   public function remove_from_garant($data){
     $sql = "DELETE FROM `ml_garant_file`
@@ -340,11 +350,40 @@ class File
     return $this->db->query($sql,$params);
   }
   public function remove_from_folder($data){
-    $sql = "DELETE FROM `ml_folder_file`
-            WHERE `ml_folder_file`.`file_id` = ?
-            AND `ml_folder_file`.`folder_id` = ?";
+    $sql = "DELETE FROM `ml_folder_item`
+            WHERE `item_id` = ?
+            AND `folder_id` = ?
+            AND `type` = 4";
     $params = array('ii', $data['file_id'], $data['folder_id']);
     return $this->db->query($sql,$params);
+  }
+
+
+  //-----------------------------------------------------
+  // Remove all
+  //-----------------------------------------------------
+  public function remove_from_folders($data){
+    $sql = "DELETE FROM `ml_folder_item` WHERE `ml_folder_file`.`file_id` = ? AND `type` = 4";
+    $params = array('i', $data['file_id']);
+    return $this->db->query($sql,$params);
+  }
+  public function remove_from_garants($data){
+    $sql_garant = "DELETE FROM `ml_garant_file` WHERE `ml_garant_file`.`file_id` = ?";
+    $params_garant = array('i', $data['id']);
+    return $this->db->query($sql_garant,$params_garant);
+  }
+  public function remove_from_articles($data){
+    $sql_article = "DELETE FROM `ml_article_file` WHERE `ml_article_file`.`file_id` = ?";
+    $params_article = array('i', $data['id']);
+    return $this->db->query($sql_article,$params_article);
+  }
+  //-----------------------------------------------------
+  // DELETE
+  //-----------------------------------------------------
+  private function remove_file($data){
+    $sql_file = "DELETE FROM `ml_file` WHERE `id` = ?";
+    $params_file = array('i', $data['id']);
+    return $this->db->query($sql_file,$params_file);
   }
 
   public function delete($data){
@@ -356,24 +395,17 @@ class File
       else{
         unlink($this->root.'/uploads/'.$data['file_name']);
       }
-      /* Remove form File Database */
-      $sql_file = "DELETE FROM `ml_file` WHERE `id` = ?";
-      $params_file = array('i', $data['id']);
-      $this->db->query($sql_file,$params_file);
-      /* Remove form File - Garant Database */
-      $sql_garant = "DELETE FROM `ml_garant_file` WHERE `ml_article_file`.`file_id` = ?";
-      $params_garant = array('i', $data['id']);
-      $this->db->query($sql_garant,$params_garant);
-      /* Remove form File - Article Database */
-      $sql_article = "DELETE FROM `ml_garant_file` WHERE `ml_article_file`.`file_id` = ?";
-      $params_article = array('i', $data['id']);
-      $this->db->query($sql_article,$params_article);
+      if($this->remove_file($data)){
+        $this->remove_from_folders($data);
+        $this->remove_from_articles($data);
+        $this->remove_from_garants($data);
+      }
       return true;
   }
 //-----------------------------------------------------
 // Functions
 //-----------------------------------------------------
-  public function arrayFiles($files){
+  private function arrayFiles($files){
       $file_ary = array();
       $file_count = count($files['files']['name']);
       $file_keys = array_keys($files['files']);
@@ -384,19 +416,14 @@ class File
       }
       return $file_ary;
   }
-  public function is_type_of($file){
+  private function is_type_of($file){
     $finfo = new finfo(FILEINFO_MIME_TYPE);
-    if (false === $ext = array_search(
-        $finfo->file($file['tmp_name']),
-        array(
-            'jpg' => 'image/jpeg',
-            'png' => 'image/png',
-            'gif' => 'image/gif',
-        ),
-        true
-    )) {
-        throw new RuntimeException('Invalid file format.');
-    }
+    if( false === $ext = array_search(
+      $finfo->file($file['tmp_name']),
+      array('jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif'), true))
+      {
+      throw new RuntimeException('Invalid file format.');
+      }
   }
 }
 ?>

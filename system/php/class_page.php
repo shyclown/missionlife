@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * 1 - article , 2 - folder , 3 - form , 4 - file , 5 - garant
  */
 class Page
 {

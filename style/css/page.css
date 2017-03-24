@@ -9,7 +9,37 @@ body{
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+#menuLeft{
+  position: fixed;
+  height: calc(100% - 64px);
+  overflow-y: scroll;
+  z-index: 5;
+  top: 64px;
+  width: 240px;
+  background-color: #999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+ul{
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+ul li > a{
+  display: block;
+  padding: 8px 16px;
+  background-color: #FFF;
+  border-bottom: 1px solid #E0E0E0;
+  text-decoration: none;
+  color: #666;
+}
+ul li > a{
+  display: block;
+  padding: 8px 16px;
+  background-color: #FFF;
+  border-bottom: 1px solid #E0E0E0;
+}
 #topnav h1{
   display: block;
   width: 120px;

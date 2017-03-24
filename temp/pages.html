@@ -103,7 +103,6 @@
 #pageView article.form .control button{
   font-family: 'Source Sans Pro', sans-serif;
 }
-
 .columns{
   display: flex;
   flex-direction: row;
@@ -140,42 +139,40 @@
   <button ng-click="openSelectFolder()"><i class="fa fa-plus"></i> <i class="fa fa-folder"></i> Add Folder</button>
   <button ng-click="openSelectForm()"><i class="fa fa-plus"></i> <i class="fa fa-list"></i> Add Form</button>
 
-  <div id="pageView">
-    <div ng-repeat="item in currPageItems">
-      <button ng-click="removeItem(item)"><i class="fa fa-minus"></i></button>
-      <button ng-click="orderUp(item)"><i class="fa fa-arrow-up"></i></button>
-      <button ng-click="orderDown(item)"><i class="fa fa-arrow-down"></i></button>
-      <!-- Single Article -->
-      <article class="shadow" ng-if="item.type == 1">
-        <h1>{{item.obj.header}}</h1>
-        <div ng-bind-html="item.obj.content"></div>
-      </article>
-      <!-- Folder Articles -->
-      <div class="columns" ng-if="item.type == 2" >
-        <div class="column" ng-repeat="k in getNumber(columns)">
-          <div ng-repeat="article in item.obj" ng-if="$index % columns == 0 && item.obj.length > ($index+k)">
-              <article class="shadow">
-                <h1>{{item.obj[$index+k].header}}</h1>
-                <div ng-bind-html="item.obj[$index+k].content"></div>
-
-              </article>
+    <div id="pageView">
+      <div ng-repeat="item in currPageItems">
+        <button ng-click="removeItem(item)"><i class="fa fa-minus"></i></button>
+        <button ng-click="orderUp(item)"><i class="fa fa-arrow-up"></i></button>
+        <button ng-click="orderDown(item)"><i class="fa fa-arrow-down"></i></button>
+        <!-- Single Article -->
+        <article class="shadow" ng-if="item.type == 1">
+          <h1>{{item.obj.header}}</h1>
+          <div ng-bind-html="item.obj.content"></div>
+        </article>
+        <!-- Folder Articles -->
+        <div class="columns" ng-if="item.type == 2" >
+          <div class="column" ng-repeat="k in getNumber(columns)">
+            <div ng-repeat="article in item.obj" ng-if="$index % columns == 0 && item.obj.length > ($index+k)">
+                <article class="shadow">
+                  <h1>{{item.obj[$index+k].header}}</h1>
+                  <div ng-bind-html="item.obj[$index+k].content"></div>
+                </article>
+            </div>
           </div>
         </div>
+        <!-- Form -->
+        <article class="form shadow" ng-if="item.type == 3">
+          <h1>{{item.obj.name}}</h1>
+          <div ng-repeat="formInput in item.obj.data">
+            <label>{{formInput.name}}</label>
+            <input ng-if="formInput.type != 'all'" type="{{formInput.type}}"></input>
+            <textarea ng-if="formInput.type == 'all'"></textarea>
+          </div>
+          <div class="control">
+`           <button> SUBMIT </button>`
+          </div>
+        </article>
       </div>
-      <!-- Form -->
-      <article class="form shadow" ng-if="item.type == 3">
-        <h1>{{item.obj.name}}</h1>
-        <div ng-repeat="formInput in item.obj.data">
-          <label>{{formInput.name}}</label>
-          <input ng-if="formInput.type != 'all'" type="{{formInput.type}}"></input>
-          <textarea ng-if="formInput.type == 'all'"></textarea>
-        </div>
-        <div class="control">
-        <button> SUBMIT </button>
-        <div>
-      </article>
-
     </div>
-  </div>
   </div>
 </div>

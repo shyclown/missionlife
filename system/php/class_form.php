@@ -52,15 +52,16 @@ class Form
   }
   public function add_to_folder($data){
     // delete old value after
-    $sql = "INSERT INTO `ml_folder_form` (`id`,`folder_id`, `form_id`)
-            VALUES (NULL, ?, ?)";
+    $sql = "INSERT INTO `ml_folder_item` (`id`,`folder_id`, `item_id`, `type`)
+            VALUES (NULL, ?, ?, 3)";
     $params = array( 'ii', $data['folder_id'], $data['form_id'] );
     return $this->db->query($sql, $params);
   }
+
   public function select_by_folder($data){
     $sql = "SELECT SQL_CALC_FOUND_ROWS f.* FROM `ml_form` f
-            INNER JOIN `ml_folder_form` ff ON f.id = ff.form_id
-            WHERE ff.folder_id = ?
+            INNER JOIN `ml_folder_item` ff ON f.id = ff.item_id
+            WHERE ff.folder_id = ? AND ff.type = 3
             ORDER BY id DESC";
     $sql_all_rows = "SELECT FOUND_ROWS()";
     $params = array('i',$data['folder_id']);

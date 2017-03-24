@@ -46,6 +46,17 @@ class Folder
     return $this->db->query($sql,$params);
   }
 
+  public function move_folder($data){
+    $sql = "UPDATE `ml_folder` SET `parent`= ? WHERE `id`= ?";
+    $params = array('ii',$data['target_id'],$data['folder_id']);
+  }
+  public function move_folder_items($data){
+    $sql_article = "UPDATE `ml_article_folder` SET `folder_id`= ? WHERE `folder_id`= ?";
+    $sql_form = "UPDATE `ml_form_folder` SET `folder_id`= ? WHERE `folder_id`= ?";
+    $sql_file = "UPDATE `ml_file_folder` SET `folder_id`= ? WHERE `folder_id`= ?";
+  }
+
+
   public function removeFromParents($data){
     $sql_parent = "UPDATE `ml_folder` SET
     `parent`= NULL, `date_edited`=CURRENT_TIMESTAMP
