@@ -20,8 +20,8 @@ class Page
   }
   public function insert($data){
     $sql = "INSERT INTO `ml_page` (`id`, `name`, `order`, `parent`, `state`, `date_created`, `date_edited`)
-            VALUES (NULL, ?, 0, NULL, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-    $params = array( 's', $data['name'] );
+            VALUES (NULL, ?, 0, NULL, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+    $params = array( 'si', $data['name'], $data['state']);
     return $this->db->query($sql, $params);
   }
   public function update($data){

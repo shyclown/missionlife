@@ -13,12 +13,18 @@
     padding: 4px 8px;
     border-radius: 8px;
 }
+.dropImage img{
+  width: 100%;
+  margin-bottom: 16px;
+}
 </style>
 
 <card>
   <card-name>Page Setup</card-name>
   <card-content>
+
     <div class="dropImage" is-drop-area="dropFunction">
+      <img src="/missionlife/uploads/image/{{settings.data.logo}}"/>
       <label for="uploadLogo" class="shadow"><i class="fa fa-upload"></i> Upload </label> or Drop new File
       <input id="uploadLogo" type="file" custom-on-change="pickFile" />
     </div>

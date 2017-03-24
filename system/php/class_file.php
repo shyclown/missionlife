@@ -204,8 +204,8 @@ class File
   public function select_by_folder($data){
     $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM  `ml_file` f
-            INNER JOIN `ml_folder_file` af ON af.file_id = f.id
-            WHERE `folder_id` = ?
+            INNER JOIN `ml_folder_item` af ON af.item_id = f.id
+            WHERE `folder_id` = ? AND `type` = 4
             ORDER BY f.id DESC ";
     $sql_all_rows = "SELECT FOUND_ROWS()";
     $params = array('i', $data['folder_id']);

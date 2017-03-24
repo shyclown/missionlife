@@ -1,4 +1,4 @@
-app.controller('pagesController',function($scope, $sanitize, Shared, Page, Article, Form){
+app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page, Article, Form){
 
   $scope.php = '';
   $scope.pages = [];
@@ -26,7 +26,7 @@ app.controller('pagesController',function($scope, $sanitize, Shared, Page, Artic
         if(item.type === 1){
           Article.select_by_id({id: item.item_id},function(res){
             item.obj = res.data[0];
-            item.obj.content = decodeURIComponent(item.obj.content);
+            item.obj.content = $sce.trustAsHtml(decodeURIComponent(item.obj.content));
         });}
         if(item.type === 2){
           Article.selectByFolder({folder_id: item.item_id},function(res){

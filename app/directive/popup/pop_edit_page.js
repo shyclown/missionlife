@@ -13,7 +13,7 @@ function(Shared, Page) {
       scope.new = false;
       scope.cancel = function(){ oEditPageWindow.close(); }
       if(oPage){ scope.page = Object.assign({}, oPage); console.log(scope.page);}
-      else{ scope.page = {}; scope.new = true; }
+      else{ scope.page = { state: 0 }; scope.new = true; }
 
 
       scope.setState = function(state){ scope.page.state = state;  }

@@ -167,13 +167,36 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         link.innerHTML = name;
         return link;
       }
+      const createYoutubeEmbedLink = function(name, href){
+        let figure = document.createElement('figure');
+        let frame = document.createElement('iframe');
+        let videoID = href.split('=')[1];
+        frame.src = "https://www.youtube.com/embed/"+videoID;
+        figure.appendChild(frame);
+        figure.contentEditable = false;
+        return figure;
+      }
       const createImage = function(image){
         let src = '/missionlife/uploads/image/'+image.file_src;
         let figure  = new Editor.imageFigure(src, image.file_name, scope.area.root).el;
         return figure;
       }
+      const editYoutubeVideo = function(data){
+        let link;
+        let oSelection = Shared.fn.selectRange(Shared.storedRange);
+        let oText = oSelection.toString();
+        let editorRootParent = getParentInRoot(oSelection.focusNode, scope.area.root);
+        console.log(editorRootParent);
+
+        let iframe = createYoutubeEmbedLink(data.name, data.href);
+        insertAfter(iframe, editorRootParent);
+        //scope.area.insertAfterSelection(iframe);
+        if(iframe.nextSibling){
+          let txt = document.createTextNode(' '); insertAfter(txt,iframe);
+        }
+        newCaretPosition(oSelection, iframe.nextSibling, 0);
+      }
       const addLink = function(data){
-        console.log(data);
         if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
         if(data.new || data.obj){
 
@@ -183,10 +206,11 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
 
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
           else{ link = $compile(createLink(data.name, data.href))(scope); }
-
           scope.area.insertAfterSelection(link[0]);
-          if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
-           newCaretPosition(oSelection, link[0].nextSibling, 0);
+          if(!link[0].nextSibling){
+            let txt = document.createTextNode(' '); insertAfter(txt,link[0]);
+          }
+          newCaretPosition(oSelection, link[0].nextSibling, 0);
         }else{
           storedItem.innerHTML = data.name;
           storedItem.href = data.href;
@@ -211,6 +235,12 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
           else{ Shared.storedRange = Shared.fn.storeRange(); }
           new Shared.directiveElement('pop-edit-web-link', item, addLink, scope);
+      }
+      scope.editYoutubeLinkPop = function(item){
+        event.preventDefault();
+          if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
+          else{ Shared.storedRange = Shared.fn.storeRange(); }
+          new Shared.directiveElement('pop-edit-web-link', item, editYoutubeVideo, scope);
       }
 
       scope.selectPagePop = function(){

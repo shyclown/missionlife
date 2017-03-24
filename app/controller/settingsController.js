@@ -6,10 +6,7 @@ app.controller('settingsController',function($http, Data , Shared, FileService, 
     if(!res.data[0]){
       $scope.settings = {
             name: 'settings',
-            data:{
-            page_name: 'Name',
-            page_motto: 'Name'
-            }
+            data:{ page_name: 'Name', page_motto: 'Name', logo: ''}
           }
           Data.insert( $scope.settings , function(res){
             $scope.settings.id = res.data;
@@ -20,13 +17,19 @@ app.controller('settingsController',function($http, Data , Shared, FileService, 
       $scope.settings = res.data[0];
     }
     $scope.page = $scope.settings.data;
+      console.log($scope.page);
   });
+
+
 
   const uploadFile = function(filedata){
     const files = filedata;
     return function(folder){
       FileService.uploadFilesToFolder( files, folder.obj ,
-        function(res){ console.log(res);},
+        function(res){
+          $scope.page.logo = res[0].file_src;
+          $scope.changePageData();
+        },
         function(i){ console.log('uploaded: '+i+'/'+files.length);}
       );
     }
