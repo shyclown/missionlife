@@ -302,7 +302,7 @@ class File
     return $this->db->query($sql, $params);
   }
   public function attach_to_folder($data){
-    $sql = "INSERT INTO `ml_folder_item` (`id`, `folder_id`, `file_id`, `type`)
+    $sql = "INSERT INTO `ml_folder_item` (`id`, `folder_id`, `item_id`, `type`)
             VALUES (NULL, ?, ?, 4)";
     $params = array( 'ii', $data['folder_id'], $data['file_id'] );
     return $this->db->query($sql, $params);
