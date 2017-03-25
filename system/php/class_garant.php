@@ -88,6 +88,7 @@ class Garant
     $params = array( 'ii', $data['folder_id'], $data['garant_id'] );
     $this->db->query($sql, $params);
   }
+
   public function select_by_folder($data){
     $sql = "SELECT SQL_CALC_FOUND_ROWS f.file_src image, g.* FROM `ml_garant` g
             LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
@@ -106,8 +107,8 @@ class Garant
     $sql = "SELECT f.file_src image, g.* FROM `ml_garant` g
             LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
             LEFT JOIN `ml_file` f ON f.id = gf.file_id
-            INNER JOIN `ml_folder_garant` fg ON g.id = fg.garant_id
-            WHERE g.id = ? ";
+            INNER JOIN `ml_folder_item` fg ON g.id = fg.item_id
+            WHERE g.id = ? AND fg.type = 5";
     $params = array('i',$data['garant_id']);
     return $this->db->query($sql, $params);
   }

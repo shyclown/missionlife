@@ -34,12 +34,20 @@ app.controller('settingsController',function($http, Data , Shared, FileService, 
       );
     }
   }
+  const changeLogo = function(filedata){
+    $scope.page.logo = filedata.obj.file_src;
+    $scope.changePageData();
+  }
+
   $scope.pickFile = function(event){
     const files = event.target.files;
     new Shared.directiveElement('pop-select', Shared.setupSelect.selectFolder, uploadFile(files), $scope);
     event.preventDefault();
   }
-  $scope.dropFunction = function(){
+  $scope.searchImage = function(){
+    new Shared.directiveElement('pop-select', Shared.setupSelect.selectImage, changeLogo, $scope);
+  }
+  $scope.dropFunction = function(event){
     const files = event.dataTransfer.files;
     new Shared.directiveElement('pop-select', Shared.setupSelect.selectFolder, uploadFile(files), $scope);
     event.preventDefault();

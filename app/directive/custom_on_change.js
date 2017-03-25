@@ -1,9 +1,13 @@
 app.directive('customOnChange', function() {
   return {
     restrict: 'A',
+    scope: { onChangeHandler: '=customOnChange' },
     link: function (scope, element, attrs) {
-      var onChangeHandler = scope.$eval(attrs.customOnChange);
-      element.bind('change', onChangeHandler);
+      element.bind('change', function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        scope.onChangeHandler(event);
+    });
     }
   };
 });

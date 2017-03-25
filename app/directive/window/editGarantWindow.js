@@ -9,102 +9,81 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
     templateUrl: '/missionlife/app/template/window/edit_garant_window.html',
     link: function (scope, element, attrs)
     {
-      scope.garantWindow = Shared.openElement[attrs.editObj];
-      let sourceGarant;
-      let imageReplaced;
-      console.log(scope.garantWindow);
-      scope.editGarant;
-      scope.image;
-      scope.openGarant = scope.garantWindow.item;
+      const oGarantWindow = Shared.openElement[attrs.editObj];
+      const oGarant = oGarantWindow.item;
+      const oCallback = oGarantWindow.callback;
+      const newGarant = { image: false, header: '', title: '', webpage: '', motto: '', state: 1 }
+
+      let newImageFile;
+
+      if(oGarant){ scope.garant = Object.assign({}, oGarant); scope.new = false; }
+      else{ scope.garant = Object.assign({}, newGarant); }
+
+      console.log(scope.garant);
+
       scope.currentFolder = Shared.explorer.current_folder;
 
-      const copy = function(obj){ return Object.assign({},obj); }
-      const callbackFn = function(){ scope.afterGarantWindow(); }
-      const newGarant = { image: false, header: '', title: '', webpage: '', motto: '', state: 1 }
-      const end = function(){
-        scope.garantWindow.callback();
-        scope.cancel(); // close window
-      }
-
-      const updateValue = function(){
-          sourceGarant = scope.openGarant;
-          imageReplaced = false;
-          if(!sourceGarant){ scope.editGarant = copy(newGarant); }
-          else{ scope.editGarant = copy(sourceGarant); }
-          scope.image = scope.editGarant.image;
-      }
-
-      scope.cancel = function(){ scope.garantWindow.close(); }
-      scope.$watch(
-        function(){ return scope.openGarant; },
-        function(){ updateValue(); }, true
-      );
-
+      scope.cancel = function(){ oGarantWindow.close(); }
       // Garant functions
-      scope.save = function(garant){
-        if (garant.id) { Garant.update( garant,
-          function(response){ replaceImage( end ); });}
-        else{ Garant.insert( garant,
-          function(response){ garant.id = response.data; replaceImage( end ); });
-        }
-      } // save
-
-      const replaceImage = function( endFn ){
-        if(imageReplaced){ uploadFile(endFn); }
-        else{ if(endFn){ endFn(); } }
-      }
-
-      // not implemented yet
-      scope.delete = function(garant){
-        garant.action = 'remove';
-        Garant.delete({id: garant.id}, function(response){
-            scope.load_garants();
-            scope.php = response.data;
+      scope.save = function(){
+        Garant.insert( scope.garant, function(response){
+          scope.garant.id = response.data;
+          updateImage(oCallback);
+          scope.cancel();
         });
-      }  // delete
-
-      const resize = function(event, callback, sizePX){
-        let reader = new FileReader();
-        reader.onload = function(ev){ resizeDroppedImage(ev, callback, sizePX);  }
-        reader.onprogress = function(ev){ console.log(ev.loaded / (ev.total / 100));}
-        reader.readAsDataURL(event.dataTransfer.files[0]);
+      }
+      scope.update = function(){
+        Garant.update( scope.garant, function(response){
+          updateImage(oCallback);
+          scope.cancel();
+        });
+      }
+      scope.delete = function(){
+        Garant.delete( scope.garant, function(response){
+            scope.cancel();
+        });
       }
 
-      const uploadFile = function(endFn)
-      {
-        const uploadData = { file_name: scope.new_file_name, files: dataURItoBlob(scope.image) }
-        FileService.upload(uploadData, function(response){
-          let update = false;
-          const attachFileToFolder = { folder_id: scope.currentFolder.id, file_id: response.data.file_id }
-          const attachFileToGarant = { garant_id: scope.editGarant.id, file_id: response.data.file_id }
-          FileService.attachToFolder(attachFileToFolder,
-            function(){ if(update && endFn){ endFn(); update = true; } });
+      const updateImage = function(callback){
+        if(scope.garant.image != oGarant.image ){
+          const attachFileToGarant = { garant_id: scope.garant.id, file_id: newImageFile.item_id }
           FileService.attachToGarant(attachFileToGarant,
-            function(){ if(update && endFn){ endFn(); update = true; } });
-        });
-      }
-
-      // TODO: !!!
-      // need to store image somewhere else because of size of request
-
-      scope.onDropImage = function(){
-        const afterResize = function(dataUrl){
-          imageReplaced = true;
-          scope.image = dataUrl;
-          scope.$apply();
+            function(){ callback(true); });
         }
-        scope.new_file_name = event.dataTransfer.files[0].name;
-        resize(event, afterResize, 1080);
+        else{ callback(false); }
+      }
+      // save
+
+      const uploadCompleted = function(){ console.log('upload Completed');}
+
+      const uploadFile = function(filedata){
+        let storedName = filedata[0].name;
+        let reader = new FileReader();
+        reader.onload = function(ev){ resizeDroppedImage(ev, afterResize, 1080); }
+        reader.readAsDataURL(filedata[0]);
+
+        afterResize = function(dataUrl){
+          filedata = dataURItoBlob(dataUrl);
+          FileService.upload({ file_name: storedName, files:filedata }, function(response){
+              let newImageFile = response.data;
+              const attachFileToFolder = { folder_id: scope.currentFolder.id, file_id: response.data.item_id }
+              FileService.attachToFolder(attachFileToFolder,
+                function(){ uploadCompleted(); });
+              scope.garant.image = response.data.file_src;
+            },
+            function(i){ console.log('uploaded: '+i+'/'+files.length);}
+          );
+        }
       }
 
-      scope.editImagePath = function(){
-        return imageReplaced ? scope.image : '/missionlife/uploads/image/'+scope.image;
-      }
-      scope.labelPosition = function(item){
-        //return item.image ? 'inCorner' : '';};
-        return 'inCorner';
+      const changeImage = function(filedata){ newImageFile = filedata.obj; scope.garant.image = filedata.obj.file_src; }
 
-    }
+      scope.onDropImage = function(){ uploadFile(event.dataTransfer.files); }
+      scope.onPickImage = function(){ uploadFile(event.target.files); }
+      scope.searchImage = function(){
+        new Shared.directiveElement('pop-select', Shared.setupSelect.selectImage, changeImage, scope);
+      }
+
   }//link
   }//return
   }//directivefunction

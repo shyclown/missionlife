@@ -42,10 +42,8 @@ app.directive('isDropArea',['$http',function($http) {
       element.bind('dragleave', stopDefault );
       element.bind('drop', function(event)
       {
-
         stopDefault(event);
-      //  scope.uploadFile(event)
-        scope.onDropFn();
+        scope.onDropFn(event);
       });
     }
   };
