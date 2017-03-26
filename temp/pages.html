@@ -103,6 +103,14 @@
 #pageView article.form .control button{
   font-family: 'Source Sans Pro', sans-serif;
 }
+#pageView article iframe{
+  width: 100%;
+  height: 220px;
+  max-width: 100%;
+  border: none;
+
+  font-family: 'Source Sans Pro', sans-serif;
+}
 .columns{
   display: flex;
   flex-direction: row;
@@ -123,7 +131,7 @@
 
 
 <div id="pageList">
-<button ng-click="openPopEditPage()" ><i class="fa fa-plus"></i> Add Page</button>
+<button ng-click="openPopEditPage()" ng-mousedown="dragPageLink()"><i class="fa fa-plus"></i> Add Page</button>
 <div class="labelList">Pages</div>
   <div class="pageBtn" ng-repeat="page in pages" ng-click="openPage(page)">
     <div class="name"> {{page.name}} </div>

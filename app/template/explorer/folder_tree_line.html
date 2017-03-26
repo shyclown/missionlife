@@ -1,5 +1,8 @@
 <div class="folder">
-  <div class="folderLine" ng-class="currentOpen(folder)" ng-click="openFolder(folder)"><i ng-class="icon()"></i> {{folder.name}}</div>
+  <div class="folderLine" ng-class="currentOpen(folder)" ng-click="openFolder(folder)">
+    <div><i ng-class="icon()"></i> {{folder.name}}</div>
+    <div class="edit"><i class="fa fa-cog" ng-click="openFolderWindow(folder); $event.stopPropagation();"></i></div>
+  </div>
   <div class="treeChildren" ng-if="openFoldersInTree.indexOf(folder.id)>=0">
   <folder-tree-line ng-repeat="folder in children"><folder-tree-line>
   </div>

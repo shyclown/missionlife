@@ -17,7 +17,6 @@
     </div>
     <div class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" >
       <button class="name" ng-click="openFolder(folder)"><i class="fa fa-folder"></i> {{folder.name}}</button>
-      <button class="edit" ng-click="openFolderWindow(folder)"><i class="fa fa-cog"></i></button>
     </div>
     <div class="ArticleLine" ng-repeat="article in articles">
       <button class="name" ng-click="openArticleWindow(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>

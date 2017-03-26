@@ -24,7 +24,7 @@ class Garant
     $sql = "SELECT f.file_src image, g.* FROM `ml_garant` g
             LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
             LEFT JOIN `ml_file` f ON f.id = gf.file_id
-            ORDER BY g.id DESC";
+            ORDER BY g.id";
     return $this->db->query($sql);
   }
 

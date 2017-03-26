@@ -16,7 +16,22 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     function() { return $scope.currPage; },
     function() { console.log($scope.currPage.id);},
     true
-  )
+  );
+
+  $scope.dragPageLink = function(event){
+    console.log(event);
+    let target = event.target;
+
+    setTimeout(function () {
+      let item = target;
+      const followMouse = function(){
+        item.style.position = 'absolute';
+        item.style.x = event.pageX;
+        item.style.y = event.pageY;
+      }
+      window.addEventListener('mousemove', followMouse, false )}, 400);
+
+  }
 
   $scope.openPage = function(page){
     $scope.currPageItems = [];

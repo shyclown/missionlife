@@ -1,6 +1,32 @@
 .folderWindow{
   position: relative;
+}
 
+.folderLine{
+  box-sizing: border-box;
+  height: 22px;
+  display: flex;
+  padding: 4px 4px;
+  line-height: 14px;
+  margin-bottom: 2px;
+  justify-content: space-between;
+}
+.folderLine:hover{
+  background-color: #EAEAEA;
+  cursor: pointer;
+}
+.folderLine > .edit i{
+  color: #EAEAEA;
+  background-color: none;
+  font-size: 14px;
+  padding: 0px;
+}
+.folderLine:hover > .edit i{
+  color: #999;
+}
+.folderLine:hover > .edit i:hover{
+  color: #000;
+  cursor: pointer;
 }
 .folderTopPanel{
   width: 100%;
@@ -70,9 +96,7 @@
 .folder{
   background-color: #FFF;
 }
-.folderLine{
-  padding: 0px 4px;
-}
+
 .folder.child{
   background-color: red;
 }
@@ -80,7 +104,8 @@
   padding-left: 16px;
 }
 .folder i{
-  color: #FFE082;
+  color: #FB0;
+  /*color: #FFE082;*/
 }
 .folder .currentFolder{
   background-color: #EAEAEA;

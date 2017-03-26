@@ -1,7 +1,7 @@
 <?php
 $url = 'http://localhost/missionlife/login.php';
 $root = $_SERVER['DOCUMENT_ROOT']."/missionlife";
-require_once($root.'/system/php/define.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/define.php');
 require_once($root.'/system/php/class_mysqli.php');
 require_once($root.'/system/php/class_session.php');
 new Session;
