@@ -69,9 +69,6 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
 
       if(position){
         if(last.item != item || last.position != position){
-          console.log(item.nextSibling.nextSibling);
-          console.log(item.previousSibling.previousSibling);
-
           if( position == 'top' && item.previousElementSibling != last.placeholder.el){
             if(last.placeholder){ last.placeholder.remove(); }
                 newPlaceholder = new Placeholder();
