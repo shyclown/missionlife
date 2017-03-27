@@ -57,16 +57,13 @@ class Page
         $sql = "UPDATE `ml_page` SET `order` = `order`-1
                 WHERE `order` BETWEEN ? AND ?";
         $params = array('ii', $old_value, $new_value);
-        echo "UPDATE `ml_page` SET `order` = `order`-1 WHERE `order` BETWEEN $old_value AND $new_value + 1";
       }
-
-      if($this->db->query($sql, $params)){
-        return $this->db->query(
-          "UPDATE `ml_page` SET `order` = ? WHERE `id` = ?",
-          array('ii', $new_value, $data['id'])
-        );
-      }
+      $this->db->query($sql, $params);
     }
+    return $this->db->query(
+      "UPDATE `ml_page` SET `order` = ?, `state`= ? WHERE `id` = ?",
+      array('iii', $data['new_order'], $data['new_state'], $data['id'])
+    );
   }
 
   public function delete($data){

@@ -153,9 +153,24 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
 
 <div id="pageList" >
 <button  ng-click="openPopEditPage()" ><i class="fa fa-plus"></i> Add Page</button>
-<div class="labelList">Pages</div>
+
+<div class="labelList" data-label="1" ng-mousemove="oMouseOver($event)">Top</div>
   <div>
-    <div class="pageBtn" data-id="{{page.id}}" data-order="{{page.order}}" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
+    <div ng-if="page.state == 1" class="pageBtn" data-id="{{page.id}}" data-order="{{page.order}}" data-state="{{page.state}}" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
+      <div class="name"> {{page.order}} - {{page.name}} </div>
+      <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
+    </div>
+  </div>
+<div class="labelList" data-label="2" ng-mousemove="oMouseOver($event)">Side</div>
+  <div>
+    <div ng-if="page.state == 2" class="pageBtn" data-id="{{page.id}}" data-order="{{page.order}}" data-state="{{page.state}}" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
+      <div class="name"> {{page.order}} - {{page.name}} </div>
+      <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
+    </div>
+  </div>
+<div class="labelList" data-label="0" ng-mousemove="oMouseOver($event)">Pages</div>
+  <div>
+    <div ng-if="page.state == 0" class="pageBtn" data-id="{{page.id}}" data-order="{{page.order}}" data-state="{{page.state}}" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
       <div class="name"> {{page.order}} - {{page.name}} </div>
       <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
     </div>

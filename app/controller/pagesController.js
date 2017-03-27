@@ -36,6 +36,13 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     }
   }
 
+  const pageOBJ = function(el){
+    var self = this;
+    this.el = el;
+    this.addEv = self.el.addEventListener('mousemove',oMouseOver, false);
+    this.removeEv = self.el.removeEventListener('mousemove', oMouseOver, false);
+  }
+
   // Reordering pages
   let draggedItem;
   let targetOrder;
@@ -46,16 +53,24 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
 
 
   $scope.oMouseOver = function(event){
+    unFocus();
     console.log('over');
     const item = event.currentTarget;
-    target = item;
     if(dragin){
-      setTimeout(function() {
-        if(target == item) { perform(); }
-      },150);
+      if(item != last.item && item.dataset.label){
+        console.log(item);
+        if(last.placeholder){ last.placeholder.remove(); }
+        newPlaceholder = new Placeholder();
+        item.nextElementSibling.insertBefore(newPlaceholder.el, item.nextElementSibling.firstChild);
+        setTimeout(function(){ newPlaceholder.grow(); },0);
+        last.placeholder = newPlaceholder;
+        last.item = item;
+      }
+      else if(!item.dataset.label){
+        target = item;
+        setTimeout(function(){ if(target == item) { perform(); } },150);
+      }
     }
-    else{ }
-
     const perform = function(){
       const getPosition = function(){
         if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
@@ -86,7 +101,13 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
       }
     }
   }
-
+  const unFocus = function () {
+    if (document.selection) {
+      document.selection.empty()
+    } else {
+      window.getSelection().removeAllRanges()
+    }
+  }
 
   $scope.oMouseDown = function(event){
     const item = event.currentTarget;
@@ -109,7 +130,17 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     const placeItem = function(){
       stillDown = false;
       if(isMoving){
-        if(last.item){
+        let dataReorder;
+
+        if(last.item.dataset.label){
+          dataReorder = {
+            id: draggedItem.dataset.id,
+            old_order: draggedItem.dataset.order || 0,
+            new_order: 0,
+            new_state: last.item.dataset.label
+          }
+        }
+        else{
           if(last.item.dataset.order < draggedItem.dataset.order){
             if(last.position == 'top'){ targetOrder = last.item.dataset.order }
             if(last.position == 'bottom'){ targetOrder = last.item.dataset.order + 1; }
@@ -118,13 +149,17 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
             if(last.position == 'top'){ targetOrder = last.item.dataset.order -1; }
             if(last.position == 'bottom'){ targetOrder = last.item.dataset.order; }
           }
+          dataReorder = {
+            id: draggedItem.dataset.id,
+            old_order: draggedItem.dataset.order,
+            new_order: targetOrder,
+            new_state: last.item.dataset.state
+          }
         }
         dragin = false;
-        let dataReorder = {
-          id: draggedItem.dataset.id,
-          old_order: draggedItem.dataset.order,
-          new_order: targetOrder
-        }
+        removeElement(last.placeholder.el);
+        console.log(dataReorder);
+
         Page.reorder( dataReorder, function(res){ console.log(res.data);   loadPages(); });
         window.removeEventListener('mousemove', followMouse, false);
         item.removeAttribute('style');
