@@ -18,6 +18,10 @@ app.service('Page',function(Ajax){
     data.action = "delete";
     Ajax.call(data, url, callback);
   }
+  this.reorder = function(data, callback){
+    data.action = "reorder";
+    Ajax.call(data, url, callback);
+  }
 
   this.attachItem = function(data, callback){
     console.log(data);

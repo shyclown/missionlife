@@ -7,7 +7,7 @@
   padding: 16px;
   height: calc(100% - 64px) ;
 }
-#pageList > div.pageBtn{
+#pageList > div > div.pageBtn{
   display: flex;
   justify-content: space-between;
   padding: 8px 16px;
@@ -18,6 +18,7 @@
   text-align: left;
   margin-top: 8px;
 }
+
 
 .orderPlaceholder{
 margin: 0px;
@@ -150,13 +151,14 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
 }
 </style>
 
-
 <div id="pageList" >
 <button  ng-click="openPopEditPage()" ><i class="fa fa-plus"></i> Add Page</button>
 <div class="labelList">Pages</div>
-  <div class="pageBtn" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
-    <div class="name"> {{page.name}} </div>
-    <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
+  <div>
+    <div class="pageBtn" data-id="{{page.id}}" data-order="{{page.order}}" ng-repeat="page in pages" ng-mousedown="oMouseDown($event)" ng-mousemove="oMouseOver($event)" ng-click="openPage(page)">
+      <div class="name"> {{page.order}} - {{page.name}} </div>
+      <div><i class="fa fa-cog" ng-click="openPopEditPage(page); $event.stopPropagation();"></i></div>
+    </div>
   </div>
 </div>
 

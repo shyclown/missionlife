@@ -24,8 +24,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     this.el.className = 'orderPlaceholder';
     this.remove = function(){
       self.shrink();
-      setTimeout( function(){
-      removeElement(self.el); }, 400);
+      setTimeout( function(){ removeElement(self.el); }, 400);
     }
     this.shrink = function(){
       this.el.style.height = '0px';
@@ -37,17 +36,17 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     }
   }
 
+  // Reordering pages
+  let draggedItem;
+  let targetOrder;
 
-  let last = {
-    item : false,
-    position : '',
-    placeholder : ''
-  }
+  let last = { item : false, position : '',  placeholder : ''}
   let target = '';
   let dragin = false;
 
 
   $scope.oMouseOver = function(event){
+    console.log('over');
     const item = event.currentTarget;
     target = item;
     if(dragin){
@@ -55,18 +54,15 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
         if(target == item) { perform(); }
       },150);
     }
-    else{ if(last.placeholder){ last.placeholder.remove(); last.placeholder = false; }}
-
+    else{ }
 
     const perform = function(){
-
       const getPosition = function(){
         if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
         if(event.offsetY < 18){ return 'top'; }
         else { return false; }
       }
       const position = getPosition();
-
       if(position){
         if(last.item != item || last.position != position){
           if( position == 'top' && item.previousElementSibling != last.placeholder.el){
@@ -84,6 +80,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
                 last.placeholder = newPlaceholder;
             }
           }
+
         last.item = item;
         last.position = position;
       }
@@ -94,27 +91,41 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   $scope.oMouseDown = function(event){
     const item = event.currentTarget;
 
-    let mouseOff = event.offsetY;
-    item.classList.add('shadow');
+    let stillDown = true;
+    let isMoving = false;
+    let mouseOff = event.offsetY; // offset in element
 
     const followMouse = function(event){
-      pholder = new Placeholder();
       if(event.currentTarget == item);
       if(stillDown){
+        isMoving = true;
+        dragin = true;
         item.style.position = 'absolute';
-        item.classList.add('shadow');
         item.style.pointerEvents = 'none';
         item.style.top = event.pageY- mouseOff - 64 +'px';
       }
     }
 
-    let stillDown = true;
-    let isMoving = false;
-
     const placeItem = function(){
       stillDown = false;
       if(isMoving){
+        if(last.item){
+          if(last.item.dataset.order < draggedItem.dataset.order){
+            if(last.position == 'top'){ targetOrder = last.item.dataset.order }
+            if(last.position == 'bottom'){ targetOrder = last.item.dataset.order + 1; }
+          }
+          if(last.item.dataset.order > draggedItem.dataset.order){
+            if(last.position == 'top'){ targetOrder = last.item.dataset.order -1; }
+            if(last.position == 'bottom'){ targetOrder = last.item.dataset.order; }
+          }
+        }
         dragin = false;
+        let dataReorder = {
+          id: draggedItem.dataset.id,
+          old_order: draggedItem.dataset.order,
+          new_order: targetOrder
+        }
+        Page.reorder( dataReorder, function(res){ console.log(res.data);   loadPages(); });
         window.removeEventListener('mousemove', followMouse, false);
         item.removeAttribute('style');
         item.classList.remove('shadow');
@@ -123,19 +134,18 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     }
 
     window.addEventListener('mouseup', placeItem, false );
+
     setTimeout(function () {
       if(stillDown){
-        isMoving = true;
-        dragin = true;
+        draggedItem = item;
+
+        item.classList.add('shadow');
         item.removeEventListener('mousemove',$scope.oMouseOver, false );
         window.addEventListener('mousemove', followMouse, false );
       }
-
-    },
-    10);
-
-
+    }, 10);
   }
+
 
   $scope.openPage = function(page){
     $scope.currPageItems = [];
@@ -156,7 +166,6 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
         });}
         if(item.type === 3){
           Form.select_by_id({id: item.item_id},function(res){
-              console.log(res.data[0]);
               item.obj = res.data[0];
               item.obj.data = JSON.parse(item.obj.data);
         });}

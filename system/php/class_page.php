@@ -15,28 +15,69 @@ class Page
   /* Page */
 
   public function select(){
-    $sql = "SELECT * FROM `ml_page` ORDER BY  `id` ASC";
+    $sql = "SELECT * FROM `ml_page` ORDER BY  `order`";
     return $this->db->query($sql);
   }
   public function insert($data){
+    $this->db->query(
+      "UPDATE `ml_page` SET `order`= `order` + 1 WHERE `state` = ?",
+      array('i',$data['state'])
+    );
+    //$count = $this->db->query('SELECT COUNT(*) AS items FROM `ml_page` WHERE `state` = ?', array('i',$data['state']));
+    $count = 0; //$count[0]['items'] + 1;
     $sql = "INSERT INTO `ml_page` (`id`, `name`, `order`, `parent`, `state`, `date_created`, `date_edited`)
-            VALUES (NULL, ?, 0, NULL, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-    $params = array( 'si', $data['name'], $data['state']);
+            VALUES (NULL, ?, ?, NULL, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+    $params = array( 'sii', $data['name'], $count, $data['state']);
     return $this->db->query($sql, $params);
   }
   public function update($data){
     $sql = "UPDATE `ml_page`
-            SET `name`=?, `order`=?, `parent`=?, `state`=?, `date_edited`= CURRENT_TIMESTAMP
+            SET `name`=?, `parent`=?, `state`=?, `date_edited`= CURRENT_TIMESTAMP
             WHERE `id` = ?";
-    $params = array('sssii',  $data['name'], $data['new_order'], $data['parent'], $data['state'], $data['id']);
+    $params = array('siii',  $data['name'],  $data['parent'], $data['state'], $data['id']);
     return $this->db->query($sql,$params);
   }
+
+  public function reorder($data){
+    if(
+      isset($data['new_order'])
+      && isset($data['old_order'])
+      && $data['old_order'] != $data['new_order']
+      && isset($data['id'])
+    ){
+      $new_value = $data['new_order'];
+      $old_value = $data['old_order'];
+
+      if($new_value < $old_value){
+        $sql = "UPDATE `ml_page` SET `order` = `order`+1
+                WHERE `order` BETWEEN ? AND ?";
+        $params = array('ii', $new_value, $old_value);
+      }
+      elseif ($new_value > $old_value) {
+        $sql = "UPDATE `ml_page` SET `order` = `order`-1
+                WHERE `order` BETWEEN ? AND ?";
+        $params = array('ii', $old_value, $new_value);
+        echo "UPDATE `ml_page` SET `order` = `order`-1 WHERE `order` BETWEEN $old_value AND $new_value + 1";
+      }
+
+      if($this->db->query($sql, $params)){
+        return $this->db->query(
+          "UPDATE `ml_page` SET `order` = ? WHERE `id` = ?",
+          array('ii', $new_value, $data['id'])
+        );
+      }
+    }
+  }
+
   public function delete($data){
-    //$this->removeFromParents($data);
-    //$this->orderAfterDelete($data);
-    $sql = "DELETE FROM `ml_page` WHERE `ml_page`.`id` = ?";
-    $params = array('i',$data['id']);
-    return $this->db->query($sql,$params);
+    $this->db->query(
+      "UPDATE `ml_page` SET `order` = `order`- 1 WHERE `order`> ? AND `state`= ?",
+      array('ii', $data['order'], $data['state'])
+    );
+    return $this->db->query(
+      "DELETE FROM `ml_page` WHERE `ml_page`.`id` = ?",
+      array('i',$data['id'])
+    );
   }
 
   /* Relations */
