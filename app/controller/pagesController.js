@@ -18,18 +18,125 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     true
   );
 
-  $scope.dragPageLink = function(event){
-    console.log(event);
-    let target = event.target;
+  const Placeholder = function(){
+    const self = this;
+    this.el = document.createElement('div');
+    this.el.className = 'orderPlaceholder';
+    this.remove = function(){
+      self.shrink();
+      setTimeout( function(){
+      removeElement(self.el); }, 400);
+    }
+    this.shrink = function(){
+      this.el.style.height = '0px';
+      this.el.style.marginTop = '0px';
+    }
+    this.grow = function(){
+      self.el.style.height = '40px';
+      self.el.style.marginTop = '8px';
+    }
+  }
 
-    setTimeout(function () {
-      let item = target;
-      const followMouse = function(){
-        item.style.position = 'absolute';
-        item.style.x = event.pageX;
-        item.style.y = event.pageY;
+
+  let last = {
+    item : false,
+    position : '',
+    placeholder : ''
+  }
+  let target = '';
+  let dragin = false;
+
+
+  $scope.oMouseOver = function(event){
+    const item = event.currentTarget;
+    target = item;
+    if(dragin){
+      setTimeout(function() {
+        if(target == item) { perform(); }
+      },150);
+    }
+    else{ if(last.placeholder){ last.placeholder.remove(); last.placeholder = false; }}
+
+
+    const perform = function(){
+
+      const getPosition = function(){
+        if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
+        if(event.offsetY < 18){ return 'top'; }
+        else { return false; }
       }
-      window.addEventListener('mousemove', followMouse, false )}, 400);
+      const position = getPosition();
+
+      if(position){
+        if(last.item != item || last.position != position){
+          console.log(item.nextSibling.nextSibling);
+          console.log(item.previousSibling.previousSibling);
+
+          if( position == 'top' && item.previousElementSibling != last.placeholder.el){
+            if(last.placeholder){ last.placeholder.remove(); }
+                newPlaceholder = new Placeholder();
+                insertBefore(newPlaceholder.el, item);
+                setTimeout(function(){ newPlaceholder.grow(); },0);
+                last.placeholder = newPlaceholder;
+            }
+          else if( position == 'bottom' && item.nextElementSibling != last.placeholder.el){
+            if(last.placeholder){ last.placeholder.remove(); }
+                newPlaceholder = new Placeholder();
+                insertAfter(newPlaceholder.el, item);
+                setTimeout(function(){ newPlaceholder.grow(); },0);
+                last.placeholder = newPlaceholder;
+            }
+          }
+        last.item = item;
+        last.position = position;
+      }
+    }
+  }
+
+
+  $scope.oMouseDown = function(event){
+    const item = event.currentTarget;
+
+    let mouseOff = event.offsetY;
+    item.classList.add('shadow');
+
+    const followMouse = function(event){
+      pholder = new Placeholder();
+      if(event.currentTarget == item);
+      if(stillDown){
+        item.style.position = 'absolute';
+        item.classList.add('shadow');
+        item.style.pointerEvents = 'none';
+        item.style.top = event.pageY- mouseOff - 64 +'px';
+      }
+    }
+
+    let stillDown = true;
+    let isMoving = false;
+
+    const placeItem = function(){
+      stillDown = false;
+      if(isMoving){
+        dragin = false;
+        window.removeEventListener('mousemove', followMouse, false);
+        item.removeAttribute('style');
+        item.classList.remove('shadow');
+      }
+      window.removeEventListener('mouseup', placeItem, false )
+    }
+
+    window.addEventListener('mouseup', placeItem, false );
+    setTimeout(function () {
+      if(stillDown){
+        isMoving = true;
+        dragin = true;
+        item.removeEventListener('mousemove',$scope.oMouseOver, false );
+        window.addEventListener('mousemove', followMouse, false );
+      }
+
+    },
+    10);
+
 
   }
 
