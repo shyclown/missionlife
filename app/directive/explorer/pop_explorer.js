@@ -82,7 +82,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       }
 
       /* File Upload On Drop */
-      scope.uploadFile = FileService.uploadFile;
+      scope.uploadFile = function(){ FileService.uploadFile(scope.currentFolder); }
 
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
       scope.openFolder = function(folder){
