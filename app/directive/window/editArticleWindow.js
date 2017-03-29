@@ -196,21 +196,24 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         }
         newCaretPosition(oSelection, iframe.nextSibling, 0);
       }
+
       const addLink = function(data){
+        console.log(data);
         if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
-        if(data.new || data.obj){
+        if(data.type || data.new){
 
           let link;
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
           let oText = oSelection.toString();
 
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
+          else if(data.type === 'page'){ link = $compile(createLink(data.name,'/ml_front/page/'+data.id))(scope); }
           else{ link = $compile(createLink(data.name, data.href))(scope); }
+
           scope.area.insertAfterSelection(link[0]);
-          if(!link[0].nextSibling){
-            let txt = document.createTextNode(' '); insertAfter(txt,link[0]);
-          }
+          if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
           newCaretPosition(oSelection, link[0].nextSibling, 0);
+
         }else{
           storedItem.innerHTML = data.name;
           storedItem.href = data.href;

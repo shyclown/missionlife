@@ -135,11 +135,12 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
   const oRoot = this.root;
   const oSelection = document.getSelection();
   const oRange = oSelection.getRangeAt(0);
+  const oRootTag = oRange.endContainer.parentNode.tagName;
   if(Editor.isDescendant(oRange.endContainer, oRoot)){
     if(oRange.endContainer.parentNode.tagName == 'A'){
       insertAfter(oElement, oRange.endContainer.parentNode);
     }
-    else if(oRange.endContainer.parentNode.tagName == 'P'){
+    else if(oRootTag == 'P' ||  oRootTag == 'LI'){
       oRange.deleteContents();
       oRange.insertNode(oElement);
     }

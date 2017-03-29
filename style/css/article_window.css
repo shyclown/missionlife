@@ -37,6 +37,11 @@
   border: 1px solid rgb(244,100,95);
   color: rgb(244,100,95);
 }
+.RightContent ul{
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
 .LeftContent{
   display: block;
   float: left;

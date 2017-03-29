@@ -51,61 +51,43 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   let target = '';
   let dragin = false;
 
-
-  $scope.oMouseOver = function(event){
-    unFocus();
-    console.log('over');
-    const item = event.currentTarget;
-    if(dragin){
-      if(item != last.item && item.dataset.label){
-        console.log(item);
-        if(last.placeholder){ last.placeholder.remove(); }
-        newPlaceholder = new Placeholder();
-        item.nextElementSibling.insertBefore(newPlaceholder.el, item.nextElementSibling.firstChild);
-        setTimeout(function(){ newPlaceholder.grow(); },0);
-        last.placeholder = newPlaceholder;
-        last.item = item;
-      }
-      else if(!item.dataset.label){
-        target = item;
-        setTimeout(function(){ if(target == item) { perform(); } },150);
-      }
-    }
-    const perform = function(){
-      const getPosition = function(){
-        if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
-        if(event.offsetY < 18){ return 'top'; }
-        else { return false; }
-      }
-      const position = getPosition();
-      if(position){
-        if(last.item != item || last.position != position){
-          if( position == 'top' && item.previousElementSibling != last.placeholder.el){
-            if(last.placeholder){ last.placeholder.remove(); }
-                newPlaceholder = new Placeholder();
-                insertBefore(newPlaceholder.el, item);
-                setTimeout(function(){ newPlaceholder.grow(); },0);
-                last.placeholder = newPlaceholder;
-            }
-          else if( position == 'bottom' && item.nextElementSibling != last.placeholder.el){
-            if(last.placeholder){ last.placeholder.remove(); }
-                newPlaceholder = new Placeholder();
-                insertAfter(newPlaceholder.el, item);
-                setTimeout(function(){ newPlaceholder.grow(); },0);
-                last.placeholder = newPlaceholder;
-            }
-          }
-
-        last.item = item;
-        last.position = position;
-      }
-    }
-  }
   const unFocus = function () {
     if (document.selection) {
       document.selection.empty()
     } else {
       window.getSelection().removeAllRanges()
+    }
+  }
+
+  $scope.oMouseOver = function(event){
+    unFocus(); // prevent focusing text while dragging over it
+    const item = event.currentTarget;
+    const label = item.dataset.label;
+    const movePlaceholder = function(){
+      const getPosition = function(){
+        if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
+        if(event.offsetY < 18){ return 'top'; } else { return false; }
+      }
+      const oMove = function(){
+        if(last.placeholder){ last.placeholder.remove(); }
+        const newPlaceholder = new Placeholder();
+        if(oPosition == 'top' && !label){ insertBefore(newPlaceholder.el, item); }
+        else if(oPosition == 'bottom'){ insertAfter(newPlaceholder.el, item); }
+        setTimeout(function(){ newPlaceholder.grow(); },0);
+        last.placeholder = newPlaceholder;
+        last.item = item;
+        last.position = oPosition;
+      }
+      const oPosition = getPosition();
+      if(oPosition){ if(last.item != item || last.position != oPosition){
+        if((oPosition == 'top' && item.previousElementSibling != last.placeholder.el) ||
+          (oPosition == 'bottom' && item.nextElementSibling != last.placeholder.el)){
+          oMove();
+      }}}
+    }
+    if(dragin){
+      let target = item;
+      setTimeout(function(){ if(target == item) { movePlaceholder(); } },150);
     }
   }
 
@@ -143,10 +125,10 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
         else{
           if(last.item.dataset.order < draggedItem.dataset.order){
             if(last.position == 'top'){ targetOrder = last.item.dataset.order }
-            if(last.position == 'bottom'){ targetOrder = last.item.dataset.order + 1; }
+            if(last.position == 'bottom'){ targetOrder = last.item.dataset.order+1; }
           }
           if(last.item.dataset.order > draggedItem.dataset.order){
-            if(last.position == 'top'){ targetOrder = last.item.dataset.order -1; }
+            if(last.position == 'top'){ targetOrder = last.item.dataset.order-1; }
             if(last.position == 'bottom'){ targetOrder = last.item.dataset.order; }
           }
           dataReorder = {
@@ -158,27 +140,23 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
         }
         dragin = false;
         removeElement(last.placeholder.el);
-        console.log(dataReorder);
-
         Page.reorder( dataReorder, function(res){ console.log(res.data);   loadPages(); });
-        window.removeEventListener('mousemove', followMouse, false);
-        item.removeAttribute('style');
-        item.classList.remove('shadow');
       }
+
+      item.removeAttribute('style');
+      item.classList.remove('shadow');
+      window.removeEventListener('mousemove', followMouse, false);
       window.removeEventListener('mouseup', placeItem, false )
     }
-
     window.addEventListener('mouseup', placeItem, false );
 
-    setTimeout(function () {
+    setTimeout(function (){
       if(stillDown){
         draggedItem = item;
-
         item.classList.add('shadow');
-        item.removeEventListener('mousemove',$scope.oMouseOver, false );
         window.addEventListener('mousemove', followMouse, false );
       }
-    }, 10);
+    }, 250);
   }
 
 
