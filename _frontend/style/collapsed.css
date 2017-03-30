@@ -1,0 +1,42 @@
+.collapsed{
+  margin: 0px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 4rem;
+  position: fixed;
+  z-index: 15;
+  top: 0px;
+  background-color: #FFF;
+  padding: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0px 0px 13px -3px rgba(0,0,0,0.75);
+}
+.collapsed h1{
+  font-size: 2rem;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  line-height: 2rem;
+  margin: 0px;
+  font-weight: 100;
+  display: inline-block;
+  float: left;
+}
+.collapsed img{
+  height: 100%;
+  float: left;
+  display: block;
+}
+.collapsed button{
+    height: 100%;
+    width: 3rem;
+    font-size: 1.3rem;
+    float: left;
+    margin-right: 16px;
+    border: none;
+    background-color: #FFF;
+    outline: none;
+}
+.collapsed button:hover{
+    background-color: #EEE;
+    cursor: pointer;
+}

@@ -1,0 +1,46 @@
+.card{
+  position: relative;
+  margin-bottom: 2rem;
+}
+.card > .content{
+  margin: 0.5rem;
+  padding: 1.5rem;
+  background-color: #FFF;
+  position: relative;
+  z-index: 1;
+}
+article.card > .content{
+  margin: 0.5rem;
+  padding: 80px 100px;
+  background-color: #FFF;
+  position: relative;
+  z-index: 1;
+  transition:padding 500ms;
+  border: 1px solid #EAEAEA;
+}
+@media (max-width: 1080px) and (min-width: 850px){
+  article.card > .content{ padding: 50px 50px; }
+}
+@media (max-width: 850px){
+  article.card > .content{  padding: 50px 30px;  }
+}
+.card img{
+  width: 100%;
+}
+.card > a{
+    box-sizing: border-box;
+    display: block;
+    height: 2rem;
+    background-color: #E0E0E0;
+    color: #666;
+    position: absolute;
+    bottom: -1rem;
+    right: 1rem;
+    z-index: 2;
+    text-decoration: none;
+    padding: 0.5rem;
+    line-height: 1rem;
+}
+.card a:hover{
+    bottom: -20px;
+}

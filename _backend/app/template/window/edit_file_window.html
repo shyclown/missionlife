@@ -1,0 +1,41 @@
+<div class="blanket" ng-click="cancel()">
+  <div class="window" ng-click="$event.stopPropagation()">
+    <div class="top">
+     Folder Editor - {{folder.name}}
+      <button class="win close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="control">
+      <div class="header">
+        topControl
+      </div>
+      </div>
+      <div class="content ">
+        <header class="p16">
+          <h1 class="filename">
+            {{file.file_name}}
+          </h1>
+        </header>
+        <div class="manipulateImage">
+          <button class="editImage" disabled="true">rotate</button>
+          <button class="editImage">change folder</button>
+          <button class="editImage">download</button>
+          <button class="editImage">delete</button>
+        </div>
+        <section class="image" ng-if="(file.file_type == 'png')">
+          <img ng-src="/uploads/image/{{file.file_src}}">
+        </section>
+        <section class="details">
+          <h3>Used in:</h3>
+          <button class="spanlink" ng-repeat="detail in details" ng-click="openItem(detail)">{{detail.header}}</button>
+        </section>
+        <section class="details">
+          <h2>File Details</h2>
+          File Source: {{file.file_src}}<br>
+          File Size: {{filesize}}
+        </section>
+    </div>
+    <div class="footer">
+      Footer
+    </div>
+  </div>
+</div><!-- blanket -->

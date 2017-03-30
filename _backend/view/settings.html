@@ -1,0 +1,52 @@
+<style>
+.dropImage{
+  padding: 24px;
+  background-color: #EEEEEE;
+  border-radius: 8px;
+}
+#uploadLogo{
+    display: none;
+}
+.dropImage label{
+    background-color: #E0E0E0;
+    margin-right: 8px;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+.dropImage button{
+    background-color: #E0E0E0;
+    color: rgb(82, 82, 82);
+    margin-left: 8px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-family: "Source Sans Pro", sans-serif;
+}
+.dropImage img{
+  width: 100%;
+  margin-bottom: 16px;
+}
+</style>
+
+<card>
+  <card-name>Page Setup</card-name>
+  <card-content>
+
+    <div class="dropImage" is-drop-area="dropFunction">
+      <img src="/uploads/image/{{settings.data.logo}}"/>
+      <label for="uploadLogo" class="shadow">
+        <i class="fa fa-upload"></i> Upload
+      </label>
+      or Drop new File
+      <button ng-click="searchImage()" class="shadow"><i class="fa fa-folder-open-o"></i></button>
+      <input id="uploadLogo" type="file" custom-on-change="pickFile" />
+
+    </div>
+      <label for="pagename">Page Name:</label>
+      <input name="pagename" ng-model="page.page_name">
+      <label for="motto">Motto:</label>
+      <textarea type="textarea" name="motto" ng-model="page.page_motto"></textarea>
+  </card-content>
+  <card-control>
+      <input type='button' value="Submit" ng-click="changePageData()">
+  </card-control>
+</card>
