@@ -28,6 +28,7 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
       <nav id="topnav" class="shadow">
         <ul>
           <li><h1>eJoin</h1></li>
+          <li><a target="_self" href="/_backend/signin.php">Sign in</a></li>
         </ul>
       </nav>
       <div id="menuLeft" class="shadow">

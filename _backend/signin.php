@@ -5,9 +5,9 @@
     <h2>Sign In</h2>
     <form class="mt-1" method="post" action="/system/ng/login.php" autocomplete="off">
       <input name="action" type="hidden" value="signin">
-      <input name="username" type="username" placeholder="username" autocomplete="off">
-      <input name="email" type="email" placeholder="email" autocomplete="off">
-      <input name="password" type="password" placeholder="password" autocomplete="off">
+      <input name="username" type="username" placeholder="username">
+      <input name="email" type="email" placeholder="email">
+      <input name="password" type="password" placeholder="password">
       <input type="submit" value="register">
     </form>
   </div>
