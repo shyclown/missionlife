@@ -32,6 +32,12 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
           <li><a target="_self" href="/_backend/signin.php">Sign in</a></li>
         </ul>
       </nav>
+      <div class="accountPanel shadow">
+        <ul>
+          <li>account</li>
+          <li>logout</li>
+        </ul>
+      </div>
       <div id="menuLeft" class="shadow">
         <ul>
           <li><a href="folders"><i class="fa fa-folder-o"></i> Files</a></li>

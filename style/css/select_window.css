@@ -14,13 +14,13 @@
   background-color: #FFF;
   padding: 16px;
 }
-.underContent{
+.selectWindow .underContent{
 }
 .inline{
   display: inline-block;
   padding: 0px;
 }
-.folderTree{
+.selectWindow .folderTree{
   background-color: #FFF;
   box-sizing: border-box;
   width: 250px;
@@ -29,7 +29,7 @@
   height: 300px;
   overflow-y: scroll;
 }
-.folderOpen{
+.selectWindow .folderOpen{
   width: calc(100% - 250px);
   box-sizing: border-box;
   background-color: #EAEAEA;
