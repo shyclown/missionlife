@@ -31,11 +31,14 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
           <li><a target="_self" href="account">Account</a></li>
           <li><a target="_self" href="/_backend/signin.php">Sign in</a></li>
         </ul>
+
       </nav>
+      <!-- account panel -->
+      <div class="accountPanelBtn"><i class="fa fa-user-circle-o"></i></div>
       <div class="accountPanel shadow">
         <ul>
-          <li>account</li>
-          <li>logout</li>
+          <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
+          <li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>
       </div>
       <div id="menuLeft" class="shadow">
