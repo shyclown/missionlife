@@ -22,25 +22,25 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/style/font-awesome.min.css" rel="stylesheet" type='text/css'>
+    <link href="/style/luca.css" rel="stylesheet" type='text/css'>
   </head>
   <body ng-app="myapp">
     <div ng-controller="mainController">
-      <nav id="topnav" class="shadow">
-        <ul>
-          <li><h1>eJoin</h1></li>
-          <li><a target="_self" href="account">Account</a></li>
-          <li><a target="_self" href="/_backend/signin.php">Sign in</a></li>
-        </ul>
+      <div id="topContainer" class="container shadow bg-yellow">
+        <div class="row space-between">
+          <h1>eJoin</h1>
+          <button><i class="fa fa-user-circle-o"></i></button>
+        </div>
 
-      </nav>
       <!-- account panel -->
-      <div class="accountPanelBtn"><i class="fa fa-user-circle-o"></i></div>
-      <div class="accountPanel shadow">
+      </div>
+      <div id="accountPanel" class="shadow">
         <ul>
           <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
-          <li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+          <li><a target="_self" href="/_backend/signin.php"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>
       </div>
+
       <div id="menuLeft" class="shadow">
         <ul>
           <li><a href="folders"><i class="fa fa-folder-o"></i> Files</a></li>
