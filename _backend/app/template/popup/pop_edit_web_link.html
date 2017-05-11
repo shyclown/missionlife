@@ -1,22 +1,6 @@
+<div class="blanket centered" ng-click="cancel()">
 
-<style>
-  #popEditWebLink{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #popEditWebLink > .window{
-    padding: 24px;
-  }
-
-
-
-</style>
-
-
-<div id="popEditWebLink" class="blanket" ng-click="cancel()">
-
-  <div  class="window shadow" ng-click="$event.stopPropagation();">
+  <div  class="window shadow pa-3" ng-click="$event.stopPropagation();">
     <input type="text" ng-model="link.name" placeholder="Link Text">
     <input type="text" ng-model="link.href" placeholder="Link to web page">
 

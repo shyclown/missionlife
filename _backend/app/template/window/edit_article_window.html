@@ -1,41 +1,32 @@
-<div class="blanket">
-<div id="editArticleWindow" class="window shadow">
-  <div class="top">
+<div class="blanket centered">
+<div class="bg-white window shadow">
+  <div class="bg-yellow row v-center space-between">
     Article Editor
     <button class="close" ng-click="closeWithoutSave()"><i class="fa fa-times"></i></button>
   </div>
-  <div class="ControlPanel">
-    <ul>
-      <li><a ng-click="clickFolder()" href="#">File</a></li>
-      <li><a href="#">Edit</a></li>
-      <li><a href="#">Selection</a></li>
-    </ul>
-  </div>
-  <div class="content">
-    <div class="LeftContent">
+  <div class="row content">
+    <div>
       <form id="articleEditorForm">
-      <input id="articleEditorHeader" class="articleHeader" placeholder="Article Header" ng-model="article.header" />
+      <input id="articleEditorHeader" class="fullwidth articleHeader" placeholder="Article Header" ng-model="article.header" />
       <input id="articleEditorContent" class="articleContent" placeholder="Article Content" ng-model="article.content" />
     </div>
-    <!-- TODO: Search panel and separate results:
-    article, files, garant
-    -->
-    <div class="RightContent">
-      <button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button>
-      <button class="delete" ng-click="saveChanges()"><i class="fa fa-trash-o"></i> Delete </button>
-      <!-- create buttons -->
+    <div>
+      <ul class="pt-1 pb-1">
+        <li><button class="fullwidth" id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button></li>
+        <li><button class="fullwidth" ng-click="saveChanges()"><i class="fa fa-trash-o"></i> Delete </button></li>
+      </ul>
       <ul>
-        <li><button ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>
-        <li><button ng-click="selectArticlePop()"><i class="fa fa-file-text-o"></i > Article</button></li>
-        <li><button ng-click="selectImagePop()"><i class="fa fa-image"></i> Image</button></li>
-        <li><button ng-click="editYoutubeLinkPop()"><i class="fa fa-youtube-play"></i> Youtube video</button></li>
-        <li><button ng-click="editWebLinkPop()"><i class="fa fa-link"></i> Web Link</button></li>
-        <li><button ng-click="selectPagePop()"><i class="fa fa-sitemap"></i> Page Link</button></li>
+        <li><button class="fullwidth txt-left" ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>
+        <li><button class="fullwidth txt-left" ng-click="selectArticlePop()"><i class="fa fa-file-text-o"></i > Article</button></li>
+        <li><button class="fullwidth txt-left" ng-click="selectImagePop()"><i class="fa fa-image"></i> Image</button></li>
+        <li><button class="fullwidth txt-left" ng-click="editYoutubeLinkPop()"><i class="fa fa-youtube-play"></i> Youtube video</button></li>
+        <li><button class="fullwidth txt-left" ng-click="editWebLinkPop()"><i class="fa fa-link"></i> Web Link</button></li>
+        <li><button class="fullwidth txt-left" ng-click="selectPagePop()"><i class="fa fa-sitemap"></i> Page Link</button></li>
       </ul>
       </form>
     </div>
-  </div class="content">
-  <div class="Footer" ng-bind-html="logPanel"></div>
-</div>
-<!-- POP WINDOW -->
+    </div>
+    <div class="Footer" ng-bind-html="logPanel"></div>
+  </div>
+</div><!-- POP WINDOW -->
 </div><!-- blanket -->

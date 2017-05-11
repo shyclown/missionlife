@@ -45,12 +45,10 @@ ul > li > a {
 ul > li > a:hover {
   background-color: #EFEFEF;
 }
-.yellow{
-  color: #FB0;
-}
-.bg-yellow{
-  background-color: #FB0;
-}
+.yellow{ color: #FB0; }
+.white{ color: #FFF; }
+.bg-yellow{ background-color: #FB0; }
+.bg-white{ background-color: #FFF; }
 
 #topContainer{
   box-sizing: border-box;
@@ -87,7 +85,9 @@ div.ng-view{
 
 }
 
-
+.txt-left{
+  text-align: left;
+}
 .container{
   display: block;
 }
@@ -170,14 +170,45 @@ div.ng-view{
 .pr-4{ padding-right: 1.75rem }
 .pr-5{ padding-right: 2rem }
 
+.w1{ min-width: 10rem; }
+.w-full{
+  box-sizing: border-box;
+  width: 100%;
+}
+
 .fill{
   width: 100%;
   height: 100%;
+}
+.fullwidth{
+  box-sizing: border-box;
+  width: 100%;
+}
+.centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.v-center{
+  align-items: center;
 }
 .flex{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.blanket{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .shadow{

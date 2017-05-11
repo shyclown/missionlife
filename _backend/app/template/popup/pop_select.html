@@ -1,18 +1,18 @@
 <div class="blanket" ng-click="cancel()">
-  <div class="selectWindow" folders-data='folders' ng-click="$event.stopPropagation();">
-    <div class="topName">
+  <div class="bg-white window shadow" folders-data='folders' ng-click="$event.stopPropagation();">
+    <div class="bg-yellow row v-center space-between">
       Select PopUp
-      <button class="closeWindow" ng-click="cancel()"><i class="fa fa-times"></i></button>
+      <button class="close" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
     <div class="folderTopPanel" ng-if="setup.createFolder">
       <path-to-folder></path-to-folder>
       <add-folder></add-folder>
     </div>
-    <div class="underContent">
+    <div class="row">
       <div class="folderTree">
         <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
       </div>
-    <div class="folderOpen">
+      <div class="folderOpen">
       <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">
         <button class="name" ng-click="openFolder(folder)">
           <i class="fa fa-folder"></i> {{folder.name}}</button>
