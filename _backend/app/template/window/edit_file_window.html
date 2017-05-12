@@ -1,28 +1,23 @@
 <div class="blanket" ng-click="cancel()">
-  <div class="window" ng-click="$event.stopPropagation()">
-    <div class="top">
-     Folder Editor - {{folder.name}}
-      <button class="win close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+  <div class="window bg-white shadow" ng-click="$event.stopPropagation()">
+    <div class="bg-yellow row v-center space-between pl-1">
+     {{text.top.name}} - {{folder.name}}
+      <button class="x-close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
-    <div class="control">
-      <div class="header">
-        topControl
-      </div>
-      </div>
-      <div class="content ">
-        <header class="p16">
+    <div class="content pa-1">
+        <header class="pa-1">
           <h1 class="filename">
             {{file.file_name}}
           </h1>
         </header>
-        <div class="manipulateImage">
+        <div class="row">
           <button class="editImage" disabled="true">rotate</button>
           <button class="editImage">change folder</button>
           <button class="editImage">download</button>
           <button class="editImage">delete</button>
         </div>
         <section class="image" ng-if="(file.file_type == 'png')">
-          <img ng-src="/uploads/image/{{file.file_src}}">
+          <img width="350px" ng-src="/missionlife/uploads/image/{{file.file_src}}">
         </section>
         <section class="details">
           <h3>Used in:</h3>
@@ -33,9 +28,9 @@
           File Source: {{file.file_src}}<br>
           File Size: {{filesize}}
         </section>
-    </div>
+    </div><!-- content -->
     <div class="footer">
-      Footer
-    </div>
-  </div>
+        Footer
+    </div><!-- footer -->
+  </div><!-- window -->
 </div><!-- blanket -->

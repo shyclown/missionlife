@@ -1,17 +1,21 @@
 <div class="blanket" ng-click="cancel()">
 
-  <div class="window shadow" id="editFormWindow" ng-click="$event.stopPropagation();">
-
-    <div class="content">
-      <h1>Edit Form: </h1>
-      <div class="main">
-      <label>name:</label>
-      <input ng-model="form.name"/>
-      <label>to email:</label>
-      <input ng-model="form.email"/>
-      <button ng-click="addField(form)"><i class="fa fa-plus"></i> Add Field</button>
+  <div class="window shadow bg-white" id="editFormWindow" ng-click="$event.stopPropagation();">
+    <div class="bg-yellow row v-center space-between pl-1">
+      Edit Form: {{text.top.name}} - {{folder.name}}
+      <button class="close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="content pa-1">
+      <div class="main column mb-1">
+        <label>name:</label>
+        <input ng-model="form.name"/>
+        <label>to email:</label>
+        <input ng-model="form.email"/>
       </div>
-      <div ng-if="form.data" ng-repeat="field in form.data track by $index">
+      <div class="row mb-1">
+        <button ng-click="addField(form)"><i class="fa fa-plus"></i> Add Field</button>
+      </div>
+      <div class="row" ng-if="form.data" ng-repeat="field in form.data track by $index">
         <input ng-model="field.name"/>
         <button class="type" ng-class="(field.type == 'all')?'selected':''" ng-click="setType('all',field)">all</button>
         <button class="type" ng-class="(field.type == 'name')?'selected':''" ng-click="setType('name',field)">name</button>
@@ -23,13 +27,13 @@
 
       </div>
     </div><!-- end .content -->
-  <div class="control" ng-if="!new">
-      <button class="cancel" ng-click="delete(form)"><i class="fa fa-save"></i> Delete</save>
+    <div class="control pa-1 border-top" ng-if="!new">
+      <button class="delete" ng-click="delete(form)"><i class="fa fa-save"></i> Delete</save>
       <button class="cancel" ng-click="cancel(form)"><i class="fa fa-save"></i> Cancel</save>
       <button class="save" ng-click="save(form)"><i class="fa fa-save"></i> Save</save>
 
     </div>
-    <div class="control" ng-if="new">
+    <div class="control pa-1 border-top" ng-if="new">
       <button class="cancel" ng-click="cancel(form)"><i class="fa fa-save"></i> Cancel</save>
       <button class="save" ng-click="insert(form)"><i class="fa fa-save"></i> Save</save>
 

@@ -1,0 +1,32 @@
+#topContainer{
+  box-sizing: border-box;
+  height: 4rem;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 9;
+  overflow: hidden;
+}
+#accountPanel{
+  position: fixed;
+  z-index: 8;
+  top: 4rem;
+  right: 0;
+}
+#menuLeft{
+  position: fixed;
+  z-index: 8;
+  top: 4rem;
+  left: 0;
+  width: 12rem;
+  background-color: #666;
+  height: 100%;
+  overflow: scroll;
+}
+div.ng-view{
+  box-sizing: border-box;
+  margin-left: 12rem;
+  margin-top: 4rem;
+  width: calc(100% - 12rem);
+  height: calc(100% - 4rem);
+}
