@@ -24,25 +24,22 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
     <link href="/style/font-awesome.min.css" rel="stylesheet" type='text/css'>
     <link href="/style/luca.css" rel="stylesheet" type='text/css'>
   </head>
+
+  <!-- LUCA APP -->
   <body ng-app="myapp">
 
     <div ng-controller="mainController" class="mainGrid">
-      <div id="topContainer" class="container shadow bg-yellow">
+
+      <!-- Header -->
+      <div id="theHeader" class="container shadow bg-yellow">
         <div class="row space-between">
           <h1>eJoin</h1>
           <button><i class="fa fa-user-circle-o"></i></button>
         </div>
-
-      <!-- account panel -->
-      </div>
-      <div id="accountPanel" class="shadow">
-        <ul>
-          <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
-          <li><a target="_self" href="/_backend/signin.php"><i class="fa fa-sign-out"></i> Logout</a></li>
-        </ul>
       </div>
 
-      <div id="menuLeft" class="shadow">
+      <!-- Left panel -->
+      <div id="theLeftPanel" class="shadow">
         <ul>
           <li><a href="folders"><i class="fa fa-folder-o"></i> Files</a></li>
           <li><a href="pages"><i class="fa fa-sitemap"></i> Webpage</a></li>
@@ -50,14 +47,24 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
         </ul>
       </div>
 
-      <div class="ng-view">
-        <!-- content -->
+      <!-- Routed content -->
+      <div id="theRoutedContent" class="ng-view">
       </div>
-      <div id="footer" >fsdfs
-        <!-- notes -->
+
+      <!-- Footer panel -->
+      <div id="theFooter" >fsdfs
         <div ng-bind-html='php'></div>
       </div>
-    </div><!--grid end -->
 
-  </body>
+      <!-- Animated panel -->
+      <div id="accountPanel" class="shadow">
+        <ul>
+          <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
+          <li><a target="_self" href="/_backend/signin.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+        </ul>
+      </div>
+
+    </div><!--MainGrid end -->
+
+  </body><!-- APP end -->
 </html>

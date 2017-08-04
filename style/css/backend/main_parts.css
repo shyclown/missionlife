@@ -7,13 +7,18 @@
   grid-template-rows: 4rem calc(100% - 8rem) 4rem;
   grid-template-areas:
   "header header header"
-  "sidebar routedContent routedContent"
+  "leftPanel routedContent routedContent"
   "footer footer footer";
 }
 
-#topContainer{
-  z-index: 2;
-  grid-area: header;
+#theHeader{  grid-area: header; z-index: 2; }
+#theLeftPanel{  grid-area: leftPanel;  z-index: 1;  background-color: #EEE; }
+#theContent{ grid-area: routedContent; overflow: hidden; }
+#theFooter{  grid-area: footer;  z-index: 2;  background-color: #EEE; }
+
+/* Content Grids */
+#explorerGrid{
+  display: grid;
 }
 
 #accountPanel{
@@ -23,18 +28,9 @@
   right: 0;
 }
 
-#menuLeft{
-  z-index: 1;
-  grid-area: sidebar;
-  overflow-y: scroll;
-}
-div.ng-view{
-  grid-area: routedContent;
-  overflow: hidden;
-}
 
-#footer{
-  z-index: 2;
-  background-color: #EEE;
-  grid-area: footer;
+
+
+div.ng-view{
+
 }
