@@ -24,6 +24,12 @@ class Account
     else{ return false; }
   }
 
+  private function load_post_values(){
+    $this->username = $_POST['username'];
+    $this->email = $_POST['email'];
+    $this->password = $this->generate_hash($_POST['password']);
+  }
+
   public function login(){
     // logname can be email or username
   $this->logname = $_POST['logname'];
@@ -35,32 +41,33 @@ class Account
   }
 
   public function delete(){
-  $this->user_id = $_SESSION['user_id'];
-  $sql = "DELETE FROM `ml_account` WHERE id = ?";
-  $params = array('i', $this->user_id);
-  $result = $db->query($sql, $params);
+    $this->user_id = $_SESSION['user_id'];
+    $sql = "DELETE FROM `ml_account` WHERE id = ?";
+    $params = array('i', $this->user_id);
+    $result = $db->query($sql, $params);
   }
 
   public function load_signed(){
-  if(isset($_SESSION['user_id'])){
-    $id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM `ml_account` WHERE `id` = ?";
-    $params = array("i",$id);
-    $result = $this->db->query($sql,$params);
-    if(!empty($result)){
-      $this->id = $result[0]['id'];
-      $this->username = $result[0]['username'];
-      $this->email = $result[0]['email'];
+    // check sessions if user is signed in
+    if(isset($_SESSION['user_id'])){
+
+      $id = $_SESSION['user_id'];
+      $sql = "SELECT * FROM `ml_account` WHERE `id` = ?";
+      $params = array("i",$id);
+      $result = $this->db->query($sql,$params);
+
+      if(!empty($result)){
+        $this->id = $result[0]['id'];
+        $this->username = $result[0]['username'];
+        $this->email = $result[0]['email'];
       }
     }
-    else { array_push($this->errors, 'Account does not exists'); }
+    else {
+      // probably exploit
+      array_push($this->errors, 'Account does not exists'); }
   }
-  private function load_post_values(){
-    $this->username = $_POST['username'];
-    $this->email = $_POST['email'];
-    $this->password = $this->generate_hash($_POST['password']);
-    // $this->salt = $_POST['password']; testing
-  }
+
+
 
   /* Check values */
 
@@ -79,12 +86,14 @@ class Account
     }
   }
 
+  // check if it is valid email and username
   public function is_valid($column)
   {
     if($column == 'email'){ return filter_var(  $this->email, FILTER_VALIDATE_EMAIL); }
     if($column == 'username'){ return preg_match('/^[A-Za-z][A-Za-z\d_.-]{5,31}$/i', $this->username); }
   }
 
+  // check if email and username are free to register
   public function is_free($column)
   {
     if($column == 'email'){ $value = $this->email; }
@@ -96,6 +105,7 @@ class Account
     return true;
   }
 
+  // debug
   public function list_all()
   {
     $sql = "SELECT * FROM `ml_account`";
@@ -103,9 +113,10 @@ class Account
     return $result;
   }
 
-  private function valid_password($input, $hashed)
+  // check validity of password input
+  private function valid_password($password_input, $hashed)
   {
-    return crypt($input, $hashed) == $hashed;
+    return crypt($password_input, $hashed) == $hashed;
   }
 
   private function generate_hash($password, $cost = 11)
@@ -135,12 +146,15 @@ class Account
 
   private function create_account()
   {
-    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `state`,`date_created`,`date_edited`) VALUES (NULL, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+    $sql = "INSERT INTO `ml_account` (`id`, `username`, `password`, `email`, `state`,`date_created`,`date_edited`)
+            VALUES (NULL, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
     $params = array('sss', $this->username , $this->password , $this->email);
     $result = $this->db->query($sql, $params);
     echo 'user created';
   }
 
+
+  // find acount in DB based on username or email
   private function find_account()
   {
     $sql = "SELECT * FROM `ml_account` WHERE `username` = ? OR `email` = ?";

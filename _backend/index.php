@@ -25,7 +25,8 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
     <link href="/style/luca.css" rel="stylesheet" type='text/css'>
   </head>
   <body ng-app="myapp">
-    <div ng-controller="mainController">
+
+    <div ng-controller="mainController" class="mainGrid">
       <div id="topContainer" class="container shadow bg-yellow">
         <div class="row space-between">
           <h1>eJoin</h1>
@@ -48,13 +49,15 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
           <li><a href="settings"><i class="fa fa-cog"></i> Settings</a></li>
         </ul>
       </div>
+
       <div class="ng-view">
         <!-- content -->
       </div>
-      <div class="notes">
+      <div id="footer" >fsdfs
         <!-- notes -->
         <div ng-bind-html='php'></div>
       </div>
-    </div>
+    </div><!--grid end -->
+
   </body>
 </html>

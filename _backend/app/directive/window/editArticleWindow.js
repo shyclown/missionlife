@@ -135,8 +135,8 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
             })();
         }
       }
-      scope.deleteArticle = function(article){
-        Article.delete(article, function(){
+      scope.deleteArticle = function(){
+        Article.delete(scope.article, function(){
           callbackFn();
         });
       }

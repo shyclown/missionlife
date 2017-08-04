@@ -1,5 +1,5 @@
 <div class="blanket centered">
-  <div class="window bg-white shadow" ng-click="$event.stopPropagation()">
+  <div class="article-editor window bg-white shadow" ng-click="$event.stopPropagation()">
     <div class="bg-yellow row v-center space-between pl-1">
      Article editor
       <button class="x-close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
@@ -13,7 +13,7 @@
       <div>
         <ul class="pt-1 pb-1">
           <li><button class="fullwidth" id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button></li>
-          <li><button class="fullwidth" ng-click="saveChanges()"><i class="fa fa-trash-o"></i> Delete </button></li>
+          <li><button class="fullwidth" ng-click="deleteArticle()"><i class="fa fa-trash-o"></i> Delete </button></li>
         </ul>
         <ul>
           <li><button class="fullwidth txt-left" ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>

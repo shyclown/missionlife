@@ -11,7 +11,7 @@ class File
     $this->db = new Database;
     $this->error = [];
 
-    $this->root = $_SERVER["DOCUMENT_ROOT"].'/missionlife';
+    $this->root = $_SERVER["DOCUMENT_ROOT"];
     $this->filetypes = array(
         'png' => 'image/png',
         'txt' => 'text/plain',

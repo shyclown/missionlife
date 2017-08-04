@@ -1,0 +1,40 @@
+.mainGrid{
+  display: grid;
+  box-sizing: border-box;
+  height: 100%;
+  grid-gap: 0px;
+  grid-template-columns: 200px auto 200px;
+  grid-template-rows: 4rem calc(100% - 8rem) 4rem;
+  grid-template-areas:
+  "header header header"
+  "sidebar routedContent routedContent"
+  "footer footer footer";
+}
+
+#topContainer{
+  z-index: 2;
+  grid-area: header;
+}
+
+#accountPanel{
+  position: fixed;
+  z-index: 8;
+  top: 4rem;
+  right: 0;
+}
+
+#menuLeft{
+  z-index: 1;
+  grid-area: sidebar;
+  overflow-y: scroll;
+}
+div.ng-view{
+  grid-area: routedContent;
+  overflow: hidden;
+}
+
+#footer{
+  z-index: 2;
+  background-color: #EEE;
+  grid-area: footer;
+}

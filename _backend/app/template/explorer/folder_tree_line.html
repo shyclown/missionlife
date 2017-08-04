@@ -1,6 +1,6 @@
 <div class="folder fullwidth">
   <div class="folderLine row space-between fullwidth" ng-class="currentOpen(folder)" ng-click="openFolder(folder)">
-    <div><i ng-class="icon()"></i> {{folder.name}}</div>
+    <div><i class="yellow" ng-class="icon()"></i> {{folder.name}}</div>
     <div class="edit"><i class="fa fa-cog" ng-click="openFolderWindow(folder); $event.stopPropagation();"></i></div>
   </div>
   <div class="pl-1 fullwidth" ng-if="openFoldersInTree.indexOf(folder.id)>=0">

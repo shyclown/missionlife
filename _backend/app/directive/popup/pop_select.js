@@ -15,6 +15,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
       const oSelectWindow = Shared.openElement[attrs.editObj];
       const oSetup = oSelectWindow.item;
       const oCallback = oSelectWindow.callback;
+
       const setup = oSetup;
       scope.setup = setup;
 
@@ -82,6 +83,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
           function(res){
             scope.files = res.data.result;
             scope.images = scope.files.filter(function(img){ return img.file_type == 'png'; });
+            console.log(scope.images);
           }
         );
       }

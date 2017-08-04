@@ -3,13 +3,13 @@
 
 
   <div class="folderTopPanel row pa-1 v-center gray">
-    <path-to-folder></path-to-folder>
+    <path-to-folder class="row"></path-to-folder>
     <add-folder></add-folder>
   </div>
 
   <div class="row h-full">
       <!-- Tree -->
-      <div class="w1 pa-1 gray">
+      <div class="w1 pa-1 bg-white border-right">
         <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
       </div>
 

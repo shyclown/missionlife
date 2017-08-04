@@ -50,6 +50,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
       });// uploadDropped
     }// for
   }
+
   /* Watch explorer */
   const ex = Shared.explorer;
   $rootScope.$watch(
@@ -124,6 +125,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
   // Attach to garant
   // require garant_id
   this.attachToGarant = function(data, callback){
+    console.log('Attach file to Garant data: ',data);
     data.action = 'attach_to_garant';
     Ajax.call(data,url,callback);
   }

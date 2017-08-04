@@ -22,15 +22,18 @@ class Article
     $params = array('i',$data['id']);
     return $this->db->query($sql,$params);
   }
+
   public function number_of_rows(){
     $sql = 'SELECT COUNT(*) AS `count` FROM `ml_article`';
     return $this->db->query($sql);
   }
+
   /* Select ALL Articles */
   public function select_all($data){
     $sql = "SELECT id, header FROM `ml_article` ORDER BY id DESC";
     return $this->db->query($sql);
   }
+
   /* Select articles IN FOLDER */
   public function select_by_folder($data){
     $sql = "SELECT SQL_CALC_FOUND_ROWS a.* FROM `ml_article` a
@@ -73,6 +76,7 @@ class Article
       if($data['sort_by'] == 'date'){ $sort_by = 'date_created'; }
       //if($data['sort_by'] == 'size'){ $sort_by = 'file_size'; }
     }
+
     $sql = "SELECT SQL_CALC_FOUND_ROWS a.* FROM `ml_article` a
             INNER JOIN `ml_folder_item` af ON a.id = af.item_id
             WHERE af.folder_id = ? AND type = 1
