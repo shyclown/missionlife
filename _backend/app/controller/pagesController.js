@@ -63,22 +63,34 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     unFocus(); // prevent focusing text while dragging over it
     const item = event.currentTarget;
     const label = item.dataset.label;
+
     const movePlaceholder = function(){
       const getPosition = function(){
-        if(event.offsetY > item.clientHeight - 18){ return 'bottom'; }
-        if(event.offsetY < 18){ return 'top'; } else { return false; }
+        console.log(item.clientHeight);
+
+        // Firefox - offsetY Polyfill
+
+        let rect = item.getBoundingClientRect();
+        let offsetX = event.clientX - rect.left;
+        let offsetY = event.clientY - rect.top;
+
+
+        if(offsetY > item.clientHeight - 18){ return 'bottom'; }
+        if(offsetY < 18){ return 'top'; } else { return false; }
       }
       const oMove = function(){
         if(last.placeholder){ last.placeholder.remove(); }
         const newPlaceholder = new Placeholder();
         if(oPosition == 'top' && !label){ insertBefore(newPlaceholder.el, item); }
-        else if(oPosition == 'bottom'){ insertAfter(newPlaceholder.el, item); }
+        // if its label we always insertAfter
+        else if(oPosition == 'bottom' || label){ insertAfter(newPlaceholder.el, item); }
         setTimeout(function(){ newPlaceholder.grow(); },0);
         last.placeholder = newPlaceholder;
         last.item = item;
         last.position = oPosition;
       }
       const oPosition = getPosition();
+
       if(oPosition){ if(last.item != item || last.position != oPosition){
         if((oPosition == 'top' && item.previousElementSibling != last.placeholder.el) ||
           (oPosition == 'bottom' && item.nextElementSibling != last.placeholder.el)){
@@ -139,6 +151,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
           }
         }
         dragin = false;
+        // remove placeholder
         removeElement(last.placeholder.el);
         Page.reorder( dataReorder, function(res){ console.log(res.data);   loadPages(); });
       }
