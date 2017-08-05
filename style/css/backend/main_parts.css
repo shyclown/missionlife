@@ -26,7 +26,7 @@
 #explorerGrid{
   display: grid;
   height: 100%;
-  grid-template-columns: 250px auto;
+  grid-template-columns: 200px auto;
   grid-template-rows: 4rem auto 4rem;
   grid-template-areas:
   "expPath expPath"
@@ -66,8 +66,11 @@
 #pageList{
   padding: 1rem;
   grid-area: pageList;
+  display: flex;
+  flex-direction: column;
   background-color: #EEEEEE;
 }
+
 #pagePreview{
   padding: 1rem;
   grid-area: pagePrev;
