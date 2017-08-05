@@ -60,8 +60,8 @@
   grid-template-columns: 250px auto;
   grid-template-rows: 4rem auto;
   grid-template-areas:
-  "pageList pagePrev"
-  "pageList pagePrev";
+  "pageList pageAdd"
+  "pageList pageView";
 }
 #pageList{
   padding: 1rem;
@@ -70,16 +70,25 @@
   flex-direction: column;
   background-color: #EEEEEE;
 }
-
-#pagePreview{
+#pageAddItem{
   padding: 1rem;
-  grid-area: pagePrev;
+  grid-area: pageAdd;
+  display: flex;
+  flex-direction: row;
+}
+#pageView{
+  padding: 1rem;
+  max-height: 100%;
+  grid-area: pageView;
   background-color: #EEEEEE;
-  border: 1px solid #000;
   overflow: hidden;
   overflow-y: scroll;
 }
-
+/* repeats per item */
+.pageItemControl{
+  display: flex;
+  flex-direction: row;
+}
 /* animated panels */
 #accountPanel{
   position: fixed;
