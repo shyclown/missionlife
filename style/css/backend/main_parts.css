@@ -16,6 +16,7 @@
 #theRoutedContent{
   grid-area: routedContent;
   height: 100% !important; /* nested grid uses 100% height */
+
 }
 #theFooter{  grid-area: footer;  z-index: 2;  background-color: #EEE; }
 
@@ -42,7 +43,8 @@
 #explorerFoldersTree{
   padding: 1rem;
   grid-area: expFolders;
-  background-color: #FFF;}
+  background-color: #FFF;
+}
 #explorerItems{
   padding: 1rem;
   grid-area: expItems;
@@ -52,6 +54,28 @@
 
 /* Webpage */
 
+#pageGrid{
+  display: grid;
+  height: 100%;
+  grid-template-columns: 250px auto;
+  grid-template-rows: 4rem auto;
+  grid-template-areas:
+  "pageList pagePrev"
+  "pageList pagePrev";
+}
+#pageList{
+  padding: 1rem;
+  grid-area: pageList;
+  background-color: #EEEEEE;
+}
+#pagePreview{
+  padding: 1rem;
+  grid-area: pagePrev;
+  background-color: #EEEEEE;
+  border: 1px solid #000;
+  overflow: hidden;
+  overflow-y: scroll;
+}
 
 /* animated panels */
 #accountPanel{

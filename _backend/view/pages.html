@@ -1,12 +1,5 @@
 <style>
-#pageList{
-  background-color: #EEEEEE;
-  box-sizing: border-box;
-  position: fixed;
-  width: 200px;
-  padding: 16px;
-  height: calc(100% - 64px) ;
-}
+
 #pageList > div > div.pageBtn{
   display: flex;
   justify-content: space-between;
@@ -64,12 +57,7 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
   padding: 8px;
   border-bottom: 1px solid #BDBDBD
 }
-#pagePreview{
-  box-sizing: border-box;
-  background-color: #EEEEEE;
-  margin-left: 200px;
-  min-height: calc(100% - 64px) ;
-}
+
 #pageView{
   margin: 0 auto;
   max-width: 550px;
@@ -150,7 +138,7 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
   margin: 8px;
 }
 </style>
-
+<div id="pageGrid">
 <div id="pageList" >
 <button  ng-click="openPopEditPage()" ><i class="fa fa-plus"></i> Add Page</button>
 
@@ -178,7 +166,7 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
 </div>
 
 
-<div id="pagePreview" >
+<div id="pagePreview">
   <div ng-if="currPage != false">
 
   <button ng-click="openSelectArticle()"><i class="fa fa-plus"></i> <i class="fa fa-file-text"></i> Add Article</button>
@@ -215,10 +203,11 @@ box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.55);
             <textarea ng-if="formInput.type == 'all'"></textarea>
           </div>
           <div class="control">
-`           <button> SUBMIT </button>`
+          <button> SUBMIT </button>
           </div>
         </article>
       </div>
     </div>
   </div>
 </div>
+</div><!-- pageGrid -->
