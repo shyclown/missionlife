@@ -12,9 +12,52 @@ echo '<!-- App / CSS -->';
 
 // foreach (glob("../style/css/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
 // foreach (glob("../style/pages/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
-foreach (glob("../style/css/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
-foreach (glob("../style/css/backend/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
-foreach (glob("../style/css/inline/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
+
+// include all css files from selected subdirectory
+function listAllFrom($folder, $folders){
+  foreach (glob($folder, GLOB_ONLYDIR) as $dir) {
+    $folders[] = $dir;
+    $folders = listAllFrom($dir."/*", $folders);
+  }
+  return $folders;
+}
+
+function getPathsToType($folder, $type){
+  $folder =  $folder."*";
+  $files = array();
+  $folders = array();
+
+  $folders = listAllFrom($folder, $folders);
+
+  foreach (glob($folder.".".$type) as $filename){
+    $files[] = $filename;
+  }
+
+  foreach ($folders as $subfolder) {
+    $path = $subfolder."/*.".$type;
+
+    foreach (glob($path) as $filename){
+      $files[] = $filename;
+    }
+  }
+  return $files;
+}
+
+$css_universal = getPathsToType("../style/css/universal/", 'css');
+$css_backend = getPathsToType("../style/css/backend/", 'css');
+
+// CSS UNIVERSAL
+foreach ($css_universal as $path) {
+echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
+}
+// CSS BACKEND
+foreach ($css_backend as $path) {
+echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
+}
+
+//foreach (glob("../style/css/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
+//foreach (glob("../style/css/backend/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
+//foreach (glob("../style/css/inline/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
 
 echo '<!-- App / Service -->';
 foreach (glob("app/service/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}
