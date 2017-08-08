@@ -11,7 +11,7 @@
   "footer footer";
 }
 
-#theHeader{  grid-area: header; z-index: 2; }
+#theHeader{  grid-area: header; z-index: 2; height: 100% !important;}
 #theLeftPanel{  grid-area: leftPanel;  z-index: 1;  background-color: #EEE; }
 #theRoutedContent{
   grid-area: routedContent;
