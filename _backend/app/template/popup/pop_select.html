@@ -1,22 +1,39 @@
+
+
+<!-- Select popup -->
+<!-- Default window setup -->
 <div class="blanket" ng-click="cancel()">
-  <div class="bg-white window shadow" folders-data='folders' ng-click="$event.stopPropagation();">
-    <div class="bg-yellow row v-center space-between">
+  <div id="selectPopup" class="bg-white window shadow" folders-data='folders' ng-click="$event.stopPropagation();">
+
+
+    <!-- Header -->
+    <div class="header bg-yellow row v-center space-between">
       Select PopUp
       <button class="close" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
+
+    <!-- Toolpanel -->
+    <div class="tooltab">
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
     <div class="folderTopPanel" ng-if="setup.createFolder">
       <path-to-folder></path-to-folder>
       <add-folder></add-folder>
     </div>
-    <div class="row">
-      <div class="folderTree">
+
+    <div class="folderTree">
         <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
-      </div>
-      <div class="folderOpen">
+    </div>
+    <div class="folderOpen">
+      <!-- FOLDERS -->
       <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">
         <button class="name" ng-click="openFolder(folder)">
           <i class="fa fa-folder"></i> {{folder.name}}</button>
       </div>
+
       <!-- SELECT FILE -->
       <div ng-if="setup.selectArticleOrFile">
         <div class="ArticleLine" ng-repeat="article in articles">
@@ -35,10 +52,8 @@
           </button>
         </div>
       </div>
-      <!-- SELECT IMAGE -->
-      <style>
 
-      </style>
+      <!-- SELECT IMAGE -->
       <!-- columns -->
       <div ng-if="setup.selectImage" class="imagesWrap">
         <div class="column" ng-repeat="i in getNumber(columns)">
@@ -52,18 +67,21 @@
         </div>
       </div>
     </div>
-      <div style="clear:both"></div>
-    <div class="under">
+
+
+    <div class="confirmSelection">
+
       <div class="selectedPath">
       <path-to-folder></path-to-folder>{{selectedName}}
       </div>
       <button class="submit" ng-click="submitFn(selectedItem)">
       <i class="fa fa-check"></i> Submit
       </button>
-      <div style="clear:both"></div>
+
+
     </div>
-    <div style="clear:both"></div>
-    </div>
-    <div style="clear:both"></div>
+
+
+  </div><!-- end of windowContent -->
   </div><!-- end of window -->
 </div><!-- end of blanket -->

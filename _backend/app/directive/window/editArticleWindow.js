@@ -37,7 +37,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       scope.area = new Editor.area({
         input_id:'articleEditorContent',
         form_id:'articleEditorForm',
-        image_url : '/missionlife/uploads/image/',
+        image_url : '/uploads/image/',
       });
 
       /* LOAD FILES - not implemented */
@@ -177,7 +177,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         return figure;
       }
       const createImage = function(image){
-        let src = '/missionlife/uploads/image/'+image.file_src;
+        let src = '/uploads/image/'+image.file_src;
         let figure  = new Editor.imageFigure(src, image.file_name, scope.area.root).el;
         return figure;
       }

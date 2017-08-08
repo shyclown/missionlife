@@ -58,9 +58,3 @@
 .border-bottom{ border-bottom: 1px solid #EAEAEA; }
 .border-left{ border-left: 1px solid #EAEAEA; }
 .border-right{ border-right: 1px solid #EAEAEA; }
-
-.control{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}

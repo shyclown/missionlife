@@ -1,3 +1,68 @@
 .window{
-  background-color: white;
+    display: grid;
+    box-sizing: border-box;
+    height: 100%;
+    grid-gap: 0px;
+    grid-template-columns: auto;
+    grid-template-rows: 2rem 2rem calc(100% - 6rem) 2rem;
+    grid-template-areas:
+    "windowHeader"
+    "windowTooltab"
+    "windowContent"
+    "windowFooter";
+}
+
+.header{
+  grid-area: windowHeader;
+}
+.tooltab{
+  grid-area: windowTooltab;
+}
+.content{
+  grid-area: windowContent;
+  overflow-y: scroll;
+}
+
+/* Select Popup */
+
+#selectPopup.window{
+  grid-template-rows: 2rem 0rem calc(100% - 6rem) 2rem;
+}
+#selectPopup .content{
+  overflow-y: hidden !important; /* overwrite default */
+  display: grid;
+  height: 100%;
+  grid-template-columns: 200px minmax(350px, 550px);
+  grid-template-rows: minmax(0rem, 2rem) auto 4rem;
+  grid-template-areas:
+  "expPath expPath"
+  "expFolders expItems"
+  "expFooter expFooter";
+}
+/* put confirmation to top panel ? */
+#selectPopup .content .folderTopPanel{
+  padding: 1rem;
+  grid-area: expPath;
+}
+#selectPopup .content .folderTree{
+  padding: 1rem;
+  grid-area: expFolders;
+}
+#selectPopup .content .folderOpen{
+  padding: 1rem;
+  grid-area: expItems;
+  overflow-y: scroll;
+}
+#selectPopup .content .confirmSelection{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  grid-area: expFooter;
+}
+#selectPopup .content .folderOpen
+
+/* Garant */
+.garantContent{
+
 }

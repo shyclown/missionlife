@@ -30,10 +30,13 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
 
     <div ng-controller="mainController" class="mainGrid">
 
+
+
       <!-- Header -->
       <div id="theHeader" class="container shadow bg-yellow">
         <div class="row space-between">
           <h1>eJoin</h1>
+
           <button><i class="fa fa-user-circle-o"></i></button>
         </div>
       </div>

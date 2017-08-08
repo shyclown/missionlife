@@ -13,9 +13,11 @@
 
 #theHeader{  grid-area: header; z-index: 2; height: 100% !important;}
 #theLeftPanel{  grid-area: leftPanel;  z-index: 1;  background-color: #EEE; }
+
 #theRoutedContent{
   grid-area: routedContent;
   height: 100% !important; /* nested grid uses 100% height */
+
 
 }
 #theFooter{  grid-area: footer;  z-index: 2;  background-color: #EEE; }
@@ -27,11 +29,11 @@
   display: grid;
   height: 100%;
   grid-template-columns: 200px auto;
-  grid-template-rows: 4rem auto 4rem;
+  grid-template-rows: 4rem auto 2rem;
   grid-template-areas:
   "expPath expPath"
   "expFolders expItems"
-  "expFolders expFooter";
+  "expFooter expFooter";
 }
 
 #explorerPath{
@@ -48,7 +50,7 @@
 #explorerItems{
   padding: 1rem;
   grid-area: expItems;
-  height: calc(100% - 2rem);
+  max-height: 100%;
   overflow-y: scroll;
 }
 
