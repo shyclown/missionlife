@@ -154,6 +154,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
   //-----------------------------------------------------
   // Select Window
   //-----------------------------------------------------
+
       /* Range */
       let storedRange = {};
       let storedItem = {};
@@ -167,6 +168,15 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         link.innerHTML = name;
         return link;
       }
+
+      const createImage = function(image){
+        let src = '/uploads/image/'+image.file_src;
+        let figure  = new Editor.imageFigure(src, image.file_name, scope.area.root).el;
+        return figure;
+      }
+
+      /* Youtube Link  */
+
       const createYoutubeEmbedLink = function(name, href){
         let figure = document.createElement('figure');
         let frame = document.createElement('iframe');
@@ -176,17 +186,12 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         figure.contentEditable = false;
         return figure;
       }
-      const createImage = function(image){
-        let src = '/uploads/image/'+image.file_src;
-        let figure  = new Editor.imageFigure(src, image.file_name, scope.area.root).el;
-        return figure;
-      }
       const editYoutubeVideo = function(data){
         let link;
         let oSelection = Shared.fn.selectRange(Shared.storedRange);
         let oText = oSelection.toString();
         let editorRootParent = getParentInRoot(oSelection.focusNode, scope.area.root);
-        console.log(editorRootParent);
+
 
         let iframe = createYoutubeEmbedLink(data.name, data.href);
         insertAfter(iframe, editorRootParent);
@@ -197,8 +202,10 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         newCaretPosition(oSelection, iframe.nextSibling, 0);
       }
 
+      /* Webpage Link */
+
       const addLink = function(data){
-        console.log(data);
+
         if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
         if(data.type || data.new){
 
@@ -219,7 +226,10 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           storedItem.href = data.href;
         }
       }
+
       /* Event Function */
+      /* Generates popup elements based on setup from shared service */
+
       const openPopSelect = function(setup, callback){
         return function(){
           Shared.storedRange = Shared.fn.storeRange();
@@ -227,12 +237,15 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         }
       }
 
+      /* scope events attached to buttons */
+
       scope.selectArticlePop = openPopSelect('selectArticle', addLink);
       scope.selectFilePop = openPopSelect('selectFile', addLink);
       scope.selectFormPop = openPopSelect('selectForm', addLink);
       scope.selectFolderPop = openPopSelect('selectFolder', addLink);
       scope.selectImagePop = openPopSelect('selectImage', addLink);
 
+      /* weblink and youtube link are separate windows templates */
       scope.editWebLinkPop = function(item){
         event.preventDefault();
           if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
@@ -246,6 +259,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           new Shared.directiveElement('pop-edit-web-link', item, editYoutubeVideo, scope);
       }
 
+      /* local link to different page */
       scope.selectPagePop = function(){
         Shared.storedRange = Shared.fn.storeRange();
         new Shared.directiveElement('pop-select-page', false, addLink, scope);
