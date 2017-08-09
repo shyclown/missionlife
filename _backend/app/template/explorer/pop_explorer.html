@@ -8,29 +8,31 @@
       <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
   </div>
 
-  <div id="explorerItems" is-drop-area="uploadFile">
+  <div id="explorerContent" is-drop-area="uploadFile">
 
-        <div ng-if="isOpenFolder()" class="row mb-1">
-          <button ng-click="openArticleWindow()"><i class="fa fa-plus"></i> Add Article</button>
-          <button ng-click="openFormWindow()"><i class="fa fa-plus"></i> Add Form</button>
-          <button ng-click="openGarantWindow(false)"><i class="fa fa-plus"></i> Add Garant</button>
-          <button type="file" ng-click=""><i class="fa fa-plus"></i> Add File</button>
-        </div>
+    <div id="addButtons" ng-if="isOpenFolder()">
+      <button ng-click="openArticleWindow()"><i class="fa fa-plus"></i> Add Article</button>
+      <button ng-click="openFormWindow()"><i class="fa fa-plus"></i> Add Form</button>
+      <button ng-click="openGarantWindow(false)"><i class="fa fa-plus"></i> Add Garant</button>
+      <button type="file" ng-click=""><i class="fa fa-plus"></i> Add File</button>
+    </div>
 
-        <div ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" >
-          <button class="w-full txt-left" ng-click="openFolder(folder)"><i class="fa fa-folder yellow"></i> {{folder.name}}</button>
-        </div>
-        <div ng-repeat="article in articles">
-          <button class="w-full txt-left" ng-click="openArticleWindow(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>
-        </div>
-        <div ng-repeat="form in forms" >
-          <button class="w-full txt-left" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
-        </div>
-        <div ng-repeat="garant in garants">
-          <button class="w-full txt-left" ng-click="openGarantWindow(garant)"><i class="fa fa-id-card-o"></i> {{garant.header}} </button>
-        </div>
-        <div ng-repeat="file in files" class="row space-between">
-          <button class="name"><i ng-class="fileTypeClass(file.file_type)"></i> {{file.file_name}}</button>
-          <button class="edit" ng-click="openFileWindow(file)"><i class="fa fa-cog"></i></button>
-        </div>
+
+      <div ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)" >
+        <button class="item" ng-click="openFolder(folder)"><i class="fa fa-folder yellow"></i> {{folder.name}}</button>
+      </div>
+      <div ng-repeat="article in articles">
+        <button class="item" ng-click="openArticleWindow(article)"><i class="fa fa-file-text-o"></i> {{article.header}} </button>
+      </div>
+      <div ng-repeat="form in forms" >
+        <button class="item" ng-click="openFormWindow(form)"><i class="fa fa-tasks"></i> {{form.name}} </button>
+      </div>
+      <div ng-repeat="garant in garants">
+        <button class="item" ng-click="openGarantWindow(garant)"><i class="fa fa-id-card-o"></i> {{garant.header}} </button>
+      </div>
+      <div ng-repeat="file in files">
+        <button class="item" ng-click="openFileWindow(file)"><i ng-class="fileTypeClass(file.file_type)" ></i> {{file.file_name}}</button>
+      </div>
+
+
   </div>

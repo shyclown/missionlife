@@ -1,0 +1,48 @@
+/* FLEXBOX */
+
+/* use flex only in 2D items - rows and columns */
+.row{  display: flex;  flex-direction: row;}
+.row-reverse{  display: flex;  flex-direction: row-reverse;}
+.column{  display: flex;  flex-direction: column;}
+.column-reverse{  display: flex;  flex-direction: column-reverse;}
+/* WRAP - if items do not fit one line */
+.wrap{flex-wrap: wrap;}
+.wrap-reverse{flex-wrap: wrap-reverse;}
+/* JUSTIFY CONTENT */
+.justify-start{  justify-content: flex-start;}
+.justify-end{  justify-content: flex-end;}
+.justify-center{  justify-content: center;}
+.justify-between{  justify-content: space-between;}
+.justify-around{  justify-content: space-around;}
+.justify-evenly{  justify-content: space-evenly;}
+/* ALIGN ITEMS*/
+.align-start{  align-items: flex-start;}
+.align-end{  align-items: flex-end;}
+.align-center{  align-items: center;}
+.align-stretch{  align-items: stretch;}
+.align-baseline{  align-items: baseline;}
+/* ALIGN CONTENT*/
+.flex-content-start{  align-items: flex-start;}
+.flex-content-end{  align-items: flex-end;}
+.flex-content-center{  align-items: center;}
+.flex-content-stretch{  align-items: stretch;}
+.flex-content-between{  align-items: space-between;}
+.flex-content-around{  align-items: space-around;}
+
+
+/*ITEMS SELF*/
+.self-align-start{ align-self: flex-start; }
+.self-align-end{ align-self: flex-end; }
+.self-align-center{ align-self: center; }
+.self-align-stretch{ align-self: stretch; }
+.self-align-baseline{ align-self: baseline; }
+/*SHRINK*/
+.self-shrink-1{ flex-shrink: 1; }
+.self-shrink-2{ flex-shrink: 2; }
+.self-shrink-3{ flex-shrink: 3; }
+.self-shrink-4{ flex-shrink: 4; }
+/*GROW*/
+.self-grow-1{ flex-grow: 1; }
+.self-grow-2{ flex-grow: 2; }
+.self-grow-3{ flex-grow: 3; }
+.self-grow-4{ flex-grow: 4; }

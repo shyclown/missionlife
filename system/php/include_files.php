@@ -1,5 +1,6 @@
 <?php
 
+
 // Include FILES
 
 echo '<!-- Editor -->';
@@ -55,9 +56,6 @@ foreach ($css_backend as $path) {
 echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
 }
 
-//foreach (glob("../style/css/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
-//foreach (glob("../style/css/backend/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
-//foreach (glob("../style/css/inline/*.css") as $filename){ echo '<link href="'.$filename.'" rel="stylesheet" type="text/css">';}
 
 echo '<!-- App / Service -->';
 foreach (glob("app/service/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}

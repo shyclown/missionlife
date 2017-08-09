@@ -23,6 +23,8 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         oArticleWindow.close();
       }
 
+      /*CANCEL CAN BE FRUSTRATING AFTER CHANGES DONE - PROMPT FOR SAVE ? */
+      scope.cancel = function(){ callbackFn(); }
       /* SCOPE */
 
       scope.articleWindow = Shared.openElement[attrs.editObj];

@@ -17,75 +17,13 @@
 #theRoutedContent{
   grid-area: routedContent;
   height: 100% !important; /* nested grid uses 100% height */
-
-
 }
+
 #theFooter{  grid-area: footer;  z-index: 2;  background-color: #EEE; }
 
-/* Content Grids */
 
-/* Explorer */
-#explorerGrid{
-  display: grid;
-  height: 100%;
-  grid-template-columns: 200px auto;
-  grid-template-rows: 4rem auto 2rem;
-  grid-template-areas:
-  "expPath expPath"
-  "expFolders expItems"
-  "expFooter expFooter";
-}
 
-#explorerPath{
-  padding: 1rem;
-  grid-area: expPath;
-  display: flex;
-  flex-direction: row;
-}
-#explorerFoldersTree{
-  padding: 1rem;
-  grid-area: expFolders;
-  background-color: #FFF;
-}
-#explorerItems{
-  padding: 1rem;
-  grid-area: expItems;
-  max-height: 100%;
-  overflow-y: scroll;
-}
 
-/* Webpage */
-
-#pageGrid{
-  display: grid;
-  height: 100%;
-  grid-template-columns: 250px auto;
-  grid-template-rows: 4rem auto;
-  grid-template-areas:
-  "pageList pageAdd"
-  "pageList pageView";
-}
-#pageList{
-  padding: 1rem;
-  grid-area: pageList;
-  display: flex;
-  flex-direction: column;
-  background-color: #EEEEEE;
-}
-#pageAddItem{
-  padding: 1rem;
-  grid-area: pageAdd;
-  display: flex;
-  flex-direction: row;
-}
-#pageView{
-  padding: 1rem;
-  max-height: 100%;
-  grid-area: pageView;
-  background-color: #EEEEEE;
-  overflow: hidden;
-  overflow-y: scroll;
-}
 /* repeats per item */
 .pageItemControl{
   display: flex;
@@ -97,11 +35,4 @@
   z-index: 8;
   top: 4rem;
   right: 0;
-}
-
-
-
-
-div.ng-view{
-
 }
