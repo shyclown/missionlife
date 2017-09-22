@@ -3,14 +3,12 @@ app.controller('pageView', function($scope, Ajax, $sanitize, $routeParams, $loca
     // display whole if only one else display headers and parts
 
     $scope.itemToShow = function(index, column){
-      console.log(index, column);
       let rad = (index % $scope.columns == 0);
-      console.log(rad);
       let size = ($scope.garants >= (index + column));
       return rad && size;
     }
     $scope.linkModelFunc = function(url){
-      console.log('lmf');
+
       $window.open(url);
     }
     $scope.sanit = function(str){return $sanitize(str);}

@@ -41,6 +41,7 @@ app.service('Article',function($rootScope, Ajax, Shared){
             limit_max: this.onePageSize
          }, url,
          function(response){
+
            self.selected = response.data.result;
            self.all_rows = response.data.all_rows;
            if(callback){ callback(response) };

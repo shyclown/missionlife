@@ -24,11 +24,15 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
         Shared.current_page = foundPage;
         Page.loadItems({page_id: Shared.current_page.id },
           function(response){
+            // received list of items to be displayed on this page
+
+            // for each item we check type and update View
               response.data.forEach(function(item){
                 if(item.type === 1){
                   Article.selectByID({id: item.item_id},function(res){
                     item.obj = res.data[0];
                     item.obj.content = $sce.trustAsHtml(decodeURIComponent(item.obj.content));
+                    $scope.$apply(); // important!
                 });}
                 if(item.type === 2){
                   Article.selectByFolder({folder_id: item.item_id},function(res){
@@ -36,6 +40,8 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
                       article.content = decodeURIComponent(article.content);
                     });
                     item.obj = res.data.result;
+                    $scope.$apply(); // important!
+
                 });}
                 if(item.type === 3){
                   console.log('Item: ',item);
@@ -44,11 +50,13 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
 
                     item.obj = res.data[0];
                     item.obj.data = JSON.parse(item.obj.data);
-                                        console.log('Response: ',item.obj.data);
+                    $scope.$apply(); // important!
+
                 });}
                 $scope.pageItems.push(item);
+
               });
-              console.log($scope.pageItems);
+
         });
       }
     }

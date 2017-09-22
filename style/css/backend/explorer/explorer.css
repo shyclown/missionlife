@@ -9,12 +9,16 @@
   "expFooter expFooter";
 }
 
+/* Path to current folder */
+
 #explorerPath{
   padding: 1rem;
   grid-area: expPath;
   display: flex;
   flex-direction: row;
 }
+
+/* Folder tree */
 
 #explorerFoldersTree{
   padding: 1rem;
@@ -34,6 +38,7 @@
   width: 100%;
 }
 
+/* Content */
 
 #addButtons{
   display: flex;
