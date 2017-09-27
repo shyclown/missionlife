@@ -16,7 +16,7 @@ app.service('Form',function($rootScope, Ajax, Shared){
     }
     else{ self.selectByFolder(
       { folder_id: ex.current_folder.id },
-      function(response){ ex.forms = response.data.result;
+      function(response){ ex.forms = response.data.result; $rootScope.$apply();
     });
     }
   }

@@ -1,4 +1,5 @@
 app.controller('formPage', function($scope, Ajax, Form, $sanitize, $routeParams, $location){
+
   const url = '/system/ajax.php';
   $scope.response;
   $scope.message;

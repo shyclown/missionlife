@@ -1,4 +1,4 @@
-app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadDropped){
+app.service('FileService',function($rootScope, Shared, Ajax,  uploadDropped){
 
   const url = '/system/ng/call.php?class=file';
 
@@ -64,7 +64,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
     }
     else{ self.selectByFolder(
       { folder_id: ex.current_folder.id },
-      function(response){ ex.files = response.data.result;
+      function(response){ ex.files = response.data.result; $rootScope.$apply();
     });
     }
   }
@@ -78,7 +78,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
   }
   this.selectByData = function(data,callback){
     data.action = 'get_files_by_selected';
-    customAjax(url, data, false, callback);
+    Ajax.call(data, url, callback);
   }
   this.selectByArticle = function(data, callback){
     data.action = 'select_by_article';
@@ -112,7 +112,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
     // chack if file is in URI or Blob
     console.log('upload', data);
     data.action = 'upload';
-    customAjax(url, data, false, callback);
+    Ajax.call(data, url, callback);
   }
 
   // Attach
@@ -133,7 +133,7 @@ app.service('FileService',function($rootScope, Shared, Ajax, customAjax, uploadD
   // require folder_id
   this.attachToFolder = function(data, callback){
     data.action = 'attach_to_folder';
-    customAjax(url, data, false, callback);
+    Ajax.call(data, url, callback);
   }
   // Update All
   this.update = function(data, callback){

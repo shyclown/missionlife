@@ -15,7 +15,7 @@ app.service('Article',function($rootScope, Ajax, Shared){
     else{
       self.selectByFolder(
         { folder_id: ex.current_folder.id },
-        function(response){ ex.articles = response.data.result;}
+        function(response){ ex.articles = response.data.result; $rootScope.$apply(); }
       );
     }
   }

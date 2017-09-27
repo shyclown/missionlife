@@ -1,4 +1,4 @@
-app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','customAjax',function(dataURItoBlob, resizeDroppedImage, customAjax){
+app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','Ajax',function(dataURItoBlob, resizeDroppedImage, Ajax){
   return function(files, progressFn, completeFn)
   {
     const targetUrl = '/system/ng/call.php?class=file';
@@ -13,7 +13,7 @@ app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','customAjax',
             file_name: one_file.name,
             files: dataURItoBlob(fileURL),
           };
-          customAjax(targetUrl, oData, progressFn, completeFn);
+          Ajax( oData, targetUrl, completeFn, progressFn);
         }
         const reader = new FileReader();
         reader.onload = function(readerEvent){
@@ -26,7 +26,7 @@ app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','customAjax',
           action: 'upload',
           files: one_file,
         }
-        customAjax(targetUrl, oData, progressFn, completeFn);
+        Ajax( oData, targetUrl, completeFn, progressFn);
       }
     });
   }//resizeDropped

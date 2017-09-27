@@ -20,16 +20,17 @@ Editor.enterEvent = function(oSelection, oRoot, oEvent)
   var oNode = oSelection.focusNode;
   var oRootNode = getParentInRoot(oNode, oRoot);
   let lastInRootNode = oNode == oRootNode.lastChild;
+
   console.log(oNode);
   console.log(oRootNode);
   console.log(oSelection.focusOffset);
-    console.log(oNode.length);
+  console.log(oNode.length);
+
   if(isOfTag(oRootNode, 'h2')
   || isOfTag(oRootNode, 'ol')
   || isOfTag(oRootNode, 'ul')
   ){
     if(!oNode.length || oSelection.focusOffset == oNode.length){
-      console.log('runs replace');
       setTimeout(function(){ replaceDivIfCreated(); },0);
     }
   }

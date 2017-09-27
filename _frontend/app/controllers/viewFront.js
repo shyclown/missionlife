@@ -11,12 +11,14 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
   $scope.pageItems = [];
   $scope.collapsedNav = true;
   $scope.showHiddenNav = false;
+
   $scope.toogleHiddenNav = function(){
     console.log('showHiddenNav');
     $scope.showHiddenNav = !$scope.showHiddenNav;
   }
 
-  const afterPageChange = function(){
+
+  const getArrayOfItems = function(){
     $scope.pageItems = [];
     if($routeParams.pageID && Shared.pages){
       let foundPage = Shared.pages.find(function(page){ return page.id == $routeParams.pageID; });
@@ -24,16 +26,15 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
         Shared.current_page = foundPage;
         Page.loadItems({page_id: Shared.current_page.id },
           function(response){
-            // received list of items to be displayed on this page
-
-            // for each item we check type and update View
               response.data.forEach(function(item){
+                // Article
                 if(item.type === 1){
                   Article.selectByID({id: item.item_id},function(res){
                     item.obj = res.data[0];
                     item.obj.content = $sce.trustAsHtml(decodeURIComponent(item.obj.content));
                     $scope.$apply(); // important!
                 });}
+                // Folder
                 if(item.type === 2){
                   Article.selectByFolder({folder_id: item.item_id},function(res){
                     res.data.result.forEach(function(article){
@@ -41,22 +42,16 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
                     });
                     item.obj = res.data.result;
                     $scope.$apply(); // important!
-
                 });}
+                // Form
                 if(item.type === 3){
-                  console.log('Item: ',item);
-
-                  Form.selectByID(item.item_id,function(res){
-
+                    Form.selectByID(item.item_id,function(res){
                     item.obj = res.data[0];
                     item.obj.data = JSON.parse(item.obj.data);
                     $scope.$apply(); // important!
-
                 });}
-                $scope.pageItems.push(item);
-
+                $scope.pageItems.push(item); // Save
               });
-
         });
       }
     }
@@ -66,14 +61,14 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
     Shared.pages = response.data;
     $scope.topNav = Shared.pages.filter(function(page){ return page.state == 1; });
     $scope.sideNav = Shared.pages.filter(function(page){ return page.state == 2; });
-    afterPageChange();
+    getArrayOfItems();
     $scope.resize();
   });
 
   $scope.selectPage = function(page){ $scope.showHiddenNav = false; $location.path('/page/'+ page.id+'/'); }
   $scope.$on('$routeChangeSuccess', function() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
-    if($routeParams.pageID){ afterPageChange(); }
+    if($routeParams.pageID){ getArrayOfItems(); }
   });
 
 

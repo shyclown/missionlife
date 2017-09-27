@@ -90,7 +90,6 @@ app.service('Shared',function($document, $compile){
 
   const directiveOBJ = function(name, generatedOBJ, item, callback, scope){
     this.html = '<'+name+' edit-obj="'+generatedOBJ+'"></'+name+'>';
-    console.log(scope);
     this.el = $compile( this.html )( scope );
     this.item = item;
     this.callback = callback;

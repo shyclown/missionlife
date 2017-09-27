@@ -74,7 +74,7 @@ user-select: none;
 }
 .content_wrap{
   font-family: 'Source Sans Pro',sans-serif;
-  max-height: 900px;
+  /*max-height: 900px;*/
   overflow: scroll;
   clear: both;
   border: 1px solid #EAEAEA;

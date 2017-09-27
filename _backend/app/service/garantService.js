@@ -1,4 +1,4 @@
-app.service('Garant',function($rootScope, Shared, Ajax, customAjax){
+app.service('Garant',function($rootScope, Shared, Ajax){
 
   const url = '/system/ng/call.php?class=garant';
   const self = this;
@@ -16,7 +16,7 @@ app.service('Garant',function($rootScope, Shared, Ajax, customAjax){
     }
     else{ self.selectByFolder(
       { folder_id: ex.current_folder.id },
-      function(response){ ex.garants = response.data.result;
+      function(response){ ex.garants = response.data.result; $rootScope.$apply();
     });
     }
   }

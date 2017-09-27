@@ -1,3 +1,4 @@
+/* blanket covers whole view and it is created under every popup window */
 .blanket{
   width: 100%;
   height: 100%;

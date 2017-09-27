@@ -1,4 +1,4 @@
-app.directive('customOnDrop',['$http','customAjax','uploadDroppedToArticle', function($http, customAjax, uploadDroppedToArticle) {
+app.directive('customOnDrop',['$http','customAjax','uploadDroppedToArticle', function($http, Ajax, uploadDroppedToArticle) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs)

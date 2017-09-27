@@ -16,6 +16,7 @@
   "expFooter expFooter";
 }
 
+
 /* put confirmation to top panel ? */
 #selectPopup .content .folderTopPanel{
   padding: 1rem;
@@ -30,6 +31,19 @@
   grid-area: expItems;
   overflow-y: scroll;
 }
+
+/* content of folder */
+#selectPopup .content .folderOpen button{
+  background-color: #EEE;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+}
+#selectPopup .content .folderOpen button:hover{
+  background-color: #E0E0E0;
+
+}
+
 #selectPopup .content .confirmSelection{
   display: flex;
   flex-direction: row;

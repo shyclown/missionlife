@@ -20,10 +20,11 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
 
       scope.$watch(
         function(){ return Folder.allFolders; },
-        function(){ scope.folders = Folder.allFolders;},
+        function(){ scope.folders = Folder.allFolders; },
       true);
       // Load Folders
-      Folder.select_all();
+      let updateScope = function(){ scope.$apply(); }
+      Folder.select_all(updateScope);
 
       const explorer = Shared.explorer;
       scope.$watch( function(){ return explorer.articles; }, function(){ scope.articles = explorer.articles; }, true );
@@ -85,15 +86,16 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.uploadFile = function(){ FileService.uploadFile(scope.currentFolder); }
 
       scope.isOpenFolder = function(){ return scope.currentFolder != null; }
+
       scope.openFolder = function(folder){
         // prompted action
-        const inFolderArray = function(id)
-        {
+        const inFolderArray = function(id){
           let pos = scope.openFoldersInTree.indexOf(id);
           return {
             open: pos >= 0, position: pos
           };
         }
+
         if(folder == null){
           scope.currentFolder = folder;
           Shared.explorer.current_folder = folder;
@@ -114,6 +116,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
             scope.openFoldersInTree.push(folder.id);
           }
         }
+
       }
       scope.isOpen = function(folder){ return folder.id == scope.currentFolder.id; }
 
