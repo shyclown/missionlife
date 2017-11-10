@@ -24,9 +24,14 @@
       <add-folder></add-folder>
     </div>
 
+
+    <!-- FOLDER TREE -->
     <div class="folderTree">
         <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
     </div>
+
+
+
     <div class="folderOpen">
       <!-- FOLDERS -->
       <div  class="folderLine line" ng-repeat="folder in folders" ng-if="(folder.parent == currentFolder.id)">

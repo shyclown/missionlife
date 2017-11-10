@@ -21,6 +21,9 @@
   line-height: 2rem;
   padding-left: 1rem;
 }
+.header .close{
+  background-color: #FFF;
+}
 .tooltab{
   grid-area: windowTooltab;
 }

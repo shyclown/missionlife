@@ -1,3 +1,10 @@
 <IfModule mod_rewrite.c>
+RewriteEngine On
+Options FollowSymLinks
 
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /_frontend/#/$1 [L]
 </IfModule>

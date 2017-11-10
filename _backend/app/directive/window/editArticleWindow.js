@@ -216,7 +216,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           let oText = oSelection.toString();
 
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
-          else if(data.type === 'page'){ link = $compile(createLink(data.name,'/ml_front/page/'+data.id))(scope); }
+          else if(data.type === 'page'){ link = $compile(createLink(data.name,'/_frontend/page/'+data.id))(scope); }
           else{ link = $compile(createLink(data.name, data.href))(scope); }
 
           scope.area.insertAfterSelection(link[0]);
