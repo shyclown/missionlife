@@ -13,7 +13,7 @@ app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','Ajax',functi
             file_name: one_file.name,
             files: dataURItoBlob(fileURL),
           };
-          Ajax( oData, targetUrl, completeFn, progressFn);
+          Ajax.call( oData, targetUrl, completeFn, progressFn);
         }
         const reader = new FileReader();
         reader.onload = function(readerEvent){
@@ -26,7 +26,8 @@ app.factory('uploadDropped', ['dataURItoBlob','resizeDroppedImage','Ajax',functi
           action: 'upload',
           files: one_file,
         }
-        Ajax( oData, targetUrl, completeFn, progressFn);
+        Ajax.call( oData, targetUrl, completeFn, progressFn);
+
       }
     });
   }//resizeDropped

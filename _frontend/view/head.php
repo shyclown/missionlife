@@ -34,7 +34,7 @@ foreach (glob("style/*.css") as $filename){
 <!-- Font Awesome -->
 <link href="/style/font-awesome.min.css" rel="stylesheet" type='text/css'>
 
-<link rel="shortcut icon" href="http://www.missionlife.sk/mission.ico"/>
+<link rel="shortcut icon" href="/mission.ico"/>
 <meta name="description" content="Občianske združenie Mission Life">
 <meta name="author" content="Mission Life">
 <meta name="keywords" content="Občianske, Združenie, Nadácia, Pomoc, 2%, Mission Life, obcianske, zdruzenie, nadacia, dar">
