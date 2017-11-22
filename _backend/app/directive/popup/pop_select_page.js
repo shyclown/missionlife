@@ -15,6 +15,7 @@ function(Shared, Page) {
 
       Page.select(function(response){
         scope.pages = response.data;
+        scope.$apply();
       });
       scope.selectPage = function(page){ scope.selectedPage = page; }
       scope.cssSelected = function(page){ return scope.selectedPage == page ? 'selected' : ''; }

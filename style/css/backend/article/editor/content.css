@@ -72,15 +72,7 @@ user-select: none;
 .intLink:hover{
   background-color: #EAEAEA;
 }
-.content_wrap{
-  font-family: 'Source Sans Pro',sans-serif;
-  /*max-height: 900px;*/
-  overflow: scroll;
-  clear: both;
-  border: 1px solid #EAEAEA;
-  min-height: 200px;
-  padding: 24px;
-}
+
 .red{
   background-color: red;
 }
