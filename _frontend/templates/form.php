@@ -21,7 +21,7 @@
 <div ng-bind-html='response'></div>
 <h2>{{form.name}}</h2>
 <div id="FormArea">
-<form method="post" target="handleForm.php" ng-submit="submit()">
+<form ng-submit="submit" ng-controller="formPage">
 <div class="field" ng-repeat="field in form.data">
   {{field.name}}:<br>
   <input ng-if="(field.type != 'all')" name="{{field.name}}" placeholder="{{field.name}}" ng-model="input[field.name].value">
@@ -32,7 +32,7 @@
 
 
 
- <input type="submit" ng-disabled="formInvalid()" value="Submit">
+ <input type="submit" id="submit" ng-disabled="formInvalid()" value="Odoslat">
 </form>
 </div>
 </article>

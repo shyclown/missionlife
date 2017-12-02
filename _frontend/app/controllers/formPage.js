@@ -1,5 +1,6 @@
 app.controller('formPage', function($scope, Ajax, Form, $sanitize, $routeParams, $location){
 
+  console.log("controller","formPage");
   const url = '/system/ajax.php';
   $scope.response;
   $scope.message;
@@ -7,14 +8,11 @@ app.controller('formPage', function($scope, Ajax, Form, $sanitize, $routeParams,
   $scope.input = {};
 
 
-  Form.selectByID($routeParams.formID, function(res){
-    let form = res.data[0];
-    form.data = JSON.parse(form.data);
-    $scope.form = form;
-    $scope.$apply(); // important;
-  });
+
   $scope.formInvalid = function(){ return false; };
   $scope.submit = function(){
+    console.log('submit');
+    console.log($scope.item.obj);
     /* todo check data */
     /*
     function check(value, type){
@@ -24,9 +22,13 @@ app.controller('formPage', function($scope, Ajax, Form, $sanitize, $routeParams,
       if(type == 'number'){}
     }
     */
-    let data = {form: $scope.form, data: $scope.input};
+
+    let data = {form: $scope.item.obj, data: $scope.input};
     console.log(data);
+    data.form = JSON.stringify(data.form);
+    data.data = JSON.stringify(data.data);
     Ajax.call(data, 'system/formEmail.php', function(res){
+      console.log(res.data);
       $scope.response = res.data;
       $scope.$apply(); // important;
     });

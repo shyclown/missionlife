@@ -48,6 +48,7 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
                     Form.selectByID(item.item_id,function(res){
                     item.obj = res.data[0];
                     item.obj.data = JSON.parse(item.obj.data);
+                    // read data
                     $scope.$apply(); // important!
                 });}
                 $scope.pageItems.push(item); // Save

@@ -1,4 +1,6 @@
 <?php
+// TatraPay
+
 class TatraBanka
 {
   // TEST

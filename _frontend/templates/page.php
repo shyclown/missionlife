@@ -30,14 +30,14 @@
     <div class="content shadow">
     <h1>{{item.obj.name}}</h1>
     <div id="FormArea">
-    <form method="post" target="handleForm.php" ng-submit="submit()">
+    <form ng-submit="submit()" ng-controller="formPage">
       <div class="field" ng-repeat="field in item.obj.data">
         {{field.name}}:<br>
         <input ng-if="(field.type != 'all')" name="{{field.name}}" placeholder="{{field.name}}" ng-model="input[field.name].value">
         <textarea ng-if="(field.type == 'all')" name="{{field.name}}" placeholder="{{field.name}}" ng-model="input[field.name].value"></textarea>
         <div ng-init="(input[field.name].type = field.type)"></div>
       </div>
-       <input class="submit" type="submit" ng-disabled="formInvalid()" value="Submit">
+       <input class="submit" type="submit" ng-disabled="formInvalid()" value="Odoslat">
     </form>
     </div>
     </div>
