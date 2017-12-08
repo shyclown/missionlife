@@ -1,0 +1,56 @@
+#editGarant{
+  .garantWindow{
+    background-color: $white;
+    max-height: 90%;
+    width: 280px;
+
+    .header{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: $primary;
+      button.close{
+        background-color: $white;
+      }
+    }
+    .imageArea{
+      display: block;
+      background-color: $gray;
+
+      .dropArea{
+        padding: 1rem;
+        background-color: $gray;
+        label, button{
+          box-sizing: border-box;
+          height: 2.5rem;
+          line-height: 2.5rem;
+          padding: 0rem 0.5rem;
+        }
+        label{ margin-right: 0.5rem;  }
+        button{ margin-left: 0.5rem;}
+
+        *{ display: inline-block;}
+      }
+      .hidden{
+        display: none;
+      }
+    }
+    .content{
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .control{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      padding: 1rem;
+
+      button.margin-right{
+        margin-right: 0.5rem;
+      }
+    }
+
+  }
+}

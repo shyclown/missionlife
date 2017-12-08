@@ -33,6 +33,15 @@
   <div id="pageContent">
   <!--MAIN CONTENT -->
     <div id="contentMain">
+        <?php
+        if(isset($_GET) && isset($_GET['ECDSA'])){
+          require( $_SERVER['DOCUMENT_ROOT']."/system/tatrapay/verify.php");
+
+          if(verifyTatraPay()){
+            echo '<h1>Ďakujeme!</h1>';
+          }
+        }
+        ?>
         <div ng-view></div>
         <section>
         <h2>Spolupracuju s nami:</h2>
@@ -57,9 +66,11 @@
     </div>
 
   <!-- SIDE -->
-  <div id="sideContent" ng-if="!hideSide">
+  <!-- SIDE  -->
+  <div id="sideContent" ng-if="!hideSide" >
     <nav id="sideNav" >
         <ul>
+          <li><a href="#" class="tatrapay" ng-click="selectTatraPay()">Tatrapay</a></li>
           <li ng-repeat="page in sideNav"><a href="#" ng-click="selectPage(page)">{{page.name}}</a></li>
         </ul>
     </nav>

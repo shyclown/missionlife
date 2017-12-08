@@ -90,12 +90,14 @@ class Garant
   }
 
   public function select_by_folder($data){
+
     $sql = "SELECT SQL_CALC_FOUND_ROWS f.file_src image, g.* FROM `ml_garant` g
             LEFT JOIN `ml_garant_file` gf ON gf.garant_id = g.id
             LEFT JOIN `ml_file` f ON f.id = gf.file_id
             INNER JOIN `ml_folder_item` fg ON g.id = fg.item_id
             WHERE fg.folder_id = ? AND fg.type = 5
             ORDER BY g.id DESC";
+    
     $sql_all_rows = "SELECT FOUND_ROWS()";
     $params = array('i',$data['folder_id']);
     $result = $this->db->query($sql, $params);

@@ -1,0 +1,55 @@
+/* yellow */
+#editGarant .garantWindow {
+  background-color: #FFF;
+  max-height: 90%;
+  width: 280px; }
+  #editGarant .garantWindow .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #FB0; }
+    #editGarant .garantWindow .header button.close {
+      background-color: #FFF; }
+  #editGarant .garantWindow .imageArea {
+    display: block;
+    background-color: #EAEAEA; }
+    #editGarant .garantWindow .imageArea .dropArea {
+      padding: 1rem;
+      background-color: #EAEAEA; }
+      #editGarant .garantWindow .imageArea .dropArea label, #editGarant .garantWindow .imageArea .dropArea button {
+        box-sizing: border-box;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        padding: 0rem 0.5rem; }
+      #editGarant .garantWindow .imageArea .dropArea label {
+        margin-right: 0.5rem; }
+      #editGarant .garantWindow .imageArea .dropArea button {
+        margin-left: 0.5rem; }
+      #editGarant .garantWindow .imageArea .dropArea * {
+        display: inline-block; }
+    #editGarant .garantWindow .imageArea .hidden {
+      display: none; }
+  #editGarant .garantWindow .content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column; }
+  #editGarant .garantWindow .control {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 1rem; }
+    #editGarant .garantWindow .control button.margin-right {
+      margin-right: 0.5rem; }
+
+.blanket {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2); }

@@ -1,22 +1,23 @@
-<div class="blanket" ng-click="cancel()">
-    <div class="window bg-white shadow" ng-click="$event.stopPropagation()">
-      <div class="bg-yellow row v-center space-between pl-1">
-          Garant {{garant.id}}
+<div id="editGarant" class="blanket" ng-click="cancel()">
+    <div class="garantWindow" ng-click="$event.stopPropagation()">
+      <div class="header">
+          Garant {{garant.header}}
          <button class="x-close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
        </div>
 
       <!-- Image Drop -->
-      <div class="dropImage gray pa-1" is-drop-area="onDropImage">
-        <img width="250px" ng-show="garant.image" src="/uploads/image/{{garant.image}}"/>
-        <div class="row v-center">
+      <div class="imageArea" is-drop-area="onDropImage">
+        <img width="280px" ng-show="hasImage()" src="{{garant.image_src}}"/>
+        <div class="dropArea">
           <label for="uploadNewImage" class="shadow"><i class="fa fa-upload"></i> Upload </label>
           <div>or Drop new File</div>
           <button ng-click="searchImage()" class="shadow"><i class="fa fa-folder-open-o"></i></button>
         </div>
+        <!-- Hidden Button -->
         <input class="hidden" id="uploadNewImage" type="file" custom-on-change="onPickImage" />
       </div>
 
-      <div class="content pa-1 column">
+      <div class="content">
         <label for="garantName">Garant name:</label>
         <input name="garantName" ng-model="garant.header">
         <label for="garantName">Garant Title:</label>
@@ -26,11 +27,11 @@
         <label for="motto">Motto:</label>
         <textarea type="textarea" contenteditable="true" name="motto" ng-model="garant.content"></textarea>
       </div>
-      <div class="control pa-1 border-top" ng-if="new">
+      <div class="control" ng-if="new">
           <button ng-click="save()">SAVE</button>
       </div>
-      <div class="control pa-1 border-top" ng-if="!new">
-          <button ng-click="delete()">DELETE</button>
+      <div class="control" ng-if="!new">
+          <button class="margin-right" ng-click="delete()">DELETE</button>
           <button ng-click="update()">UPDATE</button>
       </div>
   </div>

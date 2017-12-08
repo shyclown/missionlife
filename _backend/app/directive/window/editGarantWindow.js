@@ -17,10 +17,20 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
       let newImageFile = {};
 
       scope.new = true;
-      if(oGarant){ scope.garant = Object.assign({}, oGarant); scope.new = false; }
-      else{ scope.garant = Object.assign({}, newGarant); }
+      if(oGarant){
+        scope.garant = Object.assign({}, oGarant);
+        console.log(scope.garant);
+        scope.garant.image_src = '/uploads/image/'+scope.garant.image;
+        scope.new = false;
+      }
+      else{
+        scope.garant = Object.assign({}, newGarant);
+        scope.garant.image_src = '';
+      }
 
       scope.currentFolder = Shared.explorer.current_folder;
+
+      scope.hasImage = function(){ return scope.garant.image && scope.garant.image != null; };
 
       scope.cancel = function(){ oGarantWindow.close(); }
       // Garant functions
@@ -48,10 +58,10 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
 
           // selected item is called item.id
           console.log('selected item id: ', newImageFile.item_id);
-          const attachFileToGarant = { garant_id: scope.garant.id, file_id: newImageFile.item_id }
+          const attachFileToGarant = { garant_id: scope.garant.id, file_id: newImageFile.file_id }
 
           FileService.attachToGarant(attachFileToGarant,
-            function(res){console.log(res); callback(true); });
+            function(res){ callback(true); });
         }
         else{ callback(false); }
       }
@@ -63,18 +73,20 @@ function( Garant, FileService, dataURItoBlob, resizeDroppedImage, Shared ) {
 
         FileService.uploadFilesToFolder(filedata, Shared.explorer.current_folder,
           function(response){
-            console.log(response);
             scope.garant.image = response[0].file_src;
             newImageFile.file_id = response[0].file_id;
+
+            scope.garant.image_src = '/uploads/image/'+scope.garant.image;
+
             scope.$apply(); },
           function(prog){  }
         );
       }
 
       const changeImage = function(filedata){
-        console.log(filedata.obj);
         newImageFile = filedata.obj;
         scope.garant.image = filedata.obj.file_src;
+        scope.garant.image_src = '/uploads/image/'+scope.garant.image;
       }
 
       scope.onDropImage = function(){ uploadFile(event.dataTransfer.files); }

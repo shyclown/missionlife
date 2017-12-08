@@ -46,7 +46,7 @@ function getPathsToType($folder, $type){
 
 $css_universal = getPathsToType("../style/css/universal/", 'css');
 $css_backend = getPathsToType("../style/css/backend/", 'css');
-
+$css_scss = getPathsToType("../style/scss/", 'css');
 // CSS UNIVERSAL
 foreach ($css_universal as $path) {
 echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
@@ -55,7 +55,10 @@ echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
 foreach ($css_backend as $path) {
 echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
 }
-
+// SCSS
+foreach ($css_scss as $path) {
+echo '<link href="'.$path.'" rel="stylesheet" type="text/css">';
+}
 
 echo '<!-- App / Service -->';
 foreach (glob("app/service/*.js") as $filename){ echo '<script src="'.$filename.'"></script>';}

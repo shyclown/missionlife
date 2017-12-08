@@ -3,10 +3,9 @@
 
 class TatraBanka
 {
-  // TEST
-  const KEY = '31323334353637383930313233343536373839303132333435363738393031323132333435363738393031323334353637383930313233343536373839303132';
-  const MID = '9999';
-  const RSMS = '0911761474';
+  const KEY = '43626f62344749444b34777a59465f6148747731434c3644753764726f425f584f6662454a645356753166376a536138337a3477485077366478675731444e32';
+  const MID = '4891';
+  const RSMS = '';
   const REM = 'roman.moravcik1@gmail.com';
 
 	protected $AMT;
@@ -14,6 +13,8 @@ class TatraBanka
 	protected $VS;
 	protected $RURL;
   protected $TIME;
+
+  protected $STRING;
 
 	protected function GetSignature( $HMAC_STRING )
 	{
@@ -27,11 +28,14 @@ class TatraPay extends TatraBanka{
 
 	protected function SanitizeFloat($flt){	return str_replace(',', '.', sprintf('%.2f', $flt));}
 
-  public function __construct($AMT = '5', $CURR = '978', $VS = '0444', $RURL = 'http://www.missionlife.sk', $TIME = null)
+  public function __construct($AMT = '5', $CURR = '978', $VS = '0444', $RURL = 'https://www.missionlife.sk/_frontend/tatrapay/', $TIME = null)
 	{
+        $AMT = $this->SanitizeFloat($AMT);
+        if($AMT < 5){$AMT = 5;} // min 5
         date_default_timezone_set('UTC');
+
         // vstupne parametre
-        $this->AMT = $this->SanitizeFloat($AMT); // suma platby
+        $this->AMT = $AMT; // suma platby
 	      $this->CURR = $CURR; // mena "978" pre euro
 				$this->VS = $VS; // variabilny symbol
 
@@ -39,6 +43,7 @@ class TatraPay extends TatraBanka{
         $this->TIME = date('dmYHis'); // UTC TIME
 
         $HMAC_STRING = self::MID . $this->AMT . $this->CURR . $this->VS . $RURL . self::REM . $this->TIME;
+        $this->STRING = $HMAC_STRING;
 				$HMAC = $this->GetSignature( $HMAC_STRING );
         $this->HMAC = $HMAC;
 	}
@@ -58,20 +63,11 @@ class TatraPay extends TatraBanka{
 		);
 		return $url;
   }
+  // test HMAC
 
-	public function VerifyReply()
-	{
-    // PUBLIC
-    $ecdsa = array(
-      'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaq6djyzkpHdX7kt8DsSt6IuSoXjpWVlLfnZPoLaGKc/2BSfYQuFIO2hfgueQINJN3ZdujYXfUJ7Who+XkcJqHQ==',
-      'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+Y5mYZL/EEY9zGji+hrgGkeoyccKD0/oBoSDALHc9+LXHKsxXiEV7/h6d6+fKRDb6Wtx5cMzXT9HyY+TjPeuTg==',
-      'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkvgJ6sc2MM0AAFUJbVOD/i34YJJ8ineqTN+DMjpI5q7fQNPEv9y2z/ecPl8qPus8flS4iLOOxdwGoF1mU9lwfA=='
-    );
+  public function generateHMAC(){
+    var_dump($this->STRING);
+    var_dump($this->HMAC);
+  }
 
-    $verified = openssl_verify($stringToVerify, pack("H*", $ECDSA), $publicKey, "sha256");
-    if ($verified === 1) {
-      return true;  // odpoveď verifikovaná
-    }
-    return false;
-	}
 }

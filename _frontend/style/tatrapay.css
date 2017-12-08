@@ -1,0 +1,8 @@
+#sideNav a.tatrapay{
+  background-color: #1A237E;
+  color: #FFF;
+}
+#sideNav a.tatrapay:hover{
+  background-color: #000;
+  color: #FFF;
+}

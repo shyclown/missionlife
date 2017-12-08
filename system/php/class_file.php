@@ -197,7 +197,7 @@ class File
                         INNER JOIN  `ml_garant_file` gf ON gf.file_id = f.id
                         INNER JOIN  `ml_garant` g ON g.id = gf.garant_id
                       WHERE f.id = ?";
-    $params = array('ii', $data['file_id'], $data['file_id']);
+    $params = array('ii', $data['item_id'], $data['item_id']); // item_id
     return $this->db->query($sql, $params);
   }
 

@@ -1,6 +1,6 @@
 const app = angular.module('myapp',['ngRoute','ngSanitize']);
 
-console.log('app runs');
+
 app.controller('viewController',function($scope){
   console.log('viewController');
 });

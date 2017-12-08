@@ -16,7 +16,10 @@ app.service('Garant',function($rootScope, Shared, Ajax){
     }
     else{ self.selectByFolder(
       { folder_id: ex.current_folder.id },
-      function(response){ ex.garants = response.data.result; $rootScope.$apply();
+      function(response){
+        ex.garants = response.data.result;
+
+        $rootScope.$apply();
     });
     }
   }

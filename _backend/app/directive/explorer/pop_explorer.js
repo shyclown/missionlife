@@ -8,8 +8,8 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
     {
       let Explorer = Shared.explorer;
       // reset it
-      Shared.explorer.current_folder = null;
-      scope.currentFolder = null;
+      Shared.explorer.current_folder = 0;
+      scope.currentFolder = 0;
       scope.folders = [];
       scope.articles = [];
       scope.files = [];
@@ -39,7 +39,22 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
         Folder.insert( data, function(response){ scope.new_folder.name = ""; });
       }
 
-
+      let fil = {
+      $$hashKey: "object:69",
+      date_created: "2017-12-08 11:46:24",
+      date_edited: "2017-12-08 11:46:24",
+      file_name: "SLOVENIA-88.jpg",
+      file_size: 1504470,
+      file_src:"5a2a6d8059c07.png",
+      file_type:"png",
+      folder_id: 1,
+      id: 86,
+      item_id: 67,
+      type: 4
+    };
+    new Shared.directiveElement('edit-file-window', fil, function(){
+      //callback
+    }, scope);
 
       // Create Windows
       scope.openFileWindow = function(file){
@@ -85,7 +100,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       /* File Upload On Drop */
       scope.uploadFile = function(){ FileService.uploadFile(scope.currentFolder); }
 
-      scope.isOpenFolder = function(){ return scope.currentFolder != null; }
+      scope.isOpenFolder = function(){ return scope.currentFolder != 0; }
 
       scope.openFolder = function(folder){
         // prompted action
@@ -96,7 +111,7 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
           };
         }
 
-        if(folder == null){
+        if(folder == 0){
           scope.currentFolder = folder;
           Shared.explorer.current_folder = folder;
         }

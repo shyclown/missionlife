@@ -66,7 +66,14 @@ function($scope, Shared, Ajax, $sce, Form, $sanitize, $routeParams, $location, D
     $scope.resize();
   });
 
-  $scope.selectPage = function(page){ $scope.showHiddenNav = false; $location.path('/page/'+ page.id+'/'); }
+  $scope.selectTatraPay = function(){
+    $scope.showHiddenNav = false;
+    $location.path('/tatrapay');
+  }
+  $scope.selectPage = function(page){
+    $scope.showHiddenNav = false;
+    $location.path('/page/'+ page.id+'/');
+  }
   $scope.$on('$routeChangeSuccess', function() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     if($routeParams.pageID){ getArrayOfItems(); }

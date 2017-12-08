@@ -10,6 +10,8 @@ function( FileService, Article, Garant, Shared ) {
       scope.cancel = function(){  scope.fileWindow.close();  }
       scope.openFile = scope.fileWindow.item;
 
+      console.log(scope.openFile);
+
       if(scope.openFile){
         scope.file = Shared.fn.cloneObject(scope.openFile);
         scope.filesize = Shared.fn.getFileSize(scope.file.file_size);

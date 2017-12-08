@@ -10,8 +10,7 @@ app.factory('Ajax', function(){
     defError : function(response){console.log('error', response);},
     call: function( oData, targetUrl, completeFn, progressFn )
     {
-    console.log("data", oData);
-    console.log("target", targetUrl);
+
 
     const createForm = function(oArray){
       var oForm = new FormData();
@@ -24,7 +23,6 @@ app.factory('Ajax', function(){
     request.addEventListener('load',function(){
       const res = { data: JSON.parse(request.responseText) }
       if(completeFn){
-        console.log("response", res.data);
         completeFn(res);
       }
     });

@@ -25,6 +25,10 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'templates/page.php',
       controller: 'pageView'
   })
+  .when('/tatrapay/', {
+      templateUrl: 'templates/tatrapay.php',
+      //controller: 'pageView'
+  })
   .when('/article/:articleID/',{
       templateUrl: 'templates/article.php',
       controller: 'articlePage'
