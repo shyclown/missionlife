@@ -4,6 +4,12 @@
 uploads/
 uploads/image
 uploads/image/small
+
+system/tatrapay/
+system/tatrapay/tatrapay.php
+system/tatrapay/testpay.php
+system/tatrapay/verify.php
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -51,6 +57,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-system/tatrapay/tatrapay.php
-system/tatrapay/testpay.php
-system/tatrapay/verify.php
