@@ -1,8 +1,8 @@
-<div class="blanket" ng-click="cancel()">
-  <div class="window bg-white shadow" ng-click="$event.stopPropagation()">
-    <div class="bg-yellow row v-center space-between pl-1">
+<div id="editFile" class="blanket" ng-click="cancel()">
+  <div class="fileWindow shadow" ng-click="$event.stopPropagation()">
+    <div class="header">
      {{text.top.name}} - {{folder.name}}
-      <button class="x-close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
+      <button class="close" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
     <div class="content pa-1">
         <header class="pa-1">

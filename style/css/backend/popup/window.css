@@ -14,7 +14,7 @@
     background-color: white;
 }
 
-.header{
+.window .header{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,7 +22,7 @@
   line-height: 2rem;
   padding-left: 1rem;
 }
-.header .close{
+.window .header .close{
   background-color: #FFF;
 }
 .tooltab{

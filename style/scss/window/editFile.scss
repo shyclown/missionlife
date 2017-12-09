@@ -1,0 +1,28 @@
+#editFile{
+  .fileWindow{
+    background-color: $white;
+
+    .header{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 2rem;
+      padding-left: 1rem;
+
+      background-color: $primary;
+      button.close{
+        background-color: $white;
+      }
+    }
+
+    .content{
+      header{
+        h1{
+          font-family: 'Roboto', sans-serif;
+        }
+      }
+
+    }
+  }
+
+}
