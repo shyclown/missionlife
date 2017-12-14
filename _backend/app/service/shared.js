@@ -120,6 +120,12 @@ app.service('Shared',function($document, $compile){
 
   this.currentFolder = null;
   this.text = {
+    base:{
+      name: 'missionlife.sk',
+      files: 'Files',
+      webpage: 'Webpage',
+      settings: 'Settings'
+    },
     edit:{
       folder:{
         top:{

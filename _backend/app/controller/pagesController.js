@@ -8,7 +8,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   $scope.columns = 2;
 
   const loadPages = function(){
-    Page.select(function(response){ $scope.pages = response.data; console.log(response); });
+    Page.select(function(response){ $scope.pages = response.data; $scope.$apply(); console.log(response); });
   }
   loadPages();
 

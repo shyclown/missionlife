@@ -10,11 +10,11 @@
             {{file.file_name}}
           </h1>
         </header>
-        <div class="row">
+        <div class="buttons">
           <button class="editImage" disabled="true">rotate</button>
-          <button class="editImage">change folder</button>
-          <button class="editImage">download</button>
-          <button class="editImage">delete</button>
+          <button class="editImage" disabled="true">change folder</button>
+          <button class="editImage" disabled="true">download</button>
+          <button class="editImage" disabled="true">delete</button>
         </div>
         <section class="image" ng-if="(file.file_type == 'png')">
           <img width="350px" ng-src="/uploads/image/{{file.file_src}}">
@@ -24,9 +24,9 @@
           <button class="spanlink" ng-repeat="detail in details" ng-click="openItem(detail)">{{detail.header}}</button>
         </section>
         <section class="details">
-          <h2>File Details</h2>
-          File Source: {{file.file_src}}<br>
-          File Size: {{filesize}}
+          <h3>File Details</h3>
+          <span>File Source:</span><span>{{file.file_src}}</span>
+          <span>File Size:</span><span>{{filesize}}</span>
         </section>
     </div><!-- content -->
     <div class="footer">

@@ -64,10 +64,10 @@ class TatraPay extends TatraBanka{
 		return $url;
   }
   // test HMAC
-
+/*
   public function generateHMAC(){
     var_dump($this->STRING);
     var_dump($this->HMAC);
   }
-
+*/
 }

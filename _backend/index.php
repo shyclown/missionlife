@@ -33,9 +33,9 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
 
 
       <!-- Header -->
-      <div id="theHeader" class="container shadow bg-yellow">
-        <div class="row space-between">
-          <h1>eJoin</h1>
+      <div id="theHeader" class="shadow">
+        <div class="content">
+          <h1>{{text.base.name}}</h1>
 
           <button><i class="fa fa-user-circle-o"></i></button>
         </div>
@@ -44,9 +44,9 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
       <!-- Left panel -->
       <div id="theLeftPanel" class="shadow">
         <ul>
-          <li><a href="folders"><i class="fa fa-folder-o"></i> Files</a></li>
-          <li><a href="pages"><i class="fa fa-sitemap"></i> Webpage</a></li>
-          <li><a href="settings"><i class="fa fa-cog"></i> Settings</a></li>
+          <li><a href="folders"><i class="fa fa-folder-o"></i> {{text.base.files}}</a></li>
+          <li><a href="pages"><i class="fa fa-sitemap"></i> {{text.base.webpage}}</a></li>
+          <li><a href="settings"><i class="fa fa-cog"></i> {{text.base.settings}}</a></li>
         </ul>
       </div>
 
@@ -55,18 +55,19 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
       </div>
 
       <!-- Footer panel -->
-      <div id="theFooter" >fsdfs
+      <div id="theFooter" class="">missionlife.sk 2017
         <div ng-bind-html='php'></div>
       </div>
 
       <!-- Animated panel -->
+      <!--
       <div id="accountPanel" class="shadow">
         <ul>
           <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
           <li><a target="_self" href="/_backend/signin.php"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>
       </div>
-
+    -->
     </div><!--MainGrid end -->
 
   </body><!-- APP end -->

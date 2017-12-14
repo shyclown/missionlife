@@ -1,0 +1,46 @@
+#editArticle{
+  .fileWindow{
+    background-color: $white;
+
+    .header{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 2rem;
+      padding-left: 1rem;
+
+      background-color: $primary;
+      button.close{
+        background-color: $white;
+      }
+    }
+
+    .content{
+      header{
+        h1.filename{
+          font-family: 'Roboto', sans-serif;
+          font-weight: 100;
+        }
+      }
+      .buttons{
+        display: flex;
+        flex-direction: row;
+
+        padding-bottom: 1rem;
+        .editImage{ margin-right: 0.5rem}
+      }
+      section{
+        margin-bottom: 0.5rem;
+      }
+      section.details{
+
+        padding: 0.5rem;
+        background-color: $gray;
+
+        h3{ font-weight: 100; margin: 0px; padding: 0px; margin-bottom: 0.5rem; line-height: 1rem; background-color: none;}
+        span{ font-weight: 100; display: inline-block; width: 50%; overflow-x: hidden;}
+      }
+    }
+  }
+
+}

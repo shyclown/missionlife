@@ -69,8 +69,19 @@
   <!-- SIDE  -->
   <div id="sideContent" ng-if="!hideSide" >
     <nav id="sideNav" >
+      <style>.tatrapay{
+        vertical-align: middle;
+        line-height: 2rem;
+        }
+        .tatrapay img{
+          display: inline-block;
+          vertical-align: middle;
+          height: 2rem;
+          padding-right: 1rem;
+
+          }</style>
         <ul>
-          <li><a href="#" class="tatrapay" ng-click="selectTatraPay()">Tatrapay</a></li>
+          <li><a href="#" class="tatrapay" ng-click="selectTatraPay()"><img class="tp"  src="/TPlogo_white.png" alt="TatraPay Logo">Daruj</a></li>
           <li ng-repeat="page in sideNav"><a href="#" ng-click="selectPage(page)">{{page.name}}</a></li>
         </ul>
     </nav>

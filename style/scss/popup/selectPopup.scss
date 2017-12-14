@@ -14,46 +14,41 @@
   "expPath expPath"
   "expFolders expItems"
   "expFooter expFooter";
+  .folderTopPanel{
+    padding: 1rem;
+    grid-area: expPath;
+  }
+  .folderTree{
+    padding: 1rem;
+    grid-area: expFolders;
+  }
+  .folderOpen{
+    padding: 1rem;
+    grid-area: expItems;
+    overflow-y: scroll;
+    button{
+      background-color: #EEE;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: left;
+    }
+    button:hover{
+      background-color: #E0E0E0;
+
+    }
+  }
+  .confirmSelection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+    grid-area: expFooter;
+  }
 }
 
 
-/* put confirmation to top panel ? */
-#selectPopup .content .folderTopPanel{
-  padding: 1rem;
-  grid-area: expPath;
-}
-#selectPopup .content .folderTree{
-  padding: 1rem;
-  grid-area: expFolders;
-}
-#selectPopup .content .folderOpen{
-  padding: 1rem;
-  grid-area: expItems;
-  overflow-y: scroll;
-}
 
-/* content of folder */
-#selectPopup .content .folderOpen button{
-  background-color: #EEE;
-  box-sizing: border-box;
-  width: 100%;
-  text-align: left;
-}
-#selectPopup .content .folderOpen button:hover{
-  background-color: #E0E0E0;
 
-}
-
-#selectPopup .content .confirmSelection{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1rem;
-  grid-area: expFooter;
-}
-#selectPopup .content .folderOpen{
-
-}
 
 
 .imagesWrap{

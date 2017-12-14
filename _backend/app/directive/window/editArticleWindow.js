@@ -10,6 +10,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
     {
       const oArticleWindow = Shared.openElement[attrs.editObj];
       const oArticle = oArticleWindow.item;
+      console.log(oArticle);
       const explorer = Shared.explorer;
       const newArticle = {
         header: 'New Article',
