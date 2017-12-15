@@ -1,12 +1,12 @@
-<div class="blanket" ng-click="">
-  <div class="window bg-white shadow" ng-click="$event.stopPropagation()">
-    <div class="header bg-yellow row v-center justify-between pl-1">
+<div id="editArticle" class="blanket" ng-click="">
+  <div class="articleWindow shadow" ng-click="$event.stopPropagation()">
+    <div class="header">
      Article editor
       <button class="x-close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
     <!-- articleGrid -->
     <div class="content" >
-      <div id="articleGrid">
+
 
 
 
@@ -32,8 +32,6 @@
           <li><button class="fullwidth txt-left" ng-click="editWebLinkPop()"><i class="fa fa-link"></i> Web Link</button></li>
           <li><button class="fullwidth txt-left" ng-click="selectPagePop()"><i class="fa fa-sitemap"></i> Page Link</button></li>
         </ul>
-      </div>
-
       </div>
     </div>
     <div class="footer" ng-bind-html="logPanel"></div>

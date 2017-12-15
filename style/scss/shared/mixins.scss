@@ -1,0 +1,17 @@
+@mixin windowHeader{
+  /* top of window */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* to put close button to the right */
+
+  line-height: 2rem; /* make text in middle of header */
+  padding-left: 1rem;/* padding for text */
+
+  min-height: 2rem; /* in some cases was header shrinked in windows with not fixed height */
+
+  background-color: $primary;  
+
+  button.close{
+    background-color: $white;
+  }
+}

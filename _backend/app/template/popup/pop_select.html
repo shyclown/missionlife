@@ -2,12 +2,12 @@
 
 <!-- Select popup -->
 <!-- Default window setup -->
-<div class="blanket" ng-click="cancel()">
-  <div id="selectPopup" class="bg-white window shadow" folders-data='folders' ng-click="$event.stopPropagation();">
+<div id="selectPopup" class="blanket" ng-click="cancel()">
+  <div class="selectWindow shadow" folders-data='folders' ng-click="$event.stopPropagation();">
 
 
     <!-- Header -->
-    <div class="header bg-yellow row v-center space-between">
+    <div class="header">
       Select PopUp
       <button class="close" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>

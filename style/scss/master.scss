@@ -1,12 +1,12 @@
 @import 'shared/variables';
+@import 'shared/mixins';
 @import 'shared/blanket';
-
+/* main */
 @import 'backendBase';
-
+@import 'explorer';
+/* window */
 @import 'window/editGarant';
 @import 'window/editFile';
 @import 'window/editArticle';
-
+/* popup */
 @import 'popup/selectPopup';
-
-@import 'explorer';

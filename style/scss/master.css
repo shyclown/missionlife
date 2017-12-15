@@ -12,6 +12,7 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2); }
 
+/* main */
 #theHeader {
   background-color: #FB0;
   height: 4rem; }
@@ -47,6 +48,49 @@
   background-color: #444;
   color: #FFF; }
 
+#explorerGrid {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 200px auto;
+  grid-template-rows: 4rem auto 0rem;
+  grid-template-areas: "expPath expPath" "expFolders expItems" "expFooter expFooter"; }
+  #explorerGrid #explorerPath {
+    padding: 1rem;
+    grid-area: expPath;
+    display: flex;
+    flex-direction: row; }
+  #explorerGrid #explorerFoldersTree {
+    padding: 1rem;
+    grid-area: expFolders;
+    background-color: #FFF; }
+  #explorerGrid #explorerFoldersTree .folder {
+    box-sizing: border-box;
+    width: 100%; }
+  #explorerGrid #explorerFoldersTree .folder > .line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%; }
+  #explorerGrid #addButtons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem; }
+  #explorerGrid #explorerContent {
+    position: relative;
+    padding: 1rem;
+    grid-area: expItems;
+    max-height: 100%;
+    overflow-y: scroll; }
+  #explorerGrid #explorerContent button {
+    background-color: #FFF;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left; }
+  #explorerGrid #explorerContent button:hover {
+    background-color: #EEE; }
+
+/* window */
 #editGarant .garantWindow {
   background-color: #FFF;
   max-height: 90%;
@@ -94,11 +138,17 @@
 #editFile .fileWindow {
   background-color: #FFF; }
   #editFile .fileWindow .header {
+    /* top of window */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    /* to put close button to the right */
     line-height: 2rem;
+    /* make text in middle of header */
     padding-left: 1rem;
+    /* padding for text */
+    min-height: 2rem;
+    /* in some cases was header shrinked in windows with not fixed height */
     background-color: #FB0; }
     #editFile .fileWindow .header button.close {
       background-color: #FFF; }
@@ -129,48 +179,77 @@
       width: 50%;
       overflow-x: hidden; }
 
-#editArticle .fileWindow {
-  background-color: #FFF; }
-  #editArticle .fileWindow .header {
+#editArticle .articleWindow {
+  min-height: 500px;
+  max-height: 80%;
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column; }
+  #editArticle .articleWindow .header {
+    /* top of window */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    /* to put close button to the right */
     line-height: 2rem;
+    /* make text in middle of header */
     padding-left: 1rem;
+    /* padding for text */
+    min-height: 2rem;
+    /* in some cases was header shrinked in windows with not fixed height */
     background-color: #FB0; }
-    #editArticle .fileWindow .header button.close {
+    #editArticle .articleWindow .header button.close {
       background-color: #FFF; }
-  #editArticle .fileWindow .content header h1.filename {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100; }
-  #editArticle .fileWindow .content .buttons {
+  #editArticle .articleWindow .content {
     display: flex;
     flex-direction: row;
-    padding-bottom: 1rem; }
-    #editArticle .fileWindow .content .buttons .editImage {
-      margin-right: 0.5rem; }
-  #editArticle .fileWindow .content section {
-    margin-bottom: 0.5rem; }
-  #editArticle .fileWindow .content section.details {
-    padding: 0.5rem;
-    background-color: #EAEAEA; }
-    #editArticle .fileWindow .content section.details h3 {
-      font-weight: 100;
-      margin: 0px;
-      padding: 0px;
-      margin-bottom: 0.5rem;
-      line-height: 1rem;
-      background-color: none; }
-    #editArticle .fileWindow .content section.details span {
-      font-weight: 100;
-      display: inline-block;
-      width: 50%;
-      overflow-x: hidden; }
+    overflow-y: hidden; }
+    #editArticle .articleWindow .content #articleEditorForm {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      overflow-y: hidden; }
+      #editArticle .articleWindow .content #articleEditorForm #articleEditorHeader {
+        margin-bottom: 1rem; }
+      #editArticle .articleWindow .content #articleEditorForm .editor_wrap {
+        display: flex;
+        flex-direction: column;
+        /*Editor*/ }
+        #editArticle .articleWindow .content #articleEditorForm .editor_wrap .ctrl_btns button.intLink {
+          background-color: #FFF;
+          display: inline-block; }
+        #editArticle .articleWindow .content #articleEditorForm .editor_wrap .ctrl_btns button.intLink:hover {
+          background-color: #EAEAEA;
+          cursor: pointer; }
+        #editArticle .articleWindow .content #articleEditorForm .editor_wrap .content_wrap {
+          box-sizing: border-box;
+          overflow-y: scroll;
+          margin-bottom: 1rem;
+          min-height: 350px;
+          padding: 1rem; }
+      #editArticle .articleWindow .content #articleEditorForm #articleEditorContent {
+        overflow-y: scroll; }
 
+/* popup */
 /* Select Popup */
-#selectPopup.window {
-  grid-template-rows: 2rem 0rem calc(100% - 6rem) 2rem; }
-
+#selectPopup .selectWindow {
+  background-color: #FFF;
+  height: 500px; }
+  #selectPopup .selectWindow .header {
+    /* top of window */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* to put close button to the right */
+    line-height: 2rem;
+    /* make text in middle of header */
+    padding-left: 1rem;
+    /* padding for text */
+    min-height: 2rem;
+    /* in some cases was header shrinked in windows with not fixed height */
+    background-color: #FB0; }
+    #selectPopup .selectWindow .header button.close {
+      background-color: #FFF; }
 #selectPopup .content {
   overflow-y: hidden !important;
   /* overwrite default */
@@ -248,45 +327,3 @@
   transition-property: margin, max-width;
   transition-duration: 0.2s, 0.3s;
   max-width: 100%; }
-
-#explorerGrid {
-  display: grid;
-  height: 100%;
-  grid-template-columns: 200px auto;
-  grid-template-rows: 4rem auto 0rem;
-  grid-template-areas: "expPath expPath" "expFolders expItems" "expFooter expFooter"; }
-  #explorerGrid #explorerPath {
-    padding: 1rem;
-    grid-area: expPath;
-    display: flex;
-    flex-direction: row; }
-  #explorerGrid #explorerFoldersTree {
-    padding: 1rem;
-    grid-area: expFolders;
-    background-color: #FFF; }
-  #explorerGrid #explorerFoldersTree .folder {
-    box-sizing: border-box;
-    width: 100%; }
-  #explorerGrid #explorerFoldersTree .folder > .line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    box-sizing: border-box;
-    width: 100%; }
-  #explorerGrid #addButtons {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1rem; }
-  #explorerGrid #explorerContent {
-    position: relative;
-    padding: 1rem;
-    grid-area: expItems;
-    max-height: 100%;
-    overflow-y: scroll; }
-  #explorerGrid #explorerContent button {
-    background-color: #FFF;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left; }
-  #explorerGrid #explorerContent button:hover {
-    background-color: #EEE; }

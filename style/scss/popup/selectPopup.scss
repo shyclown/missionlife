@@ -1,48 +1,54 @@
 
 /* Select Popup */
+#selectPopup{
+  .selectWindow{
+    background-color: $white;
+    height: 500px;
 
-#selectPopup.window{
-  grid-template-rows: 2rem 0rem calc(100% - 6rem) 2rem;
-}
-#selectPopup .content{
-  overflow-y: hidden !important; /* overwrite default */
-  display: grid;
-  height: 100%;
-  grid-template-columns: 200px minmax(350px, 550px);
-  grid-template-rows: minmax(0rem, 2rem) auto 4rem;
-  grid-template-areas:
-  "expPath expPath"
-  "expFolders expItems"
-  "expFooter expFooter";
-  .folderTopPanel{
-    padding: 1rem;
-    grid-area: expPath;
-  }
-  .folderTree{
-    padding: 1rem;
-    grid-area: expFolders;
-  }
-  .folderOpen{
-    padding: 1rem;
-    grid-area: expItems;
-    overflow-y: scroll;
-    button{
-      background-color: #EEE;
-      box-sizing: border-box;
-      width: 100%;
-      text-align: left;
-    }
-    button:hover{
-      background-color: #E0E0E0;
-
+    .header{
+      @include windowHeader;
     }
   }
-  .confirmSelection{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 1rem;
-    grid-area: expFooter;
+  .content{
+    overflow-y: hidden !important; /* overwrite default */
+    display: grid;
+    height: 100%;
+    grid-template-columns: 200px minmax(350px, 550px);
+    grid-template-rows: minmax(0rem, 2rem) auto 4rem;
+    grid-template-areas:
+    "expPath expPath"
+    "expFolders expItems"
+    "expFooter expFooter";
+    .folderTopPanel{
+      padding: 1rem;
+      grid-area: expPath;
+    }
+    .folderTree{
+      padding: 1rem;
+      grid-area: expFolders;
+    }
+    .folderOpen{
+      padding: 1rem;
+      grid-area: expItems;
+      overflow-y: scroll;
+      button{
+        background-color: #EEE;
+        box-sizing: border-box;
+        width: 100%;
+        text-align: left;
+      }
+      button:hover{
+        background-color: #E0E0E0;
+
+      }
+    }
+    .confirmSelection{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 1rem;
+      grid-area: expFooter;
+    }
   }
 }
 

@@ -1,46 +1,63 @@
 #editArticle{
-  .fileWindow{
+  .articleWindow{
+    min-height: 500px;
+    max-height: 80%;
     background-color: $white;
 
-    .header{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      line-height: 2rem;
-      padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
 
-      background-color: $primary;
-      button.close{
-        background-color: $white;
-      }
+
+    .header{
+      @include windowHeader;
     }
 
     .content{
-      header{
-        h1.filename{
-          font-family: 'Roboto', sans-serif;
-          font-weight: 100;
-        }
-      }
-      .buttons{
+      display: flex;
+      flex-direction: row;
+      overflow-y: hidden;
+
+      #articleEditorForm{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
 
-        padding-bottom: 1rem;
-        .editImage{ margin-right: 0.5rem}
-      }
-      section{
-        margin-bottom: 0.5rem;
-      }
-      section.details{
+        width: 500px;
+        overflow-y: hidden;
 
-        padding: 0.5rem;
-        background-color: $gray;
+        #articleEditorHeader{
+          margin-bottom: 1rem;
+        }
+        .editor_wrap{
+          display: flex;
+          flex-direction: column;
+          /*Editor*/
+          .ctrl_btns{
+            button.intLink{
+              background-color: $white;
+              display: inline-block;
+            }
+            button.intLink:hover{
+              background-color: $gray;
+              cursor: pointer;
+            }
+          }
+          .content_wrap{
+            box-sizing: border-box;
+            overflow-y: scroll;
+            margin-bottom: 1rem;
+            min-height: 350px;
+            padding: 1rem;
+          }
+          .switch_wrap{
 
-        h3{ font-weight: 100; margin: 0px; padding: 0px; margin-bottom: 0.5rem; line-height: 1rem; background-color: none;}
-        span{ font-weight: 100; display: inline-block; width: 50%; overflow-x: hidden;}
+          }
+        }
+
+        #articleEditorContent{
+          overflow-y: scroll;
+
+        }
       }
     }
   }
-
 }
