@@ -1,22 +1,27 @@
 #editArticle{
   .articleWindow{
+    @include windowDefault;
     min-height: 500px;
     max-height: 80%;
-    background-color: $white;
 
-    display: flex;
-    flex-direction: column;
-
-
-    .header{
-      @include windowHeader;
-    }
+    .header{  @include windowHeader;  }
 
     .content{
       display: flex;
       flex-direction: row;
       overflow-y: hidden;
+      /* Buttons */
+      #articleEditorControls{
+        li{
+          button{
+            display: block;
+            text-align: left;
+            width: 100%;
+          }
+        }
 
+      }
+      /* Editor */
       #articleEditorForm{
         display: flex;
         flex-direction: column;

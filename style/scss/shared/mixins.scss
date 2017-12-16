@@ -1,5 +1,10 @@
+@mixin windowDefault{
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+}
 @mixin windowHeader{
-  /* top of window */
+
   display: flex;
   flex-direction: row;
   justify-content: space-between; /* to put close button to the right */
@@ -9,9 +14,15 @@
 
   min-height: 2rem; /* in some cases was header shrinked in windows with not fixed height */
 
-  background-color: $primary;  
+  background-color: $primary;
 
   button.close{
     background-color: $white;
   }
 }
+
+
+
+// DO NOT CHANGE
+@mixin flexrow{  display: flex;  flex-direction: row;}
+@mixin flexcolumn{  display: flex;  flex-direction: column;}

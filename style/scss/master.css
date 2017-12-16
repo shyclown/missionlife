@@ -138,7 +138,6 @@
 #editFile .fileWindow {
   background-color: #FFF; }
   #editFile .fileWindow .header {
-    /* top of window */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -180,13 +179,12 @@
       overflow-x: hidden; }
 
 #editArticle .articleWindow {
-  min-height: 500px;
-  max-height: 80%;
   background-color: #FFF;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  min-height: 500px;
+  max-height: 80%; }
   #editArticle .articleWindow .header {
-    /* top of window */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -203,7 +201,13 @@
   #editArticle .articleWindow .content {
     display: flex;
     flex-direction: row;
-    overflow-y: hidden; }
+    overflow-y: hidden;
+    /* Buttons */
+    /* Editor */ }
+    #editArticle .articleWindow .content #articleEditorControls li button {
+      display: block;
+      text-align: left;
+      width: 100%; }
     #editArticle .articleWindow .content #articleEditorForm {
       display: flex;
       flex-direction: column;
@@ -236,7 +240,6 @@
   background-color: #FFF;
   height: 500px; }
   #selectPopup .selectWindow .header {
-    /* top of window */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
