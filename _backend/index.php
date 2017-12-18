@@ -22,7 +22,7 @@ if(!$_SESSION){ header("Location: $url"); die('died'); }
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/style/font-awesome.min.css" rel="stylesheet" type='text/css'>
-    <link href="/style/luca.css" rel="stylesheet" type='text/css'>
+    <!--<link href="/style/luca.css" rel="stylesheet" type='text/css'>-->
   </head>
 
   <!-- LUCA APP -->

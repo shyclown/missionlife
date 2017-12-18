@@ -1,8 +1,134 @@
+
+html, body{
+  margin: 0px;
+  padding: 0px;
+}
+body{
+  background-color: rgb(240, 242, 241);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-smooth: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1{
+  max-height: 100%;
+}
+button{
+  box-sizing: border-box;
+  display: block;
+  padding: 0.5rem;
+  border: none;
+  border-radius: none;
+  max-height: 100%;
+  outline: none;
+}
+button.selected{ background-color: #FB0; }
+
+
+i{}
+a{ text-decoration: none; }
+form{
+  padding: 1rem;
+}
+label{
+  padding: 0.5rem 0rem;
+}
+input{
+  padding: 0.25rem 0.5rem;
+}
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+ul > li {}
+ul > li > a {
+  display: block;
+  padding: 1rem;
+  background-color: #FFFFFF;
+}
+ul > li > a:hover {
+  background-color: #EFEFEF;
+}
+#sourceText{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px;
+  overflow: hidden;
+  background-color:  #FFF3E0;
+
+  display:table;
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.image{
+  position: relative;
+  background-color: #FFF3E0;
+  display: block;
+  text-align: center;
+}
+/* buttons */
+.icon_btn{
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  position: absolute;
+  text-align: center;
+}
+.icon{
+  box-sizing: border-box;
+  background-color: #FFCC80;
+  font-size: 16px;
+  padding: 8px;
+  width: 32px;
+  height: 32px;
+}
+.moveBtn .icon:hover{
+  background-color: #EF6C00;
+  color: #FFF;
+}
+.deleteBtn .icon:hover{
+  background-color: #EF6C00;
+  color: #FFF;
+}
+.moveBtn{
+  top:0;
+  left:0;
+}
+.deleteBtn{
+  top:0;
+  right:0;
+}
+
+.mainGrid{
+  display: grid;
+  box-sizing: border-box;
+  height: 100%;
+  grid-gap: 0px;
+  grid-template-columns: 200px auto;
+  grid-template-rows: 4rem calc(100% - 8rem) 4rem;
+  grid-template-areas:
+  "header header"
+  "leftPanel routedContent "
+  "footer footer";
+}
+
+
 #theHeader{
+  grid-area: header;
+  z-index: 2;
+  height: 100% !important;
+
   background-color: $primary;
   height: 4rem;
 
   .content{
+
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -28,11 +154,22 @@
 }
 
 #theLeftPanel{
+  grid-area: leftPanel;  z-index: 1;  background-color: #EEE;
   background-color: $white;
   color: black;
   a{color: black;}
 }
+
+#theRoutedContent{
+  grid-area: routedContent;
+  height: 100% !important; /* nested grid uses 100% height */
+}
+
 #theFooter{
+  grid-area: footer;
+  z-index: 2;
+  background-color: #EEE;
+
   box-sizing: border-box;
   height: 4rem;
   padding: 1rem;
