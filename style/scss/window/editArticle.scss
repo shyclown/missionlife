@@ -4,22 +4,51 @@
     min-height: 500px;
     max-height: 80%;
 
-    .header{  @include windowHeader;  }
+    .header{
+      @include windowHeader;
+      button.x-close{
+        background-color: $white;
+      }
+      button.x-close:hover{
+        cursor: pointer;
+        background-color: $red;
+        color: $white;
+      }
+    }
 
     .content{
       display: flex;
       flex-direction: row;
       overflow-y: hidden;
       /* Buttons */
+
       #articleEditorControls{
-        li{
-          button{
-            display: block;
-            text-align: left;
-            width: 100%;
+        box-sizing: border-box;
+        padding-right: 1rem;
+        padding-top: 1rem;
+
+        button{
+          background-color: $gray;
+          display: block;
+          text-align: left;
+          width: 100%;
+          margin-bottom: 0.25rem;
+        }
+        button:hover{  background-color: $yellow_500; cursor: pointer;  }
+
+        ul.main{
+          margin-bottom: 1rem;
+          li{
+            button.save{ background-color: $yellow_500 ; }
+            button.delete{ background-color: $yellow_500; }
+            button.save:hover{ background-color: $green; }
+            button.delete:hover{ background-color: $red_bright; }
           }
         }
-
+        ul.edit{
+          li{
+          }
+        }
       }
       /* Editor */
       #articleEditorForm{

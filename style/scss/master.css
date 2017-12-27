@@ -1,5 +1,6 @@
 /* yellow */
 /* yellow */
+/* darker yellow */
 .blanket {
   width: 100%;
   height: 100%;
@@ -208,8 +209,6 @@ ul > li > a:hover {
       text-align: left; }
     #explorerGrid #explorerContent button:hover {
       background-color: #EEE; }
-  #explorerGrid #explorerContent button:hover {
-    background-color: #EEE; }
 
 /* window */
 #editGarant .garantWindow {
@@ -319,16 +318,41 @@ ul > li > a:hover {
     background-color: #FFEB3B; }
     #editArticle .articleWindow .header button.close {
       background-color: #FFF; }
+    #editArticle .articleWindow .header button.x-close {
+      background-color: #FFF; }
+    #editArticle .articleWindow .header button.x-close:hover {
+      cursor: pointer;
+      background-color: #ff4081;
+      color: #FFF; }
   #editArticle .articleWindow .content {
     display: flex;
     flex-direction: row;
     overflow-y: hidden;
     /* Buttons */
     /* Editor */ }
-    #editArticle .articleWindow .content #articleEditorControls li button {
-      display: block;
-      text-align: left;
-      width: 100%; }
+    #editArticle .articleWindow .content #articleEditorControls {
+      box-sizing: border-box;
+      padding-right: 1rem;
+      padding-top: 1rem; }
+      #editArticle .articleWindow .content #articleEditorControls button {
+        background-color: #EAEAEA;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin-bottom: 0.25rem; }
+      #editArticle .articleWindow .content #articleEditorControls button:hover {
+        background-color: #FFEB3B;
+        cursor: pointer; }
+      #editArticle .articleWindow .content #articleEditorControls ul.main {
+        margin-bottom: 1rem; }
+        #editArticle .articleWindow .content #articleEditorControls ul.main li button.save {
+          background-color: #FFEB3B; }
+        #editArticle .articleWindow .content #articleEditorControls ul.main li button.delete {
+          background-color: #FFEB3B; }
+        #editArticle .articleWindow .content #articleEditorControls ul.main li button.save:hover {
+          background-color: #b2ff59; }
+        #editArticle .articleWindow .content #articleEditorControls ul.main li button.delete:hover {
+          background-color: #ff79b0; }
     #editArticle .articleWindow .content #articleEditorForm {
       display: flex;
       flex-direction: column;

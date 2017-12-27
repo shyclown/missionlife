@@ -20,12 +20,12 @@
 
       <!-- Controls -->
       <div id="articleEditorControls">
-        <ul class="">
-          <li><button id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button></li>
-          <li><button ng-click="deleteArticle()"><i class="fa fa-trash-o"></i> Delete </button></li>
+        <ul class="main">
+          <li><button class="save" id="articleSubmitButton" type="submit" ng-click="saveChanges()"><i class="fa fa-save"></i> Save </button></li>
+          <li><button class="delete" ng-click="deleteArticle()"><i class="fa fa-trash-o"></i> Delete </button></li>
         </ul>
-        <ul class="">
-          <li><button class="a" ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>
+        <ul class="edit">
+          <li><button ng-click="selectFilePop()"><i class="fa fa-file"></i> File</button></li>
           <li><button ng-click="selectArticlePop()"><i class="fa fa-file-text-o"></i > Article</button></li>
           <li><button ng-click="selectImagePop()"><i class="fa fa-image"></i> Image</button></li>
           <li><button ng-click="editYoutubeLinkPop()"><i class="fa fa-youtube-play"></i> Youtube video</button></li>
