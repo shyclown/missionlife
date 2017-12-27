@@ -71,39 +71,6 @@ ul > li > a:hover {
   display: block;
   text-align: center;
 }
-/* buttons */
-.icon_btn{
-  box-sizing: border-box;
-  width: 32px;
-  height: 32px;
-  padding: 0px;
-  position: absolute;
-  text-align: center;
-}
-.icon{
-  box-sizing: border-box;
-  background-color: #FFCC80;
-  font-size: 16px;
-  padding: 8px;
-  width: 32px;
-  height: 32px;
-}
-.moveBtn .icon:hover{
-  background-color: #EF6C00;
-  color: #FFF;
-}
-.deleteBtn .icon:hover{
-  background-color: #EF6C00;
-  color: #FFF;
-}
-.moveBtn{
-  top:0;
-  left:0;
-}
-.deleteBtn{
-  top:0;
-  right:0;
-}
 
 .mainGrid{
   display: grid;

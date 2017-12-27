@@ -21,7 +21,7 @@ class Folder
   public function insert($data){
     $sql = "INSERT INTO `ml_folder` (`id`, `name`, `order`, `parent`, `state`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-    $params = array( 'siii', $data['name'], $data['new_order'], $data['parent'],  $data['state']  );
+    $params = array( 'siii', $data['name'], $data['order'], $data['parent'],  $data['state']  );
     return $this->db->query($sql, $params);
   }
   public function update($data){

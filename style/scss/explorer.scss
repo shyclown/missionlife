@@ -14,15 +14,39 @@
     grid-area: expPath;
     display: flex;
     flex-direction: row;
+
+    .inline{
+      display: inline-block;
+    }
+    #NewFolder{
+      input{ display: inline-block; }
+      button{ display: inline-block; }
+    }
+  }
+  #explorerFoldersTree{
+
   }
   #explorerFoldersTree{
     padding: 1rem;
     grid-area: expFolders;
     background-color: #FFF;
-  }
-  #explorerFoldersTree .folder{
+
+    .folder{
     box-sizing: border-box;
     width: 100%;
+
+    padding-left: 0.5rem;
+
+      .line{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+
+        i.yellow{ color: $folder_color; }
+      }
+    }
   }
   #explorerFoldersTree .folder > .line{
     display: flex;
@@ -42,13 +66,19 @@
     grid-area: expItems;
     max-height: 100%;
     overflow-y: scroll;
+
+    button{
+      background-color: #FFF;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: left;
+    }
+
+    button:hover{
+      background-color: #EEE;
+    }
   }
-  #explorerContent button{
-    background-color: #FFF;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
-  }
+
   #explorerContent button:hover{
     background-color: #EEE;
   }

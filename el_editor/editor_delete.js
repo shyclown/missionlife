@@ -90,6 +90,7 @@ Editor.deleteEvent = function(oSelection, oRoot)
 - does not care about position of custom elements
 - @requires Editor.splitSelection(root);
 */
+
 Editor.deleteRange = function(oRoot)
 {
   const xSelection = Editor.splitSelection(oRoot);

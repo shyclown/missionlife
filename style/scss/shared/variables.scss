@@ -1,3 +1,20 @@
-$primary: #FB0; /* yellow */
+
+
+/* yellow */
+$yellow_50 : #FFFDE7;
+$yellow_100 : #FFF9C4;
+$yellow_150 : #FFEB3B;
+$yellow_200 : #FFF59D;
+$yellow_300 : #FFF176;
+$yellow_400 : #FFEE58;
+$yellow_500 : #FFEB3B;
+$yellow_600 : #FDD835;
+$yellow_700 : #FBC02D;
+$yellow_800 : #F9A825;
+$yellow_900 : #F57F17;
+
+$primary: $yellow_500; /* yellow */
+$folder_color: $yellow_700;
+$secondary: #ff867c;
 $white: #FFF;
 $gray: #EAEAEA;
