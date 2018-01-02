@@ -1,12 +1,13 @@
 #explorerGrid{
   display: grid;
   height: 100%;
+  width: 100%;
   grid-template-columns: 200px auto;
-  grid-template-rows: 4rem auto 0rem;
+  grid-template-rows: 4rem auto;
   grid-template-areas:
   "expPath expPath"
   "expFolders expItems"
-  "expFooter expFooter";
+  ;
 
 
   #explorerPath{
@@ -17,6 +18,7 @@
 
     .inline{
       display: inline-block;
+
     }
     #NewFolder{
       input{ display: inline-block; }
@@ -24,6 +26,9 @@
     }
   }
   #explorerFoldersTree{
+
+  }
+  #explorerFoldersTree > .folder > .line > i.yellow{
 
   }
   #explorerFoldersTree{

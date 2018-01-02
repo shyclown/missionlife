@@ -156,9 +156,10 @@ ul > li > a:hover {
 #explorerGrid {
   display: grid;
   height: 100%;
+  width: 100%;
   grid-template-columns: 200px auto;
-  grid-template-rows: 4rem auto 0rem;
-  grid-template-areas: "expPath expPath" "expFolders expItems" "expFooter expFooter"; }
+  grid-template-rows: 4rem auto;
+  grid-template-areas: "expPath expPath" "expFolders expItems"; }
   #explorerGrid #explorerPath {
     padding: 1rem;
     grid-area: expPath;
