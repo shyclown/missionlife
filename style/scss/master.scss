@@ -14,7 +14,10 @@
 @import 'window/editArticle';
 /* popup */
 @import 'popup/selectPopup';
-
+@import 'popup/editPage';
+@import 'popup/editWebLink';
+@import 'popup/selectPage';
+@import 'popup/editFolder';
 
 /* pages */
 @import 'page/pageBackend';

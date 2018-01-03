@@ -1,0 +1,20 @@
+#editPage{
+  .pageWindow{
+    @include windowDefault;
+    .header{
+    @include windowHeader;
+    }
+    .content{
+      @include flexcolumn;
+      overflow-y: hidden;
+      .inputs{
+        @include flexcolumn;
+        padding: 1rem;
+        .row{  @include flexrow;  }
+      }
+      .controls{
+        @include windowBottomControls;
+      }
+    }
+  }
+}

@@ -2,6 +2,9 @@
   background-color: $white;
   display: flex;
   flex-direction: column;
+  .header{
+    @include windowHeader;
+  }
 }
 
 @mixin windowHeader{
@@ -26,7 +29,18 @@
     color: $white;
   }
 }
-
+@mixin windowBottomControls{
+    min-height: 3rem;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    border-top: 1px solid $gray;
+    button{
+      margin-left: 0.5rem;
+    }
+    display: flex;
+    direction: row;
+    justify-content: flex-end;
+}
 
 
 // DO NOT CHANGE

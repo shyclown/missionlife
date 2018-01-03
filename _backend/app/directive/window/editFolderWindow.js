@@ -6,23 +6,25 @@ app.directive('editFolderWindow', ['Folder','Shared', function(Folder, Shared) {
     link: function (scope, element, attrs){
 
       scope.folderWindow = Shared.openElement[attrs.editObj];
-
-      scope.text = Shared.text.edit.folder;
       scope.folder = Shared.fn.cloneObject(scope.folderWindow.item);
+
       scope.setPosition = function(newPosition){
         scope.folder.position = newPosition;
       }
+      scope.text = Shared.text.edit.folder;
 
       scope.changeState = function(state){ scope.folder.state = state; }
       scope.removeFolder = function(folder){ Folder.remove(folder); }
       scope.updateName = function(folder){ Folder.updateName(folder); }
       scope.updatePosition = function(folder){ Folder.updatePosition(folder); }
 
+
       scope.cancel = function(){
         new Shared.prompt( Shared.text.prompt.folder.cancel, function(){
-          Folder.update(scope.folder);
+          //Folder.update(scope.folder);
           scope.folderWindow.callback();
         }, scope);
+        //
         scope.folderWindow.close();
       }
 

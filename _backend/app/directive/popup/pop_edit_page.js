@@ -10,6 +10,9 @@ function(Shared, Page) {
       const oPage = oEditPageWindow.item;
       const callbackFn = oEditPageWindow.callback;
 
+      scope.text = Shared.text.edit.page;
+      console.log(scope.text);
+
       scope.new = false;
       scope.cancel = function(){ oEditPageWindow.close(); }
       if(oPage){ scope.page = Object.assign({}, oPage); console.log(scope.page);}

@@ -1,0 +1,30 @@
+/* PopUp */
+@mixin popupShared{
+  .window{ @include windowDefault;
+    .content{ @include flexcolumn;
+      overflow-y: hidden;
+      .inputs{ @include flexcolumn;
+        padding: 1rem;
+        .row{  @include flexrow;  }
+      }
+      .controls{
+        @include windowBottomControls;
+      }
+    }
+  }
+}
+#editFolder{ @include popupShared;}
+#editPage{ @include popupShared;}
+#editWebLink{ @include popupShared;}
+
+#promptWindow{ @include popupShared;
+  .window > .content > .message{
+    h1{
+      padding: 0px;
+      margin: 0px;
+      font-weight: 100;
+      margin-bottom: 1rem;
+      }
+    padding: 1rem;
+  }
+}

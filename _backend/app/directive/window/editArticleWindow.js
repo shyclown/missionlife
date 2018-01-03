@@ -162,9 +162,11 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       let storedRange = {};
       let storedItem = {};
       /* Add Links to Items */
+
       const createLink = function(name, href){
         let link = document.createElement('a');
         link.setAttribute('ng-click', 'editWebLinkPop(true)');
+        console.log(href);
         link.href = href;
         link.className = 'link';
         //link.contentEditable = false;
@@ -209,8 +211,9 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
 
       const addLink = function(data){
 
-        if(data.target){data.href = data.path+"/"+data.target; data.new = true; }
-        if(data.type || data.new){
+        console.log(data);
+
+        if(data.type && data.new){
 
           let link;
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
@@ -218,6 +221,8 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
 
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
           else if(data.type === 'page'){ link = $compile(createLink(data.name,'/_frontend/page/'+data.id))(scope); }
+          else if(data.type === 'weblink'){ link = $compile(createLink(data.name, data.href))(scope); }
+          // create link element
           else{ link = $compile(createLink(data.name, data.href))(scope); }
 
           scope.area.insertAfterSelection(link[0]);
@@ -251,7 +256,10 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       /* weblink and youtube link are separate windows templates */
       scope.editWebLinkPop = function(item){
         event.preventDefault();
-          if(item){ storedItem = event.target; item = { name: event.target.innerHTML, href: event.target.href, el: event.target };}
+          if(item){
+            storedItem = event.target;
+            item = { name: event.target.innerHTML, href: event.target.href, el: event.target };
+          }
           else{ Shared.storedRange = Shared.fn.storeRange(); }
           new Shared.directiveElement('pop-edit-web-link', item, addLink, scope);
       }

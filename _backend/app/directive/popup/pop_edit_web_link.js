@@ -16,15 +16,20 @@ function( Shared, Page ) {
       const oLink = oEditWebLinkWindow.item;
       const oCallback = oEditWebLinkWindow.callback;
 
+      scope.text = Shared.text.edit.weblink;
+
       scope.new = true;
-      if(oLink){ scope.link = Object.assign({}, oLink), scope.new = false; }
+      if(oLink){
+        scope.link = Object.assign({}, oLink), scope.new = false; }
       else{
         let oSelection = Shared.fn.selectRange(Shared.storedRange);
         scope.link = { name: oSelection.toString(), href: '', new: true }
       }
+      scope.link.type = 'weblink';
 
       scope.cancel = function(){ oEditWebLinkWindow.close(); }
       scope.save = function(){
+        console.log(scope.link);
         oCallback(scope.link);
         scope.cancel();
       }
@@ -33,6 +38,9 @@ function( Shared, Page ) {
         oLink.href = scope.link.href;
         oLink.innerHTML = scope.link.name;
         scope.link.new = false;
+
+        console.log(scope.link);
+        //
         oCallback(scope.link);
         scope.cancel();
       }

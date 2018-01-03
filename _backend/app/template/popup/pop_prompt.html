@@ -1,12 +1,14 @@
-<div class="blanket">
-    <div id="editFormWindow" class="window bg-white shadow" ng-click="$event.stopPropagation()">
-      <div class="content pa-1 column">
+<div id="promptWindow" class="blanket">
+    <div class="window shadow" ng-click="$event.stopPropagation()">
+      <div class="content">
+        <div class="message">
         <h1>{{message}}</h1>
         {{description}}
-      </div>
-      <div class="control pa-1 border-top">
-        <button ng-click='cancel()' ng-if="cancelBtn">{{cancelBtn}}</button>
-        <button ng-click='accept()'>{{acceptBtn}}</button>
+        </div>
+        <div class="controls">
+          <button ng-click='cancel()' ng-if="cancelBtn">{{cancelBtn}}</button>
+          <button ng-click='accept()'>{{acceptBtn}}</button>
+        </div>
       </div>
   </div>
 </div>

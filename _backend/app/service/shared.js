@@ -127,6 +127,13 @@ app.service('Shared',function($document, $compile){
       settings: 'Settings'
     },
     edit:{
+      weblink:{
+        windowName: 'Edit Web Link',
+        label:{
+          text: 'Text',
+          link: 'Link'
+        }
+      },
       form:{
         windowName: 'Edit Form',
         label:{
@@ -146,17 +153,9 @@ app.service('Shared',function($document, $compile){
         }
       },
       folder:{
-        top:{
-          name: 'Folder Editor'
-        },
-        name:{
-          label: 'Name'
-        },
-        position:{
-          label: 'position',
-          top: 'top',
-          side: 'side',
-          none: 'none',
+        windowName: 'Folder Editor',
+        label:{
+          name: 'Name'
         },
         state:{
           label: 'state',
@@ -170,20 +169,39 @@ app.service('Shared',function($document, $compile){
         NameLabel: 'Name',
         PositionLabel: 'Position',
         StateLabel: 'State',
+      },
+      // EDIT PAGE
+      page:{
+        windowName: 'Edit Page',
+        label:{
+          name: 'Name',
+          position: 'Position'
+        },
+        position:{
+          unused: 'Unused',
+          top: 'Top',
+          side: 'Side'
+        },
+        button:{
+          save: 'Save',
+          delete: 'Delete',
+          update: 'Update'
+        }
       }
     },
     prompt:{
+      //
       folder:{
         delete:{
           message: 'Delete folder',
-          description: 'You are about to delete the folder',
+          description: 'Do you wish to delete this folder?',
           cancelBtn: 'Cancel',
-          acceptBtn: 'Delete Folder'
+          acceptBtn: 'Delete'
         },
         cancel:{
           message: 'Cancel',
-          description: 'Save changes?',
-          cancelBtn: 'Leave Without Save',
+          description: 'Close window without saving the changes?',
+          cancelBtn: 'Close',
           acceptBtn: 'Save Changes'
         }
       }

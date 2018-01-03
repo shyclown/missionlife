@@ -1,15 +1,24 @@
-<div class="blanket centered" ng-click="cancel()">
+<div id="editWebLink" class="blanket" ng-click="cancel()">
 
-  <div  class="window shadow pa-3" ng-click="$event.stopPropagation();">
-    <input type="text" ng-model="link.name" placeholder="Link Text">
-    <input type="text" ng-model="link.href" placeholder="Link to web page">
-
-    <div ng-if="new">
-      <button ng-click="save()">SAVE</button>
+  <div  class="window shadow" ng-click="$event.stopPropagation();">
+    <div class="header">
+     {{text.windowName}}
+      <button class="x-close" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
-    <div ng-if="!new">
-      <button ng-click="delete()">DELETE</button>
-      <button ng-click="update()">UPDATE</button>
+    <div class="content">
+      <div class="inputs">
+      {{text.label.text}}:
+      <input type="text" ng-model="link.name" placeholder="Link Text">
+      {{text.label.link}}:
+      <input type="text" ng-model="link.href" placeholder="Link to web page">
+      </div>
+      <div ng-if="new" class="controls">
+        <button ng-click="save()">SAVE</button>
+      </div>
+      <div ng-if="!new" class="controls">
+        <button ng-click="delete()">DELETE</button>
+        <button ng-click="update()">UPDATE</button>
+      </div>
     </div>
   </div><!-- end of window -->
 </div><!-- end of blanket -->

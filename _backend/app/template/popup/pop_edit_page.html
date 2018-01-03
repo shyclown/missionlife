@@ -1,16 +1,31 @@
-<div class="blanket" ng-click="cancel()">
+<div id="editPage" class="blanket" ng-click="cancel()">
   <div  class="window shadow" ng-click="$event.stopPropagation();">
+
+    <div class="header">
+     {{text.windowName}}
+    </div>
+
     <div class="content">
-    <input type="text" ng-model="page.name" placeholder="New Page Name">
-      <div>
-      <button class="pick" ng-class="cssState(0)" ng-click="setState(0)">unused</button>
-      <button class="pick" ng-class="cssState(1)" ng-click="setState(1)">top</button>
-      <button class="pick" ng-class="cssState(2)" ng-click="setState(2)">side</button>
+      <div class="inputs">
+        {{text.label.name}}:
+        <input type="text" ng-model="page.name" placeholder="New Page Name">
+        {{text.label.position}}:
+        <div class="row">
+        <button ng-class="cssState(0)" ng-click="setState(0)">{{text.position.unused}}</button>
+        <button ng-class="cssState(1)" ng-click="setState(1)">{{text.position.top}}</button>
+        <button ng-class="cssState(2)" ng-click="setState(2)">{{text.position.side}}</button>
+        </div>
+      </div>
+
+
+      <div ng-if="new"class="controls">
+        <button ng-click="save()">{{text.button.save}}</button>
+      </div>
+      <div ng-if="!new" class="controls">
+        <button ng-click="delete()">{{text.button.delete}}</button>
+        <button ng-click="update()">{{text.button.update}}</button>
       </div>
     </div>
-    <div class="control">
-      <div ng-if="new"><button ng-click="save()">save</button></div>
-      <div ng-if="!new"><button ng-click="delete()">DELETE</button><button ng-click="update()">UPDATE</button></div>
-    </div>
+
   </div><!-- end of window -->
 </div><!-- end of blanket -->

@@ -6,19 +6,10 @@
 
     .header{
       @include windowHeader;
-      button.x-close{
-        background-color: $white;
-      }
-      button.x-close:hover{
-        cursor: pointer;
-        background-color: $red;
-        color: $white;
-      }
     }
 
     .content{
-      display: flex;
-      flex-direction: row;
+      @include flexrow;
       overflow-y: hidden;
       /* Buttons */
 
@@ -52,9 +43,7 @@
       }
       /* Editor */
       #articleEditorForm{
-        display: flex;
-        flex-direction: column;
-
+        @include flexcolumn;
         width: 500px;
         overflow-y: hidden;
 
@@ -62,8 +51,7 @@
           margin-bottom: 1rem;
         }
         .editor_wrap{
-          display: flex;
-          flex-direction: column;
+          @include flexcolumn;
           /*Editor*/
           .ctrl_btns{
             button.intLink{
