@@ -14,9 +14,15 @@ app.service('Prompt',function(Shared){
   }
   this.load = {
     cancelNewArticle: function(callback, scope){
-      Shared.prompt(promptObject('Article was not saved', 'All changes will be lost', 'Cancel', 'Do not save'))};
+      Shared.prompt(
+        promptObject(
+          'Article was not saved',
+          'All changes will be lost',
+          'Cancel',
+          'Do not save')
+        )}
   }
   this.load = function(){
 
   }
-}
+});

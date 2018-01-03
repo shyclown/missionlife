@@ -44,7 +44,14 @@
   background-color: #EEEEEE;
   overflow: hidden;
   overflow-y: scroll;
+
+  .pageItemControl{
+    button{ display: inline-block; cursor: pointer;}
+    button:hover{ display: inline-block; background-color: $primary;}
+  }
 }
+
+
 
 
 #pageList > div > div.pageBtn{

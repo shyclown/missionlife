@@ -1,43 +1,48 @@
-<div class="blanket" ng-click="cancel()">
+<div id="editFormWindow" class="blanket" ng-click="cancel()">
 
-  <div class="window shadow bg-white" id="editFormWindow" ng-click="$event.stopPropagation();">
-    <div class="bg-yellow row v-center space-between pl-1">
-      Edit Form: {{text.top.name}} - {{folder.name}}
+  <div class="formWindow shadow"  ng-click="$event.stopPropagation();">
+    <div class="header">
+      {{text.windowName}}: {{form.name}}
       <button class="close bg-white" ng-click="cancel()"><i class="fa fa-times"></i></button>
     </div>
-    <div class="content pa-1">
-      <div class="main column mb-1">
-        <label>name:</label>
+    <div class="content">
+      <div class="settings">
+        <label>{{text.label.name}}:</label>
         <input ng-model="form.name"/>
-        <label>to email:</label>
+        <label>{{text.label.email}}:</label>
         <input ng-model="form.email"/>
       </div>
-      <div class="row mb-1">
+      <div class="add-item">
         <button ng-click="addField(form)"><i class="fa fa-plus"></i> Add Field</button>
       </div>
-      <div class="row" ng-if="form.data" ng-repeat="field in form.data track by $index">
-        <input ng-model="field.name"/>
-        <button class="type" ng-class="(field.type == 'all')?'selected':''" ng-click="setType('all',field)">all</button>
-        <button class="type" ng-class="(field.type == 'name')?'selected':''" ng-click="setType('name',field)">name</button>
-        <button class="type" ng-class="(field.type == 'number')?'selected':''" ng-click="setType('number',field)">number</button>
-        <button class="type" ng-class="(field.type == 'email')?'selected':''" ng-click="setType('email',field)">email</button>
+      <div class="items">
+      <div class="item" ng-if="form.data" ng-repeat="field in form.data track by $index">
 
-        <button class="move" ng-if="($index != 0)" ng-click="order.up(form.data, field, $index)"><i class="fa fa-chevron-up"></i></button>
-        <button class="move" ng-if="($index != form.data.length - 1)" ng-click="order.down(form.data, field, $index)"><i class="fa fa-chevron-down"></i></button>
-
+        <input class="name-input" ng-model="field.name"/>
+        <div class="type-btns">
+        <button ng-class="(field.type == 'all')?'selected':''" ng-click="setType('all',field)">{{text.type.all}}</button>
+        <button ng-class="(field.type == 'name')?'selected':''" ng-click="setType('name',field)">{{text.type.name}}</button>
+        <button ng-class="(field.type == 'number')?'selected':''" ng-click="setType('number',field)">{{text.type.number}}</button>
+        <button ng-class="(field.type == 'email')?'selected':''" ng-click="setType('email',field)">{{text.type.email}}</button>
+        </div>
+        <div class="order-btns">
+        <button ng-if="($index != 0)" ng-click="order.up(form.data, field, $index)"><i class="fa fa-chevron-up"></i></button>
+        <button ng-if="($index != form.data.length - 1)" ng-click="order.down(form.data, field, $index)"><i class="fa fa-chevron-down"></i></button>
+        </div>
       </div>
+    </div><!-- end .items -->
+
+    <div class="controls" ng-if="!new">
+      <button class="delete" ng-click="delete(form)"><i class="fa fa-trash"></i> {{text.button.delete}}</save>
+      <button class="cancel" ng-click="cancel(form)"><i class="fa fa-times"></i> {{text.button.cancel}}</save>
+      <button class="save" ng-click="save(form)"><i class="fa fa-save"></i> {{text.button.save}}</save>
+    </div>
+
+    <div class="controls" ng-if="new">
+      <button class="cancel" ng-click="cancel(form)"><i class="fa fa-times"></i> {{text.button.cancel}}</save>
+      <button class="save" ng-click="insert(form)"><i class="fa fa-save"></i> {{text.button.save}}</save>
+    </div>
+
     </div><!-- end .content -->
-    <div class="control pa-1 border-top" ng-if="!new">
-      <button class="delete" ng-click="delete(form)"><i class="fa fa-save"></i> Delete</save>
-      <button class="cancel" ng-click="cancel(form)"><i class="fa fa-save"></i> Cancel</save>
-      <button class="save" ng-click="save(form)"><i class="fa fa-save"></i> Save</save>
-
-    </div>
-    <div class="control pa-1 border-top" ng-if="new">
-      <button class="cancel" ng-click="cancel(form)"><i class="fa fa-save"></i> Cancel</save>
-      <button class="save" ng-click="insert(form)"><i class="fa fa-save"></i> Save</save>
-
-    </div>
-
   </div>
 </div><!-- blanket -->

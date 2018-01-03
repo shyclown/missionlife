@@ -4,50 +4,92 @@
   .selectWindow{
     background-color: $white;
     height: 500px;
+    overflow: hidden;
 
     .header{
       @include windowHeader;
     }
   }
+  /* Window content */
   .content{
     overflow-y: hidden !important; /* overwrite default */
     display: grid;
-    height: 100%;
+    height: calc(100% - 2rem);
     grid-template-columns: 200px minmax(350px, 550px);
-    grid-template-rows: minmax(0rem, 2rem) auto 4rem;
+    grid-template-rows: auto 3rem;
     grid-template-areas:
-    "expPath expPath"
     "expFolders expItems"
     "expFooter expFooter";
-    .folderTopPanel{
-      padding: 1rem;
-      grid-area: expPath;
-    }
+
     .folderTree{
       padding: 1rem;
+      padding-left: 0.5rem;
       grid-area: expFolders;
+      overflow-y: scroll;
+
+      .folder{
+      box-sizing: border-box;
+      width: 100%;
+
+      padding-left: 0.5rem;
+
+        .line{
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          box-sizing: border-box;
+          width: 100%;
+
+          i.yellow{ color: $folder_color; }
+        }
+        .line:hover{
+          background-color: $gray;
+        }
+      }
     }
+
     .folderOpen{
       padding: 1rem;
       grid-area: expItems;
       overflow-y: scroll;
       button{
-        background-color: #EEE;
+        cursor: pointer;
+        background-color: $white;
         box-sizing: border-box;
         width: 100%;
         text-align: left;
       }
+      i.fa-folder{
+        color: $folder_color;
+      }
       button:hover{
-        background-color: #E0E0E0;
+        background-color: $gray;
 
       }
     }
+
     .confirmSelection{
+      background-color: $gray;
+      box-sizing: border-box;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       padding: 1rem;
+      line-height: 1rem;
       grid-area: expFooter;
+
+      .inline{
+        display: inline-block;
+      }
+      .submit{
+        cursor: pointer;
+        background-color: $primary;
+        margin: -0.5rem;
+      }
+      .submit:hover{
+        background-color: $yellow_300;
+      }
     }
   }
 }

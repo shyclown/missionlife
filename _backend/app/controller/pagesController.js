@@ -8,7 +8,10 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   $scope.columns = 2;
 
   const loadPages = function(){
-    Page.select(function(response){ $scope.pages = response.data; $scope.$apply(); console.log(response); });
+    Page.select(function(response){
+      $scope.pages = response.data;
+      $scope.$apply(); // we need to apply scope after new ajax is used
+      });
   }
   loadPages();
 
@@ -176,28 +179,39 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   $scope.openPage = function(page){
     $scope.currPageItems = [];
     $scope.currPage = page;
-    Page.loadItems({page_id: $scope.currPage.id},function(response){
-      response.data.forEach(function(item){
-        if(item.type === 1){
-          Article.select_by_id({id: item.item_id},function(res){
-            item.obj = res.data[0];
-            item.obj.content = $sce.trustAsHtml(decodeURIComponent(item.obj.content));
-        });}
-        if(item.type === 2){
-          Article.selectByFolder({folder_id: item.item_id},function(res){
-            res.data.result.forEach(function(article){
-              article.content = decodeURIComponent(article.content);
-            });
-            item.obj = res.data.result;
-        });}
-        if(item.type === 3){
-          Form.select_by_id({id: item.item_id},function(res){
-              item.obj = res.data[0];
-              item.obj.data = JSON.parse(item.obj.data);
-        });}
+
+    Page.loadItems(
+      {page_id: $scope.currPage.id},
+      function(response){
+        response.data.forEach(function(item){
+          if(item.type === 1){
+            Article.select_by_id({id: item.item_id},function(res){
+              let article = res.data[0];
+              if(article.content){
+              article.content = $sce.trustAsHtml(decodeURIComponent(article.content));
+              }
+              $scope.$apply();
+          });}
+          if(item.type === 2){
+            Article.selectByFolder({folder_id: item.item_id},function(res){
+              res.data.result.forEach(function(article){
+                if(article.content){
+                  article.content = decodeURIComponent(article.content);
+                }
+              });
+              item.obj = res.data.result;
+              $scope.$apply();
+          });}
+          if(item.type === 3){
+            Form.select_by_id({id: item.item_id},function(res){
+                item.obj = res.data[0];
+                item.obj.data = JSON.parse(item.obj.data);
+                $scope.$apply();
+          });}
         $scope.currPageItems.push(item);
-      })
-    })
+        $scope.$apply();
+      });
+    });
   }
   const getIntType = function(stringType){
     if(stringType === "article"){ return 1; }
@@ -217,7 +231,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   /* REMOVE */
   $scope.removeItem = function(item){
     // item should be retreived object with id attached already
-    Page.removeItem({ id:item.id },function(){ $scope.openPage($scope.currPage); })
+    Page.removeItem({ id:item.id },function(){ $scope.openPage($scope.currPage); $scope.$apply();})
   }
 
   /* REORDER */
@@ -226,7 +240,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
     if(item.order == 0){ console.warn('item is on top of stack');; }
     else{   item.obj = [];
       console.log(item);
-      Page.orderUp(item, function(){ $scope.openPage($scope.currPage); });
+      Page.orderUp(item, function(){ $scope.openPage($scope.currPage); $scope.$apply(); });
     }
   }
   $scope.orderDown = function(item){
@@ -234,7 +248,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
 
     if(item.order == $scope.currPageItems.length - 1){ console.warn('item is already at bottom of the stack'); }
     else{   item.obj = [];
-      Page.orderDown(item, function(){ $scope.openPage($scope.currPage);});
+      Page.orderDown(item, function(){ $scope.openPage($scope.currPage); $scope.$apply();});
     }
   }
 
@@ -245,7 +259,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
       item_id: selection.target,
       type: getIntType(selection.type),
       order: $scope.currPageItems.length
-    }, function(res){ $scope.openPage($scope.currPage)})
+    }, function(res){ $scope.openPage($scope.currPage); $scope.$apply();})
   }
   $scope.getNumber = function(num){
     let arr = []; let i = 0; while(i != num){

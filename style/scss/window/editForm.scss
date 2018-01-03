@@ -1,0 +1,65 @@
+#editFormWindow{
+  .formWindow{
+    @include windowDefault;
+    min-height: 300px;
+    max-height: 80%;
+
+    .header{
+      @include windowHeader;
+    }
+
+    .content{
+      display: grid;
+      height: 100%;
+      width: 100%;
+      grid-template-columns: auto;
+      grid-template-rows: 3rem 3rem auto 3rem;
+      grid-template-areas:
+      "Settings"
+      "Add-Item"
+      "Items"
+      "Controls"
+      ;
+      .settings{
+        padding: 1rem;
+        grid-area: Settings;
+      }
+      .add-item{
+        padding: 1rem;
+        grid-area: Add-Item;
+      }
+      .items{
+        box-sizing: border-box;
+        padding: 1rem;
+        grid-area: Items;
+        overflow-y: scroll;
+        .item{
+          display: grid;
+          height: 3rem;
+          width: 100%;
+          grid-template-columns: auto 1rem auto 4rem;
+          grid-template-rows: 2rem;
+          grid-template-areas:
+          "Name Gap Type Order"
+          ;
+
+          .name-input{ grid-area: Name; }
+          .type-btns{ grid-area: Type;  display: flex;  direction: row; }
+          .order-btns{ grid-area: Order;  display: flex;  direction: row; }
+        }
+      }
+      .controls{
+        box-sizing: border-box;
+        padding: 0.5rem;
+        border-top: 1px solid $gray;
+        button{
+          margin-left: 0.5rem;
+        }
+        grid-area: Controls;
+        display: flex;
+        direction: row;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

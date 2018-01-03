@@ -1,56 +1,73 @@
 #editGarant{
   .garantWindow{
-    background-color: $white;
-    max-height: 90%;
+    @include windowDefault;
+    max-height: 80%;
     width: 280px;
 
     .header{
-      line-height: 2rem;
-      padding-left: 1rem;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background-color: $primary;
-      button.close{
-        background-color: $white;
-      }
+      @include windowHeader;
     }
-    .imageArea{
-      display: block;
-      background-color: $gray;
 
-      .dropArea{
+    .content{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+
+      .image{
+        min-height: 100px;
+        max-height: 280px;
+        overflow-y: scroll;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        overflow: hidden;
+        img{ width: 280px; }
+      }
+      .droparea{
+        box-sizing: border-box;
         padding: 1rem;
         background-color: $gray;
         label, button{
-          box-sizing: border-box;
-          height: 2.5rem;
-          line-height: 2.5rem;
-          padding: 0rem 0.5rem;
+            box-sizing: border-box;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            padding: 0rem 0.5rem;
         }
         label{ margin-right: 0.5rem;  }
         button{ margin-left: 0.5rem;}
 
         *{ display: inline-block;}
+        .hidden{
+          display: none;
+        }
       }
-      .hidden{
-        display: none;
+
+
+
+      .inputs{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+
+        overflow-y: scroll;
+
+        textarea{
+          resize: vertical;
+          min-height: 3rem;
+          max-height: 10rem;
+        }
       }
-    }
-    .content{
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .control{
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-
-      padding: 1rem;
-
-      button.margin-right{
-        margin-right: 0.5rem;
+      .controls{
+        min-height: 3rem;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        border-top: 1px solid $gray;
+        button{
+          margin-left: 0.5rem;
+        }
+        display: flex;
+        direction: row;
+        justify-content: flex-end;
       }
     }
 

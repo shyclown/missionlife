@@ -17,8 +17,13 @@
 
   background-color: $primary;
 
-  button.close{
+  button.x-close{
     background-color: $white;
+  }
+  button.x-close:hover{
+    cursor: pointer;
+    background-color: $red;
+    color: $white;
   }
 }
 

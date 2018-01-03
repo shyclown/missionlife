@@ -127,6 +127,24 @@ app.service('Shared',function($document, $compile){
       settings: 'Settings'
     },
     edit:{
+      form:{
+        windowName: 'Edit Form',
+        label:{
+          name: 'Name',
+          email: 'Email'
+        },
+        type:{
+          all: 'all',
+          name: 'name',
+          number: 'number',
+          email: 'email'
+        },
+        button:{
+          delete: 'Delete',
+          cancel: 'Cancel',
+          save: 'Save'
+        }
+      },
       folder:{
         top:{
           name: 'Folder Editor'

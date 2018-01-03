@@ -11,38 +11,49 @@ function($http, Shared, Folder, Article, Form, FileService) {
     templateUrl: '/_backend/app/template/popup/pop_select.html',
     link: function (scope, element, attrs)
     {
-
+      // Current Element
       const oSelectWindow = Shared.openElement[attrs.editObj];
+      // Read setup from property
       const oSetup = oSelectWindow.item;
       const oCallback = oSelectWindow.callback;
+
+      // Ajax needs to update the scope after data is received
+      // - not using built in angularJS ajax because of the MOD-Security issues
+      const apply = ()=> scope.$apply();
 
       const setup = oSetup;
       scope.setup = setup;
 
+      // Displayed items
       scope.folders;
       scope.forms;
       scope.articles;
       scope.files;
+      // Navigation
       scope.currentFolder = null;
+      // Close Button Fn
       scope.cancel = function(){ oSelectWindow.close();  }
+
+
+      // Watch
 
       scope.$watch(
         function(){ return Folder.allFolders; },
-        function(){ scope.folders = Folder.allFolders;},
+        function(){ scope.folders = Folder.allFolders; },
       true);
       scope.$watch(
         function(){ return scope.currentFolder; },
         function(){
           if( scope.currentFolder != null ){ loadItems(); }
           else { resetItems(); }
-      },true);
+        },true);
 
-      Folder.select_all();
+      Folder.select_all(apply);
 
+
+      // LOAD CONTENT
       const loadItems = function(){
 
-
-        console.log(setup);
         scope.currentParents = Folder.listParents(scope.currentFolder);
         scope.selected = false;
         scope.selectedName = '';
@@ -57,6 +68,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
         if(setup.forms){ loadForms(); }
       }
 
+      // RESET
       const resetItems = function(){
         scope.currentFolder = null;
         scope.currentParents = [];
@@ -67,6 +79,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.selected = false;
         scope.selectedName = '';
       }
+      
       const stopDefault = function(){
         event.stopPropagation();
         event.preventDefault();
@@ -74,7 +87,9 @@ function($http, Shared, Folder, Article, Form, FileService) {
       const loadArticles = function(){
         Article.selectByFolder(
           { folder_id: scope.currentFolder.id, },
-          function(res){ scope.articles = res.data.result; }
+          function(res){ scope.articles = res.data.result;
+            apply();
+          }
         );
       }
       const loadFiles = function(){
@@ -83,14 +98,16 @@ function($http, Shared, Folder, Article, Form, FileService) {
           function(res){
             scope.files = res.data.result;
             scope.images = scope.files.filter(function(img){ return img.file_type == 'png'; });
-            console.log(scope.images);
+            apply();
           }
         );
       }
       const loadForms = function(){
         Form.selectByFolder(
           { folder_id: scope.currentFolder.id, },
-          function(res){ scope.forms = res.data.result; }
+          function(res){ scope.forms = res.data.result;
+            apply();
+          }
         );
       }
 

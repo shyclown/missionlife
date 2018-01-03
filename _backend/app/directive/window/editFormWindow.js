@@ -14,6 +14,8 @@ app.directive('editFormWindow',['$http', 'Form', 'Shared', function($http, Form,
 
       const oFormWindow = Shared.openElement[attrs.editObj];
       const oForm = oFormWindow.item;
+
+      scope.text = Shared.text.edit.form;
       scope.new = true;
 
       if(oForm){ scope.form = Object.assign({},oForm); scope.new = false; }

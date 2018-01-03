@@ -18,11 +18,12 @@
 
     .inline{
       display: inline-block;
+      line-height: 2rem;
 
     }
     #NewFolder{
-      input{ display: inline-block; }
-      button{ display: inline-block; }
+      input{ border: none; display: inline-block; height: 2rem;}
+      button{ display: inline-block; height: 2rem;}
     }
   }
   #explorerFoldersTree{
@@ -35,6 +36,7 @@
     padding: 1rem;
     grid-area: expFolders;
     background-color: #FFF;
+    overflow-y: scroll;
 
     .folder{
     box-sizing: border-box;
