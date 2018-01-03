@@ -118,7 +118,6 @@ Editor.attachImageControls = function()
 }
 
 Editor.removeImageControls = function(){
-  console.log('Remove Image Controls',this);
   var images = this.part.content_wrap.getElementsByClassName('image');
   for (var i = 0; i < images.length; i++) {
     var del = images[i].getElementsByClassName('deleteBtn')[0];
