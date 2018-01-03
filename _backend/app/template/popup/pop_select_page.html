@@ -1,21 +1,16 @@
 
-<div class="blanket" ng-click="cancel()">
+<div id="selectPage" class="blanket" ng-click="cancel()">
   <div class="window shadow" ng-click="$event.stopPropagation();">
 
     <div class="content">
-      <div class="pick page">
-        <ul>
-          <li ng-repeat="page in pages">
-            <button ng-class="cssSelected(page)"  ng-click="selectPage(page)">{{page.name}}</button>
-          </li>
-        </ul>
-
+      <div class="inputs">
+        <button ng-repeat="page in pages" ng-class="cssSelected(page)"  ng-click="selectPage(page)">{{page.name}}</button>
+      </div>
+      <div class="controls">
+        <button ng-click="cancel()">CANCEL</button>
+        <button ng-disabled="!selectedPage" ng-click="select()">SELECT</button>
       </div>
     </div>
 
-    <div class="control">
-      <button ng-click="cancel()">CANCEL</button>
-      <button ng-disabled="!selectedPage" ng-click="select()">SELECT</button>
-    </div>
   </div>
 </div>

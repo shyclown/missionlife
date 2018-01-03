@@ -11,7 +11,7 @@ function( Shared, Page ) {
     templateUrl: '/_backend/app/template/popup/pop_edit_web_link.html',
     link: function (scope, element, attrs)
     {
-      console.log('link fired');
+
       const oEditWebLinkWindow = Shared.openElement[attrs.editObj];
       const oLink = oEditWebLinkWindow.item;
       const oCallback = oEditWebLinkWindow.callback;
@@ -29,7 +29,6 @@ function( Shared, Page ) {
 
       scope.cancel = function(){ oEditWebLinkWindow.close(); }
       scope.save = function(){
-        console.log(scope.link);
         oCallback(scope.link);
         scope.cancel();
       }
@@ -38,9 +37,6 @@ function( Shared, Page ) {
         oLink.href = scope.link.href;
         oLink.innerHTML = scope.link.name;
         scope.link.new = false;
-
-        console.log(scope.link);
-        //
         oCallback(scope.link);
         scope.cancel();
       }

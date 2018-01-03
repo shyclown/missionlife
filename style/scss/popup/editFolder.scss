@@ -1,5 +1,7 @@
 /* PopUp */
 @mixin popupShared{
+  button{ cursor: pointer; }
+  button:hover{ background-color: $primary; }
   .window{ @include windowDefault;
     .content{ @include flexcolumn;
       overflow-y: hidden;
@@ -16,9 +18,10 @@
 #editFolder{ @include popupShared;}
 #editPage{ @include popupShared;}
 #editWebLink{ @include popupShared;}
+#selectPage{ @include popupShared; button{margin-bottom: 0.5rem;}}
 
 #promptWindow{ @include popupShared;
-  .window > .content > .message{
+  .message{
     h1{
       padding: 0px;
       margin: 0px;

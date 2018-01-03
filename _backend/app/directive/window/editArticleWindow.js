@@ -210,30 +210,24 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       /* Webpage Link */
 
       const addLink = function(data){
-
         console.log(data);
-
         if(data.type && data.new){
-
           let link;
           let oSelection = Shared.fn.selectRange(Shared.storedRange);
           let oText = oSelection.toString();
-
           if(data.type === 'image'){ link = $compile(createImage(data.obj))(scope); }
           else if(data.type === 'page'){ link = $compile(createLink(data.name,'/_frontend/page/'+data.id))(scope); }
           else if(data.type === 'weblink'){ link = $compile(createLink(data.name, data.href))(scope); }
-          // create link element
           else{ link = $compile(createLink(data.name, data.href))(scope); }
-
           scope.area.insertAfterSelection(link[0]);
           if(!link[0].nextSibling){ let txt = document.createTextNode(' '); insertAfter(txt,link[0]); }
           newCaretPosition(oSelection, link[0].nextSibling, 0);
-
         }else{
           storedItem.innerHTML = data.name;
           storedItem.href = data.href;
         }
       }
+
 
       /* Event Function */
       /* Generates popup elements based on setup from shared service */
