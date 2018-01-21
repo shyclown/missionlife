@@ -145,6 +145,12 @@ app.service('FileService',function($rootScope, Shared, Ajax,  uploadDropped){
     data.action = 'delete';
     Ajax.call(data,url,callback);
   }
+  // Rotate
+  this.rotate = function(data, callback){
+    data.action = 'rotate';
+    Ajax.call(data,url,callback);
+  }
+
 
 
 });

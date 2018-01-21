@@ -36,8 +36,7 @@ app.directive('editFolderWindow', ['Folder','Shared', function(Folder, Shared) {
 
       scope.delete = function(){
         new Shared.prompt( Shared.text.prompt.folder.delete, function(){
-          Folder.remove(scope.folder);
-          scope.folderWindow.callback();
+          Folder.remove(scope.folder, scope.folderWindow.callback);
           scope.folderWindow.close();
         }, scope);
       }

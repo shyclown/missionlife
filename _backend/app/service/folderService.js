@@ -13,8 +13,8 @@ app.service('Folder',function(Ajax, Shared){
 
   this.listParents = function(folder){
     let parents = [];
-    if(folder != null){
-      while(folder.parent != null){
+    if(folder != 0){
+      while(folder.parent != 0){
         folder = folderID(folder.parent);
         parents.push(folder);
       }
@@ -23,6 +23,7 @@ app.service('Folder',function(Ajax, Shared){
   }
   this.select_all = function( callback ){
     Ajax.call({action: 'select_all'}, url, function(response){
+      console.log(response.data);
       self.allFolders = response.data;
       Shared.explorer.all_folders = response.data;
       if(callback){ callback(response); }
@@ -31,7 +32,7 @@ app.service('Folder',function(Ajax, Shared){
   this.isParent = function(item, target){
     let parent = target.folder.parent;
     let inParents = false;
-    while(!inParents && parent != null){
+    while(!inParents && parent != 0){
       if(parent == item.folder.id){ inParents = true; }
       parent = folderID(parent).parent;
     }
@@ -44,7 +45,7 @@ app.service('Folder',function(Ajax, Shared){
 
   this.insert = function(data, callback)
   {
-    data.parent = (data.parent == null) ? null : data.parent.id;
+    data.parent = (data.parent == 0) ? 0 : data.parent.id;
     data.name = (!data.name || data.name == '')? data.name = 'NewFolder' : data.name;
     data.order = 0;
     data.action = 'insert';

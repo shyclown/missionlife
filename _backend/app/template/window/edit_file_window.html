@@ -11,10 +11,10 @@
           </h1>
         </header>
         <div class="buttons">
-          <button class="editImage" disabled="true">rotate</button>
+          <button class="editImage" ng-click="rotate()">rotate</button>
           <button class="editImage" disabled="true">change folder</button>
           <button class="editImage" disabled="true">download</button>
-          <button class="editImage" disabled="true">delete</button>
+          <button class="editImage" ng-click="delete()">delete</button>
         </div>
         <section class="image" ng-if="(file.file_type == 'png')">
           <img width="350px" ng-src="/uploads/image/{{file.file_src}}">

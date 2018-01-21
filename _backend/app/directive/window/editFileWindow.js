@@ -6,17 +6,34 @@ function( FileService, Article, Garant, Shared ) {
     templateUrl: '/_backend/app/template/window/edit_file_window.html',
     link: function (scope, element, attrs)
     {
-      scope.fileWindow = Shared.openElement[attrs.editObj];
-      scope.cancel = function(){  scope.fileWindow.close();  }
-      scope.openFile = scope.fileWindow.item;
+      const oFileWindow = Shared.openElement[attrs.editObj];
+      const oFile = oFileWindow.item;
 
-      console.log(scope.openFile);
+      scope.cancel = function(){
+        oFileWindow.callback();
+        oFileWindow.close();
+      }
 
-      if(scope.openFile){
-        scope.file = Shared.fn.cloneObject(scope.openFile);
+      if(oFile){
+        scope.file = Shared.fn.cloneObject(oFile);
         scope.filesize = Shared.fn.getFileSize(scope.file.file_size);
         FileService.details(scope.file, function(res){
           if(res.data){ scope.details = res.data; }
+        });
+      }
+      else{
+        scope.cancel();
+      }
+
+      scope.rotate = function(){
+        FileService.rotate(scope.file, function(res){
+          scope.$apply();
+        });
+      }
+      scope.delete = function(){
+        FileService.delete(scope.file, function(res){
+          scope.cancel();
+          scope.$apply();
         });
       }
 

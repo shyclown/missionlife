@@ -15,7 +15,7 @@ class Folder
   // -- PUBLIC --
 
   public function select_all(){
-    $sql = "SELECT * FROM `ml_folder` ORDER BY  `order` ASC";
+    $sql = "SELECT * FROM `ml_folder`";
     return $this->db->query($sql);
   }
   public function insert($data){

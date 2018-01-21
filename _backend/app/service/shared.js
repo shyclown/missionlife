@@ -21,7 +21,7 @@ app.service('Shared',function($document, $compile){
     }
   }
   this.explorer = {
-    current_folder: null,
+    current_folder: 0,
     all_folders: {},
     articles: {},
     forms: {},

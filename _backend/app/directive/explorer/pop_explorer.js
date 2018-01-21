@@ -43,6 +43,8 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.openFileWindow = function(file){
         new Shared.directiveElement('edit-file-window', file, function(){
           //callback
+          console.log("callback");
+          FileService.updateExplorer(updateScope);
         }, scope);
       }
       scope.openFormWindow = function(form){
@@ -54,13 +56,14 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       scope.openFolderWindow = function(folder){
         new Shared.directiveElement('edit-folder-window', folder, function(){
           //callback
+          Folder.select_all(updateScope);
         }, scope);
       }
       scope.openGarantWindow = function(garant){
         new Shared.directiveElement('edit-garant-window', garant, function(image){
           //callback
           if(image){ FileService.updateExplorer(); };
-          Garant.updateExplorer();
+          Garant.updateExplorer(updateScope);
         }, scope);
       }
       scope.openArticleWindow = function(article){

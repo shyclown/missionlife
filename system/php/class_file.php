@@ -185,6 +185,8 @@ class File
   }
 
 
+
+
   public function get_all_details($data){
     $sql =  "SELECT a.header, a.id, 'article' AS table_name
                       FROM  `ml_file` f
@@ -332,39 +334,15 @@ public function move_to_folder($data){
   }
 }
 
-//-----------------------------------------------------
-// Remove one
-//-----------------------------------------------------
-  public function remove_from_garant($data){
-    $sql = "DELETE FROM `ml_garant_file`
-            WHERE `ml_garant_file`.`file_id` = ?
-            AND `ml_garant_file`.`garand_id` = ?";
-    $params = array('ii', $data['file_id'], $data['garant_id']);
-    return $this->db->query($sql,$params);
-  }
-  public function remove_from_article($data){
-    $sql = "DELETE FROM `ml_garant_file`
-            WHERE `ml_article_file`.`file_id` = ?
-            AND `ml_article_file`.`article_id` = ?";
-    $params = array('ii', $data['file_id'], $data['article_id']);
-    return $this->db->query($sql,$params);
-  }
-  public function remove_from_folder($data){
-    $sql = "DELETE FROM `ml_folder_item`
-            WHERE `item_id` = ?
-            AND `folder_id` = ?
-            AND `type` = 4";
-    $params = array('ii', $data['file_id'], $data['folder_id']);
-    return $this->db->query($sql,$params);
-  }
+
 
 
   //-----------------------------------------------------
   // Remove all
   //-----------------------------------------------------
   public function remove_from_folders($data){
-    $sql = "DELETE FROM `ml_folder_item` WHERE `ml_folder_file`.`file_id` = ? AND `type` = 4";
-    $params = array('i', $data['file_id']);
+    $sql = "DELETE FROM `ml_folder_item` WHERE `ml_folder_item`.`item_id` = ? AND `type` = 4";
+    $params = array('i', $data['item_id']);
     return $this->db->query($sql,$params);
   }
   public function remove_from_garants($data){
@@ -378,23 +356,51 @@ public function move_to_folder($data){
     return $this->db->query($sql_article,$params_article);
   }
   //-----------------------------------------------------
+  // Rotate
+  //-----------------------------------------------------
+
+    public function rotate($img, $deg = 90){
+
+      $src = $img['file_src'];
+      $img = $this->root.'/uploads/image/'. $src;
+      $thumb = $this->root.'/uploads/image/small/'. $src;
+
+      var_dump($thumb);
+      $this->rotatePNG($img, $deg);
+      $this->rotatePNG($thumb, $deg);
+      return true;
+    }
+    private function rotatePNG($img, $deg){
+      var_dump($img);
+      var_dump($deg);
+      $image = imagecreatefrompng($img);
+      $rotated = imagerotate($image, $deg, 0);
+      //imagepng($rotated, $img)
+      unlink($img);
+      file_put_contents($img, $rotated);
+    }
+
+  //-----------------------------------------------------
   // DELETE
   //-----------------------------------------------------
   private function remove_file($data){
     $sql_file = "DELETE FROM `ml_file` WHERE `id` = ?";
-    $params_file = array('i', $data['id']);
+    $params_file = array('i', $data['item_id']);
     return $this->db->query($sql_file,$params_file);
   }
 
   public function delete($data){
+      // some functions expect file_id; TODO: normalize
+      $data["file_id"] = $data["item_id"];
       /* Remove File */
       if($data['file_type'] == 'png'){
-        unlink($this->root.'/uploads/image/'.$data['file_name']);
-        unlink($this->root.'/uploads/image/small/'.$data['file_name']);
+        unlink($this->root.'/uploads/image/'.$data['file_src']);
+        unlink($this->root.'/uploads/image/small/'.$data['file_src']);
       }
       else{
-        unlink($this->root.'/uploads/'.$data['file_name']);
+        unlink($this->root.'/uploads/'.$data['file_src']);
       }
+      // remove from DB
       if($this->remove_file($data)){
         $this->remove_from_folders($data);
         $this->remove_from_articles($data);
@@ -402,6 +408,33 @@ public function move_to_folder($data){
       }
       return true;
   }
+
+//-----------------------------------------------------
+// Remove one
+//-----------------------------------------------------
+  public function remove_from_garant($data){
+      $sql = "DELETE FROM `ml_garant_file`
+              WHERE `ml_garant_file`.`file_id` = ?
+              AND `ml_garant_file`.`garand_id` = ?";
+      $params = array('ii', $data['file_id'], $data['garant_id']);
+      return $this->db->query($sql,$params);
+  }
+  public function remove_from_article($data){
+    $sql = "DELETE FROM `ml_garant_file`
+              WHERE `ml_article_file`.`file_id` = ?
+              AND `ml_article_file`.`article_id` = ?";
+    $params = array('ii', $data['file_id'], $data['article_id']);
+    return $this->db->query($sql,$params);
+  }
+  public function remove_from_folder($data){
+    $sql = "DELETE FROM `ml_folder_item`
+              WHERE `item_id` = ?
+              AND `folder_id` = ?
+              AND `type` = 4";
+    $params = array('ii', $data['file_id'], $data['folder_id']);
+    return $this->db->query($sql,$params);
+  }
+
 //-----------------------------------------------------
 // Functions
 //-----------------------------------------------------

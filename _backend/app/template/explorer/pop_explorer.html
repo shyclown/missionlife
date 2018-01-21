@@ -5,7 +5,7 @@
   </div>
 
   <div id="explorerFoldersTree">
-      <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == null'></folder-tree-line>
+      <folder-tree-line ng-repeat='folder in folders' ng-if='folder.parent == 0'></folder-tree-line>
   </div>
 
   <div id="explorerContent" is-drop-area="uploadFile">
