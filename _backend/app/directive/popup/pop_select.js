@@ -79,7 +79,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.selected = false;
         scope.selectedName = '';
       }
-      
+
       const stopDefault = function(){
         event.stopPropagation();
         event.preventDefault();

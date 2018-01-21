@@ -26,6 +26,8 @@ class Data
     if(isset($data['name'])){
       $sql = "SELECT * FROM `ml_data` WHERE name=?";
       $params = array('i', $data['name']);
+      // DEBUG:
+      //var_dump($data['name']);
     }
     else{ $sql = "SELECT * FROM `ml_data`"; $params = false; }
     return $this->db->query($sql,$params);
@@ -34,13 +36,13 @@ class Data
   public function insert($data){
     $sql = "INSERT INTO `ml_data` (`id`, `name`, `data`, `date_created`, `date_edited`)
             VALUES (NULL, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-    $params = array( 'ss', $data['name'], json_encode($data['data']));
+    $params = array( 'ss', $data['name'], $data['data']);
     // returns ID of inserted draft
     return $this->db->query($sql, $params , 'get_id');
   }
   public function update($data){
     $sql = "UPDATE `ml_data` SET `name`=?, `data`=?, `date_edited`=CURRENT_TIMESTAMP  WHERE `id` = ?";
-    $params = array('ssi', $data['name'], json_encode($data['data']), $data['id']);
+    $params = array('ssi', $data['name'], $data['data'], $data['id']);
     return $this->db->query($sql,$params);
   }
   public function delete($id){

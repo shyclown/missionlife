@@ -2,6 +2,7 @@ window.addEventListener('load',function load(){
   window.removeEventListener("load", load, false); //remove listener, no longer needed
   runAfterLoad.run();
 },false);
+
 var runAfterLoad = {
   list : [],
   add : function(oFunction, oArgumentsInArray){

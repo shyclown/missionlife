@@ -5,17 +5,11 @@
 var Editor = Editor || {};
 
 Editor.node = function(node, root){
-
   let inEditor = false;
-
+  
   while(node.parentNode != null){
     if(node == root){ inEditor = true }
-
   }
-
-
-
-
 }
 
 function callbackEditor(data){
@@ -153,7 +147,6 @@ var newCaretPosition = function(oSelection, oElement, oOffset)
   oSelection.removeAllRanges();
   oSelection.addRange(range);
 }
-//
 
 var getTopEmpty = function(oElement,oRoot)
 {
@@ -193,13 +186,11 @@ var getParentInRoot = function(oElement,oRoot){
   return oElement;
 }
 
-var inArrayString = function(oArray,oString)
-{
+var inArrayString = function(oArray,oString){
   return oArray.indexOf(oString) > -1;
 }
 
-var getAllTextNodes = function(oElement)
-{
+var getAllTextNodes = function(oElement){
   var oArray = [];
 
   function findText(oElement)
@@ -283,8 +274,8 @@ var getElementsInSelection = function(range, set_root){
   return nodeArray;
 };
 
-var deleteRangeElements = function(oSelection,oRoot)
-{
+var deleteRangeElements = function(oSelection,oRoot){
+  
   var oRange = oSelection.getRangeAt(0);
 
   if(oRange.startContainer == oRange.endContainer){

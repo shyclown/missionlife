@@ -1,0 +1,63 @@
+.settings{
+  height: calc(100%);
+  width: calc(100%);
+  overflow-y: scroll;
+  .row{
+    box-sizing: border-box;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1rem;
+
+    .column{
+      max-height: 100%;
+      overflow: hidden;
+      .dropImage{
+        /* droparea */
+        background-color: yellow;
+        height: 100%;
+        overflow: hidden;
+        img{
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  input{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+  }
+  textarea{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    resize: vertical;
+    max-height: 100px;
+  }
+
+  .dropImage{
+    padding: 24px;
+    background-color: #EEEEEE;
+    border-radius: 8px;
+  }
+  #uploadLogo{
+      display: none;
+  }
+  .dropImage label{
+      background-color: #E0E0E0;
+      margin-right: 8px;
+      padding: 4px 8px;
+      border-radius: 8px;
+  }
+  .dropImage button{
+      background-color: #E0E0E0;
+      color: rgb(82, 82, 82);
+      margin-left: 8px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-family: "Source Sans Pro", sans-serif;
+  }
+}

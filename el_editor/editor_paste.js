@@ -2,7 +2,6 @@ var Editor = Editor || {};
 Editor.pasteEvent = function (oSelection, oRoot, event)
 {
   const replaceInserted = function(items, callback){
-    console.log(items);
     for (var i = 0; i < items.length; i++) {
       item = items[i];
       let newP = document.createElement('p');

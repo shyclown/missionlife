@@ -64,6 +64,7 @@ Editor.area.prototype.createEvents = function()
     copy: function(event){
       console.log('copy',event);
     },
+    // Paste event needs to be redone
     paste: function(event){
       Editor.pasteEvent(oSelection, oRoot, event);
     },
@@ -154,6 +155,7 @@ Editor.area.prototype.insertAfterSelection = function(oElement){
   }
   else { console.log('nothing selected'); }
 }
+
 Editor.fn.removeDefault = function(event){
   event.preventDefault();
   event.stopPropagation();
