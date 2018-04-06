@@ -42,33 +42,27 @@ function($http, Form, Shared, Folder, Article, Garant, FileService, uploadDroppe
       // Create Windows
       scope.openFileWindow = function(file){
         new Shared.directiveElement('edit-file-window', file, function(){
-          //callback
-          console.log("callback");
           FileService.updateExplorer(updateScope);
         }, scope);
       }
       scope.openFormWindow = function(form){
         new Shared.directiveElement('edit-form-window', form, function(){
-          //callback
           Form.updateExplorer();
         }, scope);
       }
       scope.openFolderWindow = function(folder){
         new Shared.directiveElement('edit-folder-window', folder, function(){
-          //callback
           Folder.select_all(updateScope);
         }, scope);
       }
       scope.openGarantWindow = function(garant){
         new Shared.directiveElement('edit-garant-window', garant, function(image){
-          //callback
           if(image){ FileService.updateExplorer(); };
           Garant.updateExplorer(updateScope);
         }, scope);
       }
       scope.openArticleWindow = function(article){
         new Shared.directiveElement('edit-article-window', article, function(){
-          //callback
           Article.updateExplorer();
         }, scope);
       }

@@ -22,6 +22,7 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
   );
 
   const Placeholder = function(){
+
     const self = this;
     this.el = document.createElement('div');
     this.el.className = 'orderPlaceholder';
@@ -29,14 +30,17 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
       self.shrink();
       setTimeout( function(){ removeElement(self.el); }, 400);
     }
+
     this.shrink = function(){
       this.el.style.height = '0px';
       this.el.style.marginTop = '0px';
     }
+
     this.grow = function(){
       self.el.style.height = '40px';
       self.el.style.marginTop = '8px';
     }
+
   }
 
   const pageOBJ = function(el){
@@ -84,9 +88,9 @@ app.controller('pagesController',function($scope, $sce, $sanitize, Shared, Page,
       const oMove = function(){
         if(last.placeholder){ last.placeholder.remove(); }
         const newPlaceholder = new Placeholder();
-        if(oPosition == 'top' && !label){ insertBefore(newPlaceholder.el, item); }
+        if(oPosition === 'top' && !label){ insertBefore(newPlaceholder.el, item); }
         // if its label we always insertAfter
-        else if(oPosition == 'bottom' || label){ insertAfter(newPlaceholder.el, item); }
+        else if(oPosition === 'bottom' || label){ insertAfter(newPlaceholder.el, item); }
         setTimeout(function(){ newPlaceholder.grow(); },0);
         last.placeholder = newPlaceholder;
         last.item = item;
