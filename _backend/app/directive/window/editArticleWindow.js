@@ -10,19 +10,18 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
     {
       const oArticleWindow = Shared.openElement[attrs.editObj];
       const oArticle = oArticleWindow.item;
-      console.log(oArticle);
       const explorer = Shared.explorer;
       const newArticle = {
         header: 'New Article',
         content: '<p>Content</p>',
         folder_id: explorer.current_folder.id,
         state: 0
-      }
+      };
       const targetUrl = '/missionlife/system/ng/call.php?class=file';
       const callbackFn = function(){
         oArticleWindow.callback();
         oArticleWindow.close();
-      }
+      };
 
       /*CANCEL CAN BE FRUSTRATING AFTER CHANGES DONE - PROMPT FOR SAVE ? */
       scope.cancel = function(){ callbackFn(); }
@@ -51,7 +50,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
             scope.files = response.data;
           });
         }
-      }
+      };
 
       /* OPEN ARTICLE */
 
@@ -66,7 +65,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       // compile links
       let content = scope.area.part.content_wrap;
       let links = content.getElementsByClassName('link');
-      for (var i = 0; i < links.length; i++) {
+      for (let i = 0; i < links.length; i++) {
         let link = links[i]
         link = $compile(link)(scope);
       }
@@ -79,30 +78,30 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
       scope.stateText = function(){
         if(scope.article && scope.article.state){ return 'dectivate'; }
         else{ return 'activate'; }
-      }
+      };
       scope.changeState = function(){
         scope.article.state = !scope.article.scope;
         //scope.buttonText = scope.stateText();
-      }
+      };
 
       // change filter
       scope.isOpen = 'all';
       scope.filter_str;
-      scope.open = function(item){ return scope.isOpen == item; }
-      scope.show = function(item){ scope.isOpen = item; }
-      scope.filter = function(){ console.log(scope.filter_str);  }
+      scope.open = function(item){ return scope.isOpen === item; };
+      scope.show = function(item){ scope.isOpen = item; };
+      scope.filter = function(){ console.log(scope.filter_str);  };
       scope.filterArray = function(arr, prop){
         if(arr){
           return arr.filter(function(item){
             return item[prop].match(scope.filter_str);
           });
         }
-      }
+      };
 
       scope.closeWithoutSave = function(){
         oArticleWindow.close();
 
-      }
+      };
       // 2. Attaching callback function executed after drop of file or image
       scope.onDropFiles = function(response){ }
 
@@ -117,7 +116,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
           let file = [files[i]];
           let area = scope.area;
 
-          let res = uploadDropped.bind(null,
+          uploadDropped.bind(null,
             file,
             function(response){},
             function(response){
@@ -131,7 +130,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
               area.afterImageUpload(response);
 
               // if all processes are completed we remove placeholder
-              if(completed == all){
+              if(completed === all){
                 area.removePlaceholder();
               //  scope.saveChanges();
               }
@@ -191,6 +190,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
         figure.contentEditable = false;
         return figure;
       }
+
       const editYoutubeVideo = function(data){
         let link;
         let oSelection = Shared.fn.selectRange(Shared.storedRange);
@@ -199,6 +199,7 @@ function($http, $compile, Folder, Article, Form, uploadDropped, Shared) {
 
 
         let iframe = createYoutubeEmbedLink(data.name, data.href);
+
         insertAfter(iframe, editorRootParent);
         //scope.area.insertAfterSelection(iframe);
         if(iframe.nextSibling){

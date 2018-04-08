@@ -25,14 +25,14 @@ function($http, Shared, Folder, Article, Form, FileService) {
       scope.setup = setup;
 
       // Displayed items
-      scope.folders;
-      scope.forms;
-      scope.articles;
-      scope.files;
+      scope.folders = [];
+      scope.forms = [];
+      scope.articles = [];
+      scope.files = [];
       // Navigation
       scope.currentFolder = null;
       // Close Button Fn
-      scope.cancel = function(){ oSelectWindow.close();  }
+      scope.cancel = function(){ oSelectWindow.close();  };
 
 
       // Watch
@@ -66,7 +66,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
         if(setup.articles){ loadArticles(); }
         if(setup.files){ loadFiles();  }
         if(setup.forms){ loadForms(); }
-      }
+      };
 
       // RESET
       const resetItems = function(){
@@ -78,12 +78,12 @@ function($http, Shared, Folder, Article, Form, FileService) {
         scope.new_folder = {};
         scope.selected = false;
         scope.selectedName = '';
-      }
+      };
 
       const stopDefault = function(){
         event.stopPropagation();
         event.preventDefault();
-      }
+      };
       const loadArticles = function(){
         Article.selectByFolder(
           { folder_id: scope.currentFolder.id, },
@@ -91,17 +91,17 @@ function($http, Shared, Folder, Article, Form, FileService) {
             apply();
           }
         );
-      }
+      };
       const loadFiles = function(){
         FileService.selectByFolder(
           { folder_id: scope.currentFolder.id, },
           function(res){
             scope.files = res.data.result;
-            scope.images = scope.files.filter(function(img){ return img.file_type == 'png'; });
+            scope.images = scope.files.filter(function(img){ return (img.file_type === 'png'); });
             apply();
           }
         );
-      }
+      };
       const loadForms = function(){
         Form.selectByFolder(
           { folder_id: scope.currentFolder.id, },
@@ -109,23 +109,22 @@ function($http, Shared, Folder, Article, Form, FileService) {
             apply();
           }
         );
-      }
-
+      };
 
       // columns
-      scope.getNumber = function(num){
-          let arr = []; let i = 0; while(i != num){
+      scope.getNumber = function( num ){
+          let arr = []; let i = 0; while(i !== num){
             arr.push(i); i++; }
           return arr;
-      }
+      };
       scope.columns = 2;
       //-----------------------------------------------------
       // Selected
       //-----------------------------------------------------
 
       scope.call = function(type, obj){
-        if(type == 'file') { scope.selectedName = '/ '+obj.file_name; }
-        if(type == 'article') { scope.selectedName = '/ '+obj.header; }
+        if(type === 'file') { scope.selectedName = '/ '+obj.file_name; }
+        if(type === 'article') { scope.selectedName = '/ '+obj.header; }
         scope.selected = { type: type, obj: obj }
         switch (type) {
           case 'file':
@@ -173,30 +172,32 @@ function($http, Shared, Folder, Article, Form, FileService) {
           return {  open: pos >= 0, position: pos };
         }
         const folderInArray = inFolderArray(folder.id);
-        const folderIsCurrent = folder == scope.currentFolder;
+        const folderIsCurrent = folder === scope.currentFolder;
         if(folderInArray.open && folderIsCurrent){
           scope.openFoldersInTree.splice(folderInArray.position, 1);
         }
         if(!folderInArray.open){
           scope.openFoldersInTree.push(folder.id);
         }
-      }
+      };
 
       /* Folder Editor Window */
-      scope.toogleEditFolder = function(){ scope.folderWindow = !scope.folderWindow; }
+      scope.toogleEditFolder = function(){
+        scope.folderWindow = !scope.folderWindow;
+      }
       scope.setEditFolder = function(folder){
         stopDefault(event);
         scope.editFolder = folder;
         scope.toogleEditFolder();
-      }
+      };
       scope.setPosition = function(position){
         scope.editFolder.position = position;
         scope.updatePosition(scope.editFolder);
-      }
-
+      };
       scope.isOpen = function(folder){
-        return folder.id == scope.currentFolder.id;
-      }
+        return folder.id === scope.currentFolder.id;
+      };
+
       // New Folder Object
 
       scope.saveNewFolder = function(){
@@ -206,6 +207,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
           scope.new_folder.name = "";
         });
       }
+
       scope.removeFolder = function(folder){ stopDefault(event); Folder.remove(folder); }
       scope.orderUp = function(folder){ stopDefault(event); Folder.orderUp(folder); }
       scope.orderDown = function(folder){ stopDefault(event); Folder.orderDown(folder); }
@@ -234,7 +236,7 @@ function($http, Shared, Folder, Article, Form, FileService) {
         return str;
       }
       scope.currentOpen = function(folder){
-        return (folder.id == scope.openFolder.id) ? 'currentFolder' : '';
+        return (folder.id === scope.openFolder.id) ? 'currentFolder' : '';
       }
     }
   };

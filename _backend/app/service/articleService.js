@@ -11,7 +11,7 @@ app.service('Article',function($rootScope, Ajax, Shared){
   );
 
   this.updateExplorer = function(){
-    if(ex.current_folder == null){ ex.articles = []; }
+    if(!ex.current_folder){ ex.articles = []; }
     else{
       self.selectByFolder(
         { folder_id: ex.current_folder.id },

@@ -34,7 +34,7 @@ app.service('Garant',function($rootScope, Shared, Ajax){
   // make insert possible to to folder only
   this.insert = function(data, callback){
     data.action = 'insert';
-    customAjax(url, data, false, function(response){
+    Ajax(url, data, false, function(response){
       const res = response;
       self.addToFolder( {
         folder_id: ex.current_folder.id,

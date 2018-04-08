@@ -1,4 +1,4 @@
-app.service('Form',function($rootScope, Ajax, Shared){
+app.service('Form', function($rootScope, Ajax, Shared){
 
   const url = '/system/ng/call.php?class=form';
   const self = this;
@@ -11,7 +11,7 @@ app.service('Form',function($rootScope, Ajax, Shared){
   );
 
   this.updateExplorer = function(){
-    if(ex.current_folder == null){
+    if(!ex.current_folder){
       ex.forms = [];
     }
     else{ self.selectByFolder(
